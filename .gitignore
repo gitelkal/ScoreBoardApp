@@ -106,3 +106,6 @@ server/wwwroot/lib/
 server/wwwroot/node_modules/
 server/client/node_modules/
 server/.history/
+*.editorconfig
+*.cache
+*.vsidx
