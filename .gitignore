@@ -1,2 +1,108 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-/server/.vs
+### CLIENT (Frontend) ###
+client/dist/
+client/tmp/
+client/out-tsc/
+client/bazel-out/
+
+# Node modules and logs
+client/node_modules/
+client/npm-debug.log
+client/yarn-error.log
+
+# IDEs and editors
+client/.idea/
+client/.project
+client/.classpath
+client/.c9/
+client/*.launch
+client/.settings/
+client/*.sublime-workspace
+
+# Visual Studio Code
+client/.vscode/*
+!client/.vscode/settings.json
+!client/.vscode/tasks.json
+!client/.vscode/launch.json
+!client/.vscode/extensions.json
+client/.history/*
+
+# Miscellaneous
+client/.angular/cache
+client/.sass-cache/
+client/connect.lock
+client/coverage/
+client/libpeerconnection.log
+client/testem.log
+client/typings/
+
+# System files
+client/.DS_Store
+client/Thumbs.db
+
+---
+
+### SERVER (ASP.NET Core API) ###
+server/bin/
+server/obj/
+server/.vs/
+server/.vscode/
+server/.idea/
+server/*.suo
+server/*.user
+server/*.userosscache
+server/*.sln.docstates
+server/.DS_Store
+server/Thumbs.db
+
+# Build artifacts
+server/*.dll
+server/*.exe
+server/*.pdb
+server/*.appx
+server/*.appxsym
+server/artifacts/
+
+# NuGet packages
+server/packages/
+server/project.lock.json
+server/*.nupkg
+server/.nuget/
+
+# Deployment and publish settings
+server/*.deploy
+server/*.publish/
+server/*.pfx
+server/*.pubxml
+server/*.pubxml.user
+
+# Logs and cache
+server/log/
+server/logs/
+server/error.log
+server/output.log
+server/*.log
+server/.angular/cache
+
+# Database and migrations
+server/*.mdf
+server/*.ldf
+server/Migrations/
+
+# Rider / Resharper
+server/_ReSharper*/
+server/*.DotSettings.user
+
+# Docker
+server/docker-compose.override.yml
+server/.secrets/
+server/.env
+server/.dockerignore
+server/.container.cache
+
+# Miscellaneous
+server/wwwroot/lib/
+server/wwwroot/node_modules/
+server/client/node_modules/
+server/.history/
