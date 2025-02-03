@@ -68,6 +68,4 @@ app.MapGet("/Teamusers/{id}", (int id) =>
     return usersInTeam.Count > 0 ? string.Join(", ", usersInTeam) : "Team users not found";
 });
 
-
-
 app.Run();
