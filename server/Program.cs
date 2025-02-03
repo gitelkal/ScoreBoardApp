@@ -1,73 +1,25 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.OpenApi.Models;
-
-
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-});
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// For production scenarios, consider keeping Swagger configurations behind the environment check
-// if (app.Environment.IsDevelopment())
-// {
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-});
-// }
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
-string connectionString = app.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")!;
+app.UseAuthorization();
 
-
-app.MapGet("/Users/{id}", (int id) =>
-{
-    using var conn = new SqlConnection(connectionString);
-    conn.Open();
-    var command = new SqlCommand("SELECT * FROM Users WHERE UserID = @id", conn);
-    command.Parameters.AddWithValue("@id", id);
-    using SqlDataReader reader = command.ExecuteReader();
-    if (reader.HasRows)
-    {
-        reader.Read();
-        return $"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}";
-    }
-    return "User not found";
-});
-
-app.MapGet("/Teamusers/{id}", (int id) =>
-{
-    using var conn = new SqlConnection(connectionString);
-    conn.Open();
-
-    var command = new SqlCommand(
-        "SELECT T.Teamname, U.Username FROM Users U " +
-        "JOIN TeamUsers TU ON U.UserID = TU.UserID " +
-        "JOIN Teams T ON TU.TeamID = T.TeamID " +
-        "WHERE TU.TeamID = @teamId", conn);
-
-    command.Parameters.AddWithValue("@teamId", id);
-
-    using SqlDataReader reader = command.ExecuteReader();
-    List<string> usersInTeam = new List<string>();
-
-    while (reader.Read())
-    {
-        string teamName = reader.GetString(0);
-        string username = reader.GetString(1);
-        usersInTeam.Add($"Team: {teamName}, {username}");
-    }
-
-    return usersInTeam.Count > 0 ? string.Join(", ", usersInTeam) : "Team users not found";
-});
-
-
+app.MapControllers();
 
 app.Run();
