@@ -5,7 +5,26 @@
     "version": "v1"
   },
   "paths": {
-    "/Users/{id}": {
+    "/Teams": {
+      "get": {
+        "tags": [
+          "server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Teams/{id}": {
       "get": {
         "tags": [
           "server"
@@ -35,7 +54,7 @@
         }
       }
     },
-    "/Teamusers/{id}": {
+    "/ScoreboardTeams/{id}": {
       "get": {
         "tags": [
           "server"
@@ -50,6 +69,25 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Scoreboards": {
+      "get": {
+        "tags": [
+          "server"
         ],
         "responses": {
           "200": {
