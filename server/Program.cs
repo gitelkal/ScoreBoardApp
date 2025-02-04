@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.OpenApi.Models;
+using Dapper;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
@@ -89,13 +90,11 @@ app.MapGet("/Scoreboards", async () =>
 {
     using var conn = new SqlConnection(connectionString);
     await conn.OpenAsync();
-    var command = new SqlCommand("SELECT * FROM Scoreboards", conn);
-    using SqlDataReader reader = await command.ExecuteReaderAsync();
-    List<string> scoreboards = new List<string>();
-    while (await reader.ReadAsync())
-    {
-        scoreboards.Add($"Scoreboard ID: {reader.GetInt32(0)}, Name: {reader.GetString(1)}");
-    }
-    return scoreboards.Count > 0 ? string.Join("\n", scoreboards) : "No scoreboards found";
+
+    var scoreboards = await conn.QueryAsync("SELECT * FROM Scoreboards");
+
+    return scoreboards.Any() ? Results.Json(scoreboards) : Results.Json(new { Message = "No scoreboards found" });
 });
+
+
 app.Run();

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "8lcjL1EJxwc=",
+  "dgSpecHash": "qMw28uymKsY=",
   "success": true,
   "projectFilePath": "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Slacktard\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Slacktard\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\Slacktard\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",
     "C:\\Users\\Slacktard\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Slacktard\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",
     "C:\\Users\\Slacktard\\.nuget\\packages\\microsoft.data.sqlclient\\6.0.1\\microsoft.data.sqlclient.6.0.1.nupkg.sha512",

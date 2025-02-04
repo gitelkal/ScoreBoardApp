@@ -7,6 +7,25 @@
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< Updated upstream
+=======
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+>>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
@@ -18,11 +37,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< Updated upstream
           "SelectedChildIndex": 1,
+=======
+          "SelectedChildIndex": 5,
+>>>>>>> Stashed changes
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+<<<<<<< Updated upstream
+=======
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T08:51:18.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\User.cs",
+              "RelativeDocumentMoniker": "User.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\User.cs",
+              "RelativeToolTip": "User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T08:51:12.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "WeatherForecast.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\WeatherForecast.cs",
+              "RelativeToolTip": "WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T08:51:08.667Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ScoreBoard.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\ScoreBoard.cs",
+              "RelativeDocumentMoniker": "ScoreBoard.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\ScoreBoard.cs",
+              "RelativeToolTip": "ScoreBoard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T15:39:06.276Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+>>>>>>> Stashed changes
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -41,7 +118,11 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
               "RelativeToolTip": "Program.cs",
+<<<<<<< Updated upstream
               "ViewState": "AgIAABMAAAAAAAAAAAAAACIAAABEAAAAAAAAAA==",
+=======
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAFEAAAA1AAAAAAAAAA==",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-03T14:41:13.35Z",
               "EditorCaption": ""

@@ -243,3 +243,4 @@ D:\GitHub\ScoreBoardApp\server\obj\Debug\net8.0\refint\server.dll
 D:\GitHub\ScoreBoardApp\server\obj\Debug\net8.0\server.pdb
 D:\GitHub\ScoreBoardApp\server\obj\Debug\net8.0\server.genruntimeconfig.cache
 D:\GitHub\ScoreBoardApp\server\obj\Debug\net8.0\ref\server.dll
+D:\GitHub\ScoreBoardApp\server\bin\Debug\net8.0\Dapper.dll
