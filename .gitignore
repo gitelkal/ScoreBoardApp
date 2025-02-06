@@ -1,1 +1,63 @@
-/client/node_modules
+# Ignore Visual Studio specific files
+.vs/
+*.vsidx
+*.vscode/
+
+# Ignore build output
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.appx
+*.appxsym
+*.user
+*.lock.json
+*.cache
+*.log
+
+# Ignore package dependencies
+packages/
+node_modules/
+
+# Ignore NuGet packages
+*.nupkg
+project.lock.json
+artifacts/
+
+# Ignore User-specific settings
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore Resharper files
+_ReSharper*/
+*.DotSettings.user
+
+# Ignore Web related files
+wwwroot/lib/
+wwwroot/node_modules/
+client/node_modules/
+
+# Ignore Rider files
+.idea/
+
+# Ignore temporary files
+.DS_Store
+Thumbs.db
+
+# Ignore Azure and Docker files
+.publishsettings
+.secrets/
+.env
+docker-compose.override.yml
+
+# Ignore database files
+*.mdf
+*.ldf
+
+# Ignore deployment and build artifacts
+*.deploy
+*.publish/
+*.pfx
