@@ -1,32 +1,36 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\",
+  "WorkspaceRootPath": "D:\\GitHub\\ScoreBoardApp\\server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
@@ -41,11 +45,24 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
+              "Title": "Team.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Team.cs",
+              "RelativeDocumentMoniker": "Team.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Team.cs",
+              "RelativeToolTip": "Team.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T12:19:24.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TeamsController.cs",
-              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
               "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
-              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
               "RelativeToolTip": "Controllers\\TeamsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -54,24 +71,21 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "secrets.json",
               "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
               "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-06T09:56:04.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-06T09:56:04.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "ServerDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
-              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
               "RelativeToolTip": "Data\\ServerDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -80,11 +94,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "AdminsControllers.cs",
-              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminsControllers.cs",
-              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
               "RelativeToolTip": "Controllers\\AdminsControllers.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -93,37 +107,36 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-06T09:17:58.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-06T09:17:58.793Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Program.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Program.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-06T09:17:58.797Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Admin.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Admin.cs",
               "RelativeDocumentMoniker": "Admin.cs",
-              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Admin.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Admin.cs",
               "RelativeToolTip": "Admin.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

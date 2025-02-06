@@ -1,5 +1,5 @@
 export interface Admins {
-    id: number;
+    adminID: number;
     username: string;
     firstname: string;
     lastname: string;

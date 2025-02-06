@@ -1,9 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.OpenApi.Models;
-using Dapper;
+﻿
 using server.Data;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
@@ -21,17 +18,13 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-
 builder.Services.AddDbContext<ServerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthorization();

@@ -1,4 +1,4 @@
 export interface Teams {
-    id: number;
-    name: string;
+    teamId: number;
+    teamName: string;
 }

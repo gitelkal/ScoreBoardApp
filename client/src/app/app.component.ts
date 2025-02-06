@@ -23,14 +23,14 @@ export class AppComponent {
   admins$ = this.getAdmins();
 
   private getScoreboards(): Observable<Scoreboards[]> {
-    return this.http.get<Scoreboards[]>('https://localhost:7062/scoreboards');
+    return this.http.get<Scoreboards[]>('https://localhost:7062/api/scoreboards');
   }
 
   private getTeams(): Observable<Teams[]> {
-    return this.http.get<Teams[]>('https://localhost:7062/teams');
+    return this.http.get<Teams[]>('https://localhost:7062/api/teams');
   }
 
   private getAdmins(): Observable<Admins[]> {
-    return this.http.get<Admins[]>('https://localhost:7062/admins');
+    return this.http.get<Admins[]>('https://localhost:7062/api/admins');
   }
 }
