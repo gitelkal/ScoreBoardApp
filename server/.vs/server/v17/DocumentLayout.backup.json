@@ -1,33 +1,33 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\GitHub\\ScoreBoardApp\\server\\",
+  "WorkspaceRootPath": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-<<<<<<< Updated upstream
-=======
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
->>>>>>> Stashed changes
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\raman\\onedrive\\dokument\\github\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -37,93 +37,97 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-<<<<<<< Updated upstream
-          "SelectedChildIndex": 1,
-=======
-          "SelectedChildIndex": 5,
->>>>>>> Stashed changes
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-<<<<<<< Updated upstream
-=======
-              "Title": "WeatherForecastController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\WeatherForecastController.cs",
-              "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\WeatherForecastController.cs",
-              "RelativeToolTip": "Controllers\\WeatherForecastController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "TeamsController.cs",
+              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
+              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "RelativeToolTip": "Controllers\\TeamsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:51:18.868Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\User.cs",
-              "RelativeDocumentMoniker": "User.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\User.cs",
-              "RelativeToolTip": "User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:51:12.086Z",
+              "WhenOpened": "2025-02-06T10:07:39.634Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "WeatherForecast.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\WeatherForecast.cs",
-              "RelativeDocumentMoniker": "WeatherForecast.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\WeatherForecast.cs",
-              "RelativeToolTip": "WeatherForecast.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "secrets.json",
+              "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-06T09:56:04.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServerDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
+              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "RelativeToolTip": "Data\\ServerDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:51:08.667Z",
+              "WhenOpened": "2025-02-06T09:18:25.363Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdminsControllers.cs",
+              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminsControllers.cs",
+              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
+              "RelativeToolTip": "Controllers\\AdminsControllers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T09:18:16.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-06T09:17:58.793Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ScoreBoard.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\ScoreBoard.cs",
-              "RelativeDocumentMoniker": "ScoreBoard.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\ScoreBoard.cs",
-              "RelativeToolTip": "ScoreBoard.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T15:39:06.276Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
->>>>>>> Stashed changes
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-03T14:41:15.837Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
+              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Program.cs",
               "RelativeToolTip": "Program.cs",
-<<<<<<< Updated upstream
-              "ViewState": "AgIAABMAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
-=======
-              "ViewState": "AgIAAE4AAAAAAAAAAAAAAFwAAAAbAAAAAAAAAA==",
->>>>>>> Stashed changes
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T14:41:13.35Z",
+              "WhenOpened": "2025-02-06T09:17:58.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Admin.cs",
+              "RelativeDocumentMoniker": "Admin.cs",
+              "ToolTip": "C:\\Users\\Raman\\OneDrive\\Dokument\\GitHub\\ScoreBoardApp\\server\\Admin.cs",
+              "RelativeToolTip": "Admin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T10:29:20.022Z",
               "EditorCaption": ""
             }
           ]
