@@ -1,85 +1,30 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "My API",
-    "version": "v1"
+    "title": "server",
+    "version": "1.0"
   },
   "paths": {
-    "/Users/{id}": {
+    "/api/Admins": {
       "get": {
         "tags": [
-          "server"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
+          "Admins"
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
     },
-    "/Teamusers/{id}": {
+    "/api/Teams": {
       "get": {
         "tags": [
-          "server"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
+          "Teams"
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/Scoreboards": {
-      "get": {
-        "tags": [
-          "server"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
