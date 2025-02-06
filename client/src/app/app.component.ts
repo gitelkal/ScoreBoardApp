@@ -1,23 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Scoreboards } from '../models/scoreboards.model';
+import { Teams } from '../models/teams.models';
+import { Admins } from '../models/admins.model';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-    template: `
-  <main>
-
-    <header class="brand-name">
-      <img class="brand-logo" src="/assets/logo.svg" alt="logo" aria-hidden="true" />
-    </header>
-
-  <section class="content">
-
-  </section>
-</main>
-`,
-styleUrls: ['./app.component.css'],
+  standalone: true, 
+  imports: [RouterOutlet, AsyncPipe, NgFor, NgIf], 
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'client';
+  http = inject(HttpClient); 
+
+  scoreboards$ = this.getScoreboards();
+  teams$ = this.getTeams();
+  admins$ = this.getAdmins();
+
+  private getScoreboards(): Observable<Scoreboards[]> {
+    return this.http.get<Scoreboards[]>('https://localhost:7062/scoreboards');
+  }
+
+  private getTeams(): Observable<Teams[]> {
+    return this.http.get<Teams[]>('https://localhost:7062/teams');
+  }
+
+  private getAdmins(): Observable<Admins[]> {
+    return this.http.get<Admins[]>('https://localhost:7062/admins');
+  }
 }

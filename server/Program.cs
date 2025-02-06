@@ -1,13 +1,23 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.OpenApi.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddUserSecrets<Program>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
@@ -24,8 +34,9 @@ app.UseSwaggerUI(c =>
 
 app.UseHttpsRedirection();
 
-string connectionString = app.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")!;
+app.UseCors("AllowAll");
 
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 app.MapGet("/Users/{id}", (int id) =>
 {
@@ -68,6 +79,19 @@ app.MapGet("/Teamusers/{id}", (int id) =>
     return usersInTeam.Count > 0 ? string.Join(", ", usersInTeam) : "Team users not found";
 });
 
-
+app.MapGet("/Scoreboards", () =>
+{
+    using var conn = new SqlConnection(connectionString);
+    conn.Open();
+    var command = new SqlCommand(
+        "SELECT * from SCOREBOARDS", conn);
+    using SqlDataReader reader = command.ExecuteReader();
+    List<string> scoreboards = new List<string>();
+    while (reader.Read())
+    {
+        scoreboards.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetDateTime(2)}, {reader.GetDataTypeName(3)}");
+    }
+    return scoreboards.Count > 0 ? string.Join(", ", scoreboards) : "Scoreboards not found";
+});
 
 app.Run();
