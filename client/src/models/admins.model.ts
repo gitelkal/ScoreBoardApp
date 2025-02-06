@@ -3,5 +3,5 @@ export interface Admins {
     username: string;
     firstname: string;
     lastname: string;
-    
+    password: string;
 }

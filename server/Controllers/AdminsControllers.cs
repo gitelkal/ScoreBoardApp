@@ -22,5 +22,12 @@ namespace server.Controllers
 
             return Ok(admins);
         }
+        [HttpPost]
+        public IActionResult CreateAdmin([FromBody] Admin admin)
+        {
+            dbContext.Admins.Add(admin);
+            dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
+        }
     }
 }

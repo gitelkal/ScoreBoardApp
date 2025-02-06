@@ -18,11 +18,11 @@ export class AppComponent {
   title = 'client';
   http = inject(HttpClient); 
 
-  scoreboards$ = this.getScoreboards();
-  teams$ = this.getTeams();
-  admins$ = this.getAdmins();
+  getAllScoreboards$ = this.getAllScoreboards();
+  getAllTeams$ = this.getTeams();
+  getAllAdmins$ = this.getAllAdmins();
 
-  private getScoreboards(): Observable<Scoreboards[]> {
+  private getAllScoreboards(): Observable<Scoreboards[]> {
     return this.http.get<Scoreboards[]>('https://localhost:7062/api/scoreboards');
   }
 
@@ -30,7 +30,7 @@ export class AppComponent {
     return this.http.get<Teams[]>('https://localhost:7062/api/teams');
   }
 
-  private getAdmins(): Observable<Admins[]> {
+  private getAllAdmins(): Observable<Admins[]> {
     return this.http.get<Admins[]>('https://localhost:7062/api/admins');
   }
 }
