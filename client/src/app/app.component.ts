@@ -1,36 +1,47 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Team } from '../app/models/team.model';
 import { RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Scoreboards } from '../models/scoreboards.model';
-import { Teams } from '../models/teams.models';
-import { Admins } from '../models/admins.model';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { HomeComponent } from './home/home.component';
+import { Admin } from '../app/models/admin.model';
+import { User } from '../app/models/user.model';
+import { Home } from '../app/models/home.model'
 
 @Component({
   selector: 'app-root',
-  standalone: true, 
-  imports: [RouterOutlet, AsyncPipe, NgFor, NgIf], 
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './/app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'client';
-  http = inject(HttpClient); 
-
-  scoreboards$ = this.getScoreboards();
-  teams$ = this.getTeams();
-  admins$ = this.getAdmins();
-
-  private getScoreboards(): Observable<Scoreboards[]> {
-    return this.http.get<Scoreboards[]>('https://localhost:7062/scoreboards');
+export class AppComponent implements OnInit {
+  title(title: any) {
+    throw new Error('Method not implemented.');
   }
+  teams: Team[] = [
+    new Team(1, 'Team A', 10),
+    new Team(2, 'Team B', 15),
+    new Team(3, 'Team C', 20)
+  ];
 
-  private getTeams(): Observable<Teams[]> {
-    return this.http.get<Teams[]>('https://localhost:7062/teams');
-  }
+  constructor() {}
 
-  private getAdmins(): Observable<Admins[]> {
-    return this.http.get<Admins[]>('https://localhost:7062/admins');
+  ngOnInit(): void {}
+
+  updateScore() {
+    const randomTeam = this.teams[Math.floor(Math.random() * this.teams.length)];
+    randomTeam.points += Math.floor(Math.random() * 10);
   }
 }
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatTableModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

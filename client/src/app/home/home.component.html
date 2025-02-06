@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="home.component.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Kolumnrubriker -->
+    <thead>
+      <tr>
+        <th mat-header-cell *matHeaderCellDef> Team Name </th>
+        <th mat-header-cell *matHeaderCellDef> Points </th>
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <th mat-header-cell *matHeaderCellDef> Administrated By </th>
+      </tr>
+    </thead>
+  
+    <!-- Data för respektive lag -->
+    <tbody>
+      <tr *ngFor="let element of teams">
+        <td mat-cell> {{ element.teamName }} </td>
+        <td mat-cell> {{ element.points }} </td>
+        <td mat-cell> {{ element.date }} </td>
+        <td mat-cell> <span class="admin">{{ element.admin }}</span> </td>
+      </tr>
+    </tbody>
+  </table>
+<script src="home.component.ts"></script>
+<script src="app.component.ts"></script>
+</body>
+</html>

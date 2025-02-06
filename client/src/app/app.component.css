@@ -1,4 +1,3 @@
-
 :host {
   --bright-blue: oklch(51.01% 0.274 263.83);
   --electric-violet: oklch(53.18% 0.28 296.97);
@@ -63,16 +62,34 @@ main {
   position: relative;
 }
 
-.angular-logo {
-  max-width: 9.2rem;
+.header {
+  background-color: #d2e1e9;
+  width: 600px;
+  height: 60px;
+  position: absolute;
+  left: 850px;
+  top: 10px;
+  align-self: center;
+  text-align: center;
 }
 
 .content {
   display: flex;
-  justify-content: space-around;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
   width: 100%;
-  max-width: 700px;
-  margin-bottom: 3rem;
+  max-width: 1500px;
+  margin-top: 20px;
+  margin-right: 250px;
+  margin-bottom: 20px;
+  margin-left: 250px;
+  position: absolute;
+  left: 600px;
+  top: 60px;
+  padding: 10px;
+  
+  align-self: center;
 }
 
 .content h1 {
@@ -81,6 +98,169 @@ main {
 
 .content p {
   margin-top: 1.5rem;
+}
+
+mat-table {
+  width: 100%;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+mat-header-cell {
+  font-weight: bold;
+}
+
+.table {
+  width: 1500px;
+  height: 700px;
+  background: #e9dede;
+  border: 3px solid #000000;
+  border-color: #000000; 
+  align-self: center;
+}
+
+.teamName {
+  color: #000000;
+  border: 1px;
+  border: 1px solid #000000;
+  width: 50px;
+  height: 10px;
+}
+
+.points {
+  color: #000000;
+  width: 10px;
+  height: 10px;
+  border: 1px;
+  border: 1px solid #000000;
+}
+
+.date {
+  color: #000000;
+  width: 50px;
+  height: 10px;
+  border: 1px;
+  border: 1px solid #000000;
+}
+
+.admBy {
+  color: #000000;
+  width: 50px;
+  height: 10px;
+  border: 1px solid #000000;
+  border-color: #000000;
+}
+
+.sidebar {
+  width: 440px;
+  height: 860px;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  margin: 10px, 0px, 0px, 1px;
+  padding: 10px, 0px, 0px, 1px;
+  border: 1px solid #0a0a0a;
+  background-color: #ffffff;
+}
+
+.scoreboard-card {
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  margin-left: 10px;
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+}
+
+/* .avatar {
+  width: 100px;
+  height: 100px;
+} */
+
+.container_login {
+  position:absolute;
+  top: 120px;
+  left: 0px;
+  right: 0px;
+}
+
+.unametext {
+  position: absolute;
+  top: 140px;
+  left: 120px;
+  color: #000000;
+  border: 3px solid #000000;
+  padding: 2px, 0px, 0px, 2px;
+}
+
+.uname_label {
+  position: absolute;
+  top: 140px;
+  left: 30px;
+  color: #000000;
+}
+
+.psw_label {
+  position: absolute;
+  top: 180px;
+  left: 30px;
+  color: #000000;
+}
+
+.pswText {
+  color: #000000;
+  position: absolute;
+  top: 180px;
+  left: 120px;
+  border: 3px solid #000000;
+  padding: 2px, 0px, 0px, 2px;
+}
+
+.loginbtn {
+  color: #000000;
+  border: 1;
+  width: 50px;
+  height: 30px;
+  border-radius: 8px;
+  position: absolute;
+  top: 250px;
+  left: 100px;
+  background-color: #2d8bd7;
+}
+
+.cancelbtn {
+  width: 60px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1;
+  color: #000000;
+  background-color: #2d8bd7;
+  position:absolute;
+  top: 370px;
+  left: 180px;
+}
+
+.psw {
+  position: absolute;
+  top: 420px;
+  left: 40px;
+}
+
+.checkbox {
+  position: absolute;
+  top: 210px;
+  left: 130px;
+}
+
+.remember_label {
+  position:absolute;
+  top: 210px;
+  left: 30px;
 }
 
 .divider {
