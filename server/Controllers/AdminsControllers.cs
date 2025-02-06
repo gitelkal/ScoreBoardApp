@@ -29,5 +29,16 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetAdmin(int id)
+        {
+            var admin = dbContext.Admins.Find(id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            return Ok(admin);
+        }
     }
 }

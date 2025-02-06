@@ -26,6 +26,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "server.Controllers.AdminsController",
+    "Method": "GetAdmin",
+    "RelativePath": "api/Admins/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.Controllers.TeamsController",
     "Method": "GetAllTeams",
     "RelativePath": "api/Teams",
