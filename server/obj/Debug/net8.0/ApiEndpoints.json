@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "admin",
-        "Type": "server.Admin",
+        "Type": "server.Models.Admin",
         "IsRequired": true
       }
     ],
