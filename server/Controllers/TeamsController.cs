@@ -19,20 +19,27 @@ namespace server.Controllers
         public IActionResult GetAllTeams()
         {
             var teams = dbContext.Teams.ToList();
-            var teamUsers = dbContext.TeamUsers.ToList();
-            var users = dbContext.Users.ToList();
-
-            var teamsWithUsers = teams
-                .Select(team => new 
-                {
-                    Team = team,
-                    Users = teamUsers
-                        .Where(tu => tu.TeamId == team.TeamID)
-                        .Join(users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
-                        .ToList()
-                })
-                .ToList();
-            return Ok(teamsWithUsers);
+            return Ok(teams);
+        }
+        [HttpPost]
+        public IActionResult CreateTeam([FromBody] Team team)
+        {
+            dbContext.Teams.Add(team);
+            dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
+        }
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteTeam(int id)
+        {
+            var team = dbContext.Teams.Find(id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+            dbContext.Teams.Remove(team);
+            dbContext.SaveChanges();
+            return Ok();
         }
     }
 }

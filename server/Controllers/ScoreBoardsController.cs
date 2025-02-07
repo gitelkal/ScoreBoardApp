@@ -17,11 +17,18 @@ namespace server.Controllers
 
         [HttpGet]
         public IActionResult GetAllScoreboards()
-{
+        {
         var scoreBoards = dbContext.ScoreBoards.ToList();
         
 
         return Ok(scoreBoards);
-    }
+        }
+        [HttpPost]
+        public IActionResult CreateScoreboard([FromBody] Scoreboard scoreboard)
+        {
+            dbContext.ScoreBoards.Add(scoreboard);
+            dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
+        }
     }
 }

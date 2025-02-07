@@ -14,7 +14,7 @@ namespace server.Data
         public DbSet<Admin> Admins { get; set; }
         public DbSet<TeamUser> TeamUsers {get;set;}
         public DbSet<Scoreboard> ScoreBoards {get;set;}
-        public DbSet<ScoreboardTeam> ScoreboardTeams {get;set;}
-    
+        public DbSet<ScoreBoardTeams> ScoreboardTeams {get;set;}
+
     }
 }
