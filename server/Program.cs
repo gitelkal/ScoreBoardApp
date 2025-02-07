@@ -1,15 +1,13 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.OpenApi.Models;
+﻿
+using server.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-});
-
+builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -20,78 +18,16 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddDbContext<ServerDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
-// For production scenarios, consider keeping Swagger configurations behind the environment check
-// if (app.Environment.IsDevelopment())
-// {
 app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-});
-// }
-
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
 app.UseCors("AllowAll");
-
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-app.MapGet("/Users/{id}", (int id) =>
-{
-    using var conn = new SqlConnection(connectionString);
-    conn.Open();
-    var command = new SqlCommand("SELECT * FROM Users WHERE UserID = @id", conn);
-    command.Parameters.AddWithValue("@id", id);
-    using SqlDataReader reader = command.ExecuteReader();
-    if (reader.HasRows)
-    {
-        reader.Read();
-        return $"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}";
-    }
-    return "User not found";
-});
-
-app.MapGet("/Teamusers/{id}", (int id) =>
-{
-    using var conn = new SqlConnection(connectionString);
-    conn.Open();
-
-    var command = new SqlCommand(
-        "SELECT T.Teamname, U.Username FROM Users U " +
-        "JOIN TeamUsers TU ON U.UserID = TU.UserID " +
-        "JOIN Teams T ON TU.TeamID = T.TeamID " +
-        "WHERE TU.TeamID = @teamId", conn);
-
-    command.Parameters.AddWithValue("@teamId", id);
-
-    using SqlDataReader reader = command.ExecuteReader();
-    List<string> usersInTeam = new List<string>();
-
-    while (reader.Read())
-    {
-        string teamName = reader.GetString(0);
-        string username = reader.GetString(1);
-        usersInTeam.Add($"Team: {teamName}, {username}");
-    }
-
-    return usersInTeam.Count > 0 ? string.Join(", ", usersInTeam) : "Team users not found";
-});
-
-app.MapGet("/Scoreboards", () =>
-{
-    using var conn = new SqlConnection(connectionString);
-    conn.Open();
-    var command = new SqlCommand(
-        "SELECT * from SCOREBOARDS", conn);
-    using SqlDataReader reader = command.ExecuteReader();
-    List<string> scoreboards = new List<string>();
-    while (reader.Read())
-    {
-        scoreboards.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetDateTime(2)}, {reader.GetDataTypeName(3)}");
-    }
-    return scoreboards.Count > 0 ? string.Join(", ", scoreboards) : "Scoreboards not found";
-});
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
