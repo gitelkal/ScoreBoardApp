@@ -26,23 +26,4 @@ export interface TeamData {
 
 export class HomeComponent {
 
-    displayedColumns: string[] = ['id', 'teamName', 'points', 'date', 'admin'];
-    dataSource = [];
-  
-    adminMapping: Record<string, string> = {
-      'admin1': 'Alice',
-      'admin2': 'Bob',
-      'admin3': 'Charlie',
-      'admin4': 'Diana'
-    };
-
-    teams: Team[] = [
-      new Team(1, 'Team A', 10, new Date('2025-02-06'), 'Admin A'),
-      new Team(2, 'Team B', 15, new Date('2025-02-06'), 'Admin B'),
-      new Team(3, 'Team C', 20, new Date('2025-02-06'), 'Admin C')
-    ];
-  
-    getAdminName(adminKey: string): string {
-      return this.adminMapping[adminKey] || 'Unknown Admin';
-    }
   }

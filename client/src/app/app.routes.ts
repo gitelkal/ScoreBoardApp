@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 
 
 const routeConfig: Routes =[
-  // {
-  //   path: '',
-  //   component: HomeComponent,
-  //   title: 'Home page'
-  // },
+  {
+    path: '',
+    component: HomeComponent,
+    title: 'Home page'
+  },
 
 ];
 
