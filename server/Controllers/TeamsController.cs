@@ -19,7 +19,20 @@ namespace server.Controllers
         public IActionResult GetAllTeams()
         {
             var teams = dbContext.Teams.ToList();
-            return Ok(teams);
+            var teamUsers = dbContext.TeamUsers.ToList();
+            var users = dbContext.Users.ToList();
+
+            var teamsWithUsers = teams
+                .Select(team => new 
+                {
+                    Team = team,
+                    Users = teamUsers
+                        .Where(tu => tu.TeamId == team.TeamID)
+                        .Join(users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
+                        .ToList()
+                })
+                .ToList();
+            return Ok(teamsWithUsers);
         }
     }
 }

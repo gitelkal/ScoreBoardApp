@@ -17,10 +17,34 @@
         }
       }
     },
+    "/api/ScoreBoards": {
+      "get": {
+        "tags": [
+          "ScoreBoards"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Teams": {
       "get": {
         "tags": [
           "Teams"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users": {
+      "get": {
+        "tags": [
+          "Users"
         ],
         "responses": {
           "200": {
