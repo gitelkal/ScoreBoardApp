@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Team } from '../app/models/team.model';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet} from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,7 +12,19 @@ import { Home } from '../app/models/home.model'
 
 @Component({
   selector: 'app-root',
-  templateUrl: './/app.component.html',
+  imports: [RouterOutlet],
+  template: `
+    <main>
+     
+        <header class="brand-name">
+          <img class="brand-logo" src="/assets/logo.svg" alt="logo" aria-hidden="true" />
+        </header>
+     
+      <section class="content">
+        <router-outlet></router-outlet>
+      </section>
+    </main>
+  `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {

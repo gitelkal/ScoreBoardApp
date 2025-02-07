@@ -16,7 +16,11 @@ export interface TeamData {
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, MatTableModule],  // Lägger till CommonModule och andra nödvändiga moduler 
-  templateUrl: './/home.component.html',
+  template: `
+  <main>
+  <p>Test i home</p>
+  </main>
+`,
   styleUrls: ['.//home.component.css']
 })
 
