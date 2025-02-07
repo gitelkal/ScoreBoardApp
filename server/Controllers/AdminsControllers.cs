@@ -40,5 +40,18 @@ namespace server.Controllers
             }
             return Ok(admin);
         }
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteAdmin(int id)
+        {
+            var admin = dbContext.Admins.Find(id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            dbContext.Admins.Remove(admin);
+            dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }

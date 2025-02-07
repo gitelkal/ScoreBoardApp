@@ -67,12 +67,33 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Admins"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
-    "/api/ScoreBoards": {
+    "/api/Scoreboards": {
       "get": {
         "tags": [
-          "ScoreBoards"
+          "Scoreboards"
         ],
         "responses": {
           "200": {
