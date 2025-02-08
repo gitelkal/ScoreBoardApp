@@ -7,14 +7,18 @@
   </li>
 </ul>
 
-<ng-template #noAdmins>
-  <p>No admins found.</p>
-</ng-template>
-
 <h1>Teams</h1>
 <ul *ngIf="getAllTeams$ | async as teams">
   <li *ngFor="let team of teams">
     (ID: {{team.teamId }})
     <strong>{{ team.teamName }}</strong>
+  </li>
+</ul>
+
+<h1>Scoreboards</h1>
+<ul *ngIf="getAllScoreboards$ | async as scoreboards">
+  <li *ngFor="let scoreboard of scoreboards">
+    (ID: {{ scoreboard.scoreboardId }})
+    <strong>{{ scoreboard.name }}</strong>
   </li>
 </ul>

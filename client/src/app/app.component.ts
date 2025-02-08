@@ -3,10 +3,10 @@ import { RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Scoreboards } from '../models/scoreboards.model';
-import { Teams } from '../models/teams.models';
-import { Admins } from '../models/admins.model';
-import { Users } from '../models/users.model';
+import { Scoreboards } from '../app/shared/models/scoreboards.model';
+import { Teams } from '../app/shared/models/teams.models';
+import { Admins } from '../app/shared/models/admins.model';
+import { Users } from '../app/shared/models/users.model';
 
 @Component({
   selector: 'app-root',
