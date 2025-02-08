@@ -76,8 +76,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "scoreboard",
-        "Type": "server.Scoreboard",
+        "Name": "name",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

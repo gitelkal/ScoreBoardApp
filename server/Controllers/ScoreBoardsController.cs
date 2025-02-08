@@ -24,8 +24,14 @@ namespace server.Controllers
         return Ok(scoreBoards);
         }
         [HttpPost]
-        public IActionResult CreateScoreboard([FromBody] Scoreboard scoreboard)
+        public IActionResult CreateScoreboard([FromBody] string name)
         {
+            var scoreboard = new Scoreboard
+            {
+                Name = name,
+                StartedAt = DateTime.Now
+            };
+
             dbContext.ScoreBoards.Add(scoreboard);
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);

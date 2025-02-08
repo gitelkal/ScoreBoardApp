@@ -109,17 +109,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Scoreboard"
+                "type": "string"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Scoreboard"
+                "type": "string"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Scoreboard"
+                "type": "string"
               }
             }
           }
@@ -448,29 +448,6 @@
           "password": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Scoreboard": {
-        "type": "object",
-        "properties": {
-          "scoreboardId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "endedAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
