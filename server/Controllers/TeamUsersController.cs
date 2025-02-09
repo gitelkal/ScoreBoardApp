@@ -33,7 +33,7 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{teamid}")]
         public IActionResult GetTeamUsers(int id)
         {
             var teamUsers = dbContext.Teams

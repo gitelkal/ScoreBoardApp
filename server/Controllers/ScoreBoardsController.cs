@@ -24,17 +24,29 @@ namespace server.Controllers
         return Ok(scoreBoards);
         }
         [HttpPost]
-        public IActionResult CreateScoreboard([FromBody] string name)
+        public IActionResult CreateScoreboard(string name, DateTime startedAt)
         {
             var scoreboard = new Scoreboard
             {
                 Name = name,
-                StartedAt = DateTime.Now
+                StartedAt = startedAt
             };
 
             dbContext.ScoreBoards.Add(scoreboard);
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
+        }
+        [HttpPut]
+        public IActionResult CloseScoreboard(int id, DateTime? endedAt)
+        {
+            var scoreboard = dbContext.ScoreBoards.Find(id);
+            if (scoreboard == null)
+            {
+                return NotFound();
+            }
+            scoreboard.EndedAt = endedAt;
+            dbContext.SaveChanges();
+            return Ok();
         }
     }
 }
