@@ -9,15 +9,15 @@
       "restore": {
         "projectUniqueName": "E:\\Högskolan Dalarna\\År 3\\Vårterminen\\Projektbaserad systemutveckling 7,5hp GIK2PG\\Projektet\\NyttScoreboard_group8\\ScoreBoardApp-master\\ScoreBoardApp\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "E:\\Högskolan Dalarna\\År 3\\Vårterminen\\Projektbaserad systemutveckling 7,5hp GIK2PG\\Projektet\\NyttScoreboard_group8\\ScoreBoardApp-master\\ScoreBoardApp\\server\\server.csproj",
-        "packagesPath": "C:\\Users\\Soffi\\.nuget\\packages\\",
-        "outputPath": "E:\\Högskolan Dalarna\\År 3\\Vårterminen\\Projektbaserad systemutveckling 7,5hp GIK2PG\\Projektet\\NyttScoreboard_group8\\ScoreBoardApp-master\\ScoreBoardApp\\server\\obj\\",
+        "projectPath": "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\ludwi\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\ScoreBoardApp\\server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Soffi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ludwi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

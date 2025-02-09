@@ -21,6 +21,17 @@ namespace server.Controllers
             var teams = dbContext.Teams.ToList();
             return Ok(teams);
         }
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetOneTeam(int id)
+        {
+            var team = dbContext.Teams.Find(id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+            return Ok(team);
+        }
         [HttpPost]
         public IActionResult CreateTeam([FromBody] Team team)
         {

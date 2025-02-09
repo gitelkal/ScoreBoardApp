@@ -43,8 +43,8 @@ namespace server.Controllers
         }
 
 
-        [HttpPut("{id}/add-points")]
-        public IActionResult AddPointsToTeam(int id, [FromBody] int pointsToAdd)
+        [HttpPut("{teamid}/add-points")]
+        public IActionResult AddPointsToTeam(int id, int pointsToAdd)
         {
             var team = dbContext.ScoreboardTeams.FirstOrDefault(t => t.ScoreboardTeamID == id);
 
