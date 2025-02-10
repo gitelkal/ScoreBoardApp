@@ -1,67 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { Team } from '../app/models/team.model';
-import { RouterLink, RouterOutlet} from '@angular/router';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { HomeComponent } from './home/home.component';
-import { Admin } from '../app/models/admin.model';
-import { User } from '../app/models/user.model';
-import { Home } from '../app/models/home.model'
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { AdminService } from './core/services/AdminService/admin.service';
+import { UserService } from './core/services/UserService/user.service';
+import { ScoreboardService } from '../app/core/services/ScoreboardService/scoreboard.service';
+import { TeamService } from './core/services/TeamService/team.service';
 
 @Component({
   selector: 'app-root',
-  imports: [HomeComponent,RouterOutlet],
-  template: `
-    <main>
-   
-      <header class="brand-name">
-          <img class="brand-logo" src="/assets/logo.svg" alt="logo" />
-        </header>  
-     
-        
-       <p>Test på home</p>
-     
-     <section class="content">
-        <router-outlet></router-outlet>
-      </section>
-    </main>
-  `,
-  styleUrls: ['./app.component.css']
+  standalone: true, 
+  imports: [RouterOutlet, AsyncPipe, NgFor, NgIf], 
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'homes';
+  title = 'client';
+  http = inject(HttpClient);
+  scoreboardService = inject(ScoreboardService);
+  teamService = inject(TeamService);
+  userService = inject(UserService);
+  adminService = inject(AdminService);
 
+  getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
+  getOneScoreboard$ = this.scoreboardService.getOneScoreboard('some-id');
+  getAllTeams$ = this.teamService.getAllTeams();
+  getOneTeam$ = this.teamService.getOneTeam('some-id');
+  getAllAdmins$ = this.adminService.getAllAdmins();
+  getOneAdmin$ = this.adminService.getOneAdmin('some-id');
+  getAllUsers$ = this.userService.getAllUsers();
+  getOneUser$ = this.userService.getOneUser('some-id');
 
 }
-// export class AppComponent implements OnInit {
-//   title(title: any) {
-//     throw new Error('Method not implemented.');
-//   }
-//   teams: Team[] = [
-//     new Team(1, 'Team A', 10),
-//     new Team(2, 'Team B', 15),
-//     new Team(3, 'Team C', 20)
-//   ];
-
-//   constructor() {}
-
-//   ngOnInit(): void {}
-
-//   updateScore() {
-//     const randomTeam = this.teams[Math.floor(Math.random() * this.teams.length)];
-//     randomTeam.points += Math.floor(Math.random() * 10);
-//   }
-// }
-
-// @NgModule({
-//   imports: [
-//     BrowserModule,
-//     BrowserAnimationsModule,
-//     MatTableModule
-//   ],
-//   providers: [],
-//   bootstrap: [AppComponent]
-// })
-// export class AppModule { }
