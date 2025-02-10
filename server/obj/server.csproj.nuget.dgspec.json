@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj": {}
+    "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\server.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj": {
+    "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj",
+        "projectUniqueName": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\server.csproj",
         "projectName": "server",
-        "projectPath": "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj",
-        "packagesPath": "C:\\Users\\ludwi\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\ScoreBoardApp\\server\\obj\\",
+        "projectPath": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\server.csproj",
+        "packagesPath": "C:\\Users\\paulk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ludwi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\paulk\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
