@@ -1,17 +1,22 @@
-import {Routes} from '@angular/router';
-// import {HomeComponent} from './home/home.component';
-// import { RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
+import { ActiveScoreboardsComponent } from './shared/components/active-scoreboards/active-scoreboards.component';
+import { ScoreboardsHistoryComponent } from './shared/components/scoreboards-history/scoreboards-history.component';
+import { HomeComponent } from '../app/shared/components/home/home.component';
 
-
-// const routeConfig: Routes =[
-//   {
-//     path: '',
-//     component: HomeComponent,
-//     title: 'Home page'
-//   },
-
-// ];
-
-// export default routeConfig;
-
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    title: 'Startsida - Poängtavlan'
+  },
+  {
+    path: 'active-scoreboards',
+    component: ActiveScoreboardsComponent,
+    title: 'Aktiva Poängtavlor'
+  },
+  {
+    path: 'scoreboards-history',
+    component: ScoreboardsHistoryComponent,
+    title: 'Poängtavlor - Historik'
+  }
+];

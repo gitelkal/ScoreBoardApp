@@ -1,29 +1,14 @@
-// import { Component } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { MatTableModule } from '@angular/material/table';
-// import { Team } from '../models/team.model';
-// import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
+@Component({
+  selector: 'app-home',
+  imports: [MatButtonModule, MatIconModule, MatToolbarModule],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent {
 
-// export interface TeamData {
-//   teamName: string;
-//   points: number;
-//   date: string;
-//   admin: string;
-// }
-
-// @Component({
-//   selector: 'app-home',
-//   standalone: true,
-//   imports: [CommonModule, MatTableModule],  // Lägger till CommonModule och andra nödvändiga moduler 
-//   template: `
-//   <main>
-//   <p>Test i home</p>
-//   </main>
-// `,
-//   styleUrls: ['.//home.component.css']
-// })
-
-// export class HomeComponent {
-
-//   }
+}
