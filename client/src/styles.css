@@ -1,16 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Angkor&display=swap');
 
-header {
-    background-color: rgb(215,0,0);
-    color: white;
-    font-size: xx-large;
-    text-align: center;
-    width: 100%;
-    padding: 10px;
-}
-
-:host {
+:root {
  /* Färger */
  --red1: rgb(215, 0, 0);   /* #D70000 */
  --red2: rgb(255, 0, 0);   /* #FF0000 */
@@ -26,6 +17,7 @@ header {
 
  --black1: rgb(0, 0, 0);      /* #000000 */
  --black2: cmyk(40%, 60%, 0%, 100%); /* Special CMYK-färg för tryck */
+ --white1: rgb(255, 255, 255);  /* #FFFFFF */
 
  /* Typografi */
  --font-digital: "Open Sans", sans-serif;  /* Digital produktion (webb, sociala medier) */
