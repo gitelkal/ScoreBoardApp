@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +22,5 @@ export class ScoreboardService {
   public getOneScoreboard(id: string): Observable<Scoreboards> {
     return this.http.get<Scoreboards>(`${this.api}/scoreboards/${id}`);
   }
-
 
 }
