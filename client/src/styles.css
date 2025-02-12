@@ -25,7 +25,7 @@
  --font-body: "Mercury", serif;            /* Brödtext i rapporter/grafisk form */
  --font-office: "Arial", sans-serif;       /* Office-program som PPT, Outlook */
  --font-longtext: "Georgia", serif;        /* Brödtext för långa texter i Office */
-  }
+}
 
 *,
 *::before,

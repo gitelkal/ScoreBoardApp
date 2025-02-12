@@ -1,6 +1,7 @@
 header {
     background-color: var(--red1);
     color: var(--black1);
+    font-family: var(--font-digital);
     font-size: 2rem;
     text-align: center;
     width: 100%;

@@ -1,6 +1,7 @@
 export interface Scoreboards {
     scoreboardId: number;
     name: string;
-    startedat: Date;
-    endedat: Date;
+    startedAt: Date;
+    endedAt: Date;
+    active: boolean;
 }
