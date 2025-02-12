@@ -14,7 +14,7 @@ import {MatCardModule} from '@angular/material/card';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-   scoreboardService = inject(ScoreboardService);
+    scoreboardService = inject(ScoreboardService);
     
     getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
 }
