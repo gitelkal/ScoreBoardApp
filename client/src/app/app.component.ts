@@ -27,6 +27,7 @@ export class AppComponent {
 
   getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
   getOneScoreboard$ = this.scoreboardService.getOneScoreboard('some-id');
+  getRichScoreboard$ = this.scoreboardService.getRichScoreboard('some-id');
   getAllTeams$ = this.teamService.getAllTeams();
   getOneTeam$ = this.teamService.getOneTeam('some-id');
   getAllAdmins$ = this.adminService.getAllAdmins();
