@@ -58,6 +58,12 @@
               ],
               "outputHashing": "all"
             },
+            "styles": [
+              "src/styles.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,

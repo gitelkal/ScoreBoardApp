@@ -3,7 +3,7 @@
   <div>
     <ul *ngIf="getAllScoreboards$ | async as scoreboards">
       <mat-card class="example-card" *ngFor="let scoreboard of scoreboards">
-        <mat-card-header>
+        <mat-card-header class="bg-sky-600">
           <mat-card-title>{{ scoreboard.name }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>{{ scoreboard.startedAt }}</mat-card-content>

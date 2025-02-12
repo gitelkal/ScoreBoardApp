@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Angkor&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
  /* Färger */
  --red1: rgb(215, 0, 0);   /* #D70000 */
