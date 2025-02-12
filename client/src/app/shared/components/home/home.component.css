@@ -1,7 +1,7 @@
-h1 {
+/* h1 {
   display: flex;
   justify-content: center;
-  /* margin-top: 200px; */
+  margin-top: 200px;
   font-family: comic sans ms;
   font-size: 5rem;
   color: rgb(100, 100, 200, 0.8);
@@ -23,4 +23,4 @@ h1 {
   margin: 2rem;
   margin-left: 40%;
   box-shadow: black 0px 0px 10px;
-}
+} */
