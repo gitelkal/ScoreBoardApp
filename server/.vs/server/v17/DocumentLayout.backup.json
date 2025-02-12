@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\GitHub\\ScoreBoardApp\\server\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -72,15 +76,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Scoreboard.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\Scoreboard.cs",
+              "RelativeDocumentMoniker": "Entities\\Scoreboard.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\Scoreboard.cs",
+              "RelativeToolTip": "Entities\\Scoreboard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-12T12:55:24.666Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ScoreboardTeamsController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreboardTeamsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ScoreboardTeamsController.cs",
@@ -92,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "TeamUsersController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamUsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\TeamUsersController.cs",
@@ -104,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "TeamsController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
               "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
@@ -116,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AdminsControllers.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminsControllers.cs",
@@ -129,7 +146,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ServerDbContext.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
@@ -141,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "server.http",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
               "RelativeDocumentMoniker": "server.http",
@@ -153,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ScoreBoardsController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ScoreBoardsController.cs",
@@ -165,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "UsersController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
@@ -177,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ScoreBoardTeams.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
               "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
@@ -189,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "TeamUser.cs",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
               "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
@@ -199,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "secrets.json",
               "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
               "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
@@ -209,7 +226,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Team.cs",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
               "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
@@ -219,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
               "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
@@ -229,7 +246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -241,7 +258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Team.cs",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
               "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
@@ -251,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -263,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Admin.cs",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
               "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
