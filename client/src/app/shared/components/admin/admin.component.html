@@ -1,1 +1,17 @@
-<p>admin works!</p>
+ <p>Lista med admins:</p>
+<body>¨
+    
+   
+    <ul *ngIf="getAllAdmins$ | async as admins">
+      <li *ngFor="let admin of admins">
+        <button 
+          class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
+          (click)="handleAdminClick(admin)"
+        >
+          (ID: {{ admin.adminID }}) 
+          <strong>{{ admin.firstname + ' ' + admin.lastname }}</strong>
+        </button>
+      </li>
+    </ul>
+  </body>
+  
