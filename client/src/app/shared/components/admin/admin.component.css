@@ -1,14 +1,27 @@
-body{
-    background-color: #f2f2f2;
-    width: 100%;
-    height: 100%;
-  }
-  p {
-    display: grid;
-    place-content: center;
-    margin-top: 5rem;
-    font-size: 2rem
-  }
+/* Standard border */
+.border {
+  border-width: 1px;
+  border-style: solid;
+}
+
+/* Förbättrad border för Dark Mode */
+.dark input,
+.dark select {
+  border-color: #9ca3af !important; /* Tailwind gray-400 */
+}
+
+p {
+  display: grid;
+  place-content: center;
+  margin-top: 5rem;
+  font-size: 2rem;
+}
+
+
+
+/* Standard ljus bakgrund */
+
+/* 
   ul {
     display: grid;
     place-content: center;
@@ -21,4 +34,4 @@ body{
     width: 100%;
     height: 5rem;
   }
-  
+   */

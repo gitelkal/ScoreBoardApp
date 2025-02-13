@@ -1,17 +1,47 @@
- <p>Lista med admins:</p>
-<body>¨
-    
-   
-    <ul *ngIf="getAllAdmins$ | async as admins">
-      <li *ngFor="let admin of admins">
-        <button 
-          class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded"
-          (click)="handleAdminClick(admin)"
-        >
-          (ID: {{ admin.adminID }}) 
-          <strong>{{ admin.firstname + ' ' + admin.lastname }}</strong>
-        </button>
-      </li>
-    </ul>
-  </body>
-  
+<!-- Wrapper för att centrera allt -->
+<div class="flex flex-col items-center w-full">
+  <button
+    (click)="toggleTheme()"
+    class="bg-gray-800 text-white px-4 py-2 rounded"
+  >
+    🌙 Dark Mode
+  </button>
+  <!-- Sökfält -->
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    placeholder="Sök admin..."
+    class="border p-2 rounded w-full max-w-md mb-4 text-center bg-white text-black dark:bg-gray-900 dark:text-white border-gray-600 dark:border-gray-400 dark:placeholder-gray-400"
+  />
+
+  <!-- Sorteringsdropdown -->
+  <select
+    [(ngModel)]="sortBy"
+    class="border p-2 rounded w-full max-w-md mb-4 bg-white text-black dark:bg-gray-900 dark:text-white 
+    border-gray-600 dark:border-gray-400"
+  >
+    <option value="name">Sortera efter namn</option>
+    <option value="date">Sortera efter senast aktiv</option>
+  </select>
+
+  <!-- Admin-lista -->
+  <ul
+    *ngIf="sortedAdmins.length > 0; else noResults"
+    role="list"
+    class="flex flex-col items-center w-full"
+  >
+    <li
+      *ngFor="let admin of sortedAdmins"
+      class="bg-white border rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+      (click)="handleAdminClick(admin)"
+    >
+      <strong class="text-lg">{{
+        admin.firstname + " " + admin.lastname
+      }}</strong>
+    </li>
+  </ul>
+
+  <ng-template #noResults>
+    <p class="text-gray-500">Inga admins hittades.</p>
+  </ng-template>
+</div>
