@@ -328,5 +328,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardsController",
+    "Method": "GetRichScoreboardById",
+    "RelativePath": "rich/{scoreboardId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

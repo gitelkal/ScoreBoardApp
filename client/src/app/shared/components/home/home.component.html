@@ -1,19 +1,22 @@
 <div class="flex flex-wrap justify-center">
   <h2 class="w-full bg-blue-200 text-center text-4xl pt-8 pb-10">
-    Välkommen till Trafikverkets poängtavla!!
+    Välkommen till Trafikverkets poängtavlor!!
   </h2>
-  <p class="w-full text-center text-2xl bg-orange-200">Här är de tävlingar som pågår just nu!</p>
-    <ul class="w-100 flex justify-center" *ngIf="getAllScoreboards$ | async as scoreboards">
-      <li class="w-100">
-      <mat-card class="bg-green-200 w-50" *ngFor="let scoreboard of scoreboards">
-        <mat-card-header class="mb-20 bg-green-200">
-        <mat-card-title>{{ scoreboard.name }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="bg-green-100">
-        {{ scoreboard.startedAt }} (ID: {{ scoreboard.scoreboardId }})
-        <strong>{{ scoreboard.name }}</strong>
-        </mat-card-content>
-      </mat-card>
+  <p class="w-full text-center text-2xl p-4 bg-orange-200">Här är de tävlingar som pågår just nu!</p>
+  <div class="w-full ml-64 mr-64">  
+    <ul class="" *ngIf="getAllScoreboards$ | async as scoreboards">
+      <li class="rounded-lg border-2 mb-4 mt-4 ml-64 mr-64" *ngFor="let scoreboard of scoreboards">
+        <div class="shadow-lg rounded-lg bg-white1">
+          <div class="h-16 rounded-tl-lg rounded-tr-lg bg-red5 flex items-center px-4 justify-between">
+            <h3 class="font-digital text-lg text-white1">{{ scoreboard.name }}</h3>
+          </div>
+          <div class="h-30 bg-white1 p-4">
+            <p class="text-red6">(ID: {{ scoreboard.scoreboardId }})</p>
+            <strong class="text-red6">Här kanske man skulle haft en liten beskrivning</strong>
+            <p class="text-red6">{{ scoreboard.startedAt }}</p>
+          </div>
+        </div>
       </li>
     </ul>
+  </div>
 </div>
