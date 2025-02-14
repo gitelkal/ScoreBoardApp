@@ -20,6 +20,8 @@ namespace server.Controllers
             return Ok(scoreboardTeams);
         }
 
+        
+
         [HttpGet]
         [Route("{teamId}")]
         public IActionResult GetScoreboardsForTeam(int teamId)

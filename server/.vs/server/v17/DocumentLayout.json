@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\GitHub\\ScoreBoardApp\\server\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\scoreboardteamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardteamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -72,17 +72,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "ScoreBoardsController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ScoreBoardsController.cs",
               "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
               "RelativeToolTip": "Controllers\\ScoreBoardsController.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwCYAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAqwEMAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T15:56:45.854Z",
               "EditorCaption": ""
@@ -113,20 +117,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ScoreboardTeamsController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreboardTeamsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ScoreboardTeamsController.cs",
               "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreboardTeamsController.cs",
               "RelativeToolTip": "Controllers\\ScoreboardTeamsController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAC4AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T15:57:19.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "TeamUsersController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamUsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\TeamUsersController.cs",
@@ -134,12 +138,11 @@
               "RelativeToolTip": "Controllers\\TeamUsersController.cs",
               "ViewState": "AgIAADEAAAAAAAAAAAAAACMAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T15:50:15.565Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-07T15:50:15.565Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "TeamsController.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
               "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
@@ -147,8 +150,7 @@
               "RelativeToolTip": "Controllers\\TeamsController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAuwCEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T10:07:39.634Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-06T10:07:39.634Z"
             },
             {
               "$type": "Document",
