@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "WvUW8ajKwwc=",
   "success": true,
-  "projectFilePath": "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj",
+  "projectFilePath": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Slacktard\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Slacktard\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
