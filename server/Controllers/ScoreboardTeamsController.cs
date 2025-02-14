@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using server.Data;
 
 namespace server.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+[ApiController]
+[Route("api/[controller]")]
     public class ScoreboardTeamsController : ControllerBase
     {
         private readonly ServerDbContext dbContext;
+        private readonly IHubContext<ScoreboardHub> _hubContext;
 
-        public ScoreboardTeamsController(ServerDbContext dbContext)
+        public ScoreboardTeamsController(ServerDbContext context, IHubContext<ScoreboardHub> hubContext)
         {
-            this.dbContext = dbContext;
+            dbContext = context;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public IActionResult GetAllScoreboardTeams()
@@ -44,7 +47,7 @@ namespace server.Controllers
 
 
         [HttpPut("{teamid}/add-points")]
-        public IActionResult AddPointsToTeam(int id, int pointsToAdd)
+        public async Task<IActionResult> AddPointsToTeamAsync(int id, int pointsToAdd)
         {
             var team = dbContext.ScoreboardTeams.FirstOrDefault(t => t.ScoreboardTeamID == id);
 
@@ -57,6 +60,8 @@ namespace server.Controllers
             team.LastUpdated = DateTime.UtcNow; 
 
             dbContext.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("ReceiveScoreUpdate", id, team.Points);
 
             return Ok(team);
         }

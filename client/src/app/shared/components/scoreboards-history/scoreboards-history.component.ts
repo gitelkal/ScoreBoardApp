@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service';
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({

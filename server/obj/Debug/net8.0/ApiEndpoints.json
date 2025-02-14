@@ -132,7 +132,7 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
-    "Method": "AddPointsToTeam",
+    "Method": "AddPointsToTeamAsync",
     "RelativePath": "api/ScoreboardTeams/{teamid}/add-points",
     "HttpMethod": "PUT",
     "IsController": true,
