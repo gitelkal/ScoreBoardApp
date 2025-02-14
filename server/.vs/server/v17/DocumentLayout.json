@@ -142,11 +142,11 @@
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "ServerDbContext.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
-              "RelativeToolTip": "Data\\ServerDbContext.cs",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
+              "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T16:12:41.207Z"
@@ -154,23 +154,23 @@
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "server.http",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
-              "RelativeDocumentMoniker": "server.http",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
-              "RelativeToolTip": "server.http",
+              "Title": "ScoreBoardTeams.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeToolTip": "Entities\\ScoreBoardTeams.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T16:32:20.079Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ScoreBoardsController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ScoreBoardsController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
-              "RelativeToolTip": "Controllers\\ScoreBoardsController.cs",
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAYwCYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T15:56:45.854Z"
@@ -178,23 +178,23 @@
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "Title": "server.http",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
+              "RelativeDocumentMoniker": "server.http",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
+              "RelativeToolTip": "server.http",
               "ViewState": "AgIAABoAAAAAAAAAAAAQwDUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
               "WhenOpened": "2025-02-07T16:33:21.007Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "ScoreBoardTeams.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
-              "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
-              "RelativeToolTip": "Entities\\ScoreBoardTeams.cs",
+              "Title": "ServerDbContext.cs",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "RelativeToolTip": "Data\\ServerDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T15:46:08.959Z"
@@ -202,9 +202,9 @@
             {
               "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "TeamUser.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
+              "Title": "Team.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T08:53:18.494Z"
@@ -212,9 +212,11 @@
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "secrets.json",
-              "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
-              "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-02-06T09:56:04.995Z"
@@ -222,9 +224,9 @@
             {
               "$type": "Document",
               "DocumentIndex": 16,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAhwBEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-06T09:18:25.363Z"
@@ -232,9 +234,9 @@
             {
               "$type": "Document",
               "DocumentIndex": 14,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
+              "Title": "TeamUser.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T09:05:52.335Z"
@@ -242,21 +244,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
-              "RelativeToolTip": "Program.cs",
+              "Title": "secrets.json",
+              "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-02-06T09:17:58.797Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T09:09:33.059Z"
@@ -264,24 +264,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
+              "Title": "Team.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-06T09:17:58.793Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T10:29:20.022Z"
+              "WhenOpened": "2025-02-06T09:17:58.793Z"
             }
           ]
         }
