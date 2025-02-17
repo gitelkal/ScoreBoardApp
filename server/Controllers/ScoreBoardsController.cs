@@ -79,6 +79,4 @@ namespace server.Controllers
 
             return Ok(teamsWithUsers);
         }
-    }
 }
-

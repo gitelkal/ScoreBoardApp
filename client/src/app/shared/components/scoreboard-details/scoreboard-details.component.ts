@@ -5,13 +5,14 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Scoreboards } from '@app/shared/models/scoreboards.model';
 import { ScoreboardTeams } from '@app/shared/models/scoreboardTeams.model';
-import { AsyncPipe, NgIf} from '@angular/common';
+import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scoreboard-details',
   standalone: true,
-  imports: [NgIf, AsyncPipe, CommonModule],
+  imports: [NgIf, NgFor, AsyncPipe, CommonModule],
   templateUrl: './scoreboard-details.component.html',
   styleUrls: ['./scoreboard-details.component.css']
 })
@@ -20,8 +21,9 @@ export class ScoreboardDetailsComponent implements OnInit {
   teams$ = new BehaviorSubject<ScoreboardTeams[]>([]); // Store teams as an observable
 
   scoreboardService = inject(ScoreboardService);
+  route = inject(ActivatedRoute);
 
-  constructor(private route: ActivatedRoute, private signalRService: SignalRService) {}
+  constructor(private signalRService: SignalRService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -30,8 +32,12 @@ export class ScoreboardDetailsComponent implements OnInit {
         this.scoreboard$ = this.scoreboardService.getOneScoreboard(id);
       }
     });
-
-
   }
 
+  getRichScoreboard$ = this.route.paramMap.pipe(
+    switchMap(params => {
+      const id = params.get('id'); 
+      return this.scoreboardService.getRichScoreboard(id!); 
+    })
+  );
 }
