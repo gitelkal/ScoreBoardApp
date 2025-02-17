@@ -7427,23 +7427,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\paulk\\.nuget\\packages\\": {},
+    "C:\\Users\\Soffi\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\server.csproj",
+      "projectUniqueName": "E:\\Högskolan Dalarna\\År 3\\Vårterminen\\Projektbaserad systemutveckling 7,5hp GIK2PG\\Projektet\\NyttScoreboard_group8\\ScoreBoardApp-master\\ScoreBoardApp\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\server.csproj",
-      "packagesPath": "C:\\Users\\paulk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\obj\\",
+      "projectPath": "D:\\GitHub\\ScoreBoardApp\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\Slacktard\\.nuget\\packages\\",
+      "outputPath": "D:\\GitHub\\ScoreBoardApp\\server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\paulk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Slacktard\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7452,6 +7452,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7522,6 +7523,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.12, 8.0.12]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.12, 8.0.12]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.12, 8.0.12]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.12, 8.0.12]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
