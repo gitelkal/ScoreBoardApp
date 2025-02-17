@@ -27,3 +27,10 @@
     </ul>
   </div>
 </div>
+
+<ul>
+  <li *ngFor="let score of scores">
+    <p>Lag {{ score.teamId }}</p>
+    <p>har {{ score.points }} poäng</p>
+  </li>
+</ul>
