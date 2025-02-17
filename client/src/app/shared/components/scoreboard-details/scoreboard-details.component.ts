@@ -12,7 +12,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-scoreboard-details',
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, CommonModule],
+  imports: [NgIf, AsyncPipe, CommonModule],
   templateUrl: './scoreboard-details.component.html',
   styleUrls: ['./scoreboard-details.component.css']
 })
