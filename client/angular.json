@@ -24,9 +24,15 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -51,6 +57,12 @@
                 }
               ],
               "outputHashing": "all"
+            },
+            "styles": [
+              "src/styles.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"]
             },
             "development": {
               "optimization": false,
@@ -90,6 +102,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/magenta-violet.css",
               "src/styles.css"
             ],
             "scripts": []

@@ -1,0 +1,8 @@
+<p>scoreboards-history works!</p>
+
+<ul *ngIf="getAllScoreboards$ | async as scoreboards">
+    <li *ngFor="let scoreboard of scoreboards">
+        (ID: {{ scoreboard.scoreboardId }})
+        <strong>{{ scoreboard.name }}</strong>
+    </li>
+</ul>

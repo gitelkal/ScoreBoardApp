@@ -8,6 +8,7 @@ namespace server
         public DateTime? EndedAt { get; set; }     
         public string Name { get; set; }         
         public DateTime StartedAt { get; set; }  
+        public Boolean Active {  get; set; }
 
     }
 }

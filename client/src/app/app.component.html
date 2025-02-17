@@ -1,20 +1,2 @@
-<h1>Admins</h1>
-<ul *ngIf="getAllAdmins$ | async as admins">
-  <li *ngFor="let admin of admins">
-    (ID: {{ admin.adminID }})
-    <strong>{{ admin.username }}</strong> 
-    ({{ admin.firstname }} {{ admin.lastname }})
-  </li>
-</ul>
-
-<ng-template #noAdmins>
-  <p>No admins found.</p>
-</ng-template>
-
-<h1>Teams</h1>
-<ul *ngIf="getAllTeams$ | async as teams">
-  <li *ngFor="let team of teams">
-    (ID: {{team.teamId }})
-    <strong>{{ team.teamName }}</strong>
-  </li>
-</ul>
+<app-header></app-header>
+<router-outlet></router-outlet>

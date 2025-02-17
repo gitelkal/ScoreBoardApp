@@ -105,25 +105,92 @@
         "tags": [
           "Scoreboards"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Scoreboard"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Scoreboard"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Scoreboard"
-              }
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startedAt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
             }
           }
-        },
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Scoreboards/{scoreboardId}": {
+      "get": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rich/{scoreboardId}": {
+      "get": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rich/{scoreboardId}": {
+      "get": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -166,7 +233,7 @@
         }
       }
     },
-    "/api/ScoreboardTeams/{id}/add-points": {
+    "/api/ScoreboardTeams/{teamid}/add-points": {
       "put": {
         "tags": [
           "ScoreboardTeams"
@@ -174,36 +241,29 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
+          },
+          {
+            "name": "pointsToAdd",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "teamid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -253,6 +313,27 @@
       }
     },
     "/api/Teams/{id}": {
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Teams"
@@ -315,7 +396,7 @@
         }
       }
     },
-    "/api/TeamUsers/{id}": {
+    "/api/TeamUsers/{teamid}": {
       "get": {
         "tags": [
           "TeamUsers"
@@ -323,11 +404,18 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "teamid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -448,29 +536,6 @@
           "password": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Scoreboard": {
-        "type": "object",
-        "properties": {
-          "scoreboardId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "endedAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false

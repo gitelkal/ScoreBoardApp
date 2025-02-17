@@ -1,0 +1,12 @@
+p {
+    display: grid;
+    place-content: center;
+    margin-top: 5rem;
+    font-size: 2rem
+}
+ul {
+    display: grid;
+    place-content: center;
+    margin-top: 5rem;
+    font-size: 2rem
+}
