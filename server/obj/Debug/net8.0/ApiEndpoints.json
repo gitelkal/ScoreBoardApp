@@ -90,21 +90,16 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardsController",
-    "Method": "CloseScoreboard",
-    "RelativePath": "api/Scoreboards",
-    "HttpMethod": "PUT",
+    "Method": "GetScoreboardById",
+    "RelativePath": "api/Scoreboards/{scoreboardId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "scoreboardId",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "endedAt",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -137,7 +132,7 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
-    "Method": "AddPointsToTeam",
+    "Method": "AddPointsToTeamAsync",
     "RelativePath": "api/ScoreboardTeams/{teamid}/add-points",
     "HttpMethod": "PUT",
     "IsController": true,

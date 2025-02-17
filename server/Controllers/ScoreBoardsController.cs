@@ -18,11 +18,10 @@ namespace server.Controllers
         [HttpGet]
         public IActionResult GetAllScoreboards()
         {
-        var scoreBoards = dbContext.ScoreBoards.ToList();
-        
-
-        return Ok(scoreBoards);
+            var scoreBoards = dbContext.ScoreBoards.ToList();
+            return Ok(scoreBoards);
         }
+
         [HttpPost]
         public IActionResult CreateScoreboard(string name, DateTime startedAt)
         {
@@ -31,22 +30,54 @@ namespace server.Controllers
                 Name = name,
                 StartedAt = startedAt
             };
-
             dbContext.ScoreBoards.Add(scoreboard);
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
-        [HttpPut]
-        public IActionResult CloseScoreboard(int id, DateTime? endedAt)
+
+        [HttpGet("{scoreboardId}")]
+        public IActionResult GetScoreboardById(int scoreboardId)
         {
-            var scoreboard = dbContext.ScoreBoards.Find(id);
+            var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
             if (scoreboard == null)
-            {
                 return NotFound();
+            return Ok(scoreboard);
+        }
+
+        [HttpGet("/rich/{scoreboardId}")]
+        public IActionResult GetRichScoreboardById(int scoreboardId)
+        {
+            var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
+                                  join t in dbContext.Teams on sbt.TeamID equals t.TeamID
+                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamId
+                                  join u in dbContext.Users on tu.UserId equals u.UserId
+                                  where sbt.ScoreboardID == scoreboardId
+                                  group new { u } by new
+                                  {
+                                      t.TeamID,
+                                      t.TeamName,
+                                      sbt.Points,
+                                      sbt.LastUpdated
+                                  } into teamGroup
+                                  select new
+                                  {
+                                      teamGroup.Key.TeamID,
+                                      teamGroup.Key.TeamName,
+                                      teamGroup.Key.Points,
+                                      teamGroup.Key.LastUpdated,
+                                      Users = teamGroup.Select(x => new
+                                      {
+                                          x.u.UserId,
+                                          x.u.UserName
+                                      }).ToList()
+                                  }).ToList();
+
+            if (!teamsWithUsers.Any())
+            {
+                return NotFound("No teams found for this scoreboard.");
             }
-            scoreboard.EndedAt = endedAt;
-            dbContext.SaveChanges();
-            return Ok();
+
+            return Ok(teamsWithUsers);
         }
 
         [HttpGet("/rich/{scoreboardId}")]

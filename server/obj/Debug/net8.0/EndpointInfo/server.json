@@ -127,26 +127,67 @@
             "description": "OK"
           }
         }
-      },
-      "put": {
+      }
+    },
+    "/api/Scoreboards/{scoreboardId}": {
+      "get": {
         "tags": [
           "Scoreboards"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
             }
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rich/{scoreboardId}": {
+      "get": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
           {
-            "name": "endedAt",
-            "in": "query",
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
             "schema": {
-              "type": "string",
-              "format": "date-time"
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rich/{scoreboardId}": {
+      "get": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],

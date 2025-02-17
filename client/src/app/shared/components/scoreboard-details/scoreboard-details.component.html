@@ -1,3 +1,13 @@
+<div *ngIf="scoreboard$ | async as scoreboard">
+    <h2 class="text-3xl font-bold text-center text-red-600">{{ scoreboard.name }}</h2>
+    <p class="text-center text-gray-700">Start Date: {{ scoreboard.startedAt }}</p>
+    <p *ngIf="scoreboard.endedAt" class="text-center text-gray-700">End Date: {{ scoreboard.endedAt }}</p>
+    <p class="text-center font-semibold" [ngClass]="{ 'text-green-500': scoreboard.active, 'text-gray-500': !scoreboard.active }">
+      {{ scoreboard.active ? 'Active' : 'Inactive' }}
+    </p>
+  
+ 
+  
 
 <p>scoreboard-details works!</p>
 
