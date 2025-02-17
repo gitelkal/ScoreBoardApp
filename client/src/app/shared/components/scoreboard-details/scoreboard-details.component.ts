@@ -5,13 +5,13 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Scoreboards } from '@app/shared/models/scoreboards.model';
 import { ScoreboardTeams } from '@app/shared/models/scoreboardTeams.model';
-import { AsyncPipe, NgIf, NgFor } from '@angular/common';
+import { AsyncPipe, NgIf} from '@angular/common';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-scoreboard-details',
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, CommonModule],
+  imports: [NgIf, AsyncPipe, CommonModule],
   templateUrl: './scoreboard-details.component.html',
   styleUrls: ['./scoreboard-details.component.css']
 })
