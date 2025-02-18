@@ -1,12 +1,16 @@
-import { AdminService } from '@app/core/services/AdminService/admin.service';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { AdminService } from '@app/core/services/AdminService/admin.service';
+import { NgIf, NgFor } from '@angular/common';  
+import { FormsModule } from '@angular/forms';  
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { AddScoreboardComponent } from '../add-scoreboard/add-scoreboard.component';
+import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
+
+
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule],
+  imports: [NgIf, NgFor, FormsModule, AddScoreboardComponent,ManageTeamsComponent],  
   providers: [AdminService],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
@@ -16,62 +20,72 @@ export class AdminComponent {
   getAllAdmins$ = this.adminService.getAllAdmins();
   router = inject(Router);
 
-  // 🟢 Saknade variabler
   searchQuery: string = '';
-  sortBy: string = 'name'; // Default sorteringsvärde
-  admins: any[] = []; // Admin-lista
+  sortBy: string = 'name';  
+  admins: any[] = [];  
+
 
   constructor() {
-    // Hämta alla admins och lagra i `admins`-arrayen
     this.adminService.getAllAdmins().subscribe((data) => {
+      console.log("Admins hämtade:", data);  // 🔍 Se vad API:et returnerar
       this.admins = data;
+    },
+    (error) => {
+      console.error("Fel vid hämtning av admins:", error);
     });
   }
-
-  handleAdminClick(admin: any) {
-    console.log('Admin clicked:', admin);
-    this.router.navigate(['/admin', admin.adminID]); // Navigera till admin-detaljsida
-  }
-
-  addNewAdmin() {
-    console.log('Lägger till en ny admin!');
-  }
-
+  
   get sortedAdmins() {
     if (!this.filteredAdmins || this.filteredAdmins.length === 0) return [];
-
     return this.filteredAdmins.sort((a: any, b: any) => {
-      if (!this.sortBy) return 0; // Om `sortBy` är null eller undefined
-
+      if (!this.sortBy) return 0;
       if (this.sortBy === 'name') return a.firstname.localeCompare(b.firstname);
       if (this.sortBy === 'date') {
-        return (
-          new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime()
-        );
+        return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
       }
       return 0;
     });
   }
 
+  // 🟢 Navigera till admin-detaljer
+  handleAdminClick(admin: any) {
+    console.log('Admin clicked:', admin);
+    this.router.navigate(['/admin', admin.adminID]);  
+  }
+
   get filteredAdmins() {
     return this.admins.filter((admin: any) =>
-      (admin.firstname + ' ' + admin.lastname)
-        .toLowerCase()
-        .includes(this.searchQuery.toLowerCase())
+      (admin.firstname + ' ' + admin.lastname).toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
-  toggleTheme() {
-    const html = document.documentElement;
-    const isDark = html.classList.toggle('dark');
 
-    // Spara i localStorage
-    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+  handleScoreboardCreated(scoreboardData: any) {
+    this.adminService.createCompetition(scoreboardData).subscribe(
+      (response) => {
+        console.log('Tävling skapad:', response);
+        alert('Tävling skapad!');
+      },
+      (error) => {
+        console.error('Fel vid skapande av tävling:', error);
+        alert('Något gick fel vid skapandet av tävling.');
+      }
+    );
+  }
+  handleTeamCreated(teamData: any) {
+    console.log('Nytt lag skapat:', teamData);
+    alert(`Laget "${teamData.name}" har skapats!`);
+  }
+  
+  handleTeamDeleted(teamId: number) {
+    console.log('Lag raderat:', teamId);
+    alert(`Laget med ID ${teamId} har tagits bort!`);
+  }
+  
+  handleTeamUpdated(teamData: any) {
+    console.log('Lag uppdaterat:', teamData);
+    alert(`Laget "${teamData.name}" har uppdaterats!`);
   }
 
-  // Lägg till detta i `ngOnInit()` så att Dark Mode aktiveras vid sidladdning
-  ngOnInit() {
-    if (localStorage.getItem('darkMode') === 'enabled') {
-      document.documentElement.classList.add('dark');
-    }
-  }
+  
+
 }

@@ -1,43 +1,41 @@
 <!-- Wrapper för att centrera allt -->
-<div class="flex flex-col items-center w-full">
-  <button
-    (click)="toggleTheme()"
-    class="bg-gray-800 text-white px-4 py-2 rounded"
-  >
-    🌙 Dark Mode
-  </button>
-  <!-- Sökfält -->
+
+
+
+  <app-add-scoreboard (scoreboardCreated)="handleScoreboardCreated($event)"></app-add-scoreboard>
+  <app-manage-teams
+  (teamCreated)="handleTeamCreated($event)"
+  (teamDeleted)="handleTeamDeleted(+$event)">
+</app-manage-teams>
+
+
+
+
+  <div class="flex flex-col items-center w-full">
   <input
     type="text"
     [(ngModel)]="searchQuery"
     placeholder="Sök admin..."
-    class="border p-2 rounded w-full max-w-md mb-4 text-center bg-white text-black dark:bg-gray-900 dark:text-white border-gray-600 dark:border-gray-400 dark:placeholder-gray-400"
+    class="border p-2 rounded w-full max-w-md mb-4 text-center bg-white text-black "
   />
 
   <!-- Sorteringsdropdown -->
   <select
     [(ngModel)]="sortBy"
-    class="border p-2 rounded w-full max-w-md mb-4 bg-white text-black dark:bg-gray-900 dark:text-white 
-    border-gray-600 dark:border-gray-400"
+    class="border p-2 rounded w-full max-w-md mb-4 bg-white text-black "
   >
     <option value="name">Sortera efter namn</option>
     <option value="date">Sortera efter senast aktiv</option>
   </select>
 
   <!-- Admin-lista -->
-  <ul
-    *ngIf="sortedAdmins.length > 0; else noResults"
-    role="list"
-    class="flex flex-col items-center w-full"
-  >
+  <ul *ngIf="sortedAdmins.length > 0; else noResults">
     <li
       *ngFor="let admin of sortedAdmins"
-      class="bg-white border rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+      class="bg-white border rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center "
       (click)="handleAdminClick(admin)"
     >
-      <strong class="text-lg">{{
-        admin.firstname + " " + admin.lastname
-      }}</strong>
+      <strong class="text-lg">{{ admin.firstname + " " + admin.lastname }}</strong>
     </li>
   </ul>
 

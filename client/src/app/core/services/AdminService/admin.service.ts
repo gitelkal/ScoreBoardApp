@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,5 +23,9 @@ export class AdminService {
     return this.http.get<Admins>(`${this.api}/admins/${id}`);
   }
 
-
+  // 🟢 Ny funktion: Skapa tävling
+  public createCompetition(competition: { name: string; startedAt: string }): Observable<any> {
+    return this.http.post(`${this.api}/scoreboards?name=${competition.name}&startedAt=${competition.startedAt}`, {});
+  }
 }
+

@@ -1,0 +1,45 @@
+<div class="flex flex-col items-center w-full">
+  <h2 class="text-xl font-bold mb-4">Hantera lag</h2>
+
+  <form class="w-3/4 bg-white p-8 rounded-lg shadow-md">
+    
+    <!-- Lagnamn -->
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 font-semibold mb-1">Lagnamn:</label>
+      <input 
+        type="text" id="name" name="name"
+        [(ngModel)]="teamData.name"
+        required
+        class="border p-2 rounded w-full text-black"
+      />
+    </div>
+
+    <!-- Knapp: Skapa lag -->
+    <button 
+      type="button"
+      (click)="createTeam()"
+      class="bg-green-600 text-white font-semibold py-2 px-4 rounded w-full hover:bg-green-700 transition"
+    >
+      Skapa lag
+    </button>
+
+    <!-- Välj lag att radera -->
+    <div class="mb-4 mt-4">
+      <label for="deleteTeam" class="block text-gray-700 font-semibold mb-1">Välj lag att radera:</label>
+      <select [(ngModel)]="teamData.id" id="deleteTeam" name="deleteTeam"
+        class="border p-2 rounded w-full text-black">
+        <option *ngFor="let team of teams" [value]="team.id">{{ team.name }}</option>
+      </select>
+    </div>
+
+    <!-- Knapp: Ta bort lag -->
+    <button 
+      type="button"
+      (click)="deleteTeam()"
+      class="bg-red-600 text-white font-semibold py-2 px-4 rounded w-full hover:bg-red-700 transition mt-2"
+    >
+      Ta bort lag
+    </button>
+
+  </form>
+</div>
