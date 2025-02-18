@@ -1,4 +1,4 @@
-<div *ngIf="scoreboard$ | async as scoreboard">
+<div *ngIf="getRichScoreboard$ | async as scoreboard">
     <h2 class="text-3xl font-bold text-center text-red-600">{{ scoreboard.name }}</h2>
     <p class="text-center text-gray-700">Start Date: {{ scoreboard.startedAt }}</p>
     <p *ngIf="scoreboard.endedAt" class="text-center text-gray-700">End Date: {{ scoreboard.endedAt }}</p>
@@ -11,4 +11,9 @@
 
 <p>scoreboard-details works!</p>
 
-<p *ngIf="getRichScoreboard$ | async as scoreboard"> {{scoreboard.name}}</p> 
+<p *ngIf="(getRichScoreboard$ | async) as richscoreboard">
+  {{ richscoreboard?.[0]?.teamName }}
+</p>
+
+
+<p>hejhej</p>

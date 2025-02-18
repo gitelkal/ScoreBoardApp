@@ -23,7 +23,7 @@ export class ScoreboardService {
     return this.http.get<Scoreboards>(`${this.api}/scoreboards/${id}`);
   }
   public getRichScoreboard(id: string): Observable<Scoreboards> {
-    return this.http.get<Scoreboards>(`https://localhost:7062/rich/${id}`);
+    return this.http.get<Scoreboards>(`${this.api}/scoreboards/rich/${id}`);
   }
 
 }

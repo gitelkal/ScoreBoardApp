@@ -44,7 +44,7 @@ namespace server.Controllers
             return Ok(scoreboard);
         }
 
-        [HttpGet("/rich/{scoreboardId}")]
+        [HttpGet("rich/{scoreboardId}")]
         public IActionResult GetRichScoreboardById(int scoreboardId)
         {
             var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
