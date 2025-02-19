@@ -12,8 +12,8 @@
     <ul class="flex flex-wrap justify-between" *ngIf="getAllScoreboards$ | async as scoreboards">
       <li class="w-1/2 pr-4 pt-4" *ngFor="let scoreboard of scoreboards">
         <a routerLink="/scoreboard/{{ scoreboard.scoreboardId }}">
-          <div class="shadow-lg rounded-lg bg-white1">
-            <div class="h-16 rounded-tl-lg rounded-tr-lg bg-red5 flex items-center px-4">
+          <div class="shadow-lg bg-white1">
+            <div class="h-16  bg-red5 flex items-center px-4">
               <h3 class="font-digital text-lg text-white1">{{ scoreboard.name }}</h3>
             </div>
             <div class="h-30 bg-white1 p-4 rounded-bl-lg rounded-br-lg">

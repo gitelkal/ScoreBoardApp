@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}"],
+  content: ["./src/**/*.{html,ts}"], // 🔹 Viktigt att detta ligger på högsta nivån!
+  darkMode: "class", // 🔹 Aktiverar Dark Mode
   theme: {
     extend: {
       colors: {
@@ -25,13 +26,6 @@ module.exports = {
         longtext: ['"Georgia"', "serif"],
       },
     },
-    content: [
-      "./src/**/*.{html,ts}", // Gör att Tailwind kan använda klasser i HTML och TypeScript
-    ],
-    darkMode: "class", // Aktiverar Dark Mode
-    theme: {
-      extend: {},
-    },
-    plugins: [],
   },
+  plugins: [], // 🔹 Viktigt att detta också ligger på högsta nivån!
 };

@@ -44,9 +44,26 @@ namespace server.Controllers
             return Ok(scoreboard);
         }
 
-        [HttpGet("/rich/{scoreboardId}")]
+        [HttpGet("rich/{scoreboardId}")]
         public IActionResult GetRichScoreboardById(int scoreboardId)
         {
+            // Fetch the scoreboard details
+            var scoreboard = dbContext.ScoreBoards
+                .Where(sb => sb.ScoreboardId == scoreboardId)
+                .Select(sb => new
+                {
+                    sb.ScoreboardId,
+                    sb.Name,
+                    sb.StartedAt
+                })
+                .FirstOrDefault();
+
+            if (scoreboard == null)
+            {
+                return NotFound("Scoreboard not found.");
+            }
+
+            // Fetch teams and users related to the scoreboard
             var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
                                   join t in dbContext.Teams on sbt.TeamID equals t.TeamID
                                   join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamId
@@ -72,12 +89,19 @@ namespace server.Controllers
                                       }).ToList()
                                   }).ToList();
 
-            if (!teamsWithUsers.Any())
+            // Return the structured JSON response
+            return Ok(new
             {
-                return NotFound("No teams found for this scoreboard.");
-            }
-
-            return Ok(teamsWithUsers);
+                Scoreboard = new
+                {
+                    scoreboard.ScoreboardId,
+                    scoreboard.Name,
+                    scoreboard.StartedAt,
+                    Teams = teamsWithUsers
+                }
+            });
         }
+
+
     }
 }

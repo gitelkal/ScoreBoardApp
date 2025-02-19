@@ -1,6 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Satisfy&family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Angkor&display=swap");
 
+@use "@angular/material" as mat;
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --mdc-dialog-container-shape: 0px;
+    --mdc-dialog-container-color: transparent; 
+    --mdc-dialog-container-surface-color: transparent; 
+}
+

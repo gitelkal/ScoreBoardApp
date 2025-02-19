@@ -1,14 +1,15 @@
-<div *ngIf="scoreboard$ | async as scoreboard">
-    <h2 class="text-3xl font-bold text-center text-red-600">{{ scoreboard.name }}</h2>
-    <p class="text-center text-gray-700">Start Date: {{ scoreboard.startedAt }}</p>
-    <p *ngIf="scoreboard.endedAt" class="text-center text-gray-700">End Date: {{ scoreboard.endedAt }}</p>
-    <p class="text-center font-semibold" [ngClass]="{ 'text-green-500': scoreboard.active, 'text-gray-500': !scoreboard.active }">
-      {{ scoreboard.active ? 'Active' : 'Inactive' }}
-    </p>
-  
- 
-  
+<div *ngIf="getRichScoreboard$ | async as richScoreboard">
+  <h2 class="text-3xl font-bold text-center text-green-600">{{ richScoreboard.scoreboard.name }}</h2>
+  <p class="text-center text-gray-700">Start Date: {{ richScoreboard.scoreboard.startedAt }}</p>
+  <p *ngIf="richScoreboard.scoreboard.endedAt" class="text-center text-gray-700">End Date: {{ richScoreboard.scoreboard.endedAt }}</p>
+  <p class="text-center font-semibold" [ngClass]="{ 'text-green-500': richScoreboard.scoreboard.active, 'text-gray-500': !richScoreboard.scoreboard.active }">
+    {{ richScoreboard.scoreboard.active ? 'Active' : 'Inactive' }}
+  </p>
+  <p>{{richScoreboard.scoreboard.teams.length}}</p>
 
-<p>scoreboard-details works!</p>
+  <p>scoreboard-details works!</p>
+</div>
 
-<p *ngIf="getRichScoreboard$ | async as scoreboard"> {{scoreboard.name}}</p> 
+
+
+<p>hejhej</p>
