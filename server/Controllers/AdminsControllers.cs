@@ -1,6 +1,7 @@
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
+using server.Service;
 
 namespace server.Controllers
 {
@@ -22,12 +23,24 @@ namespace server.Controllers
 
             return Ok(admins);
         }
-        [HttpPost]
-        public IActionResult CreateAdmin([FromBody] Admin admin)
-        {
-            dbContext.Admins.Add(admin);
+        [HttpPost, Route("Register")]
+        public IActionResult CreateAdmin(Entities.AdminDTO adminDTO)
+        {   if(!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var objAdmin = dbContext.Admins.FirstOrDefault(x => x.Username == adminDTO.Username);
+            if(objAdmin == null)
+            {
+            dbContext.Admins.Add(new Admin
+            {
+                Firstname = adminDTO.Firstname,
+                Lastname = adminDTO.Lastname,
+                Username = adminDTO.Username,
+                Password = adminDTO.Password
+            });
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
+            } else
+                return BadRequest("Username already exists");
         }
         [HttpGet]
         [Route("{id}")]
@@ -53,5 +66,6 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return Ok();
         }
+        
     }
 }
