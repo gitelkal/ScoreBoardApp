@@ -1,16 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '@app/core/services/AdminService/admin.service';
-import { NgIf, NgFor } from '@angular/common';  
-import { FormsModule } from '@angular/forms';  
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AddScoreboardComponent } from '../add-scoreboard/add-scoreboard.component';
 import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
 
-
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, AddScoreboardComponent,ManageTeamsComponent],  
+  imports: [
+    NgIf,
+    NgFor,
+    FormsModule,
+    AddScoreboardComponent,
+    ManageTeamsComponent,
+  ],
   providers: [AdminService],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
@@ -21,27 +26,30 @@ export class AdminComponent {
   router = inject(Router);
 
   searchQuery: string = '';
-  sortBy: string = 'name';  
-  admins: any[] = [];  
-
+  sortBy: string = 'name';
+  admins: any[] = [];
 
   constructor() {
-    this.adminService.getAllAdmins().subscribe((data) => {
-      console.log("Admins hämtade:", data);  // 🔍 Se vad API:et returnerar
-      this.admins = data;
-    },
-    (error) => {
-      console.error("Fel vid hämtning av admins:", error);
-    });
+    this.adminService.getAllAdmins().subscribe(
+      (data) => {
+        console.log('Admins hämtade:', data); // 🔍 Se vad API:et returnerar
+        this.admins = data;
+      },
+      (error) => {
+        console.error('Fel vid hämtning av admins:', error);
+      }
+    );
   }
-  
+
   get sortedAdmins() {
     if (!this.filteredAdmins || this.filteredAdmins.length === 0) return [];
     return this.filteredAdmins.sort((a: any, b: any) => {
       if (!this.sortBy) return 0;
       if (this.sortBy === 'name') return a.firstname.localeCompare(b.firstname);
       if (this.sortBy === 'date') {
-        return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
+        return (
+          new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime()
+        );
       }
       return 0;
     });
@@ -50,12 +58,14 @@ export class AdminComponent {
   // 🟢 Navigera till admin-detaljer
   handleAdminClick(admin: any) {
     console.log('Admin clicked:', admin);
-    this.router.navigate(['/admin', admin.adminID]);  
+    this.router.navigate(['/admin', admin.adminID]);
   }
 
   get filteredAdmins() {
     return this.admins.filter((admin: any) =>
-      (admin.firstname + ' ' + admin.lastname).toLowerCase().includes(this.searchQuery.toLowerCase())
+      (admin.firstname + ' ' + admin.lastname)
+        .toLowerCase()
+        .includes(this.searchQuery.toLowerCase())
     );
   }
 
@@ -75,17 +85,14 @@ export class AdminComponent {
     console.log('Nytt lag skapat:', teamData);
     alert(`Laget "${teamData.name}" har skapats!`);
   }
-  
+
   handleTeamDeleted(teamId: number) {
     console.log('Lag raderat:', teamId);
     alert(`Laget med ID ${teamId} har tagits bort!`);
   }
-  
+
   handleTeamUpdated(teamData: any) {
     console.log('Lag uppdaterat:', teamData);
     alert(`Laget "${teamData.name}" har uppdaterats!`);
   }
-
-  
-
 }

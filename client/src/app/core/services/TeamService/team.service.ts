@@ -28,6 +28,8 @@ export class TeamService {
   public createTeam(team: { name: string }): Observable<Teams> {
     return this.http.post<Teams>(`${this.api}/teams`, team);
   }
+ 
+
 
   // ✅ Ta bort ett lag
   public deleteTeam(teamId: number): Observable<any> {

@@ -1,14 +1,20 @@
 <div class="flex flex-col items-center w-full">
- 
-
-  <form (ngSubmit)="createScoreboard()" #scoreboardForm="ngForm" class="w-full max-w-lg bg-white p-8 mb-4 rounded-lg shadow-md">
-     <h2 class="text-xl font-bold mb-4">Skapa en ny tävling</h2>
+  <form
+    (ngSubmit)="createScoreboard()"
+    #scoreboardForm="ngForm"
+    class="w-full max-w-lg bg-white1 p-8 mb-4 rounded-lg shadow-md"
+  >
+    <h2 class="bg-red1 p-3px text-xl font-bold mb-4">Skapa en ny tävling</h2>
     <!-- Tävlingsnamn -->
     <div class="mb-4">
-      <label for="name" class="block text-gray-700 font-semibold mb-1">Tävlingsnamn:</label>
-      <input 
-        type="text" id="name" name="name"
-        [(ngModel)]="scoreboardData.name" 
+      <label for="name" class="block text-gray-700 font-semibold mb-1"
+        >Tävlingsnamn:</label
+      >
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="scoreboardData.name"
         required
         class="border p-2 rounded w-full max-w-md mb-4 text-black"
       />
@@ -16,10 +22,14 @@
 
     <!-- Startdatum -->
     <div class="mb-4">
-      <label for="date" class="block text-gray-700 font-semibold mb-1">Startdatum:</label>
-      <input 
-        type="date" id="date" name="startedAt"
-        [(ngModel)]="scoreboardData.startedAt" 
+      <label for="date" class="block text-gray-700 font-semibold mb-1"
+        >Startdatum:</label
+      >
+      <input
+        type="datetime-local"
+        id="date"
+        name="startedAt"
+        [(ngModel)]="scoreboardData.startedAt"
         required
         class="border p-2 rounded w-full max-w-lg mb-4 text-black"
       />
@@ -27,22 +37,26 @@
 
     <!-- Plats -->
     <div class="mb-4">
-      <label for="location" class="block text-gray-700 font-semibold mb-1">Plats:</label>
-      <input 
-        type="text" id="location" name="location"
-        [(ngModel)]="scoreboardData.location"
+      <label for="datetime-local" class="block text-gray-700 font-semibold mb-1"
+        >Slutdatum:</label
+      >
+      <input
+        type="datetime-local"
+        id="date"
+        name="EndedAt"
+        [(ngModel)]="scoreboardData.EndedAt"
+        required
         class="border p-2 rounded w-full max-w-lg mb-4 text-black"
       />
     </div>
 
     <!-- Skapa tävling-knapp -->
-    <button 
+    <button
       type="submit"
       [disabled]="scoreboardForm.invalid"
       class="bg-green-600 text-white font-semibold py-2 px-4 rounded w-full hover:bg-green-700 transition"
     >
       Skapa tävling
     </button>
-
   </form>
 </div>

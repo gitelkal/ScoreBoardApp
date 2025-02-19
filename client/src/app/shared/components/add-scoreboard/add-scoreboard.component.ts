@@ -3,10 +3,10 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-scoreboard',
-  standalone: true,  
-  imports: [FormsModule],  
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './add-scoreboard.component.html',
-  styleUrl: './add-scoreboard.component.css'
+  styleUrl: './add-scoreboard.component.css',
 })
 export class AddScoreboardComponent {
   @Output() scoreboardCreated = new EventEmitter<any>();
@@ -14,7 +14,7 @@ export class AddScoreboardComponent {
   scoreboardData = {
     name: '',
     startedAt: '',
-    location: ''
+    EndedAt: '',
   };
 
   createScoreboard() {
@@ -28,6 +28,6 @@ export class AddScoreboardComponent {
   }
 
   resetForm() {
-    this.scoreboardData = { name: '', startedAt: '', location: '' };
+    this.scoreboardData = { name: '', startedAt: '', EndedAt: '' };
   }
 }
