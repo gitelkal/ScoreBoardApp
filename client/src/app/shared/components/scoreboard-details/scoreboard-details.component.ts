@@ -17,7 +17,7 @@ import { switchMap } from 'rxjs/operators';
 export class ScoreboardDetailsComponent implements OnInit {
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
-
+  openTeamIndex: number | null = null; // Track which team card is open
   constructor(private signalRService: SignalRService) {}
 
   ngOnInit() {
@@ -30,6 +30,12 @@ export class ScoreboardDetailsComponent implements OnInit {
     switchMap(params => {
       const id = params.get('id'); 
       return this.scoreboardService.getRichScoreboard(id!); 
-    })
+    }) 
   );
+  
+
+  toggleDropdown(index: number): void {
+    this.openTeamIndex = this.openTeamIndex === index ? null : index;
+  }
 }
+ 
