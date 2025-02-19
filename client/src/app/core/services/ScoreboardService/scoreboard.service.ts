@@ -30,8 +30,4 @@ export class ScoreboardService {
       tap(response => console.log('Service response:', response))
     );
   }
-  public getRichScoreboard(id: string): Observable<Scoreboards> {
-    return this.http.get<Scoreboards>(`https://localhost:7062/rich/${id}`);
-  }
-
 }
