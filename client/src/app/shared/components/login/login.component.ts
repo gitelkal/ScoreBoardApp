@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +10,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
+  readonly dialog = inject(MatDialog);
+  authService = inject(AuthService);
   username: string = '';
   password: string = '';
 
   login() {
-      console.log({ username: this.username, password: this.password });
-      console.log(this.username, this.password);
+      this.authService.login({username: this.username, password: this.password}).subscribe(response => {
+          console.log(response.username, "Logged in");
+          this.dialog.closeAll();
+      });
         
   }
 
