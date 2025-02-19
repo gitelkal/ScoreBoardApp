@@ -11,22 +11,6 @@
   },
   {
     "ContainingType": "server.Controllers.AdminsController",
-    "Method": "CreateAdmin",
-    "RelativePath": "api/Admins",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "admin",
-        "Type": "server.Admin",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "server.Controllers.AdminsController",
     "Method": "GetAdmin",
     "RelativePath": "api/Admins/{id}",
     "HttpMethod": "GET",
@@ -52,6 +36,54 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.AdminsController",
+    "Method": "CreateAdmin",
+    "RelativePath": "api/Admins/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "adminDTO",
+        "Type": "server.Entities.AdminDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "api/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDTO",
+        "Type": "server.Entities.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.RegisterController",
+    "Method": "CreateAdmin",
+    "RelativePath": "api/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "adminDTO",
+        "Type": "server.Entities.AdminDTO",
         "IsRequired": true
       }
     ],
