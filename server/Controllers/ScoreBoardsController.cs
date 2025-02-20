@@ -54,7 +54,8 @@ namespace server.Controllers
                 {
                     sb.ScoreboardId,
                     sb.Name,
-                    sb.StartedAt
+                    sb.StartedAt,
+                    sb.Active
                 })
                 .FirstOrDefault();
 
@@ -76,6 +77,7 @@ namespace server.Controllers
                                       sbt.Points,
                                       sbt.LastUpdated
                                   } into teamGroup
+                                  orderby teamGroup.Key.Points descending
                                   select new
                                   {
                                       teamGroup.Key.TeamID,
@@ -97,6 +99,7 @@ namespace server.Controllers
                     scoreboard.ScoreboardId,
                     scoreboard.Name,
                     scoreboard.StartedAt,
+                    scoreboard.Active,
                     Teams = teamsWithUsers
                 }
             });

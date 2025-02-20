@@ -46,24 +46,43 @@ namespace server.Controllers
         }
 
 
-        [HttpPut("{teamid}/add-points")]
-        public async Task<IActionResult> AddPointsToTeamAsync(int id, int pointsToAdd)
+        [HttpPut("{scoreboardId}/{teamId}/add-points")]
+        public async Task<IActionResult> AddPointsToTeamAsync(int scoreboardId, int teamId, int pointsToAdd)
         {
-            var team = dbContext.ScoreboardTeams.FirstOrDefault(t => t.ScoreboardTeamID == id);
+            // Find the scoreboard team based on scoreboardId and teamId
+            var scoreboardTeam = dbContext.ScoreboardTeams
+                .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
 
-            if (team == null)
+            if (scoreboardTeam == null)
             {
-                return NotFound(new { message = "Team not found" });
+                return NotFound(new { message = "Team not found in the scoreboard" });
             }
 
-            team.Points = (team.Points ?? 0) + pointsToAdd;
-            team.LastUpdated = DateTime.UtcNow; 
+            // Add the points to the team
+            scoreboardTeam.Points = (scoreboardTeam.Points ?? 0) + pointsToAdd;
+            scoreboardTeam.LastUpdated = DateTime.UtcNow;
 
+            // Save changes to the database
             dbContext.SaveChanges();
 
-            await _hubContext.Clients.All.SendAsync("ReceiveScoreUpdate", id, team.Points);
+            // Send the updated points to all connected clients
+            await _hubContext.Clients.All.SendAsync("ReceiveScoreUpdate", scoreboardTeam.ScoreboardID, scoreboardTeam.TeamID, scoreboardTeam.Points);
 
-            return Ok(team);
+            return Ok(scoreboardTeam);
+        }
+
+        [HttpPost]
+        public IActionResult AddTeamToScoreboard(int teamId, int scoreboardId)
+        {
+            var scoreboardTeam = new ScoreBoardTeams
+            {
+                ScoreboardID = scoreboardId,
+                TeamID = teamId
+            };
+
+            dbContext.ScoreboardTeams.Add(scoreboardTeam);
+            dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
         }
     }
 }

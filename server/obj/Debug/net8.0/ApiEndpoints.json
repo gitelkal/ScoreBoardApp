@@ -132,6 +132,53 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "AddTeamToScoreboard",
+    "RelativePath": "api/ScoreboardTeams",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "AddPointsToTeamAsync",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/add-points",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "pointsToAdd",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
     "Method": "GetScoreboardsForTeam",
     "RelativePath": "api/ScoreboardTeams/{teamId}",
     "HttpMethod": "GET",
@@ -141,32 +188,6 @@
       {
         "Name": "teamId",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "server.Controllers.ScoreboardTeamsController",
-    "Method": "AddPointsToTeamAsync",
-    "RelativePath": "api/ScoreboardTeams/{teamid}/add-points",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "pointsToAdd",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "teamid",
-        "Type": "",
         "IsRequired": true
       }
     ],
