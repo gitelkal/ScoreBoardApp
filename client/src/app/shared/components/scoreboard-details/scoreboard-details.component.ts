@@ -5,7 +5,8 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
+import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -30,8 +31,9 @@ export class ScoreboardDetailsComponent implements OnInit {
     switchMap(params => {
       const id = params.get('id'); 
       return this.scoreboardService.getRichScoreboard(id!); 
-    }) 
+    })
   );
+  
   
 
   toggleDropdown(index: number): void {
