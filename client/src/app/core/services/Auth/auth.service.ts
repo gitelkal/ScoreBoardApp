@@ -48,12 +48,15 @@ export class AuthService {
       this.timeUntilExpiration = (new Date(expirationTime).getTime() - new Date().getTime()) / 1000;
     } 
     setInterval(() => {
-      if (this.timeUntilExpiration == 3600) {
-        console.log("Token kommer att gå ut om 1 timme");
+      if (expirationTime) {
+        this.timeUntilExpiration = (new Date(expirationTime).getTime() - new Date().getTime()) / 1000;
+      } 
+      if (this.timeUntilExpiration < 4000 || this.timeUntilExpiration > 3000) {
+        console.log("Token kommer att gå ut om cirka 1 timme");
       } else if (this.timeUntilExpiration <= 0) {
         console.log("Token har utgått");
         this.logout();
       }
-    },60000); // Kollar varje timme hur lång tid det är kvar tills token går ut
+    },360000); // 1 timme
   }
 }
