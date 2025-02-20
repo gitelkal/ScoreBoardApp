@@ -18,7 +18,7 @@ import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
   ],
   providers: [AdminService],
   templateUrl: './admin.component.html',
-  styleUrl: './admin.component.css',
+  styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent {
   adminService = inject(AdminService);
@@ -81,14 +81,15 @@ export class AdminComponent {
       }
     );
   }
+
   handleTeamCreated(teamData: any) {
     console.log('Nytt lag skapat:', teamData);
-    alert(`Laget "${teamData.name}" har skapats!`);
+    alert(`Laget "${teamData.teamName}" har skapats!`);
   }
 
-  handleTeamDeleted(teamId: number) {
-    console.log('Lag raderat:', teamId);
-    alert(`Laget med ID ${teamId} har tagits bort!`);
+  handleTeamDeleted(teamData: any) {
+    console.log('Bortaget lag med ID:', teamData);
+    alert(`Laget med ID "${teamData}" har tagits bort!`);
   }
 
   handleTeamUpdated(teamData: any) {
