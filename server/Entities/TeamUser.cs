@@ -1,7 +1,14 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
 namespace server
 {
 public class TeamUser
 {
+    [Key]
+    [JsonIgnore]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int TeamUserId { get; set; }  
     public int TeamId { get; set; }  
     public int UserId { get; set; }  
