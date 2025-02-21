@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TeamService {
   private readonly api: string;
@@ -14,26 +14,25 @@ export class TeamService {
     this.api = this.apiService.api;
   }
 
-  // ✅ Hämta alla lag
+  // Hämta alla lag
   public getAllTeams(): Observable<Teams[]> {
     return this.http.get<Teams[]>(`${this.api}/teams`);
   }
 
-  // ✅ Hämta ett enskilt lag
+  // Hämta ett enskilt lag
   public getOneTeam(id: string): Observable<Teams> {
     return this.http.get<Teams>(`${this.api}/teams/${id}`);
   }
 
-  // ✅ Skapa ett nytt lag
-  public createTeam(team: { name: string }): Observable<Teams> {
-    return this.http.post<Teams>(`${this.api}/teams`, team);
+  // Skapa ett nytt lag
+  public createTeam(team: { teamName: string }): Observable<any> {
+    return this.http.post<any>(`${this.api}/Teams`, team, {
+      responseType: 'json',
+    });
   }
- 
 
-
-  // ✅ Ta bort ett lag
+  // Ta bort ett lag
   public deleteTeam(teamId: number): Observable<any> {
     return this.http.delete(`${this.api}/teams/${teamId}`);
   }
 }
-

@@ -5,7 +5,8 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
+import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -17,7 +18,7 @@ import { switchMap } from 'rxjs/operators';
 export class ScoreboardDetailsComponent implements OnInit {
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
-
+  openTeamIndex: number | null = null; // Track which team card is open
   constructor(private signalRService: SignalRService) {}
 
   ngOnInit() {
@@ -32,4 +33,11 @@ export class ScoreboardDetailsComponent implements OnInit {
       return this.scoreboardService.getRichScoreboard(id!); 
     })
   );
+  
+  
+
+  toggleDropdown(index: number): void {
+    this.openTeamIndex = this.openTeamIndex === index ? null : index;
+  }
 }
+ 

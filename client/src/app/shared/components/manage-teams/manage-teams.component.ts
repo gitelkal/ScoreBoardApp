@@ -11,7 +11,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { TeamService } from '@app/core/services/TeamService/team.service';
+import { TeamService } from '@app/core/services/teamService/team.service';
 
 @Component({
   selector: 'app-manage-teams',
@@ -31,8 +31,8 @@ export class ManageTeamsComponent implements OnInit {
   searchQuery: string = '';
   showDropdown: boolean = false;
   selectedTeamId?: number;
-
-  teamData = { id: null, name: '' }; // Data för formuläret
+  selectedTeamName?: string;
+  teamData: { teamID: number; name: string } = { teamID: 0, name: '' }; // Standardvärde
 
   @ViewChild('dropdown') dropdown!: ElementRef;
 
@@ -43,34 +43,46 @@ export class ManageTeamsComponent implements OnInit {
   fetchTeams() {
     this.teamService.getAllTeams().subscribe(
       (data) => {
-        console.log('✅ Lagen hämtade från API:', data);
         this.teams = data;
         this.filteredTeams = data;
       },
       (error) => {
-        console.error('❌ Fel vid hämtning av lag:', error);
+        console.error('Fel vid hämtning av lag:', error);
       }
     );
   }
 
   // 🔹 Skapa nytt lag
+
   createTeam() {
-    if (!this.teamData.name) {
+    if (!this.teamData || !this.teamData.name.trim()) {
       alert('Lagnamn krävs!');
       return;
     }
-    this.teamService.createTeam({ name: this.teamData.name }).subscribe(
+
+    const payload = { teamID: 0, teamName: this.teamData.name };
+
+    console.log('📤 Skickar till backend:', JSON.stringify(payload, null, 2));
+
+    this.teamService.createTeam(payload).subscribe(
       (response) => {
-        console.log('Lagt till lag:', response);
-        this.fetchTeams(); // ✅ Uppdatera listan
-        this.teamCreated.emit(response);
+        console.log('✅ Lagt till lag:', response);
+
+        if (response) {
+          console.log(`Nytt lag skapat:`, response);
+          this.fetchTeams(); // Uppdatera listan
+          this.teamCreated.emit(response);
+          this.teamData = { teamID: 0, name: '' }; // Återställ formuläret
+        } else {
+          console.warn(' API returnerade null! Kolla backend.');
+          alert('API returnerade null. Kontrollera backend.');
+        }
       },
       (error) => {
         console.error('Fel vid skapande av lag:', error);
         alert('Något gick fel vid skapandet av lag.');
       }
     );
-    this.resetForm();
   }
 
   // 🔹 Filtrera lag i sökrutan
@@ -103,17 +115,17 @@ export class ManageTeamsComponent implements OnInit {
       alert('Välj ett lag att radera!');
       return;
     }
-
     this.teamService.deleteTeam(this.selectedTeamId).subscribe(
       () => {
         console.log('✅ Lag raderat:', this.selectedTeamId);
-        this.fetchTeams();
-        this.teamDeleted.emit(this.selectedTeamId);
-        this.searchQuery = '';
+        this.fetchTeams(); // Uppdatera listan efter radering
+        this.teamDeleted.emit(this.selectedTeamId!);
+
+        this.searchQuery = ''; // 🔹 Rensa inputfältet efter radering
         this.selectedTeamId = undefined;
       },
       (error) => {
-        console.error('❌ Fel vid borttagning av lag:', error);
+        console.error('Fel vid borttagning av lag:', error);
         alert('Något gick fel vid borttagning av lag.');
       }
     );
@@ -127,7 +139,7 @@ export class ManageTeamsComponent implements OnInit {
     }
   }
 
-  resetForm() {
-    this.teamData = { id: null, name: '' };
-  }
+  // resetForm() {
+  //   this.teamData = { id: 0, name: '' };
+  // }
 }

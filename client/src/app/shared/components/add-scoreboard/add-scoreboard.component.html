@@ -2,9 +2,9 @@
   <form
     (ngSubmit)="createScoreboard()"
     #scoreboardForm="ngForm"
-    class="w-full max-w-lg bg-white1 p-8 mb-4 rounded-lg shadow-md"
+    class="w-full max-w-lg bg-white1 p-8 mb-4 rounded-lg shadow-lg"
   >
-    <h2 class="bg-red1 p-3px text-xl font-bold mb-4">Skapa en ny tävling</h2>
+    <h2 class="bg-red5 p-3px text-xl text-white1 text-center h-12 font-bold mb-4">Skapa en ny tävling</h2>
     <!-- Tävlingsnamn -->
     <div class="mb-4">
       <label for="name" class="block text-gray-700 font-semibold mb-1"
@@ -54,7 +54,7 @@
     <button
       type="submit"
       [disabled]="scoreboardForm.invalid"
-      class="bg-green-600 text-white font-semibold py-2 px-4 rounded w-full hover:bg-green-700 transition"
+      class="bg-red5 text-white font-semibold py-2 px-4 rounded w-full hover:bg-green-700 transition"
     >
       Skapa tävling
     </button>

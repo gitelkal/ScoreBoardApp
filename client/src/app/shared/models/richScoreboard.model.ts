@@ -4,7 +4,7 @@ export interface RichScoreboard {
     scoreboardId: number;
     name: string;
     startedAt: Date;
-    endedAt?: Date; // Optional since not all scoreboards may have an end date
+    endedAt?: Date; 
     active: boolean;
     teams: RichTeam[];  
 }
@@ -35,7 +35,7 @@ export interface ScoreboardTeams {
 
 export interface TeamUsers {
     teamUserId: number;
-    teamId: number;
+    teamId: number; 
     userId: number;
 }
 

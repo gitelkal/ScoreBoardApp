@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Scoreboards } from '../../../shared/models/scoreboards.model';
-import { ScoreboardResponse } from '../../../shared/models/richScoreboard.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
 import { tap } from 'rxjs/operators';
+import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
+import { ScoreboardResponse } from '../../../shared/models/richScoreboard.model';
 
 @Injectable({
   providedIn: 'root'

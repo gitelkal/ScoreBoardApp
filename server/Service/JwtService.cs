@@ -53,6 +53,7 @@ namespace server.Service
             var accessToken = tokenHandler.WriteToken(securityToken);
             return new LoginResponseModel
             {
+                ID = adminAccount.AdminID,
                 Firstname = adminAccount.Firstname,
                 Lastname = adminAccount.Lastname,
                 Username = request.Username,
