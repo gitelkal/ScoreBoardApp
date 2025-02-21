@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { LoginRequest } from '@app/interfaces/login-request';
 import { AuthResponse } from '@app/interfaces/auth-response';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -16,11 +16,13 @@ export class AuthService {
   timeUntilExpiration:number = 0;
   firstname: string = '';
   lastname: string = '';
+  errorMessage: string = '';
 
   constructor(private apiService: ApiService, private http: HttpClient) {
     this.api = this.apiService.api;
   }
-  login(data:LoginRequest):Observable<AuthResponse> {
+
+  login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.api}/login`, data).pipe(
       map((response: AuthResponse) => {
         if (response.token) localStorage.setItem(this.tokenKey, response.token);
@@ -30,8 +32,14 @@ export class AuthService {
         this.adminLoggedIn.next(true);
         console.log(response.username, "Logged in", this.adminLoggedIn);
         return response;
+      }),
+      catchError((error) => {
+        if (error.status === 401) {
+          this.errorMessage = error.error;
+        }
+        return throwError(error);
       })
-    );    
+    );
   }
 
   logout() {

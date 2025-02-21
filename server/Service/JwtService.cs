@@ -25,12 +25,12 @@ namespace server.Service
             if (!(adminAccount is not null && PasswordHashHandler.VerifyPassword(request.Password, adminAccount.Password)))
                 if (adminAccount == null)
                 {
-                    return (null, "Fel användarnamn.");
+                    return (null, "Fel användarnamn");
                 }
 
             if (!PasswordHashHandler.VerifyPassword(request.Password, adminAccount.Password))
             {
-                return (null, "Fel lösenord.");
+                return (null, "Fel lösenord");
             }
 
             var issuer = _configuration["JwtConfig:Issuer"];

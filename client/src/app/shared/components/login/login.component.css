@@ -1,0 +1,14 @@
+@keyframes blink {
+    0%, 100% {
+      background-color: #f87171;
+    }
+    50% {
+      background-color: #fecaca; 
+    }
+}
+
+.input-error {
+animation: blink 1s ease-in-out 2; 
+border-color: #dc2626; 
+background-color: #fecaca; 
+}
