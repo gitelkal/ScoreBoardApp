@@ -14,6 +14,8 @@ export class AuthService {
   adminLoggedIn = new BehaviorSubject<boolean>(false); 
   tokenExpirationDateTime: Date = new Date();
   timeUntilExpiration:number = 0;
+  firstname: string = '';
+  lastname: string = '';
 
   constructor(private apiService: ApiService, private http: HttpClient) {
     this.api = this.apiService.api;
