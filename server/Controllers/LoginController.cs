@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
+using server.Entities;
 using server.Service;
 
 namespace server.Controllers
@@ -22,12 +23,14 @@ namespace server.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Entities.LoginDTO loginDTO)
         {
-            var result = await _jwtService.Authenticate(loginDTO);
-            if (result == null)
+            var (loginResponse, errorMessage) = await _jwtService.Authenticate(loginDTO);
+
+            if (loginResponse == null)
             {
-                return Unauthorized();
+                return Unauthorized(new ErrorResponseModel { Message = errorMessage ?? "Inloggningen misslyckades." });
             }
-            return Ok(result);
+
+            return Ok(loginResponse);
         }
     }
 }
