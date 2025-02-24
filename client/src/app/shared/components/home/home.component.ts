@@ -8,8 +8,6 @@ import { MatCardModule } from '@angular/material/card';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { RouterLink } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-home',
   imports: [MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, NgIf, NgFor, AsyncPipe, RouterLink],
@@ -19,11 +17,7 @@ import { RouterLink } from '@angular/router';
 export class HomeComponent implements OnInit {
   scores: { teamId: number; points: number }[] = [];
     scoreboardService = inject(ScoreboardService);
-
-    
-    
     getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
-
 
     constructor(private signalRService: SignalRService) { }
 

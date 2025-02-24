@@ -15,7 +15,9 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/Admins/Register": {
       "post": {
         "tags": [
           "Admins"
@@ -24,17 +26,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Admin"
+                "$ref": "#/components/schemas/AdminDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Admin"
+                "$ref": "#/components/schemas/AdminDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Admin"
+                "$ref": "#/components/schemas/AdminDTO"
               }
             }
           }
@@ -83,6 +85,68 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Register": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -537,13 +601,9 @@
   },
   "components": {
     "schemas": {
-      "Admin": {
+      "AdminDTO": {
         "type": "object",
         "properties": {
-          "adminID": {
-            "type": "integer",
-            "format": "int32"
-          },
           "firstname": {
             "type": "string",
             "nullable": true
@@ -552,6 +612,20 @@
             "type": "string",
             "nullable": true
           },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "type": "object",
+        "properties": {
           "username": {
             "type": "string",
             "nullable": true

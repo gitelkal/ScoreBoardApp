@@ -1,6 +1,7 @@
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
+using server.Service;
 
 namespace server.Controllers
 {
@@ -21,13 +22,6 @@ namespace server.Controllers
             var admins = dbContext.Admins.ToList();
 
             return Ok(admins);
-        }
-        [HttpPost]
-        public IActionResult CreateAdmin([FromBody] Admin admin)
-        {
-            dbContext.Admins.Add(admin);
-            dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
         }
         [HttpGet]
         [Route("{id}")]
@@ -53,5 +47,6 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return Ok();
         }
+        
     }
 }
