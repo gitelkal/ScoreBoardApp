@@ -16,16 +16,22 @@ import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
   styleUrls: ['./scoreboard-details.component.css']
 })
 export class ScoreboardDetailsComponent implements OnInit {
+  
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
   openTeamIndex: number | null = null; // Track which team card is open
+
+  private scoreboardSubject = new BehaviorSubject<RichScoreboard | null>(null);
+  scoreboard$ = this.scoreboardSubject.asObservable();
   constructor(private signalRService: SignalRService) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id'); 
-      return this.scoreboardService.getRichScoreboard(id!); 
-    });
+    this.signalRService.startConnection(); 
+    this.signalRService.scoreUpdates.subscribe(update => {
+      if (update) {
+          //const existingScoreboard =  
+      }
+  }); 
   }
   getRichScoreboard$ = this.route.paramMap.pipe(
     switchMap(params => {

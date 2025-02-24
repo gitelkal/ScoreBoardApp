@@ -1,4 +1,67 @@
-.no-animation {
-    animation: none !important;
-    opacity: 1 !important;
-  }
+/* Base styles for podium places */
+.first-place {
+  background: #FFD700; /* Constant Gold */
+  color: #3d3d3d;
+}
+.second-place {
+  background: #C0C0C0; /* Constant Silver */
+  color: #3d3d3d;
+}
+.third-place {
+  background: #CD7F32; /* Constant Bronze */
+  color: #fff;
+}
+
+/* ✨ Shimmer Overlay */
+@keyframes shimmer {
+  0% { left: -50%; opacity: 0.5; }
+  50% { left: 50%; opacity: 1; }
+  100% { left: 120%; opacity: 0.5; }
+}
+.shimmer-effect {
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  animation: shimmer 3s infinite ease-in-out;
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+/* ✨ Glow Effect for Silver */
+@keyframes movingGlow {
+  0% { left: -60%; opacity: 0.3; }
+  50% { left: 50%; opacity: 0.6; }
+  100% { left: 120%; opacity: 0.3; }
+}
+.moving-glow {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+  animation: movingGlow 3.5s infinite ease-in-out;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* ✨ Glow Effect for Bronze */
+@keyframes subtleGlow {
+  0% { left: -50%; opacity: 0.3; }
+  50% { left: 50%; opacity: 0.6; }
+  100% { left: 120%; opacity: 0.3; }
+}
+.subtle-glow {
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 140, 0, 0.2), rgba(255, 69, 0, 0.5), rgba(255, 140, 0, 0.2));
+  animation: subtleGlow 4s infinite ease-in-out;
+  filter: blur(3px);
+  pointer-events: none;
+}
