@@ -4,6 +4,7 @@ import { ScoreboardsHistoryComponent } from './shared/components/scoreboards-his
 import { HomeComponent } from '../app/shared/components/home/home.component';
 import { ScoreboardDetailsComponent } from '../app/shared/components/scoreboard-details/scoreboard-details.component';
 import { AdminComponent } from '../app/shared/components/admin/admin.component';
+import { TeamComponent } from '../app/shared/components/team/team.component';
 
 export const routes: Routes = [
   {
@@ -30,5 +31,10 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     title: 'Admin'
+  },
+  {
+    path: 'team',
+    component: TeamComponent,
+    title: 'Lag'
   }
 ];
