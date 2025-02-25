@@ -13,13 +13,12 @@
       <li class="w-1/2 pr-4 pt-4" *ngFor="let scoreboard of scoreboards">
         <a routerLink="/scoreboard/{{ scoreboard.scoreboardId }}">
           <div class="shadow-lg bg-white1">
-            <div class="h-16  bg-red5 flex items-center px-4">
-              <h3 class="font-digital text-lg text-white1">{{ scoreboard.name }}</h3>
+            <div class="h-16  bg-red5 flex items-center justify-center px-4">
+              <h3 class="font-digital text-lg text-white1">{{ scoreboard.name }} - {{ scoreboard.startedAt | date:'longDate' }}</h3>
             </div>
-            <div class="h-30 bg-white1 p-4 rounded-bl-lg rounded-br-lg">
-              <p class="text-red6">(ID: {{ scoreboard.scoreboardId }})</p>
-              <strong class="text-red6">Här kanske man skulle haft en liten beskrivning</strong>
-              <p class="text-red6">{{ scoreboard.startedAt }}</p>
+            <div class="h-28 bg-white1 p-4">
+              <!-- <p class="text-red6">(ID: {{ scoreboard.scoreboardId }})</p> -->
+              <p class="text-red6 h-8 text-md font-bold flex justify-center items-center">{{ scoreboard.description}}</p>
             </div>
           </div>
         </a>

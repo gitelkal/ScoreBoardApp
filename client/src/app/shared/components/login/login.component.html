@@ -3,12 +3,16 @@
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Användarnamn</label>
         <input id="username" type="text" [(ngModel)]="username" name="username" placeholder="Användarnamn" [ngClass]="{ 'input-error': (wrongUsername | async) }" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        <p class="text-red6 text-sm font-medium" *ngIf="(wrongUsername | async)">{{ errorMessage }}</p>
+        <div class="h-2">
+          <p class="text-red6 text-sm font-medium" *ngIf="(wrongUsername | async)">{{ errorMessage }}</p>
+        </div>
       </div>
       <div class="mb-8">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Lösenord</label>
         <input id="password" type="password" [(ngModel)]="password" name="password" placeholder="******************" [ngClass]="{ 'input-error': (wrongPassword | async) }" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"/>
-        <p class="text-red-6 text-sm font-medium" *ngIf="(wrongPassword | async)">{{ errorMessage }}</p>
+        <div class="h-2">
+          <p class="text-red-6 text-sm font-medium" *ngIf="(wrongPassword | async)">{{ errorMessage }}</p>
+        </div>
       </div>
 
       <div class="flex items-center justify-between w-full">
@@ -20,8 +24,8 @@
             Glömt lösenord?
           </a>
       </div>
-        <div class="bg-green-600" *ngIf="(success | async) === true"> 
-          <p class="text-white1 font-bold py-2 px-4">Välkommen, {{ firstname }} {{ lastname }}</p>
+        <div class="bg-green-600 w-full flex justify-center" *ngIf="(success | async) === true"> 
+          <p class="text-white1 font-bold py-2 px-4">Välkommen, {{ firstname }}</p>
         </div>
       </div>
     </form>
