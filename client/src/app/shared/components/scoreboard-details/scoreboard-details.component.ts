@@ -21,22 +21,26 @@ export class ScoreboardDetailsComponent implements OnInit {
   route = inject(ActivatedRoute);
   openTeamIndex: number | null = null; // Track which team card is open
 
-  private scoreboardSubject = new BehaviorSubject<RichScoreboard | null>(null);
-  scoreboard$ = this.scoreboardSubject.asObservable();
+  scores: { teamId: number; points: number }[] = [];
   constructor(private signalRService: SignalRService) {}
 
   ngOnInit() {
     this.signalRService.startConnection(); 
     this.signalRService.scoreUpdates.subscribe(update => {
       if (update) {
-          //const existingScoreboard =  
+        const existingTeam = this.scores.findIndex(s => s.teamId === update.teamId);
+        if (existingTeam === -1) {
+            this.scores.push(update);
+        } else {
+            this.scores[existingTeam] = update;
+        }
       }
   }); 
   }
   getRichScoreboard$ = this.route.paramMap.pipe(
     switchMap(params => {
       const id = params.get('id'); 
-      return this.scoreboardService.getRichScoreboard(id!); 
+      return this.scoreboardService.getRichScoreboard(id!);
     })
   );
   

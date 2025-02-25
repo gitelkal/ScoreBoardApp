@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  scores: { teamId: number; points: number }[] = [];
+  scores: {scoreboardId: number; teamId: number; points: number }[] = [];
     scoreboardService = inject(ScoreboardService);
     getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
 
