@@ -23,12 +23,13 @@ namespace server.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateScoreboard(string name, DateTime startedAt)
+        public IActionResult CreateScoreboard(string name, DateTime startedAt, string description)
         {
             var scoreboard = new Scoreboard
             {
                 Name = name,
-                StartedAt = startedAt
+                StartedAt = startedAt,
+                Description = description
             };
             dbContext.ScoreBoards.Add(scoreboard);
             dbContext.SaveChanges();

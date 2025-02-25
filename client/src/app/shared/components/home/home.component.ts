@@ -3,14 +3,14 @@ import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboa
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, NgIf, NgFor, AsyncPipe, RouterLink],
+  imports: [MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, NgIf, NgFor, AsyncPipe, RouterLink, DatePipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
