@@ -33,11 +33,11 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("{teamid}")]
-        public IActionResult GetTeamUsers(int id)
+        [Route("{teamId}")]
+        public IActionResult GetTeamUsers(int teamId)
         {
             var teamUsers = dbContext.Teams
-                .Where(team => team.TeamID == id) 
+                .Where(team => team.TeamID == teamId) 
                 .Select(team => new
                 {
                     Team = team,

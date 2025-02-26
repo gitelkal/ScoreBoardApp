@@ -5,8 +5,8 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { switchMap, map } from 'rxjs/operators';
-import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
+import { switchMap } from 'rxjs/operators';
+import { RichScoreboard,ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -19,35 +19,53 @@ export class ScoreboardDetailsComponent implements OnInit {
   
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
-  openTeamIndex: number | null = null; // Track which team card is open
+  openTeamIndex: number | null = null;
 
-  scores: { teamId: number; points: number }[] = [];
-  constructor(private signalRService: SignalRService) {}
+  private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
+  getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
+
+  constructor(private signalRService: SignalRService) {} 
 
   ngOnInit() {
-    this.signalRService.startConnection(); 
+    this.signalRService.startConnection();
+    this.subscribeToScoreUpdates();
+    this.loadInitialScoreboard();
+  }
+
+  loadInitialScoreboard() {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('id');
+        return this.scoreboardService.getRichScoreboard(id!);
+      })
+    ).subscribe(ScoreboardResponse => {
+      this.scoreboardResonseSubject.next(ScoreboardResponse); // Load initial data
+    });
+  }
+
+  subscribeToScoreUpdates() {
     this.signalRService.scoreUpdates.subscribe(update => {
       if (update) {
-        const existingTeam = this.scores.findIndex(s => s.teamId === update.teamId);
-        if (existingTeam === -1) {
-            this.scores.push(update);
-        } else {
-            this.scores[existingTeam] = update;
+        const currentScoreboard = this.scoreboardResonseSubject.value;
+  
+        if (currentScoreboard?.scoreboard?.teams) {  
+          const updatedTeams = currentScoreboard.scoreboard.teams.map(team => 
+            team.teamID === update.teamId ? { ...team, points: update.points } : team
+          );
+
+          this.scoreboardResonseSubject.next({
+            ...currentScoreboard,
+            scoreboard: {
+              ...currentScoreboard.scoreboard,
+              teams: updatedTeams
+            }
+          });
         }
       }
-  }); 
+    });
   }
-  getRichScoreboard$ = this.route.paramMap.pipe(
-    switchMap(params => {
-      const id = params.get('id'); 
-      return this.scoreboardService.getRichScoreboard(id!);
-    })
-  );
-  
-  
 
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
 }
- 
