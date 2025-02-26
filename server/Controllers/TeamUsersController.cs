@@ -23,7 +23,7 @@ namespace server.Controllers
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamId == team.TeamID)
+                        .Where(tu => tu.TeamID == team.TeamID)
                         .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
                         .ToList()
                 })
@@ -32,17 +32,16 @@ namespace server.Controllers
             return Ok(teamsUsers);
         }
 
-        [HttpGet]
-        [Route("{teamid}")]
-        public IActionResult GetTeamUsers(int id)
+        [HttpGet("{teamID}")]
+        public IActionResult GetTeamUsers(int teamID)
         {
             var teamUsers = dbContext.Teams
-                .Where(team => team.TeamID == id) 
+                .Where(team => team.TeamID == teamID) 
                 .Select(team => new
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamId == team.TeamID) 
+                        .Where(tu => tu.TeamID == team.TeamID) 
                         .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
                         .ToList()
                 })
@@ -60,7 +59,7 @@ namespace server.Controllers
             var teamUser = new TeamUser
             {
                 UserId = userId,
-                TeamId = teamId
+                TeamID = teamId
             };
 
             dbContext.TeamUsers.Add(teamUser);
