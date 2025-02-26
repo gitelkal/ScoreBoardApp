@@ -2,15 +2,28 @@
 
 <!-- exempel: red1 || bg-red1  -->
 
-<app-add-scoreboard
-  (scoreboardCreated)="handleScoreboardCreated($event)"
-></app-add-scoreboard>
+<app-manage-scoreboard 
+(scoreboardCreated)="handleScoreboardCreated($event)"
+(scoreboardUpdated)="handleScoreboardUpdated($event)"
+></app-manage-scoreboard> 
+
+<app-add-scoreboard></app-add-scoreboard>
+
+
+
 <app-manage-teams
   (teamCreated)="handleTeamCreated($event)"
   (teamDeleted)="handleTeamDeleted(+$event)"
 >
-</app-manage-teams>
-<div class="flex flex-col items-center w-full mt-80">
+</app-manage-teams> 
+
+
+
+
+<div class="flex flex-col items-center w-full mt-40 ">
+  <h1 class="text-5xl text-center mb-4">Admins</h1> 
+
+
   <h2
     class="text-center text-5xl md:text-base mt-70 mb-1 mr-80 pl-96"
   >
@@ -32,18 +45,38 @@
     <option value="date">Sortera efter senast aktiv</option>
   </select>
 
+
+
+
   <!-- Admin-lista -->
-  <ul *ngIf="sortedAdmins.length > 0; else noResults">
+  <ul *ngIf="sortedAdmins.length > 0; else noResults" class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
     <li
       *ngFor="let admin of sortedAdmins"
-      class="bg-white border-black1 rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center"
+      class="bg-white border-black1 rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center py-3 sm:py-4"
       (click)="handleAdminClick(admin)"
     >
-      <strong class="text-lg">{{
-        admin.firstname + " " + admin.lastname
-      }}</strong>
+    <div class="flex items-center space-x-3 rtl:space-x-reverse">
+      <div class="shrink-0"> 
+
+
+      <img class="w-8 h-8 rounded-full" src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg" alt="Neil image">
+        
+      </div>
+      <div class="flex flex-col items-start truncate">
+        <strong class="text-lg ">{{
+          admin.firstname + " " + admin.lastname
+        }}</strong>
+        <!-- <span class="text-sm text-gray-500">{{ admin.email }}</span> -->
+        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+          email: {{ admin.email }}
+      </p>
+      </div>
+    </div>
     </li>
   </ul>
+
+
+
   <ng-template #noResults>
     <p class="text-gray-500">Inga admins hittades.</p>
   </ng-template>

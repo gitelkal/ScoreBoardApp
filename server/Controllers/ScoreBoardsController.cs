@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
-
+using server.Entities;
 namespace server.Controllers
 {
     [Route("api/[controller]")]
@@ -22,19 +22,78 @@ namespace server.Controllers
             return Ok(scoreBoards);
         }
 
-        [HttpPost]
-        public IActionResult CreateScoreboard(string name, DateTime startedAt, string description)
+
+
+[HttpPost]
+public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
+{
+    Console.WriteLine("📥 Mottagen ScoreboardDTO:");
+
+
+    if (scoreboardDTO == null)
+    {
+        return BadRequest("Scoreboard-data saknas.");
+    }
+
+    try
+    {
+        var scoreboard = new Scoreboard
         {
-            var scoreboard = new Scoreboard
-            {
-                Name = name,
-                StartedAt = startedAt,
-                Description = description
-            };
-            dbContext.ScoreBoards.Add(scoreboard);
-            dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
+            Name = scoreboardDTO.Name,
+            StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow,
+            EndedAt = scoreboardDTO.EndedAt,
+            Description = scoreboardDTO.Description,
+            Active = scoreboardDTO.Active
+        };
+
+        dbContext.ScoreBoards.Add(scoreboard);
+        dbContext.SaveChanges();
+        Console.WriteLine("✅ Scoreboard skapad med ID: " + scoreboard.ScoreboardId);
+
+        return StatusCode(StatusCodes.Status201Created, scoreboard);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ FEL vid databasinsättning: " + ex.Message);
+        return StatusCode(500, "Internt serverfel: " + ex.Message);
+    }
+}
+
+
+// ------------------------------------
+[HttpPut("{scoreboardId}")] // Uppdaterad route
+    public IActionResult UpdateScoreboard(int scoreboardId, [FromBody] ScoreboardDTO scoreboardDTO)
+    {
+        Console.WriteLine($"🔹 PUT-request mottagen för scoreboardId={scoreboardId}");
+
+        if (scoreboardDTO == null)
+        {
+            Console.WriteLine("⚠️ Ingen scoreboard-data mottagen!");
+            return BadRequest(new { message = "Invalid scoreboard data." });
         }
+
+        var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
+        if (scoreboard == null)
+        {
+            Console.WriteLine("⚠️ Scoreboard hittades inte!");
+            return NotFound(new { message = "Scoreboard not found." });
+        }
+
+        scoreboard.Name = scoreboardDTO.Name;
+        scoreboard.StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow;
+        scoreboard.EndedAt = scoreboardDTO.EndedAt;
+        scoreboard.Description = scoreboardDTO.Description;
+        scoreboard.Active = scoreboardDTO.Active;
+
+        dbContext.SaveChanges();
+        Console.WriteLine("✅ Scoreboard uppdaterad!");
+
+        return Ok(new { message = "Scoreboard updated successfully!" });
+    }
+
+
+
+// --------------------------------------
 
         [HttpGet("{scoreboardId}")]
         public IActionResult GetScoreboardById(int scoreboardId)
