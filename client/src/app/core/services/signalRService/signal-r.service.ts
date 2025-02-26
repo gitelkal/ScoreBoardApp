@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
-  public scoreUpdates = new BehaviorSubject<{ teamId: number; points: number } | null>(null);
+  public scoreUpdates = new BehaviorSubject<{scoreboardId: number; teamId: number; points: number } | null>(null);
 
   constructor() { }
 
@@ -22,9 +22,9 @@ export class SignalRService {
       .then(() => console.log('SignalR Connected'))
       .catch(err => console.log('Error while starting SignalR: ' + err));
 
-    this.hubConnection.on('ReceiveScoreUpdate', (teamId: number, points: number) => {
-      console.log(`Update received: Team ${teamId} now has ${points} points`);
-      this.scoreUpdates.next({ teamId, points });
+    this.hubConnection.on('ReceiveScoreUpdate', (scoreboardId: number,teamId: number, points: number) => {
+      console.log(`Update received: Team ${teamId} now has ${points} points in scorebard ${scoreboardId}`);
+      this.scoreUpdates.next({ scoreboardId, teamId, points });
     });
   }
 }

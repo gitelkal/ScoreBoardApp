@@ -1,0 +1,13 @@
+<div *ngIf="team$ | async as team">
+    <h1 class="text-2xl font-bold">{{ team.teamName }}</h1>
+
+    <h3 class="font-bold mt-4">Medlemmar:</h3>
+    <ul class="list-disc list-inside">
+        <li class="" *ngFor="let userName of team.users">
+            {{ userName }}
+        </li>
+    </ul>
+</div>
+
+
+

@@ -21,16 +21,22 @@ namespace server.Service
 
         public async Task<(LoginResponseModel? loginResponse, string? errorMessage)> Authenticate(LoginDTO request)
         {
-            var adminAccount = await _dbContext.Admins.FirstOrDefaultAsync(x => x.Username == request.Username);
-            if (!(adminAccount is not null && PasswordHashHandler.VerifyPassword(request.Password, adminAccount.Password)))
-                if (adminAccount == null)
-                {
-                    return (null, "Fel användarnamn");
-                }
+            var account = await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
+            var isAdmin = await _dbContext.Admins.FirstOrDefaultAsync(x => x.Username == request.Username);
+            Boolean admin = false;
 
-            if (!PasswordHashHandler.VerifyPassword(request.Password, adminAccount.Password))
+            if (!(account is not null && PasswordHashHandler.VerifyPassword(request.Password, account.PasswordHash)))
+            if (account == null)
+            {
+                return (null, "Fel användarnamn");
+            }
+            if (!PasswordHashHandler.VerifyPassword(request.Password, account.PasswordHash))
             {
                 return (null, "Fel lösenord");
+            }
+            if (isAdmin!=null)
+            {
+                admin = true;
             }
 
             var issuer = _configuration["JwtConfig:Issuer"];
@@ -56,12 +62,13 @@ namespace server.Service
             var accessToken = tokenHandler.WriteToken(securityToken);
             return (new LoginResponseModel
             {
-                ID = adminAccount.AdminID,
-                Firstname = adminAccount.Firstname,
-                Lastname = adminAccount.Lastname,
+                ID = account.UserId,
+                Firstname = account.Firstname,
+                Lastname = account.Lastname,
                 Username = request.Username,
                 Token = accessToken,
-                TokenExpiration = (int)tokenExpiryTimeStamp.Subtract(DateTime.Now).TotalSeconds
+                TokenExpiration = (int)tokenExpiryTimeStamp.Subtract(DateTime.Now).TotalSeconds,
+                admin = admin
             }, null);
         }
     }

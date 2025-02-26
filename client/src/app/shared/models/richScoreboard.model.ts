@@ -10,7 +10,7 @@ export interface RichScoreboard {
 }
 
 export interface RichTeam {
-    teamId: number;
+    teamID: number;
     teamName: string;
     points: number;
     lastUpdated: Date;
@@ -23,14 +23,13 @@ export interface RichUser {
 }
 
 
-
 export interface ScoreboardTeams {
     scoreboardTeamId: number;
     scoreboardId: number;
     teamId: number;
     points: number;
     lastUpdated: Date;
-    users: TeamUsers[]; // Include users inside teams
+    users: TeamUsers[]; 
 }
 
 export interface TeamUsers {
@@ -41,6 +40,15 @@ export interface TeamUsers {
 
 export interface ScoreboardResponse {
     scoreboard: RichScoreboard;
-    teams: ScoreboardTeams[];
+}
+
+export interface Scoreboard {
+    scoreboardId: number;
+    name: string;
+    description: string;
+    startedAt: Date;
+    endedAt: Date;
+    active: boolean;
+    teams: RichTeam[];
 }
 

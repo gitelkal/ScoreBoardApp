@@ -42,22 +42,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "server.Controllers.AdminsController",
-    "Method": "CreateAdmin",
-    "RelativePath": "api/Admins/Register",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "adminDTO",
-        "Type": "server.Entities.AdminDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "server.Controllers.LoginController",
     "Method": "Login",
     "RelativePath": "api/Login",
@@ -82,8 +66,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "adminDTO",
-        "Type": "server.Entities.AdminDTO",
+        "Name": "userDTO",
+        "Type": "server.Entities.UserDTO",
         "IsRequired": true
       }
     ],
@@ -115,6 +99,11 @@
       {
         "Name": "startedAt",
         "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "description",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -317,19 +306,14 @@
   {
     "ContainingType": "server.Controllers.TeamUsersController",
     "Method": "GetTeamUsers",
-    "RelativePath": "api/TeamUsers/{teamid}",
+    "RelativePath": "api/TeamUsers/{teamID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "teamID",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "teamid",
-        "Type": "",
         "IsRequired": true
       }
     ],
@@ -387,22 +371,6 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "server.Controllers.ScoreboardsController",
-    "Method": "GetRichScoreboardById",
-    "RelativePath": "rich/{scoreboardId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "scoreboardId",
         "Type": "System.Int32",
         "IsRequired": true
       }

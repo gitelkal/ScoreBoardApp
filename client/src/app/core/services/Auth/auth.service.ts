@@ -11,7 +11,8 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private readonly api: string;
   private readonly tokenKey = 'token';
-  adminLoggedIn = new BehaviorSubject<boolean>(false); 
+  isAdmin = new BehaviorSubject<boolean>(false); 
+  loggedIn = new BehaviorSubject<boolean>(false); 
   tokenExpirationDateTime: Date = new Date();
   timeUntilExpiration:number = 0;
   firstname: string = '';
@@ -29,8 +30,11 @@ export class AuthService {
         const expirationDate = new Date();
         expirationDate.setSeconds(expirationDate.getSeconds() + response.tokenExpiration);
         localStorage.setItem('tokenExpiration', expirationDate.toISOString());
-        this.adminLoggedIn.next(true);
-        console.log(response.username, "Logged in", this.adminLoggedIn);
+        if (response.admin) {
+          this.isAdmin.next(true);
+        }
+        this.loggedIn.next(true);
+        console.log(response.username, "Logged in", this.loggedIn);
         return response;
       }),
       catchError((error) => {
@@ -45,13 +49,14 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('tokenExpiration');
-    this.adminLoggedIn.next(false);
+    this.isAdmin.next(false);
+    this.loggedIn.next(false);
   }
 
   tokenExpirationCheck() {
     let token = localStorage.getItem(this.tokenKey);
     if (token) {
-      this.adminLoggedIn.next(true);
+      this.loggedIn.next(true);
     }
     let expirationTime = localStorage.getItem('tokenExpiration');
     if (expirationTime) {

@@ -127,7 +127,7 @@ public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
             // Fetch teams and users related to the scoreboard
             var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
                                   join t in dbContext.Teams on sbt.TeamID equals t.TeamID
-                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamId
+                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamID
                                   join u in dbContext.Users on tu.UserId equals u.UserId
                                   where sbt.ScoreboardID == scoreboardId
                                   group new { u } by new
@@ -147,7 +147,7 @@ public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
                                       Users = teamGroup.Select(x => new
                                       {
                                           x.u.UserId,
-                                          x.u.UserName
+                                          x.u.Username
                                       }).ToList()
                                   }).ToList();
 
