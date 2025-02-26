@@ -5,7 +5,7 @@ export interface TeamUsers {
       };
     users: {
     userId: number;
-    userName: string;
+    username: string;
     passwordHash: string;
     }[];
 }

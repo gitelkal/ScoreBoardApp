@@ -16,8 +16,8 @@ export class TeamUsersService {
   getTeamWithUsers(): Observable<TeamUsers[]> {
     return this.http.get<TeamUsers[]>(`${this.api}/TeamUsers/`);
   }
-  joinTeam(teamID: number, userID: number): Observable<any> {
-    return this.http.post(`${this.api}`, { teamID, userID });
+  joinTeam(userID: number, teamID: number): Observable<any> {
+    return this.http.post(`${this.api}/teamusers`, {userId: userID, teamId: teamID});
   }
 
 }

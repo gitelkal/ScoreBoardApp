@@ -29,5 +29,16 @@ export class TeamComponent {
   
   route = inject(ActivatedRoute);
 
+  joinTeam(userID: number, teamID: number): void {
+    this.teamUsersService.joinTeam(userID, teamID).subscribe({
+      next: (response) => {
+        console.log('Användare ' + userID + ' har lagts till i lag ' + teamID);
+      },
+    });
+  }
+  get userID(): number {
+    return this.authService.getUserID() ?? 0;  
+  }
+  
 }
 

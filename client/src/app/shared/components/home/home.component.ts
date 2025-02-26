@@ -14,7 +14,6 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  scores: { teamId: number; points: number }[] = [];
     scoreboardService = inject(ScoreboardService);
     getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
 }

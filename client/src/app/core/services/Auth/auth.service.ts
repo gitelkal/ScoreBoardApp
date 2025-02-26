@@ -30,11 +30,13 @@ export class AuthService {
         const expirationDate = new Date();
         expirationDate.setSeconds(expirationDate.getSeconds() + response.tokenExpiration);
         localStorage.setItem('tokenExpiration', expirationDate.toISOString());
+        localStorage.setItem('username', response.username);
+        localStorage.setItem('userID', response.id.toString());
+        this.loggedIn.next(true);
+        console.log(response.username, "Logged in", this.loggedIn);
         if (response.admin) {
           this.isAdmin.next(true);
         }
-        this.loggedIn.next(true);
-        console.log(response.username, "Logged in", this.loggedIn);
         return response;
       }),
       catchError((error) => {
@@ -49,6 +51,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userID');
     this.isAdmin.next(false);
     this.loggedIn.next(false);
   }
@@ -74,4 +78,13 @@ export class AuthService {
       }
     },360000); // 1 timme
   }
+  
+  getUserID() {
+    const userID = localStorage.getItem('userID');
+    return userID ? parseInt(userID, 10) : null;
+  }
+  getUsername() {
+    return localStorage.getItem('username');
+  }
+
 }

@@ -291,14 +291,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "teamId",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "server.Entities.AddUserToTeamRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -306,13 +301,13 @@
   {
     "ContainingType": "server.Controllers.TeamUsersController",
     "Method": "GetTeamUsers",
-    "RelativePath": "api/TeamUsers/{teamID}",
+    "RelativePath": "api/TeamUsers/{teamId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "teamID",
+        "Name": "teamId",
         "Type": "System.Int32",
         "IsRequired": true
       }

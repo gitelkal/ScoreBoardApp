@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using server.Data;
+using server.Entities;
 
 namespace server.Controllers
 
@@ -55,12 +56,12 @@ namespace server.Controllers
 
         }
         [HttpPost]
-        public IActionResult AddUserToTeam(int userId, int teamId)
+        public IActionResult AddUserToTeam([FromBody] AddUserToTeamRequest request)
         {
             var teamUser = new TeamUser
             {
-                UserId = userId,
-                TeamID = teamId
+                UserId = request.UserId,
+                TeamID = request.TeamId
             };
 
             dbContext.TeamUsers.Add(teamUser);

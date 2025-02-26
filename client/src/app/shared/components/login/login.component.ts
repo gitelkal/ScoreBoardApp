@@ -16,6 +16,7 @@ export class LoginComponent {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
   router = inject(Router);
+  userId: number = 0;
   username: string = '';
   password: string = '';
   firstname: string = '';
@@ -33,6 +34,7 @@ export class LoginComponent {
         next: response => {
           this.firstname = response.firstname;
           this.lastname = response.lastname;
+          this.userId = response.id;
           this.success.next(true);
           setTimeout(() => {
             this.dialog.closeAll();
