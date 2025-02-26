@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
-import { RichScoreboard,ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
+import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -52,8 +52,7 @@ export class ScoreboardDetailsComponent implements OnInit {
           const updatedTeams = currentScoreboard.scoreboard.teams.map(team => 
             team.teamID === update.teamId ? { ...team, points: update.points } : team
           );
-  
-          // ✅ Sort teams by points in descending order (highest score first)
+
           const sortedTeams = updatedTeams.sort((a, b) => b.points - a.points);
   
           this.scoreboardResonseSubject.next({
