@@ -19,7 +19,7 @@ export interface RichTeam {
 
 export interface RichUser {
     userId: number;
-    userName: string;
+    username: string;
 }
 
 

@@ -6,7 +6,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
-import { RichScoreboard,ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
+import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -39,7 +39,7 @@ export class ScoreboardDetailsComponent implements OnInit {
         return this.scoreboardService.getRichScoreboard(id!);
       })
     ).subscribe(ScoreboardResponse => {
-      this.scoreboardResonseSubject.next(ScoreboardResponse); // Load initial data
+      this.scoreboardResonseSubject.next(ScoreboardResponse); 
     });
   }
 
@@ -53,11 +53,13 @@ export class ScoreboardDetailsComponent implements OnInit {
             team.teamID === update.teamId ? { ...team, points: update.points } : team
           );
 
+          const sortedTeams = updatedTeams.sort((a, b) => b.points - a.points);
+  
           this.scoreboardResonseSubject.next({
             ...currentScoreboard,
             scoreboard: {
               ...currentScoreboard.scoreboard,
-              teams: updatedTeams
+              teams: sortedTeams
             }
           });
         }
