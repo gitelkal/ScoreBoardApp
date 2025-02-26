@@ -32,11 +32,12 @@ namespace server.Controllers
             return Ok(teamsUsers);
         }
 
-        [HttpGet("{teamID}")]
-        public IActionResult GetTeamUsers(int teamID)
+        [HttpGet]
+        [Route("{teamId}")]
+        public IActionResult GetTeamUsers(int teamId)
         {
             var teamUsers = dbContext.Teams
-                .Where(team => team.TeamID == teamID) 
+                .Where(team => team.TeamID == teamId) 
                 .Select(team => new
                 {
                     Team = team,
