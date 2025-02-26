@@ -1,8 +1,9 @@
 export interface Scoreboards {
-    scoreboardId: number;
+    scoreboardId?: number;  // Gör ID valfritt
     name: string;
-    description: string;
-    startedAt: Date;
-    endedAt: Date;
+    startedAt: string;
+    endedAt: string;
     active: boolean;
-}
+    description?: string;  // Gör description valfritt om det inte alltid behövs
+  }
+  

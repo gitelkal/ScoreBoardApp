@@ -1,98 +1,97 @@
-
-  <h2 class="text-4xl flex flex-wrap justify-center font-bold md:mb-4 ">Hantera lag</h2>
-  <div
-    class="flex flex-wrap justify-center space-x-6 md:w-full md:top-20px md:right-56 md:gap-1 md:ml-22 md:-mr-10 overflow-hidden mx-auto md:h-full"
+<h2 class="text-4xl flex flex-wrap justify-center font-bold md:mb-4">
+  Hantera lag
+</h2>
+<div
+  class="flex flex-wrap justify-center space-x-6 md:w-full md:top-20px md:right-56 md:gap-1 md:ml-22 md:-mr-10 overflow-hidden mx-auto md:h-full"
+>
+  <form
+    class="flex-1 md:w-1/6 max-w-md bg-white md:p-8 rounded-lg shadow-lg border border-black inline-block ng-untouched ng-pristine ng-valid"
   >
-    <form
-      class="flex-1 md:w-1/6 max-w-md bg-white md:p-8 rounded-lg shadow-lg border border-black inline-block ng-untouched ng-pristine ng-valid"
+    <!-- Lagnamn -->
+
+    <h2
+      class="md:text-xl font-bold md:mb-4 text-center text-black bg-red5 text-white md:py-2 rounded"
     >
-      <!-- Lagnamn -->
-      
-        <h2
-          class="md:text-xl font-bold md:mb-4 text-center text-black bg-red5 text-white md:py-2 rounded"
-        >
-          Skapa ett nytt lag
-        </h2>
-        <label for="name" class="block text-gray-700 font-semibold md:mb-1"
-          >Lagets namn:</label
-        >
+      Skapa ett nytt lag
+    </h2>
+    <label for="name" class="block text-gray-700 font-semibold md:mb-1"
+      >Lagets namn:</label
+    >
 
-        <input
-          placeholder="Lagnamn"
-          type="text"
-          id="name"
-          name="name"
-          [(ngModel)]="teamData.name"
-          required
-          class="border md:p-2 rounded md:w-full text-black"
-        />
-    
+    <input
+      placeholder="Lagnamn"
+      type="text"
+      id="name"
+      name="name"
+      [(ngModel)]="teamData.name"
+      required
+      class="border md:p-2 rounded md:w-full text-black"
+    />
 
-      <!-- Knapp: Skapa lag -->
+    <!-- Knapp: Skapa lag -->
+    <button
+      type="button"
+      (click)="createTeam()"
+      class="bg-red5 text-white text-center font-semibold md:py-2 md:px-4 rounded md:w-300px hover:bg-red-700 transition"
+    >
+      Skapa lag
+    </button>
+  </form>
+
+  <!-- Välj lag att radera -->
+
+  <form
+    class="flex-1 md:w-1/6 max-w-md bg-white md:p-8 rounded-lg shadow-lg border border-black inline-block"
+  >
+    <h2
+      class="text-xl font-bold md:mb-4 text-center text-black bg-red5 text-white md:py-2 rounded"
+    >
+      Ta bort ett lag
+    </h2>
+
+    <!-- 🔹 Välj eller skriv lag att radera -->
+    <div class="md:mb-4">
+      <label for="deleteTeam" class="block text-gray-700 font-semibold md:mb-0"
+        >Välj eller skriv lag att radera:</label
+      >
+
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        name="searchQuery"
+        (input)="filterTeams()"
+        (focus)="showDropdown = true"
+        
+        placeholder="Sök lag..."
+        class="border md:p-2 rounded md:w-full text-black"
+      />
+
+      <!-- 🔹 Dropdown-lista -->
+      <ul
+        *ngIf="showDropdown && filteredTeams.length > 0"
+        class="md:z-10 md:w-full bg-white border rounded shadow-md md:max-h-40 overflow-y-auto"
+      >
+        <li
+          *ngFor="let team of filteredTeams"
+          (click)="selectTeam(team)"
+          class="md:p-2 hover:bg-gray-200 cursor-pointer"
+        >
+          {{ team.teamName }}
+        </li>
+      </ul>
+
+      <!-- 🔹 Knapp: Ta bort lag -->
       <button
         type="button"
-        (click)="createTeam()"
-        class="bg-red5 text-white text-center font-semibold md:py-2 md:px-4 rounded md:w-300px hover:bg-red-700 transition"
+        (click)="deleteTeam()"
+        class="bg-red5 text-white font-semibold items-center md:py-2 md:px-4 rounded md:w-300px hover:bg-red-700 transition md:mt-5 md:mb-0"
       >
-        Skapa lag
+        Ta bort lag
       </button>
-    </form>
+    </div>
+  </form>
 
-    <!-- Välj lag att radera -->
-
-    <form
-      class="flex-1 md:w-1/6 max-w-md bg-white md:p-8 rounded-lg shadow-lg border border-black inline-block"
-    >
-      <h2
-        class="text-xl font-bold md:mb-4 text-center text-black bg-red5 text-white md:py-2 rounded"
-      >
-        Ta bort ett lag
-      </h2>
-
-      <!-- 🔹 Välj eller skriv lag att radera -->
-      <div class="md:mb-4" #dropdown>
-        <label
-          for="deleteTeam"
-          class="block text-gray-700 font-semibold md:mb-0"
-          >Välj eller skriv lag att radera:</label
-        >
-
-        <input
-          type="text"
-          [(ngModel)]="searchQuery"
-          name="searchQuery"
-          (input)="filterTeams()"
-          (focus)="showDropdown = true"
-          placeholder="Sök lag..."
-          class="border md:p-2 rounded md:w-full text-black"
-        />
-
-        <!-- 🔹 Dropdown-lista -->
-        <ul
-          *ngIf="showDropdown && filteredTeams.length > 0"
-          class="md:z-10 md:w-full bg-white border rounded shadow-md md:max-h-40 overflow-y-auto"
-        >
-          <li
-            *ngFor="let team of filteredTeams"
-            (click)="selectTeam(team)"
-            class="md:p-2 hover:bg-gray-200 cursor-pointer"
-          >
-            {{ team.teamName }}
-          </li>
-        </ul>
-
-        <!-- 🔹 Knapp: Ta bort lag -->
-        <button
-          type="button"
-          (click)="deleteTeam()"
-          class="bg-red5 text-white font-semibold items-center md:py-2 md:px-4 rounded md:w-300px hover:bg-red-700 transition md:mt-5 md:mb-0"
-        >
-          Ta bort lag
-        </button>
-      </div>
-    </form>
-
-    <!--  <div class="w-full flex flex-col">
+  <!--  <div class="w-full flex flex-col">
       <form
         class="w-1/6 max-w-md bg-white p-8 rounded-lg shadow-md border border-black relative top-30 right-22 bottom-32 left-90"
       >
@@ -112,5 +111,4 @@
       </form>
     </div> 
   </div>-->
-  </div>
-
+</div>
