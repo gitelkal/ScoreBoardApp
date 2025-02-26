@@ -88,7 +88,7 @@ namespace server.Controllers
                                       Users = teamGroup.Select(x => new
                                       {
                                           x.u.UserId,
-                                          x.u.UserName
+                                          x.u.Username
                                       }).ToList()
                                   }).ToList();
 

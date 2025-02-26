@@ -1,21 +1,33 @@
 <div class="flex flex-wrap justify-center"> 
-    <div class="items-center flex flex-wrap mt-8">
-        <ul class="flex flex-wrap justify-between gap-y-4" *ngIf="getAllTeams$ | async as teams">
-            <li class=" pr-4 pt-4" *ngFor="let team of teams">
-                <a [routerLink]="['/team', team.teamID]">
-                    <div class="rounded-xl shadow-xl bg-gray-100">
-                        <!--img class="rounded-t-xl w-full h-36 object-cover" src="https://m.media-amazon.com/images/I/71MYezvnohL._AC_SL1500_.jpg" alt="{{ team.teamName }}"/-->
-                        <div class="flex flex-col p-7">
-                            <h2 class="text-xl font-bold truncate mt-1">{{ team.teamName }}</h2>
-                            <p class="text-base text-gray-600 mt-1">Visa medlemmar(?)</p>
-                            <div class="flex flex-row mt-5 item-center justify-start">
-                                <div class="rounded-2xl mr-2"></div>
-                                <div class="font-bold text-sm mr-2">Visa om laget är aktivt(?)</div>
-                                <div class="text-gray-600 text-sm">Poäng?</div>
-                            </div>
+    <div class="w-3/4 items-center flex flex-wrap mt-4">
+        <div *ngIf="(isAdmin | async) === true">
+            <a routerLink="/team/create">
+                <button class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold">Skapa nytt lag</button>
+            </a>
+        </div>
+        <ul class="flex flex-wrap justify-between gap-y-4" *ngIf="getAllTeamUsers$ | async as teams">
+            <li class="px-4 pb-4 h-64" *ngFor="let team of teams">
+                <div class="rounded-xl shadow-xl bg-gray-100 h-full">
+                    <!--img class="rounded-t-xl w-full h-36 object-cover" src="https://m.media-amazon.com/images/I/71MYezvnohL._AC_SL1500_.jpg" alt="{{ team.teamName }}"/-->
+                    <div class="flex flex-col p-7">
+                        <h2 class="text-xl font-bold truncate mt-1" [routerLink]="['/team', team.team.teamID]">{{ team.team.teamName }}</h2>
+                        <ul class="h-36">
+                            <li *ngFor="let user of team.users; let i = index">
+                                <p class="text-base text-gray-600 mt-1">{{ user.userName }}</p>
+                                <!-- <p class="text-base text-gray-600 mt-1" *ngIf="i > 3">...</p> -->
+                                <p class="text-base text-gray-600 mt-1" *ngIf="team.users.length === 0">Inga medlemmar ännu...</p>
+                            </li>
+                        </ul>
+                        <div>
+                            <button class="bg-green-500 text-white1 text center w-full" >Gå med i lag</button>
+                        </div>
+                        <div class="flex flex-row item-center justify-start">
+                            <div class="rounded-2xl mr-2"></div>
+                            <div class="font-bold text-sm mr-2">Visa om laget är aktivt(?)</div>
+                            <div class="text-gray-600 text-sm">Poäng?</div>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         </ul>
     </div>
