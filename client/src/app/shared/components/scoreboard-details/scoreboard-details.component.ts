@@ -39,7 +39,7 @@ export class ScoreboardDetailsComponent implements OnInit {
         return this.scoreboardService.getRichScoreboard(id!);
       })
     ).subscribe(ScoreboardResponse => {
-      this.scoreboardResonseSubject.next(ScoreboardResponse); // Load initial data
+      this.scoreboardResonseSubject.next(ScoreboardResponse); 
     });
   }
 
@@ -52,12 +52,15 @@ export class ScoreboardDetailsComponent implements OnInit {
           const updatedTeams = currentScoreboard.scoreboard.teams.map(team => 
             team.teamID === update.teamId ? { ...team, points: update.points } : team
           );
-
+  
+          // ✅ Sort teams by points in descending order (highest score first)
+          const sortedTeams = updatedTeams.sort((a, b) => b.points - a.points);
+  
           this.scoreboardResonseSubject.next({
             ...currentScoreboard,
             scoreboard: {
               ...currentScoreboard.scoreboard,
-              teams: updatedTeams
+              teams: sortedTeams
             }
           });
         }

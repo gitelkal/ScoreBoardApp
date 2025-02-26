@@ -49,7 +49,6 @@ namespace server.Controllers
         [HttpPut("{scoreboardId}/{teamId}/add-points")]
         public async Task<IActionResult> AddPointsToTeamAsync(int scoreboardId, int teamId, int pointsToAdd)
         {
-            // Find the scoreboard team based on scoreboardId and teamId
             var scoreboardTeam = dbContext.ScoreboardTeams
                 .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
 
@@ -58,11 +57,9 @@ namespace server.Controllers
                 return NotFound(new { message = "Team not found in the scoreboard" });
             }
 
-            // Add the points to the team
             scoreboardTeam.Points = (scoreboardTeam.Points ?? 0) + pointsToAdd;
             scoreboardTeam.LastUpdated = DateTime.UtcNow;
 
-            // Save changes to the database
             dbContext.SaveChanges();
 
             // Send the updated points to all connected clients
@@ -70,6 +67,29 @@ namespace server.Controllers
 
             return Ok(scoreboardTeam);
         }
+
+        [HttpPut("{scoreboardId}/{teamId}/set-points")]
+        public async Task<IActionResult> SetPointsToTeamAsync(int scoreboardId, int teamId, int pointsToSet)
+        {
+            var scoreboardTeam = dbContext.ScoreboardTeams
+                .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
+
+            if (scoreboardTeam == null)
+            {
+                return NotFound(new { message = "Team not found in the scoreboard" });
+            }
+
+            scoreboardTeam.Points = pointsToSet;
+            scoreboardTeam.LastUpdated = DateTime.UtcNow;
+
+            dbContext.SaveChanges();
+
+            // Send the updated points to all connected clients
+            await _hubContext.Clients.All.SendAsync("ReceiveScoreUpdate", scoreboardTeam.ScoreboardID, scoreboardTeam.TeamID, scoreboardTeam.Points);
+
+            return Ok(scoreboardTeam);
+        }
+
 
         [HttpPost]
         public IActionResult AddTeamToScoreboard(int teamId, int scoreboardId)
