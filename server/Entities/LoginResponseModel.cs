@@ -8,5 +8,6 @@
         public string Lastname { get; set; }
         public string Token { get; set; }
         public int TokenExpiration { get; set; }
+        public bool admin { get; set; }
     }
 }

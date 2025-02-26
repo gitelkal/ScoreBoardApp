@@ -23,7 +23,7 @@ namespace server.Controllers
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamId == team.TeamID)
+                        .Where(tu => tu.TeamID == team.TeamID)
                         .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
                         .ToList()
                 })
@@ -42,7 +42,7 @@ namespace server.Controllers
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamId == team.TeamID) 
+                        .Where(tu => tu.TeamID == team.TeamID) 
                         .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
                         .ToList()
                 })
@@ -60,7 +60,7 @@ namespace server.Controllers
             var teamUser = new TeamUser
             {
                 UserId = userId,
-                TeamId = teamId
+                TeamID = teamId
             };
 
             dbContext.TeamUsers.Add(teamUser);

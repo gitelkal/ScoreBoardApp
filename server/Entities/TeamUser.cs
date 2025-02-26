@@ -10,7 +10,7 @@ public class TeamUser
     [JsonIgnore]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int TeamUserId { get; set; }  
-    public int TeamId { get; set; }  
+    public int TeamID { get; set; }  
     public int UserId { get; set; }  
     public Team Team { get; set; }
     public User User { get; set; }

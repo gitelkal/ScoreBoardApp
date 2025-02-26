@@ -35,4 +35,12 @@ export class TeamService {
   public deleteTeam(teamId: number): Observable<any> {
     return this.http.delete(`${this.api}/teams/${teamId}`);
   }
+
+
+  public getTeamWithUsers(): Observable<any> {
+    return this.http.get<any>(`${this.api}/TeamUsers/`)
+    
+  }
+  
+  
 }

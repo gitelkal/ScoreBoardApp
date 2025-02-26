@@ -17,12 +17,14 @@ import { Observable } from 'rxjs';
 export class HeaderComponent {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
-  adminLoggedIn!: Observable<boolean>;
+  isAdmin!: Observable<boolean>;
+  loggedIn!: Observable<boolean>;
   
   constructor() {
     if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
       this.authService.tokenExpirationCheck();
-      this.adminLoggedIn = this.authService.adminLoggedIn;
+      this.isAdmin = this.authService.isAdmin;
+      this.loggedIn = this.authService.loggedIn;
     }
   }
   
