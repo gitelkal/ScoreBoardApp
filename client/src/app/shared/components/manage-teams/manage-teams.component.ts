@@ -13,6 +13,7 @@ import { NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { TeamService } from '@app/core/services/teamService/team.service';
 
+
 @Component({
   selector: 'app-manage-teams',
   standalone: true,
@@ -25,16 +26,19 @@ export class ManageTeamsComponent implements OnInit {
 
   @Output() teamCreated = new EventEmitter<any>();
   @Output() teamDeleted = new EventEmitter<number>();
-
+  sortBy: string = 'name';
   teams: any[] = [];
   filteredTeams: any[] = [];
-  searchQuery: string = '';
   showDropdown: boolean = false;
-  selectedTeamId?: number;
-  selectedTeamName?: string;
-  teamData: { teamID: number; name: string } = { teamID: 0, name: '' }; // Standardvärde
+  selectedTeam: any = { teamID: null, teamName: '' };
+
+
+  searchManageQuery: string = '';  // För hantera lag (ändra/tar bort)
+  searchListQuery: string = '';    // För listan "Sök efter Teams"
+
 
   @ViewChild('dropdown') dropdown!: ElementRef;
+
 
   ngOnInit() {
     this.fetchTeams();
@@ -52,31 +56,21 @@ export class ManageTeamsComponent implements OnInit {
     );
   }
 
-  // 🔹 Skapa nytt lag
-
+  //Skapa nytt lag
   createTeam() {
-    if (!this.teamData || !this.teamData.name.trim()) {
+    if (!this.selectedTeam.teamName.trim()) {
       alert('Lagnamn krävs!');
       return;
     }
 
-    const payload = { teamID: 0, teamName: this.teamData.name };
-
-    console.log('📤 Skickar till backend:', JSON.stringify(payload, null, 2));
+    const payload = { teamID: 0, teamName: this.selectedTeam.teamName };
 
     this.teamService.createTeam(payload).subscribe(
       (response) => {
         console.log('✅ Lagt till lag:', response);
-
-        if (response) {
-          console.log(`Nytt lag skapat:`, response);
-          this.fetchTeams(); // Uppdatera listan
-          this.teamCreated.emit(response);
-          this.teamData = { teamID: 0, name: '' }; // Återställ formuläret
-        } else {
-          console.warn(' API returnerade null! Kolla backend.');
-          alert('API returnerade null. Kontrollera backend.');
-        }
+        this.fetchTeams();
+        this.teamCreated.emit(response);
+        this.selectedTeam = { teamID: null, teamName: '' };
       },
       (error) => {
         console.error('Fel vid skapande av lag:', error);
@@ -85,44 +79,59 @@ export class ManageTeamsComponent implements OnInit {
     );
   }
 
-  // 🔹 Filtrera lag i sökrutan
-  filterTeams() {
-    if (!this.searchQuery.trim()) {
-      this.filteredTeams = [];
-      this.showDropdown = false;
-      return;
-    }
-
-    this.filteredTeams = this.teams.filter((team) =>
-      team.teamName.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
-
-    this.showDropdown = this.filteredTeams.length > 0;
+  // Filtrera lag i sökrutan
+  filterManageTeams() {
+    this.filteredTeams = this.searchManageQuery.trim()
+      ? this.teams.filter(team =>
+          team.teamName.toLowerCase().includes(this.searchManageQuery.toLowerCase())
+        )
+      : [...this.teams];
   }
+  
+  filterTeamList() {
+    this.filteredTeams = this.searchListQuery.trim()
+      ? this.teams.filter(team =>
+          team.teamName.toLowerCase().includes(this.searchListQuery.toLowerCase())
+        )
+      : [...this.teams];
+  }
+  
+
+
+  get sortedTeams() {
+    return [...(this.filteredTeams || [])].sort((a, b) => 
+      this.sortBy === 'name' ? a.teamName.localeCompare(b.teamName) : 0
+    );
+  }
+  
+  
+
+
+
+
 
   // 🔹 Välj lag från dropdown
   selectTeam(team: any) {
-    console.log('Lag valt:', team); // 🔹 Debugging – ser vi detta i konsolen?
-
-    this.searchQuery = team.teamName; // 🔹 Fyller i sökfältet
-    this.selectedTeamId = team.teamID; // 🔹 Sparar ID för borttagning
-    this.showDropdown = false; // 🔹 Stänger dropdownen
+    if (!team || this.selectedTeam.teamID === team.teamID) return;
+    this.selectedTeam = { ...team };
+    this.searchManageQuery = team.teamName; 
   }
+  
+  
 
   // 🔹 Ta bort lag
   deleteTeam() {
-    if (!this.selectedTeamId) {
+    if (!this.selectedTeam.teamID) {
       alert('Välj ett lag att radera!');
       return;
     }
-    this.teamService.deleteTeam(this.selectedTeamId).subscribe(
-      () => {
-        console.log('✅ Lag raderat:', this.selectedTeamId);
-        this.fetchTeams(); // Uppdatera listan efter radering
-        this.teamDeleted.emit(this.selectedTeamId!);
 
-        this.searchQuery = ''; // 🔹 Rensa inputfältet efter radering
-        this.selectedTeamId = undefined;
+    this.teamService.deleteTeam(this.selectedTeam.teamID).subscribe(
+      () => {
+        console.log('✅ Lag raderat:', this.selectedTeam.teamID);
+        this.fetchTeams();
+        this.teamDeleted.emit(this.selectedTeam.teamID);
+        this.selectedTeam = { teamID: null, teamName: '' }; // Återställ formulär
       },
       (error) => {
         console.error('Fel vid borttagning av lag:', error);
@@ -131,15 +140,41 @@ export class ManageTeamsComponent implements OnInit {
     );
   }
 
+  // 🔹 Uppdatera lag
+  updateTeam() {
+    if (!this.selectedTeam.teamID || !this.selectedTeam.teamName.trim()) {
+      alert('Välj ett lag och ange ett nytt namn!');
+      return;
+    }
+
+    this.teamService.updateTeam(this.selectedTeam.teamID, this.selectedTeam).subscribe(
+      (response) => {
+        console.log('✅ Lag uppdaterat:', response);
+        this.fetchTeams();
+        alert('Lag uppdaterat!');
+      },
+      (error) => {
+        console.error('Fel vid uppdatering av lag:', error);
+        alert('Ett fel uppstod vid uppdatering.');
+      }
+    );
+  }
+
   // 🔹 Stänger dropdown om du klickar utanför
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event) {
-    if (!this.dropdown?.nativeElement.contains(event.target)) {
-      this.showDropdown = false;
+    const clickedElement = event.target as HTMLElement;
+    console.log('Klickat element:', clickedElement);
+    if (
+      this.dropdown?.nativeElement.contains(clickedElement) || 
+      clickedElement.getAttribute('name') === 'searchQuery' || 
+      clickedElement.getAttribute('name') === 'name' ||
+      clickedElement.getAttribute('name') === 'editname'
+    ) {
+      console.log('Dropdown ska vara kvar öppen');
+      return; 
     }
+    console.log('Dropdown stängs');
+    this.showDropdown = false; 
   }
-
-  // resetForm() {
-  //   this.teamData = { id: 0, name: '' };
-  // }
 }

@@ -2,10 +2,15 @@
 .vs/
 *.vsidx
 *.vscode/
+*.vsidx
+.idea/
+*.suo
 
 # Ignore build output
 bin/
 obj/
+Debug/
+Release/
 *.exe
 *.dll
 *.pdb
@@ -15,6 +20,9 @@ obj/
 *.lock.json
 *.cache
 *.log
+*.nuget/
+*.nupkg
+*.editorconfig
 
 # Ignore package dependencies
 packages/
@@ -61,3 +69,5 @@ docker-compose.override.yml
 *.deploy
 *.publish/
 *.pfx
+
+
