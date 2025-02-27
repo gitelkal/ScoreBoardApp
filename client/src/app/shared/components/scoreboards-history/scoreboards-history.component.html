@@ -1,13 +1,12 @@
-<div class="flex flex-wrap justify-center" style="height: 100vh; background-image: url(../../../../assets/images/bakgrund-home.png) ;background-size: cover; background-position: center;"> 
+<div class="flex flex-wrap justify-center fin-bakgrund"> 
     <div class="w-3/4 items-center flex flex-wrap mt-4">
         <div class="w-1/3">
           <h2 class=" bg-red1 text-white1 text-center text-3xl p-7 font-semibold">
-            Välkommen till Trafikverkets poängtavlor! <br>
-            Här är de gamla poängtavlorna:
+            Gamla poängtavlor:
           </h2>
         </div>
-        <ul class="grid grid-cols-2 gap-4 mt-4" *ngIf="getAllScoreboards$ | async as scoreboards">
-            <li *ngFor="let scoreboard of scoreboards">
+        <ul class="grid grid-cols-2 gap-4 mt-4 w-full" *ngIf="getAllScoreboards$ | async as scoreboards">
+            <li class="rounded-sm" *ngFor="let scoreboard of scoreboards">
                 <a routerLink="/scoreboard/{{ scoreboard.scoreboardId }}">
                     <div class="shadow-lg bg-white1">
                         <div class="h-16  bg-red5 flex items-center justify-center px-4 hover:bg-red4 cursor-pointer">

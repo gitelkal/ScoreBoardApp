@@ -1,40 +1,59 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TeamService } from '@app/core/services/teamService/team.service';
-import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
-import { switchMap, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { response } from 'express';
-import { userInfo } from 'os';
+import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
+import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
+import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { ScoreboardTeamsResponseOne } from '@app/shared/models/scoreboardTeamsOne.model'
+import { TeamUsers } from '@app/shared/models/teamUser.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-team-details',
-  imports: [NgIf, NgFor, AsyncPipe],
+  imports: [NgIf, NgFor, AsyncPipe, DatePipe, RouterLink],
   templateUrl: './team-details.component.html',
   styleUrl: './team-details.component.css'
 })
 export class TeamDetailsComponent {
 
-  teamService = inject(TeamService);
+  teamUsersService = inject(TeamUsersService);
+  scoreboardTeamsService = inject(ScoreboardTeamsService);
+  // getOneTeamWithUsers$: Observable<any> | undefined;
+  // getOneScoreboardTeam$: Observable<any> | undefined;
+  
+  scoreboardTeamsResonseSubject = new BehaviorSubject<ScoreboardTeamsResponseOne[] | null>(null);
+  teamUsersResonseSubject = new BehaviorSubject<TeamUsers | null>(null);
+  getOneScoreboardTeam$ = this.scoreboardTeamsResonseSubject.asObservable();
+  getOneTeamWithUsers$ = this.teamUsersResonseSubject.asObservable();
+
   route = inject(ActivatedRoute);
 
-  team$: Observable<any>;
-
-  constructor() {
-    this.team$ = this.route.paramMap.pipe(
-      switchMap(params => 
-        this.teamService.getTeamWithUsers().pipe(
-          map((teams: any[]) => {
-            const teamID = Number(params.get('teamID'));
-            const team = teams.find(t => t.team.teamID === teamID);
-            return team ? { 
-              teamName: team.team.teamName,
-              users: team.users.map((user: any) => user.userName)
-            } : null;
-        })
-      )
-    )
-    );
+  ngOnInit() {
+    this.loadInitialScoreboardTeam();
+    this.loadInitialTeamWithUsers();
   }
+
+  loadInitialScoreboardTeam() {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('teamID');
+        return this.scoreboardTeamsService.getOneScoreboardTeam(id!);
+      })
+    ).subscribe(scoreboardResponse => {
+      this.scoreboardTeamsResonseSubject.next(scoreboardResponse);
+    });
+  }
+
+  loadInitialTeamWithUsers() {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('teamID');
+        return this.teamUsersService.getOneTeamWithUsers(id!);
+      })
+    ).subscribe(TeamUsersResponse => {
+      this.teamUsersResonseSubject.next(TeamUsersResponse);
+      console.log(TeamUsersResponse);
+    });
+  }
+
 }
