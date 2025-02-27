@@ -1,36 +1,38 @@
-<div style="width: 100%">
-  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url(../../../../assets/images/bakgrund-home.png); background-size: cover; z-index: -1;"></div>
+<div class="w-full relative">
+  <!-- Full-page background -->
+  <div class="fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1] backdrop-blur-override" 
+       style="background-image: url(../../../../assets/images/bakgrund-home.png);"></div>
 
   <div>
-    <div *ngIf="getRichScoreboard$ | async as richScoreboard" class="text-center p-6 rounded-lg shadow-lg">
-      <div class="bg-gradient-to-r from-sky-400 to-purple-400 p-6 rounded-xl shadow-xl border border-gray-300 max-w-2xl mx-auto">
-        <h2 class="text-4xl font-extrabold text-gray-800 mb-4">{{ richScoreboard.scoreboard.name }}</h2>
-        
-        <p class="text-gray-700 mb-2 text-xl">
+    <div *ngIf="getRichScoreboard$ | async as richScoreboard" class="text-center p-4 rounded-lg shadow-override">
+      <div class="bg-gradient-to-r from-sky-400 to-purple-400 p-4 rounded-lg shadow-override border border-gray-300 max-w-md mx-auto frosted-container">
+        <h2 class="text-2xl font-bold text-gray-800 mb-3">{{ richScoreboard.scoreboard.name }}</h2>
+
+        <p class="text-gray-700 mb-1 text-base">
           <span class="font-semibold text-gray-900">
-            {{ richScoreboard.scoreboard.startedAt | date: 'EEEE, MMMM d, y' }}
+            {{ richScoreboard.scoreboard.startedAt | date: 'EEEE, MMM d, y' }}
           </span>
         </p>
 
-        <p *ngIf="richScoreboard.scoreboard.endedAt" class="text-gray-700 mb-2 text-xl">  
+        <p *ngIf="richScoreboard.scoreboard.endedAt" class="text-gray-700 mb-1 text-base">  
           End Date: <span class="font-semibold text-gray-900">
-            {{ richScoreboard.scoreboard.endedAt | date: 'EEEE, MMMM d, y' }}
+            {{ richScoreboard.scoreboard.endedAt | date: 'EEEE, MMM d, y' }}
           </span>
         </p>
-        
-        <p class="font-semibold mb-4 text-lg" 
-          [ngClass]="{ 'text-green-600': richScoreboard.scoreboard.active, 'text-red-600': !richScoreboard.scoreboard.active }">
+
+        <p class="font-semibold mb-3 text-sm" 
+          [ngClass]="{ 'text-green-600 pulse': richScoreboard.scoreboard.active, 'text-red-600': !richScoreboard.scoreboard.active }">
           {{ richScoreboard.scoreboard.active ? 'Active' : 'Inactive' }}
         </p>
-        
-        <p class="text-xl font-medium text-gray-800 mb-6">
+
+        <p class="text-base font-medium text-gray-800">
           Total Teams: <span class="text-gray-600 font-semibold">{{ richScoreboard.scoreboard.teams.length }}</span>
         </p>
       </div>
 
-      <div class="scrollable-container">
+
         <div *ngFor="let team of richScoreboard.scoreboard.teams; let i = index" 
-          class="relative overflow-hidden rounded-xl border p-6 my-4 shadow-md cursor-pointer transition-all max-w-2xl mx-auto fade-in"
+          class="relative overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container"
           (click)="toggleDropdown(i)"  
           [ngClass]="{  
             'first-place': i === 0, 
@@ -39,10 +41,10 @@
             'default-team-color': i > 2
           }"> 
 
-          <div class="relative z-10 flex items-center justify-between px-4 py-2 padding-top:">
-            <span class="text-xl font-bold text-gray-900">{{ i + 1 }}.</span>
-            <h3 class="text-2xl font-bold flex-1 text-center text-gray-900">{{ team.teamName }}</h3>
-            <p class="text-lg font-semibold text-gray-900">{{ team.points }}</p> 
+          <div class="relative z-10 flex items-center justify-between px-3 py-2">
+            <span class="text-lg font-bold text-gray-900">{{ i + 1 }}.</span>
+            <h3 class="text-lg font-bold flex-1 text-center text-gray-900">{{ team.teamName }}</h3>
+            <p class="text-base font-semibold text-gray-900">{{ team.points }}</p> 
           </div>
 
           <!-- Shimmer effect overlays --> 
@@ -50,14 +52,26 @@
           <div *ngIf="i === 1" class="moving-glow"></div>
           <div *ngIf="i === 2" class="subtle-glow"></div> 
 
-          <!-- Dropdown for users (Moved inside) -->  
-          <div *ngIf="openTeamIndex === i" class="mt-2 rounded-md shadow-lg p-4 bg-gray-100"> 
-            <div class="flex flex-wrap justify-center gap-4 text-center"> 
-              <span *ngFor="let user of team.users" class="text-gray-700">{{ user.username }}</span> 
+          <!-- Dropdown for users -->
+          <div *ngIf="openTeamIndex === i" class="mt-2 rounded-md shadow-override p-3 bg-gray-100 bg-opacity-90 frosted-container"> 
+            <div class="flex flex-wrap justify-center gap-2 text-center"> 
+              <span *ngFor="let user of team.users" class="text-gray-700 text-sm">{{ user.username }}</span> 
+              <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300">
+                + Add User
+              </button>
             </div>   
           </div>
         </div> <!-- Closes *ngFor loop -->
-      </div> <!-- Closes Scrollable Container -->
+
+        <!-- Row for the Plus Button -->
+        <div class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container">
+          <div class="relative z-10 flex items-center justify-center px-3 py-2">
+            <button class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black">
+              + Add team 
+            </button>  
+          </div> 
+        </div>
+
     </div>
   </div>
 </div>
