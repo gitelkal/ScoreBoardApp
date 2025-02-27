@@ -7,4 +7,12 @@ public class ScoreboardHub : Hub
     {
         await Clients.All.SendAsync("ReceiveScoreUpdate", ScoreboardId, newPoints);
     }
+    public async Task NotifyUserJoinedTeam(int teamId, int userId)
+    {
+        await Clients.All.SendAsync("UserJoinedTeam", teamId, userId);
+    }
+    public async Task NotifyScoreboardCreated(int scoreboardId)
+    {
+        await Clients.All.SendAsync("ScoreboardCreated", scoreboardId);
+    }
 }

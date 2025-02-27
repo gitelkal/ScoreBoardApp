@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using server.Data;
 using server.Entities;
 namespace server.Controllers
@@ -9,10 +10,12 @@ namespace server.Controllers
     public class ScoreboardsController : ControllerBase
     {
         private readonly ServerDbContext dbContext;
+        private readonly IHubContext<ScoreboardHub> _hubContext;
 
-        public ScoreboardsController(ServerDbContext dbContext)
+        public ScoreboardsController(ServerDbContext dbContext, IHubContext<ScoreboardHub> hubContext)
         {
             this.dbContext = dbContext;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -24,78 +27,79 @@ namespace server.Controllers
 
 
 
-[HttpPost]
-public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
-{
-
-    if (scoreboardDTO == null)
-    {
-        return BadRequest("Scoreboard-data saknas.");
-    }
-
-    try
-    {
-        var scoreboard = new Scoreboard
+        [HttpPost]
+        public async Task <IActionResult> CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
         {
-            Name = scoreboardDTO.Name,
-            StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow,
-            EndedAt = scoreboardDTO.EndedAt,
-            Description = scoreboardDTO.Description,
-            Active = scoreboardDTO.Active
-        };
 
-        dbContext.ScoreBoards.Add(scoreboard);
-        dbContext.SaveChanges();
+            if (scoreboardDTO == null)
+            {
+                return BadRequest("Scoreboard-data saknas.");
+            }
 
-        return StatusCode(StatusCodes.Status201Created, scoreboard);
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, "Internt serverfel: " + ex.Message);
-    }
-}
+            try
+            {
+                var scoreboard = new Scoreboard
+                {
+                    Name = scoreboardDTO.Name,
+                    StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow,
+                    EndedAt = scoreboardDTO.EndedAt,
+                    Description = scoreboardDTO.Description,
+                    Active = scoreboardDTO.Active
+                };
 
+                dbContext.ScoreBoards.Add(scoreboard);
+                dbContext.SaveChanges();
 
-// ------------------------------------
-[HttpPut("{scoreboardId}")] 
-    public IActionResult UpdateScoreboard(int scoreboardId, [FromBody] ScoreboardDTO scoreboardDTO)
-    {
-        if (scoreboardDTO == null)
-        {
-            return BadRequest(new { message = "Invalid scoreboard data." });
+                await _hubContext.Clients.All.SendAsync("ReceiveScoreboardCreation", scoreboard.ScoreboardId);
+
+                return StatusCode(StatusCodes.Status201Created, scoreboard);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internt serverfel: " + ex.Message);
+            }
         }
 
-        var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
-        if (scoreboard == null)
+
+        [HttpPut("{scoreboardId}")] 
+            public IActionResult UpdateScoreboard(int scoreboardId, [FromBody] ScoreboardDTO scoreboardDTO)
+            {
+                if (scoreboardDTO == null)
+                {
+                    return BadRequest(new { message = "Invalid scoreboard data." });
+                }
+
+                var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
+                if (scoreboard == null)
+                {
+                    return NotFound(new { message = "Scoreboard not found." });
+                }
+
+                scoreboard.Name = scoreboardDTO.Name;
+                scoreboard.StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow;
+                scoreboard.EndedAt = scoreboardDTO.EndedAt;
+                scoreboard.Description = scoreboardDTO.Description;
+                scoreboard.Active = scoreboardDTO.Active;
+
+                dbContext.SaveChanges();
+
+                return Ok(new { message = "Scoreboard updated successfully!" });
+            }
+
+        [HttpDelete("{scoreboardId}")]
+        public IActionResult DeleteScoreboard(int scoreboardId)
         {
-            return NotFound(new { message = "Scoreboard not found." });
-        }
+            var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
+            if (scoreboard == null)
+            {
+                return NotFound(new { message = "Scoreboard not found." });
+            }
 
-        scoreboard.Name = scoreboardDTO.Name;
-        scoreboard.StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow;
-        scoreboard.EndedAt = scoreboardDTO.EndedAt;
-        scoreboard.Description = scoreboardDTO.Description;
-        scoreboard.Active = scoreboardDTO.Active;
-
-        dbContext.SaveChanges();
-
-        return Ok(new { message = "Scoreboard updated successfully!" });
-    }
-
-[HttpDelete("{scoreboardId}")]
-public IActionResult DeleteScoreboard(int scoreboardId)
-{
-    var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
-    if (scoreboard == null)
-    {
-        return NotFound(new { message = "Scoreboard not found." });
-    }
-
-    dbContext.ScoreBoards.Remove(scoreboard);
-    dbContext.SaveChanges();
+            dbContext.ScoreBoards.Remove(scoreboard);
+            dbContext.SaveChanges();
     
-    return Ok(new { message = "Scoreboard deleted successfully!" });
-}
+            return Ok(new { message = "Scoreboard deleted successfully!" });
+        }
 
 
 // --------------------------------------
