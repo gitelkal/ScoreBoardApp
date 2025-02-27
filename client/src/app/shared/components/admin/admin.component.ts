@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '@app/core/services/AdminService/admin.service';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; // ✅ Lägg till denna!
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; // 
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
 import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboard.component';
-import { AddScoreboardComponent } from '../add-scoreboard/add-scoreboard.component';
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -15,7 +14,7 @@ import { AddScoreboardComponent } from '../add-scoreboard/add-scoreboard.compone
     NgFor,
     FormsModule,
     ManageTeamsComponent,
-    ManageScoreboardComponent,AddScoreboardComponent
+    ManageScoreboardComponent,
 
   ],
   providers: [AdminService, ScoreboardService], 

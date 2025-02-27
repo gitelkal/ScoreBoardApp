@@ -3,9 +3,14 @@
 *.vsidx
 *.vscode/
 
+# Ignore Rider files
+.idea/
+
 # Ignore build output
 bin/
 obj/
+server/Debug/
+server/Release/
 *.exe
 *.dll
 *.pdb
@@ -15,14 +20,19 @@ obj/
 *.lock.json
 *.cache
 *.log
+*.editorconfig
 
 # Ignore package dependencies
-packages/
 node_modules/
+client/node_modules/
+packages/
+.nuget/
 
 # Ignore NuGet packages
 *.nupkg
 project.lock.json
+project.nuget.cache
+project.assets.json
 artifacts/
 
 # Ignore User-specific settings
@@ -38,14 +48,8 @@ _ReSharper*/
 # Ignore Web related files
 wwwroot/lib/
 wwwroot/node_modules/
-client/node_modules/
-
-# Ignore Rider files
-.idea/
-
-# Ignore temporary files
-.DS_Store
-Thumbs.db
+dist/
+client/dist/
 
 # Ignore Azure and Docker files
 .publishsettings
@@ -57,7 +61,21 @@ docker-compose.override.yml
 *.mdf
 *.ldf
 
+# Ignore Swagger UI (if used)
+swagger/
+
 # Ignore deployment and build artifacts
-*.deploy
-*.publish/
-*.pfx
+server/*.nuget.g.props
+server/project.assets.json
+server/project.nuget.cache
+server/*.editorconfig
+server/*.csproj.FileListAbsolute.txt
+server/*.csproj.AssemblyReference.cache
+server/*.csproj.CoreCompileInputs.cache
+server/*.GeneratedMSBuildEditorConfig.editorconfig
+server/*.g.runtimeconfig.cache
+server/*.dll
+server/*.pdb
+server/*.sourcelink.json
+server/*.dgspec.json
+server/obj/

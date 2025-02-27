@@ -163,6 +163,17 @@ export class ManageScoreboardComponent implements OnInit {
         },
       });
   }
+  deleteScoreboard(scoreboardId: number) {
+    if (confirm('Är du säker på att du vill ta bort denna tävling?')) {
+      this.scoreboardService.deleteScoreboard(scoreboardId).subscribe(() => {
+        alert('Tävlingspoängtavlan har tagits bort.');
+        this.fetchScoreboards(); // Uppdaterar listan
+      }, error => {
+        console.error('Fel vid borttagning:', error);
+        alert('Ett fel uppstod vid borttagning.');
+      });
+    }
+  }
   
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event) {

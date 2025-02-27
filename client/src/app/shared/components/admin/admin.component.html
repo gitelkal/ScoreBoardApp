@@ -1,13 +1,13 @@
 <!-- Wrapper för att centrera allt -->
 
 <!-- exempel: red1 || bg-red1  -->
-
+<div class="bg-[#e9ecef]">
 <app-manage-scoreboard 
 (scoreboardCreated)="handleScoreboardCreated($event)"
 (scoreboardUpdated)="handleScoreboardUpdated($event)"
 ></app-manage-scoreboard> 
 
-<app-add-scoreboard></app-add-scoreboard>
+
 
 
 
@@ -20,7 +20,7 @@
 
 
 
-<div class="flex flex-col items-center w-full mt-40 ">
+<div class="flex flex-col items-center w-full mt-40 justify-between">
   <h1 class="text-5xl text-center mb-4">Admins</h1> 
 
 
@@ -80,4 +80,5 @@
   <ng-template #noResults>
     <p class="text-gray-500">Inga admins hittades.</p>
   </ng-template>
+</div>
 </div>

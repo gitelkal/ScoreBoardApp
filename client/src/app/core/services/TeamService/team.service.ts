@@ -42,5 +42,9 @@ export class TeamService {
     
   }
   
+  public updateTeam(teamId: number, updatedTeam: any): Observable<any> {
+    return this.http.put(`${this.api}/teams/${teamId}`, updatedTeam);
+  }
+  
   
 }

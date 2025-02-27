@@ -27,8 +27,6 @@ namespace server.Controllers
 [HttpPost]
 public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
 {
-    Console.WriteLine("📥 Mottagen ScoreboardDTO:");
-
 
     if (scoreboardDTO == null)
     {
@@ -48,34 +46,28 @@ public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
 
         dbContext.ScoreBoards.Add(scoreboard);
         dbContext.SaveChanges();
-        Console.WriteLine("✅ Scoreboard skapad med ID: " + scoreboard.ScoreboardId);
 
         return StatusCode(StatusCodes.Status201Created, scoreboard);
     }
     catch (Exception ex)
     {
-        Console.WriteLine("❌ FEL vid databasinsättning: " + ex.Message);
         return StatusCode(500, "Internt serverfel: " + ex.Message);
     }
 }
 
 
 // ------------------------------------
-[HttpPut("{scoreboardId}")] // Uppdaterad route
+[HttpPut("{scoreboardId}")] 
     public IActionResult UpdateScoreboard(int scoreboardId, [FromBody] ScoreboardDTO scoreboardDTO)
     {
-        Console.WriteLine($"🔹 PUT-request mottagen för scoreboardId={scoreboardId}");
-
         if (scoreboardDTO == null)
         {
-            Console.WriteLine("⚠️ Ingen scoreboard-data mottagen!");
             return BadRequest(new { message = "Invalid scoreboard data." });
         }
 
         var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
         if (scoreboard == null)
         {
-            Console.WriteLine("⚠️ Scoreboard hittades inte!");
             return NotFound(new { message = "Scoreboard not found." });
         }
 
@@ -86,11 +78,24 @@ public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
         scoreboard.Active = scoreboardDTO.Active;
 
         dbContext.SaveChanges();
-        Console.WriteLine("✅ Scoreboard uppdaterad!");
 
         return Ok(new { message = "Scoreboard updated successfully!" });
     }
 
+[HttpDelete("{scoreboardId}")]
+public IActionResult DeleteScoreboard(int scoreboardId)
+{
+    var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
+    if (scoreboard == null)
+    {
+        return NotFound(new { message = "Scoreboard not found." });
+    }
+
+    dbContext.ScoreBoards.Remove(scoreboard);
+    dbContext.SaveChanges();
+    
+    return Ok(new { message = "Scoreboard deleted successfully!" });
+}
 
 
 // --------------------------------------
