@@ -4,5 +4,6 @@ export interface AuthResponse {
         "firstname": string,
         "lastname": string,
         "token": string,
-        "tokenExpiration": number
+        "tokenExpiration": number,
+        "admin": boolean
 }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
-
+using server.Entities;
 namespace server.Controllers
 {
     [Route("api/[controller]")]
@@ -22,18 +22,83 @@ namespace server.Controllers
             return Ok(scoreBoards);
         }
 
-        [HttpPost]
-        public IActionResult CreateScoreboard(string name, DateTime startedAt)
+
+
+[HttpPost]
+public IActionResult CreateScoreboard([FromBody] ScoreboardDTO scoreboardDTO)
+{
+
+    if (scoreboardDTO == null)
+    {
+        return BadRequest("Scoreboard-data saknas.");
+    }
+
+    try
+    {
+        var scoreboard = new Scoreboard
         {
-            var scoreboard = new Scoreboard
-            {
-                Name = name,
-                StartedAt = startedAt
-            };
-            dbContext.ScoreBoards.Add(scoreboard);
-            dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created);
+            Name = scoreboardDTO.Name,
+            StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow,
+            EndedAt = scoreboardDTO.EndedAt,
+            Description = scoreboardDTO.Description,
+            Active = scoreboardDTO.Active
+        };
+
+        dbContext.ScoreBoards.Add(scoreboard);
+        dbContext.SaveChanges();
+
+        return StatusCode(StatusCodes.Status201Created, scoreboard);
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, "Internt serverfel: " + ex.Message);
+    }
+}
+
+
+// ------------------------------------
+[HttpPut("{scoreboardId}")] 
+    public IActionResult UpdateScoreboard(int scoreboardId, [FromBody] ScoreboardDTO scoreboardDTO)
+    {
+        if (scoreboardDTO == null)
+        {
+            return BadRequest(new { message = "Invalid scoreboard data." });
         }
+
+        var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
+        if (scoreboard == null)
+        {
+            return NotFound(new { message = "Scoreboard not found." });
+        }
+
+        scoreboard.Name = scoreboardDTO.Name;
+        scoreboard.StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow;
+        scoreboard.EndedAt = scoreboardDTO.EndedAt;
+        scoreboard.Description = scoreboardDTO.Description;
+        scoreboard.Active = scoreboardDTO.Active;
+
+        dbContext.SaveChanges();
+
+        return Ok(new { message = "Scoreboard updated successfully!" });
+    }
+
+[HttpDelete("{scoreboardId}")]
+public IActionResult DeleteScoreboard(int scoreboardId)
+{
+    var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
+    if (scoreboard == null)
+    {
+        return NotFound(new { message = "Scoreboard not found." });
+    }
+
+    dbContext.ScoreBoards.Remove(scoreboard);
+    dbContext.SaveChanges();
+    
+    return Ok(new { message = "Scoreboard deleted successfully!" });
+}
+
+
+// --------------------------------------
 
         [HttpGet("{scoreboardId}")]
         public IActionResult GetScoreboardById(int scoreboardId)
@@ -67,7 +132,7 @@ namespace server.Controllers
             // Fetch teams and users related to the scoreboard
             var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
                                   join t in dbContext.Teams on sbt.TeamID equals t.TeamID
-                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamId
+                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamID
                                   join u in dbContext.Users on tu.UserId equals u.UserId
                                   where sbt.ScoreboardID == scoreboardId
                                   group new { u } by new
@@ -87,7 +152,7 @@ namespace server.Controllers
                                       Users = teamGroup.Select(x => new
                                       {
                                           x.u.UserId,
-                                          x.u.UserName
+                                          x.u.Username
                                       }).ToList()
                                   }).ToList();
 

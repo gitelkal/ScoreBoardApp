@@ -19,19 +19,19 @@ namespace server.Controllers
             _jwtService = jwtService;
         }
         [HttpPost]
-        public IActionResult CreateAdmin(Entities.AdminDTO adminDTO)
+        public IActionResult CreateAdmin(Entities.UserDTO userDTO)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var objAdmin = dbContext.Admins.FirstOrDefault(x => x.Username == adminDTO.Username);
+            var objAdmin = dbContext.Users.FirstOrDefault(x => x.Username == userDTO.Username);
             if (objAdmin == null)
             {
-                dbContext.Admins.Add(new Admin
+                dbContext.Users.Add(new User
                 {
-                    Firstname = adminDTO.Firstname,
-                    Lastname = adminDTO.Lastname,
-                    Username = adminDTO.Username,
-                    Password = PasswordHashHandler.HashPassword(adminDTO.Password)
+                    Firstname = userDTO.Firstname,
+                    Lastname = userDTO.Lastname,
+                    Username = userDTO.Username,
+                    PasswordHash = PasswordHashHandler.HashPassword(userDTO.Password)
                 });
                 dbContext.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created);

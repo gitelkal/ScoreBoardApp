@@ -24,6 +24,7 @@ export class AddScoreboardComponent {
     }
 
     this.scoreboardCreated.emit(this.scoreboardData);
+    alert('Tävlingspoängtavlan uppdaterad!');
     this.resetForm();
   }
 

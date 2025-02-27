@@ -5,8 +5,8 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { switchMap, map } from 'rxjs/operators';
-import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
+import { switchMap } from 'rxjs/operators';
+import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -16,28 +16,58 @@ import { RichScoreboard } from '@app/shared/models/richScoreboard.model';
   styleUrls: ['./scoreboard-details.component.css']
 })
 export class ScoreboardDetailsComponent implements OnInit {
+  
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
-  openTeamIndex: number | null = null; // Track which team card is open
-  constructor(private signalRService: SignalRService) {}
+  openTeamIndex: number | null = null;
+
+  private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
+  getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
+
+  constructor(private signalRService: SignalRService) {} 
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id'); 
-      return this.scoreboardService.getRichScoreboard(id!); 
+    this.signalRService.startConnection();
+    this.subscribeToScoreUpdates();
+    this.loadInitialScoreboard();
+  }
+
+  loadInitialScoreboard() {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('id');
+        return this.scoreboardService.getRichScoreboard(id!);
+      })
+    ).subscribe(ScoreboardResponse => {
+      this.scoreboardResonseSubject.next(ScoreboardResponse); 
     });
   }
-  getRichScoreboard$ = this.route.paramMap.pipe(
-    switchMap(params => {
-      const id = params.get('id'); 
-      return this.scoreboardService.getRichScoreboard(id!); 
-    })
-  );
+
+  subscribeToScoreUpdates() {
+    this.signalRService.scoreUpdates.subscribe(update => {
+      if (update) {
+        const currentScoreboard = this.scoreboardResonseSubject.value;
   
+        if (currentScoreboard?.scoreboard?.teams) {  
+          const updatedTeams = currentScoreboard.scoreboard.teams.map(team => 
+            team.teamID === update.teamId ? { ...team, points: update.points } : team
+          );
+
+          const sortedTeams = updatedTeams.sort((a, b) => b.points - a.points);
   
+          this.scoreboardResonseSubject.next({
+            ...currentScoreboard,
+            scoreboard: {
+              ...currentScoreboard.scoreboard,
+              teams: sortedTeams
+            }
+          });
+        }
+      }
+    });
+  }
 
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
 }
- 

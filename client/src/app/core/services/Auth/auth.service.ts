@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { LoginRequest } from '@app/interfaces/login-request';
 import { AuthResponse } from '@app/interfaces/auth-response';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,37 +11,56 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private readonly api: string;
   private readonly tokenKey = 'token';
-  adminLoggedIn = new BehaviorSubject<boolean>(false); 
+  isAdmin = new BehaviorSubject<boolean>(false); 
+  loggedIn = new BehaviorSubject<boolean>(false); 
   tokenExpirationDateTime: Date = new Date();
   timeUntilExpiration:number = 0;
+  firstname: string = '';
+  lastname: string = '';
+  errorMessage: string = '';
 
   constructor(private apiService: ApiService, private http: HttpClient) {
     this.api = this.apiService.api;
   }
-  login(data:LoginRequest):Observable<AuthResponse> {
+
+  login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.api}/login`, data).pipe(
       map((response: AuthResponse) => {
         if (response.token) localStorage.setItem(this.tokenKey, response.token);
         const expirationDate = new Date();
         expirationDate.setSeconds(expirationDate.getSeconds() + response.tokenExpiration);
         localStorage.setItem('tokenExpiration', expirationDate.toISOString());
-        this.adminLoggedIn.next(true);
-        console.log(response.username, "Logged in", this.adminLoggedIn);
+        localStorage.setItem('username', response.username);
+        localStorage.setItem('userID', response.id.toString());
+        this.loggedIn.next(true);
+        console.log(response.username, "Logged in", this.loggedIn);
+        if (response.admin) {
+          this.isAdmin.next(true);
+        }
         return response;
+      }),
+      catchError((error) => {
+        if (error.status === 401) {
+          this.errorMessage = error.error;
+        }
+        return throwError(error);
       })
-    );    
+    );
   }
 
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('tokenExpiration');
-    this.adminLoggedIn.next(false);
+    localStorage.removeItem('username');
+    localStorage.removeItem('userID');
+    this.isAdmin.next(false);
+    this.loggedIn.next(false);
   }
 
   tokenExpirationCheck() {
     let token = localStorage.getItem(this.tokenKey);
     if (token) {
-      this.adminLoggedIn.next(true);
+      this.loggedIn.next(true);
     }
     let expirationTime = localStorage.getItem('tokenExpiration');
     if (expirationTime) {
@@ -59,4 +78,13 @@ export class AuthService {
       }
     },360000); // 1 timme
   }
+  
+  getUserID() {
+    const userID = localStorage.getItem('userID');
+    return userID ? parseInt(userID, 10) : null;
+  }
+  getUsername() {
+    return localStorage.getItem('username');
+  }
+
 }

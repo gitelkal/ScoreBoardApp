@@ -14,3 +14,11 @@
     --mdc-dialog-container-surface-color: transparent; 
 }
 
+.fin-bakgrund {
+    background-image: url(../src/assets/images/bild_neutral.png);
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+  }

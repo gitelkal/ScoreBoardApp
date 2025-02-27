@@ -1,0 +1,246 @@
+<div class="flex flex-wrap justify-center space-x-6 items-center w-full pt-6 bg-[#e9ecef] shadow-[0_0_1rem_rgba(0, 0, 0, .15)];">
+
+  <!-- <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+    <div class="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+    <div class="h-[46px] w-[3px] bg-gray-800 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
+    <div class="h-[46px] w-[3px] bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
+    <div class="h-[64px] w-[3px] bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
+    <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
+    </div>
+  </div> -->
+  <!-- Skapa ny tävling -->
+  <form
+    (ngSubmit)="createScoreboard()"
+    #scoreboardForm="ngForm"
+    class="w-full max-w-lg bg-white p-8 mb-4 rounded-lg shadow-lg overflow-hidden"
+  >
+    <h2
+      class="sticky z-50 scale-x-125 scale-y-125 pr-5 pl-5 font-[Garamond] bg-red-900 top-0 p-3 p-4 text-xl text-white text-center h-full w-full font-semibold mb-5 mt-0"
+    >
+      Skapa en ny tävling
+    </h2>
+
+    <!-- Tävlingsnamn -->
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 font-semibold mb-1"
+        >Tävlingsnamn:</label
+      >
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="scoreboardData.name"
+        required
+        class="border p-2 rounded w-full text-black"
+      />
+
+    </div>
+
+    <!-- Startdatum -->
+    <div class="mb-4">
+      <label for="startedAt" class="block text-gray-700 font-semibold mb-1"
+        >Startdatum:</label
+      >
+      <input
+        type="datetime-local"
+        id="startedAt"
+        name="startedAt"
+        [(ngModel)]="scoreboardData.startedAt"
+        required
+        class="border p-2 rounded w-full text-black"
+      />
+    </div>
+
+    <!-- Slutdatum -->
+    <div class="mb-4">
+      <label for="endedAt" class="block text-gray-700 font-semibold mb-1"
+        >Slutdatum:</label
+      >
+      <input
+        type="datetime-local"
+        id="endedAt"
+        name="endedAt"
+        [(ngModel)]="scoreboardData.endedAt"
+        class="border p-2 rounded w-full text-black"
+      />
+    </div>
+
+    <!-- Aktiv slide -->
+    <!-- <div class="mb-4 flex items-center text-black">
+      <div class="flex items-center me-4">
+        <input
+          id="red-radio"
+          type="radio"
+          value=""
+          name="colored-radio"
+          class="w-4 h-4 text-gray-200 bg-gray-100 border-green-200 focus:ring-green-200 focus:ring-2 dark:bg-green-200 dark:border-green-200"
+        />
+        <label
+          for="red-radio"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >
+          Aktiv
+        </label>
+      </div> -->
+      
+      <!-- Aktiv slide -->
+      <div class="mb-4 flex items-center">
+        <input
+          type="checkbox"
+          id="editActiveCheck"
+          name="activeCheck"
+          [(ngModel)]="scoreboardData.active"
+          class="mr-2"
+        />
+        <label for="editActiveCheck" class="text-gray-700 font-semibold">Aktiv</label>
+      </div>
+    
+
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 font-semibold mb-1"
+        >Beskrivning:</label
+      >
+      <input
+        type="text"
+        id="description"
+        name="description"
+        [(ngModel)]="scoreboardData.description"
+        class="block w-full p-5 text-gray-900 border border-gray-300 rounded-lg bg-white-50 text-base focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <!-- Skapa tävling-knapp -->
+    <button
+      type="submit"
+      [disabled]="scoreboardForm.invalid"
+      class="text-white font-bold font-[Garamond] py-2 px-4 rounded-lg w-1/2 bg-red-900 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+    >
+      Skapa tävling
+    </button>
+  </form>
+
+
+  <!-- Redigera tävling -->
+
+<form
+  (ngSubmit)="updateScoreboard()"
+  #editForm="ngForm"
+  class="w-full max-w-lg bg-white p-8 mb-4 rounded-lg shadow-lg overflow-hidden"
+>
+  <h2 class="sticky z-50 scale-x-125 scale-y-125 bg-red-900 top-0 p-3 p-4 text-xl text-white text-center h-full w-full font-semibold font-[Garamond] mb-5">
+    Redigera tävling
+  </h2>
+<!-- 🔹 1. Välj en tävling med hjälp av namn -->
+<div class="mb-4">
+  <label for="editName" class="block text-gray-700 font-semibold mb-1">
+    Välj en tävling:
+  </label>
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    name="searchQuery"
+    (input)="filterScoreboards()"
+    (focus)="showDropdown = true"
+    placeholder="Sök tävling..."
+    class="border md:p-2 rounded md:w-full text-black"
+  />
+
+  <!-- 🔹 Dropdown-lista -->
+  <ul
+    *ngIf="showDropdown && filteredScoreboards.length > 0"
+    class="md:z-10 md:w-full bg-white border rounded shadow-md md:max-h-40 overflow-y-auto"
+  >
+    <li
+      *ngFor="let scoreboard of filteredScoreboards"
+      (click)="selectScoreboard(scoreboard)"
+      class="md:p-2 hover:bg-gray-200 cursor-pointer"
+    >
+      {{ scoreboard.name }}
+    </li>
+  </ul>
+</div>
+
+<!-- 🔹 2. Om man vill, ändra namnet -->
+<div class="mb-4" *ngIf="selectedScoreboard && selectedScoreboard.scoreboardId">
+  <label for="editName" class="block text-gray-700 font-semibold mb-1">
+    Nytt tävlingsnamn:
+  </label>
+  <input
+    type="text"
+    id="editName"
+    name="editName"
+    [(ngModel)]="selectedScoreboard.name"
+    class="border p-2 rounded w-full text-black"
+  />
+</div>
+
+    
+  <div class="mb-4">
+    <label for="editStartedAt" class="block text-gray-700 font-semibold mb-1">
+      Startdatum:
+    </label>
+    <input
+      type="datetime-local"
+      id="editStartedAt"
+      name="startedAt"
+      [(ngModel)]="selectedScoreboard.startedAt"
+      required
+      class="border p-2 rounded w-full text-black"
+    />
+  </div>
+
+  <div class="mb-4">
+    <label for="editEndedAt" class="block text-gray-700 font-semibold mb-1">
+      Slutdatum:
+    </label>
+    <input
+      type="datetime-local"
+      id="editEndedAt"
+      name="endedAt"
+      [(ngModel)]="selectedScoreboard.endedAt"
+      class="border p-2 rounded w-full text-black"
+    />
+  </div>
+
+  <div class="mb-4 flex items-center">
+    <input
+      type="checkbox"
+      id="editActive"
+      name="active"
+      [(ngModel)]="selectedScoreboard.active"
+      class="mr-2"
+    />
+    <label for="editActive" class="text-gray-700 font-semibold">Aktiv</label>
+  </div>
+
+  <div class="mb-4">
+    <label for="description" class="block text-gray-700 font-semibold mb-1">
+      Beskrivning:
+    </label>
+    <input
+      type="text"
+      id="description"
+      name="description"
+      [(ngModel)]="selectedScoreboard.description" 
+      class="block w-full p-5 text-gray-900 border border-gray-300 rounded-lg bg-white-50 text-base focus:ring-blue-500 focus:border-blue-500"
+    />
+  </div>
+
+  <div class="flex justify-between ">
+  <button
+    type="submit"
+    [disabled]="editForm.invalid"
+    class="text-white font-bold font-[Garamond]   px-5 rounded-lg  bg-red-900 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+  >
+    Uppdatera tävling
+  </button>
+
+  <button
+  class="text-white font-bold font-[Garamond] py-2 px-5  rounded-lg  bg-red-900 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+   (click)="deleteScoreboard(selectedScoreboard.scoreboardId)">
+    Ta bort tävlingen
+  </button>
+</div>
+
+
+</form>
+</div>

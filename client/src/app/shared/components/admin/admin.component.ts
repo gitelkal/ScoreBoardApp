@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { AdminService } from '@app/core/services/adminService/admin.service';
+import { AdminService } from '@app/core/services/AdminService/admin.service';
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; // 
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddScoreboardComponent } from '../add-scoreboard/add-scoreboard.component';
 import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
-
+import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboard.component';
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -13,15 +13,18 @@ import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
     NgIf,
     NgFor,
     FormsModule,
-    AddScoreboardComponent,
     ManageTeamsComponent,
+    ManageScoreboardComponent,
+
   ],
-  providers: [AdminService],
+  providers: [AdminService, ScoreboardService], 
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent {
   adminService = inject(AdminService);
+  scoreboardService = inject(ScoreboardService); 
+
   getAllAdmins$ = this.adminService.getAllAdmins();
   router = inject(Router);
 
@@ -32,7 +35,7 @@ export class AdminComponent {
   constructor() {
     this.adminService.getAllAdmins().subscribe(
       (data) => {
-        console.log('Admins hämtade:', data); // 🔍 Se vad API:et returnerar
+        console.log('Admins hämtade:', data);
         this.admins = data;
       },
       (error) => {
@@ -47,15 +50,13 @@ export class AdminComponent {
       if (!this.sortBy) return 0;
       if (this.sortBy === 'name') return a.firstname.localeCompare(b.firstname);
       if (this.sortBy === 'date') {
-        return (
-          new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime()
-        );
+        return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
       }
       return 0;
     });
   }
 
-  // 🟢 Navigera till admin-detaljer
+  // Navigera till admin-detaljer
   handleAdminClick(admin: any) {
     console.log('Admin clicked:', admin);
     this.router.navigate(['/admin', admin.adminID]);
@@ -69,8 +70,9 @@ export class AdminComponent {
     );
   }
 
+
   handleScoreboardCreated(scoreboardData: any) {
-    this.adminService.createCompetition(scoreboardData).subscribe(
+    this.scoreboardService.createScoreboard(scoreboardData).subscribe(
       (response) => {
         console.log('Tävling skapad:', response);
         alert('Tävling skapad!');
@@ -81,6 +83,32 @@ export class AdminComponent {
       }
     );
   }
+
+  handleScoreboardUpdated(scoreboardData: any) {
+    if (!scoreboardData || !scoreboardData.scoreboardId) {
+      alert('Ingen tävlingspoängtavla vald för uppdatering!');
+      return;
+    }
+  
+    this.scoreboardService.updateScoreboard(scoreboardData.scoreboardId, scoreboardData).subscribe(
+      (response) => {
+        console.log('Tävlingspoängtavlan uppdaterad:', response);
+        alert('Tävlingspoängtavlan har uppdaterats!');
+      },
+      (error) => {
+        console.error('Fel vid uppdatering av tävling:', error);
+        alert('Något gick fel vid uppdatering av tävling.');
+      }
+    );
+  }
+  
+
+
+
+
+
+
+
 
   handleTeamCreated(teamData: any) {
     console.log('Nytt lag skapat:', teamData);

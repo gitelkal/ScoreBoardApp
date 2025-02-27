@@ -8,11 +8,11 @@ namespace server
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ScoreboardId { get; set; }    
+        public int ScoreboardId { get; set; }
+        public string Name { get; set; }
+        public string? Description { get; set; }
         public DateTime? EndedAt { get; set; }     
-        public string Name { get; set; }         
         public DateTime StartedAt { get; set; }  
         public Boolean Active {  get; set; }
-
     }
 }

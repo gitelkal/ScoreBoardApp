@@ -52,5 +52,23 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return Ok();
         }
+[HttpPut("{id}")]
+public IActionResult UpdateTeam(int id, [FromBody] Team updatedTeam)
+{
+    var team = dbContext.Teams.Find(id);
+    if (team == null)
+    {
+        return NotFound();
+    }
+
+    // Uppdatera endast namnet (eller fler fält om nödvändigt)
+    team.TeamName = updatedTeam.TeamName;
+
+    dbContext.SaveChanges();
+    return Ok(team);
+}
+
+
+
     }
 }

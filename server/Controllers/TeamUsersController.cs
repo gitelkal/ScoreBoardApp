@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using server.Data;
+using server.Entities;
 
 namespace server.Controllers
 
@@ -23,7 +24,7 @@ namespace server.Controllers
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamId == team.TeamID)
+                        .Where(tu => tu.TeamID == team.TeamID)
                         .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
                         .ToList()
                 })
@@ -33,17 +34,23 @@ namespace server.Controllers
         }
 
         [HttpGet]
-        [Route("{teamid}")]
-        public IActionResult GetTeamUsers(int id)
+        [Route("{teamId}")]
+        public IActionResult GetTeamUsers(int teamId)
         {
             var teamUsers = dbContext.Teams
-                .Where(team => team.TeamID == id) 
+                .Where(team => team.TeamID == teamId)
                 .Select(team => new
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamId == team.TeamID) 
-                        .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
+                        .Where(tu => tu.TeamID == team.TeamID)
+                        .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => new
+                        {
+                            user.UserId,
+                            user.Username,
+                            user.Firstname,
+                            user.Lastname
+                        })
                         .ToList()
                 })
                 .FirstOrDefault();
@@ -51,16 +58,17 @@ namespace server.Controllers
             {
                 return NotFound();
             }
+
             return Ok(teamUsers);
 
         }
         [HttpPost]
-        public IActionResult AddUserToTeam(int userId, int teamId)
+        public IActionResult AddUserToTeam([FromBody] AddUserToTeamRequest request)
         {
             var teamUser = new TeamUser
             {
-                UserId = userId,
-                TeamId = teamId
+                UserId = request.UserId,
+                TeamID = request.TeamId
             };
 
             dbContext.TeamUsers.Add(teamUser);
