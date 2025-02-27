@@ -52,7 +52,6 @@ export class TeamDetailsComponent {
       })
     ).subscribe(TeamUsersResponse => {
       this.teamUsersResonseSubject.next(TeamUsersResponse);
-      console.log(TeamUsersResponse);
     });
   }
 

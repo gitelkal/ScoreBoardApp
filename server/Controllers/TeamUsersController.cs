@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using server.Data;
 using server.Entities;
 
@@ -10,10 +11,12 @@ namespace server.Controllers
     public class TeamUsersController : ControllerBase
     {
         private readonly ServerDbContext dbContext;
+        private readonly IHubContext<ScoreboardHub> _hubContext;
 
-        public TeamUsersController(ServerDbContext dbContext)
+        public TeamUsersController(ServerDbContext dbContext, IHubContext<ScoreboardHub> hubContext)
         {
             this.dbContext = dbContext;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -63,7 +66,7 @@ namespace server.Controllers
 
         }
         [HttpPost]
-        public IActionResult AddUserToTeam([FromBody] AddUserToTeamRequest request)
+        public async Task <IActionResult> AddUserToTeam([FromBody] AddUserToTeamRequest request)
         {
             var teamUser = new TeamUser
             {
@@ -73,6 +76,9 @@ namespace server.Controllers
 
             dbContext.TeamUsers.Add(teamUser);
             dbContext.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("ReceiveUserJoinedTeam", teamUser.TeamID, teamUser.UserId);
+
             return StatusCode(StatusCodes.Status201Created);
         }
     }
