@@ -34,8 +34,7 @@
                     <div>
                         <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-b w-full" (click)="joinTeam(userID, team.team.teamID)" *ngIf="!isUserInTeam(team.team.teamID, userID)">Gå med i lag</button>
                         <p class="flex justify-center bg-red4 text-white font-bold py-2 px-4 rounded-b w-full" *ngIf="isUserInTeam(team.team.teamID, userID)">Du tillhör detta lag</p>
-                    </div>
-               
+                    </div>               
                 </div>
             </li>
         </ul>
