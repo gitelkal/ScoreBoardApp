@@ -1,12 +1,14 @@
 <div class="flex flex-wrap justify-center fin-bakgrund">      
-    <div class="w-3/4 mt-4 justify-between">
-        <div class="w-1/3" >
-            <h2 class=" bg-red1 text-white1 text-center text-3xl p-7 font-semibold">Lag:</h2>
-        </div>
-        <div *ngIf="(isAdmin | async) === true">
-            <a routerLink="/team/create">
-                <button class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold">Skapa nytt lag</button>
-            </a>
+    <div class="w-3/4 mt-4">
+        <div class="w-100 flex justify-between">
+            <div class="w-1/3" >
+                <h2 class=" bg-red1 text-white1 text-center text-3xl p-7 font-semibold">Lag:</h2>
+            </div>
+            <div *ngIf="(isAdmin | async) === true">
+                <a routerLink="/team/create">
+                    <button class="bg-red1 text-white1 text-center text-xl p-7 font-semibold">Skapa nytt lag</button>
+                </a>
+            </div>
         </div>
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4 w-full" *ngIf="getAllTeamUsers$ | async as teams">
             <li class="h-72" *ngFor="let team of teams">
