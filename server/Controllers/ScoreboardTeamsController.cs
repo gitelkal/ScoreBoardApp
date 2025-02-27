@@ -29,7 +29,7 @@ namespace server.Controllers
         {
             var scoreboards = dbContext.ScoreboardTeams
                 .Where(st => st.TeamID == teamId)
-                .Select(st => st.ScoreboardID)
+                .Select(st => new { st.ScoreboardID, st.Points })
                 .Distinct()
                 .ToList();
 
@@ -39,10 +39,21 @@ namespace server.Controllers
             }
 
             var scoreboardDetails = dbContext.ScoreBoards
-                .Where(sb => scoreboards.Contains(sb.ScoreboardId))
+                .Where(sb => scoreboards.Select(s => s.ScoreboardID).Contains(sb.ScoreboardId))
                 .ToList();
 
-            return Ok(scoreboardDetails);
+            var result = scoreboardDetails.Select(sb => new
+            {
+                sb.ScoreboardId,
+                sb.Name,
+                sb.Description,
+                sb.StartedAt,
+                sb.EndedAt,
+                sb.Active,
+                Points = scoreboards.First(s => s.ScoreboardID == sb.ScoreboardId).Points
+            });
+
+            return Ok(result);
         }
 
 

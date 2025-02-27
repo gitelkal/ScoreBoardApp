@@ -1,7 +1,6 @@
-<div class="flex flex-wrap justify-center" style="height: 100vh; background-image: url(../../../../assets/images/bakgrund-home.png); background-size: cover; background-position: center;">   
-      
-    <div class="w-3/4 items-center flex flex-wrap mt-4 justify-between">
-        <div class="w-1/3">
+<div class="flex flex-wrap justify-center fin-bakgrund">      
+    <div class="w-3/4 mt-4 justify-between">
+        <div class="w-1/3" >
             <h2 class=" bg-red1 text-white1 text-center text-3xl p-7 font-semibold">Lag:</h2>
         </div>
         <div *ngIf="(isAdmin | async) === true">
@@ -9,31 +8,32 @@
                 <button class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold">Skapa nytt lag</button>
             </a>
         </div>
-        <ul class="grid grid-cols-6 gap-4 gap-6 mt-4" *ngIf="getAllTeamUsers$ | async as teams">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4 w-full" *ngIf="getAllTeamUsers$ | async as teams">
             <li class="h-72" *ngFor="let team of teams">
-                <div class="rounded-xl shadow-xl bg-gray-100 h-full">
+                <div class="rounded-xl shadow-xl shadow-red-400/50 bg-gray-100 h-full flex flex-col">
                     <!--img class="rounded-t-xl w-full h-36 object-cover" src="https://m.media-amazon.com/images/I/71MYezvnohL._AC_SL1500_.jpg" alt="{{ team.teamName }}"/-->
-                    <div class="flex flex-col">
-                        <div class="h-16 bg-red5 flex items-center justify-center px-4 rounded-t hover:bg-red4 cursor-pointer" [routerLink]="['/team', team.team.teamID]">
-                            <h2 class="text-white1 text-xl font-bold mt-1">{{ team.team.teamName }}</h2>
-                        </div>
-                        <ul class="h-48">
-                            <div class="flex justify-center mt-1">
-                                <p class="text-red6 font-bold text-sm ml-2 mr-2">Visa om laget är aktivt(?)</p>
-                                <p class="text-red6 text-sm">Poäng?</p>
-                            </div>
-                            <li *ngIf="team.users.length === 0">
-                                <p class="text-base text-red6 mt-1 ml-4 font-medium">Inga medlemmar ännu...</p>
-                            </li>
-                            <li *ngFor="let user of team.users; let i = index">
-                                <p class="text-base text-text-red6 mt-1 ml-4 font-medium" *ngIf="i < 5">{{ user.username }}</p>
-                                <!-- <p class="text-base text-text-red6 mt-1" *ngIf="i === 3">...</p> -->
-                            </li>
-                        </ul>
-                        <div>
-                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-b w-full" (click)="joinTeam(userID, team.team.teamID)">Gå med i lag</button>
-                        </div>
+            
+                    <div class="h-16 bg-red5 flex items-center justify-center px-4 rounded-t hover:bg-red4 cursor-pointer" [routerLink]="['/team', team.team.teamID]">
+                        <h2 class="text-white1 text-xl font-bold mt-1">{{ team.team.teamName }}</h2>
                     </div>
+                    <ul class="h-48">
+                        <!-- <div class="flex justify-center mt-1">
+                            <p class="text-red6 font-bold text-sm ml-2 mr-2">Visa om laget är aktivt(?)</p>
+                            <p class="text-red6 text-sm">Poäng?</p>
+                        </div> -->
+                        <li *ngIf="team.users.length === 0">
+                            <p class="text-base text-red6 mt-2 ml-4 font-medium">Inga medlemmar ännu...</p>
+                        </li>
+                        <li *ngFor="let user of team.users; let i = index">
+                            <p class="text-base text-text-red6 mt-2 ml-4 font-medium" *ngIf="i < 5">{{ user.username }}</p>
+                            <!-- <p class="text-base text-text-red6 mt-1" *ngIf="i === 3">...</p> -->
+                        </li>
+                    </ul>
+                    <div>
+                        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-b w-full" (click)="joinTeam(userID, team.team.teamID)" *ngIf="!isUserInTeam(team.team.teamID, userID)">Gå med i lag</button>
+                        <p class="flex justify-center bg-red4 text-white font-bold py-2 px-4 rounded-b w-full" *ngIf="isUserInTeam(team.team.teamID, userID)">Du tillhör detta lag</p>
+                    </div>
+               
                 </div>
             </li>
         </ul>

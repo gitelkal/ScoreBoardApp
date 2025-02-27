@@ -41,6 +41,6 @@ export const routes: Routes = [
   {
     path:'team/:teamID',
     component: TeamDetailsComponent,
-    title: 'Enskilt lag'
-  }
+    title: 'Lag - Detaljer'
+  },
 ];

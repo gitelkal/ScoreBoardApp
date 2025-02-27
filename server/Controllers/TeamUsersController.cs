@@ -38,13 +38,19 @@ namespace server.Controllers
         public IActionResult GetTeamUsers(int teamId)
         {
             var teamUsers = dbContext.Teams
-                .Where(team => team.TeamID == teamId) 
+                .Where(team => team.TeamID == teamId)
                 .Select(team => new
                 {
                     Team = team,
                     Users = dbContext.TeamUsers
-                        .Where(tu => tu.TeamID == team.TeamID) 
-                        .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
+                        .Where(tu => tu.TeamID == team.TeamID)
+                        .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => new
+                        {
+                            user.UserId,
+                            user.Username,
+                            user.Firstname,
+                            user.Lastname
+                        })
                         .ToList()
                 })
                 .FirstOrDefault();
@@ -52,6 +58,7 @@ namespace server.Controllers
             {
                 return NotFound();
             }
+
             return Ok(teamUsers);
 
         }

@@ -6,6 +6,8 @@ export interface TeamUsers {
     users: {
     userId: number;
     username: string;
+    firstname: string;
+    lastname: string;
     passwordHash: string;
     }[];
 }
