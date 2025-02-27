@@ -31,6 +31,9 @@ updateScoreboard(id: string, updatedScoreboard: any) {
 
   return this.http.put<Scoreboards>(`${this.api}/scoreboards/${id}`, updatedScoreboard);
 }
+deleteScoreboard(scoreboardId: number): Observable<any> {
+  return this.http.delete(`${this.api}/scoreboards/${scoreboardId}`);
+}
 
   
 

@@ -1,4 +1,4 @@
-<div class="flex flex-wrap justify-center space-x-6 items-center w-full">
+<div class="flex flex-wrap justify-center space-x-6 items-center w-full pt-6 bg-[#e9ecef] shadow-[0_0_1rem_rgba(0, 0, 0, .15)];">
 
   <!-- <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
     <div class="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
@@ -225,12 +225,22 @@
     />
   </div>
 
+  <div class="flex justify-between ">
   <button
     type="submit"
     [disabled]="editForm.invalid"
-    class="text-white font-bold font-[Garamond] py-2 px-5 rounded-lg w-1/2 bg-red-900 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+    class="text-white font-bold font-[Garamond]   px-5 rounded-lg  bg-red-900 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
   >
     Uppdatera tävling
   </button>
+
+  <button
+  class="text-white font-bold font-[Garamond] py-2 px-5  rounded-lg  bg-red-900 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+   (click)="deleteScoreboard(selectedScoreboard.scoreboardId)">
+    Ta bort tävlingen
+  </button>
+</div>
+
+
 </form>
 </div>
