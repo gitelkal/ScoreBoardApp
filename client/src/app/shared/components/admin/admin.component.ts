@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AdminService } from '@app/core/services/AdminService/admin.service';
+import { AdminService } from '@app/core/services/adminService/admin.service';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; // 
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -48,7 +48,7 @@ export class AdminComponent {
     if (!this.filteredAdmins || this.filteredAdmins.length === 0) return [];
     return this.filteredAdmins.sort((a: any, b: any) => {
       if (!this.sortBy) return 0;
-      if (this.sortBy === 'name') return a.firstname.localeCompare(b.firstname);
+      if (this.sortBy === 'name') return a.username.localeCompare(b.username);
       if (this.sortBy === 'date') {
         return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
       }

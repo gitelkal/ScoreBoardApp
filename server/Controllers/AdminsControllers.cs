@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using server.Data;
+using server.Entities;
 using server.Service;
 
 namespace server.Controllers
@@ -47,6 +49,30 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return Ok();
         }
-        
+
+        [HttpPost]
+        [Route("check")]
+        public IActionResult AdminCheck(Entities.AdminCheckDTO adminCheckDTO)
+        {
+            var admin = dbContext.Admins.FirstOrDefault(x => x.Username == adminCheckDTO.Username);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            return Ok(new { Success = true });
+        }
+
+        [HttpPost]
+        public IActionResult CreateAdmin([FromBody]CreateAdminDTO admin)
+        {
+            var objAdmin = dbContext.Admins.FirstOrDefault(x => x.Username == admin.Username);
+            if (objAdmin == null) {
+                dbContext.Admins.Add(new Admin { Username = admin.Username });
+                dbContext.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created);
+            } else
+            return BadRequest("Username already exists");
+        }  
     }
 }
+

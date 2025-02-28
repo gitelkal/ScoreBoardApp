@@ -41,7 +41,7 @@
     [(ngModel)]="sortBy"
     class="border-rounded w-full text-center max-w-md mb-4 bg-red5 border-black1 font-semibold py-2 px-4 text-white1 hover:bg-red1 transition"
   >
-    <option value="name">Sortera efter namn</option>
+    <option value="name">Sortera efter användarnamn</option>
     <option value="date">Sortera efter senast aktiv</option>
   </select>
 
@@ -64,11 +64,11 @@
       </div>
       <div class="flex flex-col items-start truncate">
         <strong class="text-lg ">{{
-          admin.firstname + " " + admin.lastname
-        }}</strong>
+          admin.username 
+        }}</strong> <!-- + " " + admin.lastname  flyttad ned denna eftersom för-efternamn är borttaget-!>
         <!-- <span class="text-sm text-gray-500">{{ admin.email }}</span> -->
         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-          email: {{ admin.email }}
+          <!-- email: {{ admin.email }} -->
       </p>
       </div>
     </div>

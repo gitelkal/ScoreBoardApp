@@ -1,32 +1,38 @@
 <div class="w-full max-w-xs">
-    <form class="bg-white shadow-md px-8 pt-6 pb-8 mb-4" (submit)="submitLogin()">
-      <div class="mb-6">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Användarnamn</label>
-        <input id="username" type="text" [(ngModel)]="username" name="username" placeholder="Användarnamn" [ngClass]="{ 'input-error': (wrongUsername | async) }" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-        <div class="h-2">
-          <p class="text-red6 text-sm font-medium" *ngIf="(wrongUsername | async)">{{ errorMessage }}</p>
-        </div>
+  <form class="bg-white shadow-md px-8 pt-6 pb-8 mb-4" #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)">
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Användarnamn</label>
+      <input id="username" type="text" [(ngModel)]="username" name="username" #usernameInput="ngModel" required
+             class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+             [ngClass]="{ 'input-error': (usernameInput.invalid && usernameInput.touched) || usernameExists }" />
+      <div class="h-2 text-red-600 text-sm font-medium">
+        <p *ngIf="usernameInput.invalid && usernameInput.touched">Användarnamn krävs.</p>
+        <p *ngIf="usernameExists">Användarnamnet är upptaget.</p>
       </div>
-      <div class="mb-8">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Lösenord</label>
-        <input id="password" type="password" [(ngModel)]="password" name="password" placeholder="******************" [ngClass]="{ 'input-error': (wrongPassword | async) }" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"/>
-        <div class="h-2">
-          <p class="text-red-6 text-sm font-medium" *ngIf="(wrongPassword | async)">{{ errorMessage }}</p>
-        </div>
+    </div>
+    <div class="mb-8">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Lösenord</label>
+      <input id="password" type="password" [(ngModel)]="password" name="password" #passwordInput="ngModel" required minlength="6"
+             class="shadow appearance-none border w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+             [ngClass]="{ 'input-error': (passwordInput.invalid && passwordInput.touched) || wrongPassword }" />
+      <div class="h-2 text-red-600 text-sm font-medium">
+        <p *ngIf="passwordInput.invalid && passwordInput.touched">Lösenord krävs (minst 6 tecken).</p>
+        <p *ngIf="wrongPassword">Felaktigt lösenord, försök igen.</p>
       </div>
-
-      <div class="flex items-center justify-between w-full">
-        <div class="flex items-center" *ngIf="(success | async) === false"> 
-          <button class="bg-red6 hover:bg-red4 text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline" type="submit">
-            Logga in
-          </button>
-          <a class="inline-block align-baseline font-bold text-sm text-red-6 hover:text-red3 ml-4" href="#">
-            Glömt lösenord?
-          </a>
+    </div>
+    <div class="flex items-center justify-between w-full" *ngIf="!success">
+      <div class="flex items-center">
+        <button class="bg-red6 hover:bg-red4 text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+                type="submit" [disabled]="loginForm.invalid">
+          Logga in
+        </button>
+        <a class="inline-block align-baseline font-bold text-sm text-red-6 hover:text-red3 ml-4" href="#">
+          Glömt lösenord?
+        </a>
       </div>
-        <div class="bg-green-600 w-full flex justify-center" *ngIf="(success | async) === true"> 
-          <p class="text-white1 font-bold py-2 px-4">Välkommen, {{ firstname }}</p>
-        </div>
-      </div>
-    </form>
-  </div>
+    </div>
+    <div class="bg-green-600 w-full flex justify-center" *ngIf="success"> 
+      <p class="text-white1 font-bold py-2 px-4">Välkommen, {{ firstname }}</p>
+    </div>
+  </form>
+</div>
