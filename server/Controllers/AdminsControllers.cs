@@ -63,7 +63,7 @@ namespace server.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAdmin([FromBody]Admin admin)
+        public IActionResult CreateAdmin([FromBody]CreateAdminDTO admin)
         {
             var objAdmin = dbContext.Admins.FirstOrDefault(x => x.Username == admin.Username);
             if (objAdmin == null) {
