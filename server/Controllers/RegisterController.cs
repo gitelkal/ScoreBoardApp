@@ -19,12 +19,12 @@ namespace server.Controllers
             _jwtService = jwtService;
         }
         [HttpPost]
-        public IActionResult CreateAdmin(Entities.UserDTO userDTO)
+        public IActionResult CreateUser(Entities.UserDTO userDTO)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var objAdmin = dbContext.Users.FirstOrDefault(x => x.Username == userDTO.Username);
-            if (objAdmin == null)
+            var objUser = dbContext.Users.FirstOrDefault(x => x.Username == userDTO.Username);
+            if (objUser == null)
             {
                 dbContext.Users.Add(new User
                 {

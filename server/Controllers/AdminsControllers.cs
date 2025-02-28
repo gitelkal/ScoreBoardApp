@@ -62,7 +62,17 @@ namespace server.Controllers
             return Ok(new { Success = true });
         }
 
-        
-        
+        [HttpPost]
+        public IActionResult CreateAdmin([FromBody]Admin admin)
+        {
+            var objAdmin = dbContext.Admins.FirstOrDefault(x => x.Username == admin.Username);
+            if (objAdmin == null) {
+                dbContext.Admins.Add(new Admin { Username = admin.Username });
+                dbContext.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created);
+            } else
+            return BadRequest("Username already exists");
+        }  
     }
 }
+
