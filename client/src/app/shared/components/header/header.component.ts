@@ -6,6 +6,8 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 
+
+
 @Component({
   selector: 'app-header',
   imports: [RouterLink, MatDialogModule, NgIf, AsyncPipe],
@@ -19,14 +21,17 @@ export class HeaderComponent {
   authService = inject(AuthService);
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
+
   
   constructor() {
-    if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
-      this.authService.tokenExpirationCheck();
-      this.isAdmin = this.authService.isAdmin;
-      this.loggedIn = this.authService.loggedIn;
-    }
+     if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
+       this.authService.tokenExpirationCheck();
+       this.isAdmin = this.authService.isAdmin;
+       this.loggedIn = this.authService.loggedIn;
+     }
   }
+
+
   
   toggleLoginModal() {
     this.dialog.open(LoginComponent);

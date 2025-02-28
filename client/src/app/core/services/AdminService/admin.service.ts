@@ -3,6 +3,7 @@ import { Admins } from '../../../shared/models/admins.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
+import { AdminCheckRequest } from '@app/interfaces/admin-check-request';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class AdminService {
   // Ny funktion: Skapa tävling
   public createCompetition(competition: { name: string; startedAt: string }): Observable<any> {
     return this.http.post(`${this.api}/scoreboards?name=${competition.name}&startedAt=${competition.startedAt}`, {});
+  }
+
+  public checkIfAdmin(data: AdminCheckRequest): Observable<{ success: boolean }> {
+    return this.http.post<{ success: boolean }>(`${this.api}/admins/check`, data);
   }
 }
 

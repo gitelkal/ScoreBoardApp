@@ -42,6 +42,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "server.Controllers.AdminsController",
+    "Method": "AdminCheck",
+    "RelativePath": "api/Admins/check",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "adminCheckDTO",
+        "Type": "server.Entities.AdminCheckDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.Controllers.LoginController",
     "Method": "Login",
     "RelativePath": "api/Login",

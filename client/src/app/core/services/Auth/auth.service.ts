@@ -23,6 +23,7 @@ export class AuthService {
     this.api = this.apiService.api;
   }
 
+  
   login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.api}/login`, data).pipe(
       map((response: AuthResponse) => {
@@ -84,7 +85,8 @@ export class AuthService {
     return userID ? parseInt(userID, 10) : null;
   }
   getUsername() {
-    return localStorage.getItem('username');
+    const username = localStorage.getItem('username');
+    return username ? username : null;
   }
 
 }

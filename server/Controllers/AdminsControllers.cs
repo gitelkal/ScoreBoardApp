@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using server.Data;
+using server.Entities;
 using server.Service;
 
 namespace server.Controllers
@@ -47,6 +49,20 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return Ok();
         }
+
+        [HttpPost]
+        [Route("check")]
+        public IActionResult AdminCheck(Entities.AdminCheckDTO adminCheckDTO)
+        {
+            var admin = dbContext.Admins.FirstOrDefault(x => x.Username == adminCheckDTO.Username);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            return Ok(new { Success = true });
+        }
+
+        
         
     }
 }
