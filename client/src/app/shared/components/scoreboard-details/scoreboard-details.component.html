@@ -63,14 +63,33 @@
           </div>
         </div> <!-- Closes *ngFor loop -->
 
-        <!-- Row for the Plus Button -->
-        <div class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container">
-          <div class="relative z-10 flex items-center justify-center px-3 py-2">
-            <button class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black">
-              + Add team 
-            </button>  
-          </div> 
-        </div>
+        <!-- Add Team Row -->
+<div class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container">
+  <div class="relative z-10 flex flex-col items-center justify-center px-3 py-2">
+    <!-- Toggle Form Button -->
+    <button *ngIf="!isAddingTeam" 
+            (click)="isAddingTeam = true" 
+            class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black">
+      + Add team 
+    </button>  
+
+    <!-- Add Team Form -->
+    <form *ngIf="isAddingTeam" (submit)="addTeam($event)" class="w-full mt-3 flex flex-col items-center gap-2">
+      <input type="text" [(ngModel)]="newTeamName" name="teamName"
+             placeholder="Enter team name" 
+             class="border p-2 rounded-lg w-3/4" required>
+      <div class="flex gap-2">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded-lg">
+          Save
+        </button>
+        <button type="button" (click)="isAddingTeam = false" class="bg-gray-300 px-4 py-1 rounded-lg">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div> 
+</div>
+
 
     </div>
   </div>

@@ -7,16 +7,19 @@ import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-scoreboard-details',
   standalone: true,
-  imports: [NgIf, AsyncPipe, CommonModule],
+  imports: [NgIf, AsyncPipe, CommonModule, FormsModule],
   templateUrl: './scoreboard-details.component.html',
   styleUrls: ['./scoreboard-details.component.css']
 })
 export class ScoreboardDetailsComponent implements OnInit {
-  
+  isAddingTeam = false;
+  newTeamName = '';
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
   openTeamIndex: number | null = null;
@@ -24,7 +27,7 @@ export class ScoreboardDetailsComponent implements OnInit {
   private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
   getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
 
-  constructor(private signalRService: SignalRService) {} 
+  constructor(private signalRService: SignalRService,private http: HttpClient) {}
 
   ngOnInit() {
     this.signalRService.startConnection();
@@ -63,6 +66,25 @@ export class ScoreboardDetailsComponent implements OnInit {
             }
           });
         }
+      }
+    });
+  } 
+
+  addTeam(event: Event) {
+    event.preventDefault();
+    
+    if (!this.newTeamName.trim()) return;
+
+    const newTeam = { teamName: this.newTeamName };
+
+    this.http.post('/api/teams', newTeam).subscribe({
+      next: (response) => {
+        console.log('Team added:', response);
+        this.isAddingTeam = false;
+        this.newTeamName = '';
+      },
+      error: (error) => {
+        console.error('Error adding team:', error);
       }
     });
   }
