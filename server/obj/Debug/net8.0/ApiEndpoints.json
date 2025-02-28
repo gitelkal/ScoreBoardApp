@@ -219,12 +219,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "teamId",
+        "Name": "scoreboardId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "scoreboardId",
+        "Name": "teamId",
         "Type": "System.Int32",
         "IsRequired": false
       }
@@ -234,7 +234,7 @@
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
     "Method": "AddPointsToTeamAsync",
-    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/add-points",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/{points}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -250,7 +250,33 @@
         "IsRequired": true
       },
       {
-        "Name": "pointsToAdd",
+        "Name": "points",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "SetPointsToTeamAsync",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/points",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "points",
         "Type": "System.Int32",
         "IsRequired": false
       }
@@ -259,9 +285,9 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
-    "Method": "SetPointsToTeamAsync",
-    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/set-points",
-    "HttpMethod": "PUT",
+    "Method": "CreateAndAddEmptyTeamToScoreboard",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamName}",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -271,14 +297,9 @@
         "IsRequired": true
       },
       {
-        "Name": "teamId",
-        "Type": "System.Int32",
+        "Name": "teamName",
+        "Type": "System.String",
         "IsRequired": true
-      },
-      {
-        "Name": "pointsToSet",
-        "Type": "System.Int32",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -412,6 +433,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.TeamUsersController",
+    "Method": "CreateUserAndAddToTeam",
+    "RelativePath": "api/TeamUsers/{username}/{teamId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "passwordHash",
+        "Type": "System.String",
+        "IsRequired": false
+      },
       {
         "Name": "teamId",
         "Type": "System.Int32",
