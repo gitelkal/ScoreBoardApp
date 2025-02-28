@@ -5,8 +5,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-
-
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-header',
@@ -22,21 +21,22 @@ export class HeaderComponent {
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
 
-  
   constructor() {
-     if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
-       this.authService.tokenExpirationCheck();
-       this.isAdmin = this.authService.isAdmin;
-       this.loggedIn = this.authService.loggedIn;
-     }
+    if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
+      this.authService.tokenExpirationCheck();
+      this.isAdmin = this.authService.isAdmin;
+      this.loggedIn = this.authService.loggedIn;
+    }
   }
-
-
   
   toggleLoginModal() {
     this.dialog.open(LoginComponent);
   }
   
+  toggleRegisterModal() {
+    this.dialog.open(RegisterComponent);
+  }
+
   logoutButton () { 
     this.authService.logout(); 
   }

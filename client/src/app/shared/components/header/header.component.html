@@ -12,6 +12,7 @@
         <button class="w-48 font-bold p-2 bg-white1 text-red6 border-2 border-red6" routerLink="team">Lag</button>
         <button class="w-48 font-bold ml-4 p-2 bg-white1 text-red6 border-2 border-red6" routerLink="scoreboards-history">Historik</button>
         <button class="p-2 font-bold ml-4 bg-white1 text-red6 border-2 border-red6" *ngIf="(isAdmin | async) === true" routerLink="/admin">Administrera</button>
+        <button class="w-48 font-bold p-2 ml-4 bg-white1 text-red6 border-2 border-red6" (click)="toggleRegisterModal()" *ngIf="(loggedIn | async) === false">Registrera</button>
         <button class="w-48 font-bold p-2 ml-4 bg-white1 text-red6 border-2 border-red6" (click)="toggleLoginModal()" *ngIf="(loggedIn | async) === false">Logga in</button>
         <button class="w-48 font-bold p-2 ml-4 bg-white1 text-red6 border-2 border-red6" (click)="logoutButton()" *ngIf="(loggedIn | async) === true">Logga ut</button>        
       </div>
