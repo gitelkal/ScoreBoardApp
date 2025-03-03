@@ -28,8 +28,9 @@ export class LoginComponent {
   submitLogin(form: NgForm) {
     if (form.invalid) { return; }
     this.authService.login({ username: this.username, password: this.password }).subscribe({
-      next: () => {
+      next: (response) => {
         this.success = true;
+        this.firstname = response.firstname;
         setTimeout(() => {
           form.resetForm();
           this.dialog.closeAll();

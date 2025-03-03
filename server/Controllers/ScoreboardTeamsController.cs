@@ -57,8 +57,8 @@ namespace server.Controllers
         }
 
 
-        [HttpPut("{scoreboardId}/{teamId}/add-points")]
-        public async Task<IActionResult> AddPointsToTeamAsync(int scoreboardId, int teamId, int pointsToAdd)
+        [HttpPut("{scoreboardId}/{teamId}/{points}")]
+        public async Task<IActionResult> AddPointsToTeamAsync(int scoreboardId, int teamId, int points)
         {
             var scoreboardTeam = dbContext.ScoreboardTeams
                 .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
@@ -68,7 +68,7 @@ namespace server.Controllers
                 return NotFound(new { message = "Team not found in the scoreboard" });
             }
 
-            scoreboardTeam.Points = (scoreboardTeam.Points ?? 0) + pointsToAdd;
+            scoreboardTeam.Points = (scoreboardTeam.Points ?? 0) + points;
             scoreboardTeam.LastUpdated = DateTime.UtcNow;
 
             dbContext.SaveChanges();
@@ -79,8 +79,8 @@ namespace server.Controllers
             return Ok(scoreboardTeam);
         }
 
-        [HttpPut("{scoreboardId}/{teamId}/set-points")]
-        public async Task<IActionResult> SetPointsToTeamAsync(int scoreboardId, int teamId, int pointsToSet)
+        [HttpPut("{scoreboardId}/{teamId}/points")]
+        public async Task<IActionResult> SetPointsToTeamAsync(int scoreboardId, int teamId, int points)
         {
             var scoreboardTeam = dbContext.ScoreboardTeams
                 .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
@@ -90,7 +90,7 @@ namespace server.Controllers
                 return NotFound(new { message = "Team not found in the scoreboard" });
             }
 
-            scoreboardTeam.Points = pointsToSet;
+            scoreboardTeam.Points = points;
             scoreboardTeam.LastUpdated = DateTime.UtcNow;
 
             dbContext.SaveChanges();
@@ -103,7 +103,7 @@ namespace server.Controllers
 
 
         [HttpPost]
-        public IActionResult AddTeamToScoreboard(int teamId, int scoreboardId)
+        public IActionResult AddTeamToScoreboard(int scoreboardId,int teamId)
         {
             var scoreboardTeam = new ScoreBoardTeams
             {
@@ -115,5 +115,29 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
+
+        [HttpPost("{scoreboardId}/{teamName}")]
+        public IActionResult CreateAndAddEmptyTeamToScoreboard(int scoreboardId,string teamName)
+        {
+            var team = new Team
+            {
+                TeamName = teamName
+            };
+
+            dbContext.Teams.Add(team);
+            dbContext.SaveChanges();
+
+            var scoreboardTeam = new ScoreBoardTeams
+            {
+                ScoreboardID = scoreboardId,
+                TeamID = team.TeamID 
+            };
+
+            dbContext.ScoreboardTeams.Add(scoreboardTeam);
+            dbContext.SaveChanges();
+
+            return StatusCode(StatusCodes.Status201Created, new { teamId = team.TeamID, scoreboardId = scoreboardId });
+        }
+
     }
 }

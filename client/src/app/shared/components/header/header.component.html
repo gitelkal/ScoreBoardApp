@@ -7,10 +7,28 @@
         </div>
       </a>
       <div class="flex w-full pl-6">
-        <input class="w-full border-l-2 border-t-2 border-b-2 border-red6 px-2" type="text" placeholder="Sök bland poängtavlor">
-        <button class="w-24 font-bold p-2 mr-4 bg-white1 text-red6 border-2 border-red6">Sök</button>
+
+        <form class="flex w-full relative" #searchForm="ngForm" (ngSubmit)="submitQuery(searchForm)" novalidate>
+          <input class="w-full border-l-2 border-t-2 border-b-2 border-red6 px-2" type="text" placeholder="Sök efter tävlingar, lag eller användare" [(ngModel)]="searchQuery" name="searchQuery" required (input)="onSearchInputChange()" autocomplete="off"/>
+          <button class="w-24 font-bold p-2 mr-4 bg-white1 text-red6 border-2 border-red6" type="submit" [disabled]="searchForm.invalid">Sök</button>
+          <div *ngIf="isDropdownOpen" class="absolute w-[calc(100%-1rem)] bg-white border border-red6 mt-1 z-10 top-10 mr-4">
+            <ul>
+              <li *ngFor="let result of filteredResults.slice(0, 10), let i = index" class="p-2 border-b border-red6 cursor-pointer flex">
+                <img [src]="imageUrls[i]" alt="Icon" class="mr-2 w-6 h-6">
+                <a [routerLink]="getRouterLink(result)">
+                  {{ getResultName(result) }}
+                </a>
+              </li>
+              <li *ngIf="filteredResults.length === 0" class="p-2">
+                Inga resultat matchade din sökning
+              </li>
+            </ul>
+          </div>
+        </form>
+  
         <button class="w-48 font-bold p-2 bg-white1 text-red6 border-2 border-red6" routerLink="team">Lag</button>
         <button class="w-48 font-bold ml-4 p-2 bg-white1 text-red6 border-2 border-red6" routerLink="scoreboards-history">Historik</button>
+        <button class="w-48 font-bold p-2 ml-4 bg-white1 text-red6 border-2 border-red6" *ngIf="(loggedIn | async) === true" [routerLink]="['/user', userID]">Min sida</button>
         <button class="p-2 font-bold ml-4 bg-white1 text-red6 border-2 border-red6" *ngIf="(isAdmin | async) === true" routerLink="/admin">Administrera</button>
         <button class="w-48 font-bold p-2 ml-4 bg-white1 text-red6 border-2 border-red6" (click)="toggleRegisterModal()" *ngIf="(loggedIn | async) === false">Registrera</button>
         <button class="w-48 font-bold p-2 ml-4 bg-white1 text-red6 border-2 border-red6" (click)="toggleLoginModal()" *ngIf="(loggedIn | async) === false">Logga in</button>
@@ -19,3 +37,6 @@
     </div>
   </div>
 </header>
+
+
+
