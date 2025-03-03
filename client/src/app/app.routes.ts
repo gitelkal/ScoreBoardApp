@@ -43,4 +43,9 @@ export const routes: Routes = [
     component: TeamDetailsComponent,
     title: 'Lag - Detaljer'
   },
+  {
+    path: 'user/:userID',
+    component: AdminComponent, // Byt ut till riktiga UserComponent 
+    title: 'Användare'
+  }
 ];

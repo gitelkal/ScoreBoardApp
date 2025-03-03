@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
    
   ngOnInit() {
     const username = this.authService.getUsername()?.toString();
-    console.log('Username:', username);
     if (username) {
       const adminCheckRequest: AdminCheckRequest = { username };
       this.adminService.checkIfAdmin(adminCheckRequest).subscribe(() => {

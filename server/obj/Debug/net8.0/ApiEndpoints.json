@@ -90,6 +90,36 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProxyController",
+    "Method": "GetScoreboardImage",
+    "RelativePath": "api/Proxy/scoreboard-image",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProxyController",
+    "Method": "GetTeamImage",
+    "RelativePath": "api/Proxy/team-image",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProxyController",
+    "Method": "GetUserImage",
+    "RelativePath": "api/Proxy/user-image",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.Controllers.RegisterController",
     "Method": "CreateUser",
     "RelativePath": "api/Register",
@@ -318,6 +348,32 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.SearchController",
+    "Method": "Search",
+    "RelativePath": "api/Search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.SearchController",
+    "Method": "GetAll",
+    "RelativePath": "api/Search/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

@@ -28,7 +28,7 @@
                         </li>
                         <h3 class="text-base text-red6 mt-2 ml-4 font-medium" *ngIf="team.users.length !=0">Medlemmar:</h3>
                         <li *ngFor="let user of team.users; let i = index">
-                            <p class="text-base text-text-red6 mt-2 ml-4 font-medium" *ngIf="i < 5">{{ user.username }}</p>
+                            <p class="text-base text-text-red6 mt-1 ml-4 font-medium" *ngIf="i < 5">{{ user.username }}</p>
                             <!-- <p class="text-base text-text-red6 mt-1" *ngIf="i === 3">...</p> -->
                         </li>
                     </ul>
