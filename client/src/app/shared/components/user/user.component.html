@@ -1,8 +1,13 @@
 
 <div class="flex flex-wrap justify-center fin-bakgrund min-h-screen" *ngIf="getOneUser$ | async as user">
     <div class="w-3/4 mt-4">
-        <div class="w-1/3">
-            <h2 class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold">{{ user.username }}</h2>
+        <div class="flex justify-between w-full px-10">
+            <h2 class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold w-1/3">{{ user.username }}</h2>
+            <ul class="bg-red1 text-white1 px-7 py-3 align-right">
+                <li class="">Förnamn: {{ user.firstname }}</li>
+                <li class="">Efternamn: {{ user.lastname }}</li>
+                <li class="">Roll: {{ isAdmin ? 'Admin' : 'Användare' }}</li>
+            </ul>
         </div>
         <div class="w-full flex flex-wrap">
             <div class="w-1/2">
