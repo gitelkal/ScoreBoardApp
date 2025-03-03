@@ -1,157 +1,125 @@
-<h2 class="text-4xl flex flex-wrap justify-center font-bold md:mb-4">
-  Hantera lag
-</h2>
 
-<div
-  class="flex flex-wrap justify-center space-x-6 overflow-hidden mx-auto md:h-full"
->
+<h1>Hantera lag</h1>
+<div class="head">
+
   <!-- 🔹 Skapa nytt lag -->
-  <div class="flex bg-white">
-  <form
-    class="flex-1 md:w-1/6 max-w-md bg-white md:p-8 rounded-lg shadow-lg border"
-  >
-    <h2
-      class="sticky z-50 scale-x-125 scale-y-125 md:text-2xl font-bold font-[Garamond] -top-2 text-center text-white bg-red-900 md:mb-4 md:py-2 rounded"
-    >
+  <div>
+    <form>
+      <h2>Skapa ett nytt lag</h2>
 
-      Skapa ett nytt lag
-    </h2>
-    
-    
-    <label for="name" class="block text-gray-700 bg-white text-lg font-[Garamond] font-semibold md:mb-1"
-      >Lagnamn:</label
-    >
-    <input
-      type="text"
-      id="editName"
-      name="editTeamName"
-      [(ngModel)]="selectedTeam.teamName"
-      class="border md:p-2 rounded md:w-full text-black"
-      placeholder="Lägg till lagnamn"
-    />
-    <button
-      type="button"
-      (click)="createTeam()"
-      class="text-white font-bold font-[Garamond] text-xl px-5 rounded-lg p-2 bg-red-900 transition hover:scale-110 mt-2 ml-2"
-    >
-      Skapa lag
-    </button>
-  </form>
-</div>
-<div>
-  <!-- 🔹 Hantera befintliga lag -->
-<div class="flex bg-white">
-  <form
-    (ngSubmit)="updateTeam()"
-    #editForm="ngForm"
-    class="flex-1 md:w-1/6 max-w-md bg-white md:p-8 rounded-lg shadow-lg border"
-  >
-    <h2
-      class="sticky z-50 scale-x-125 scale-y-125 md:text-2xl font-bold font-[Garamond] top-0 text-center text-white bg-red-900 md:mb-5 md:py-2 rounded"
-    >
-      Hantera lag
-    </h2>
-    <label for="editname" class="block text-gray-700 bg-white text-lg font-[Garamond] font-semibold md:mb-1"
-      >Lagnamn:</label
-    >
-
-    <!-- 🔹 Dropdown och sök -->
-    <input
-    type="text"
-    name="editname"
-    [ngModelOptions]="{ standalone: true }"
-    [(ngModel)]="searchManageQuery"
-    (input)="filterManageTeams()"
-    (focus)="showDropdown = true"
-    placeholder="Sök lag att hantera..."
-    class="border md:p-2 rounded md:w-full text-black"
-  />
-  
-    <ul
-      *ngIf="showDropdown && filteredTeams.length > 0"
-      class="md:z-10 bg-white border rounded shadow-md md:max-h-40 overflow-y-auto"
-    >
-      <li
-        *ngFor="let team of filteredTeams"
-        (click)="selectTeam(team)"
-        class="md:p-2 hover:bg-gray-200 cursor-pointer"
-      >
-        {{ team.teamName }}
-      </li>
-    </ul>
-
-    <!-- 🔹 Ändra lag -->
-    <div class="mb-4" *ngIf="selectedTeam.teamID">
-      <label for="editTeamName" class="block text-gray-700 font-semibold md:mb-1"
-      >Lagnamn:</label
-    >
-      <label class="block text-gray-700 font-semibold mb-4">Nytt namn:</label>
+      <label for="name">Lagnamn:</label>
       <input
         type="text"
+        id="editName"
         name="editTeamName"
         [(ngModel)]="selectedTeam.teamName"
-        class="border p-2 rounded w-full text-black"
+        placeholder="Lägg till lagnamn"
       />
-    </div>
 
-
-    
-    <div class="flex justify-between ">
-    <button
-      type="submit"
-      class="text-white font-bold font-[Garamond] text-xl px-5 rounded-lg p-2 bg-red-900 transition hover:scale-110 mt-2 ml-2"
-    >
-      Uppdatera lag
-    </button>
-    <button
-      type="button"
-      (click)="deleteTeam()"
-      class="text-white font-bold font-[Garamond] text-xl px-5 rounded-lg p-2 bg-red-900 transition hover:scale-110 mt-2 ml-2"
-    >
-      Ta bort lag
-    </button>
-    </div>    
-  </form>
-</div>
-</div>
-<!--  <div class="w-full flex flex-col">
-      <form
-        class="w-1/6 max-w-md bg-white p-8 rounded-lg shadow-md border border-black relative top-30 right-22 bottom-32 left-90"
+      <button
+        type="button"
+        (click)="createTeam()"
       >
-        <h2
-          class="text-xl font-bold mb-4 text-center text-black bg-red5 text-white py-2 rounded"
+        Skapa lag
+      </button>
+    </form>
+  </div>
+
+  <!-- 🔹 Hantera befintliga lag -->
+  <div class="">
+    <form
+      (ngSubmit)="updateTeam()"
+      #editForm="ngForm"
+      class="border"
+    >
+      <h2> Hantera lag</h2>
+      <label for="editname">Lagnamn:</label>
+
+      <!-- 🔹 Dropdown och sök -->
+      <div class="relative w-full">
+        <input
+          type="text"
+          name="editname"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="searchManageQuery"
+          (input)="filterManageTeams()"
+          (focus)="showDropdown = true"
+          placeholder="Sök lag att hantera..."
+          class="border md:p-2 rounded md:w-full text-black"
+        />
+      
+        <ul
+          *ngIf="showDropdown && filteredTeams.length > 0"
+          class="absolute top-full left-0 z-50 bg-white border rounded shadow-md md:max-h-40 overflow-y-auto w-full"
+         #dropdown 
         >
-          Ta bort en användare ur ett lag
-        </h2>
-        🔹 Knapp: Ta bort användare ur lag
+          <li
+            *ngFor="let team of filteredTeams"
+            (click)="selectTeam(team)"
+            class="md:p-2 hover:bg-gray-200 cursor-pointer"
+          >
+            {{ team.teamName }}
+          </li>
+        </ul>
+      </div>
+      
+
+      <!-- 🔹 Ändra lag -->
+      <div class="" *ngIf="selectedTeam.teamID">
+
+        <label class="">Nytt namn:</label>
+        <input
+          type="text"
+          name="editTeamName"
+          [(ngModel)]="selectedTeam.teamName"
+          class=""
+        />
+      </div>
+
+      <div class="flex justify-between">
+        <button
+          type="submit"
+          class=" transition  "
+        >
+          Uppdatera lag
+        </button>
         <button
           type="button"
-          (click)="deleteTeamMember()"
-          class="bg-grey3 text-white font-semibold items-center py-2 px-4 rounded w-300px hover:bg-red-700 transition mt-2"
+          (click)="deleteTeam()"
+          class="  "
         >
-          Ta bort användare ur lag lag
+          Ta bort lag
         </button>
-      </form>
-    </div> 
-  </div>-->
-<div class="flex flex-col justify-between items-center w-full mt-40 font-semibold font-[Garamond] text-3xl">
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="flex-col justify-between items-center w-full mt-40  text-3xl">
   <!-- Sök efter Team -->
-  <h2 class="flex items-center pt-4 pb-5">Sök efter Teams</h2>
+  <h1>Sök efter Teams</h1>
   <input
-  type="text"
-  [(ngModel)]="searchListQuery"
-  (input)="filterTeamList()"
-  placeholder="Sök efter team..."
-  class="border p-2 rounded w-1/6 pt-4 h-1/2 max-w-md mb-4 text-center bg-white text-black"
-/>
+    type="text"
+    [(ngModel)]="searchListQuery"
+    (input)="filterTeamList()"
+    placeholder="Sök efter team..."
+    class="border p-2 rounded w-1/6 pt-4 h-1/2 max-w-md mb-4 text-center bg-white text-black"
+  />
 
   <!-- Sorteringsdropdown -->
   <select
-  [(ngModel)]="sortBy"
+    [(ngModel)]="sortBy"
     class="flex appearance-auto w-full max-w-md mb-4 bg-red-900 border border-black font-semibold py-2 px-4 pb-3 text-center text-white hover:bg-red-800 transition"
   >
-    <option value="name" class="text-white font-[Garamond]">Sortera efter namn</option>
-    <option value="date" class="text-white font-[Garamond]">Sortera efter senast aktiv</option>
+    <option value="name" class="">Sortera efter namn</option>
+    <option value="date" class="">Sortera efter senast aktiv</option>
   </select>
 
   <ul
@@ -170,12 +138,8 @@
             alt="Neil image"
           />
         </div>
-        <div class="flex flex-col items-start truncate">
+        <div class="flex flex-col items-start ">
           <strong class="text-lg">{{ team.teamName }}</strong>
-          <!-- <span class="text-sm text-gray-500">{{ admin.email }}</span> -->
-          <!-- <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-          email: {{ admin.email }} -->
-          <p></p>
         </div>
       </div>
     </li>

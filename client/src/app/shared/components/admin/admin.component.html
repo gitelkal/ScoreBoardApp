@@ -1,6 +1,4 @@
-<!-- Wrapper för att centrera allt -->
 
-<!-- exempel: red1 || bg-red1  -->
 <div class="bg-[#e9ecef]">
 <app-manage-scoreboard 
 (scoreboardCreated)="handleScoreboardCreated($event)"
@@ -14,6 +12,7 @@
 <app-manage-teams
   (teamCreated)="handleTeamCreated($event)"
   (teamDeleted)="handleTeamDeleted(+$event)"
+  (teamUpdated)="handleTeamUpdated($event)"
 >
 </app-manage-teams> 
 
@@ -66,7 +65,7 @@
         <strong class="text-lg ">{{
           admin.username 
         }}</strong> <!-- + " " + admin.lastname  flyttad ned denna eftersom för-efternamn är borttaget-!>
-        <!-- <span class="text-sm text-gray-500">{{ admin.email }}</span> -->
+      <span class="text-sm text-gray-500">{{ admin.email }}</span> -->
         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
           <!-- email: {{ admin.email }} -->
       </p>
@@ -81,4 +80,5 @@
     <p class="text-gray-500">Inga admins hittades.</p>
   </ng-template>
 </div>
+<footer>slut på sidan!</footer>
 </div>

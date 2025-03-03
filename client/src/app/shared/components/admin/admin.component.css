@@ -1,14 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Anpassad stil */
 h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  @apply text-xl font-bold mb-1 text-center;
 }
 
 input, select {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  @apply p-10 rounded border-solid;
 }
 
 button {
@@ -22,4 +22,12 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+ul {
+  @apply md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto;
+}
+
+footer {
+  @apply h-[40px];
 }
