@@ -1,1 +1,45 @@
-<p>user works!</p>
+
+<div class="flex flex-wrap justify-center fin-bakgrund min-h-screen" *ngIf="getOneUser$ | async as user">
+    <div class="w-3/4 mt-4">
+        <div class="w-1/3">
+            <h2 class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold">{{ user.username }}</h2>
+        </div>
+        <div class="w-full flex flex-wrap">
+            <div class="w-1/2">
+                <h3 class="p-4 mr-4 font-bold mt-4 text-4xl font-digital bg-gray-100 border-t-2 border-l-2 border-black shadow-lg shadow-blue-400 rounded-sm">Medlem i:</h3>
+                
+                    <ul class="grid gap-4 mt-4">
+                        <li class="bg-gray-100 mr-4 border-b-2 border-r-2 border-black p-2 shadow-xl shadow-blue-400/50 rounded-sm">
+                            <p>En lista med lag</p> 
+                        </li>
+                    </ul>
+            
+                <ng-template #noUsersList>
+                    <div class="shadow-lg p-4 mt-4 bg-gray-200 mr-4">
+                        <h4 class="text-lg font-bold bg-gray-200">Inga medlemmar tillgängliga.</h4>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="w-1/2">
+                <h3 class="p-4 font-bold mt-4 text-4xl font-digital bg-gray-100 border-t-2 border-l-2 border-black shadow-lg shadow-blue-400 rounded-sm">Poängtavlor:</h3>
+                <ng-container *ngIf="userScoreboards.length > 0; else noScoreboards">
+                    <ul class="grid gap-4 mt-4">
+                        <li *ngFor="let sb of userScoreboards">
+                            <div class="shadow-lg border-b-2 border-black bg-white1">
+                                <div class="h-16 bg-red5 flex items-center justify-center px-4 hover:bg-red4 cursor-pointer" [routerLink]="['/scoreboard/', sb.scoreboardId]">
+                                    <h3 class="font-digital text-lg text-white1">{{ sb.name }}</h3>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </ng-container>
+                <ng-template #noScoreboards>
+                    <div class="shadow-lg p-4 mt-4 bg-gray-200">
+                        <h4 class="text-lg font-bold bg-gray-200">Inga poängtavlor tillgängliga.</h4>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

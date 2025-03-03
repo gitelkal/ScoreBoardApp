@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Diagnostics.SymbolStore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
 
@@ -21,6 +22,7 @@ namespace server.Controllers
             var users = dbContext.Users.ToList();
             return Ok(users);
         }
+
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetOneUser(int id)
@@ -32,6 +34,7 @@ namespace server.Controllers
             }
             return Ok(user);
         }
+
         [HttpPost]
         public IActionResult CreateUser([FromBody] User user)
         {
@@ -39,6 +42,7 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
+
         [HttpDelete]
         [Route("{id}")]
         public IActionResult DeleteUser(int id)
@@ -51,6 +55,28 @@ namespace server.Controllers
             dbContext.Users.Remove(user);
             dbContext.SaveChanges();
             return Ok();
+        }
+
+        [HttpGet("{id}/scoreboards")]
+        public IActionResult GetUserScoreboards(int id)
+        {
+            var scoreboards = dbContext.ScoreboardTeams
+                .Where(st => dbContext.TeamUsers
+                    .Where(tu => tu.UserId == id)
+                    .Select(tu => tu.TeamID)
+                    .Contains(st.TeamID))
+                .Join(dbContext.ScoreBoards,
+                st => st.ScoreboardID,
+                sb => sb.ScoreboardId,
+                (st, sb) => new { sb.ScoreboardId, sb.Name })
+                .Distinct()
+                .ToList();
+            if (!scoreboards.Any())
+            {
+                return NotFound(new { message = "Användaren har inte deltagit i några poängtavlor" });
+            }
+
+            return Ok(scoreboards);
         }
     }
 }

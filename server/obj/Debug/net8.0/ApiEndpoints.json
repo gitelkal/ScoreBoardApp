@@ -580,5 +580,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.UsersController",
+    "Method": "GetUserScoreboards",
+    "RelativePath": "api/Users/{id}/scoreboards",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
