@@ -12,14 +12,17 @@
         <div class="w-full flex flex-wrap">
             <div class="w-1/2">
                 <h3 class="p-4 mr-4 font-bold mt-4 text-4xl font-digital bg-gray-100 border-t-2 border-l-2 border-black shadow-lg shadow-blue-400 rounded-sm">Medlem i:</h3>
-                
+                    <ng-container *ngIf="userTeams.length > 0; else noTeams">
                     <ul class="grid gap-4 mt-4">
-                        <li class="bg-gray-100 mr-4 border-b-2 border-r-2 border-black p-2 shadow-xl shadow-blue-400/50 rounded-sm">
-                            <p>En lista med lag</p> 
+                        <li class="bg-gray-100 mr-4 border-b-2 border-r-2 border-black p-2 shadow-xl shadow-blue-400/50 rounded-sm" *ngFor="let team of userTeams">
+                            <a class="text-red6 h-4 text-md font-bold" [routerLink]="['/team/' + team.teamID]">
+                                <p class="" >{{ team.teamName }}
+                                </p>
+                            </a>
                         </li>
                     </ul>
-            
-                <ng-template #noUsersList>
+                </ng-container>
+                <ng-template #noTeams>
                     <div class="shadow-lg p-4 mt-4 bg-gray-200 mr-4">
                         <h4 class="text-lg font-bold bg-gray-200">Inga medlemmar tillgängliga.</h4>
                     </div>

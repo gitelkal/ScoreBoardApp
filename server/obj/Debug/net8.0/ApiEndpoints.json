@@ -499,6 +499,22 @@
   },
   {
     "ContainingType": "server.Controllers.TeamUsersController",
+    "Method": "GetUserTeams",
+    "RelativePath": "api/TeamUsers/{userId}/teams",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.TeamUsersController",
     "Method": "CreateUserAndAddToTeam",
     "RelativePath": "api/TeamUsers/{username}/{teamId}",
     "HttpMethod": "POST",

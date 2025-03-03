@@ -65,6 +65,28 @@ namespace server.Controllers
             return Ok(teamUsers);
 
         }
+
+        [HttpGet("{userId}/teams")]
+        public IActionResult GetUserTeams(int userId)
+        {
+            var teams = dbContext.TeamUsers
+                .Where(tu => tu.UserId == userId)
+                .Join(dbContext.Teams,
+                tu => tu.TeamID,
+                t => t.TeamID,
+                (tu, t) => new
+                {
+                    t.TeamID,
+                    t.TeamName
+                })
+                .ToList();
+            if (!teams.Any())
+            {
+                return NotFound(new { message = "Användaren tillhör inte något lag." });
+            }
+            return Ok(teams);
+        }
+        
         [HttpPost]
         public async Task <IActionResult> AddUserToTeam([FromBody] AddUserToTeamRequest request)
         {

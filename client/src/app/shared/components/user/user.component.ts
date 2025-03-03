@@ -7,7 +7,7 @@ import { UserService } from '@app/core/services/userService/user.service';
 import { ScoreboardBasic } from '@app/shared/models/scoreboardBasic.model';
 import { RouterLink } from '@angular/router';
 import { AdminService } from '@app/core/services/adminService/admin.service';
-import { response } from 'express';
+import { UserTeams } from '@app/shared/models/userTeams.model';
 
 @Component({
   selector: 'app-user',
@@ -20,15 +20,20 @@ export class UserComponent {
 
   userService = inject(UserService);
   adminService = inject(AdminService);
+
   userSubject = new BehaviorSubject<Users | null>(null);
   getOneUser$ = this.userSubject.asObservable();
   isAdmin: boolean = false;
+
   userScoreboards: ScoreboardBasic[] = [];
+  userTeams: UserTeams[] = [];
+  
   route = inject(ActivatedRoute);
 
   ngOnInit() {
     this.loadInitialUser();
     this.loadUserScoreboards();
+    this.loadUserTeams();
   }
 
   loadInitialUser() {
@@ -60,6 +65,18 @@ export class UserComponent {
     ).subscribe(userScoreboardsResponse => {
       console.log(userScoreboardsResponse);
       this.userScoreboards = userScoreboardsResponse;
+    });
+  }
+
+  loadUserTeams() {
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('userID');
+        return this.userService.getUserTeams(id!);
+      })
+    ).subscribe(userTeamsResponse => {
+      console.log(userTeamsResponse);
+      this.userTeams = userTeamsResponse;
     });
   }
 
