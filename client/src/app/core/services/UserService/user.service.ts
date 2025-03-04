@@ -26,7 +26,7 @@ export class UserService {
   }
 
   public getUserScoreboards(id: string): Observable<ScoreboardBasic[]> {
-    return this.http.get<ScoreboardBasic[]>(`${this.api}/users/${id}/scoreboards`);
+    return this.http.get<ScoreboardBasic[]>(`${this.api}/userscoreboards/${id}/scoreboards`);
   }
 
   public getUserTeams(id: string): Observable<UserTeams[]> {

@@ -598,9 +598,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "server.Controllers.UsersController",
+    "ContainingType": "server.Controllers.UserScoreboardsController",
     "Method": "GetUserScoreboards",
-    "RelativePath": "api/Users/{id}/scoreboards",
+    "RelativePath": "api/UserScoreboards/{id}/scoreboards",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
