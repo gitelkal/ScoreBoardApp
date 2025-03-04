@@ -23,3 +23,19 @@
     min-height: 100vh;
     background-attachment: fixed;
   }
+
+app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 10px 14px 16px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+router-outlet {
+    display: block;
+    margin-top: 128px;
+}
