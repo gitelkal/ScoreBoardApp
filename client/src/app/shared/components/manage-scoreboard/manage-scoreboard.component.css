@@ -6,6 +6,10 @@ div {
   @apply font-digital text-grey4 font-semibold;
 }
 
+h1 {
+    @apply font-digital text-black1 font-semibold text-center text-4xl h-full w-full z-50 mb-5 scale-x-125 scale-y-125 p-3 p-4;
+}
+
 h2 {
   @apply font-digital text-white1 font-semibold text-center bg-red5 text-xl h-full w-full sticky z-50 mb-5 scale-x-125 scale-y-125 p-3 p-4;
 }
@@ -34,4 +38,10 @@ label {
     @apply forminput inline-grid grid-cols-2 gap-4 m-2;
 }
 
-
+.sidenav {
+    @apply h-full w-[200px] fixed z-10 top-0 left-0 bg-white1 overflow-hidden;
+  }
+  
+  .sidenav a {
+    @apply text-gray-700 p-[16px] block;
+  }

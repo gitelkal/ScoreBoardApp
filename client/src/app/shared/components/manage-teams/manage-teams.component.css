@@ -55,3 +55,11 @@ div {
   option {
       @apply font-digital text-white1 font-bold text-center;
   }
+
+  .sidenav {
+    @apply h-full w-[200px] fixed z-10 top-0 left-0 bg-white1 overflow-hidden;
+  }
+  
+  .sidenav a {
+    @apply text-gray-700 p-[16px] block;
+  }
