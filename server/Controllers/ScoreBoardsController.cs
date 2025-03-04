@@ -133,13 +133,14 @@ namespace server.Controllers
                 return NotFound("Scoreboard not found.");
             }
 
-            // Fetch teams and users related to the scoreboard
             var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
                                   join t in dbContext.Teams on sbt.TeamID equals t.TeamID
-                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamID
-                                  join u in dbContext.Users on tu.UserId equals u.UserId
+                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamID into teamUsersGroup // Left Join
+                                  from tu in teamUsersGroup.DefaultIfEmpty()
+                                  join u in dbContext.Users on tu.UserId equals u.UserId into usersGroup // Left Join
+                                  from u in usersGroup.DefaultIfEmpty()
                                   where sbt.ScoreboardID == scoreboardId
-                                  group new { u } by new
+                                  group u by new
                                   {
                                       t.TeamID,
                                       t.TeamName,
@@ -153,12 +154,16 @@ namespace server.Controllers
                                       teamGroup.Key.TeamName,
                                       teamGroup.Key.Points,
                                       teamGroup.Key.LastUpdated,
-                                      Users = teamGroup.Select(x => new
-                                      {
-                                          x.u.UserId,
-                                          x.u.Username
-                                      }).ToList()
+                                      Users = teamGroup
+                                          .Where(x => x != null) // Ensure no null values
+                                          .Select(x => new
+                                          {
+                                              x.UserId,
+                                              x.Username
+                                          }).ToList()
                                   }).ToList();
+
+
 
             // Return the structured JSON response
             return Ok(new
