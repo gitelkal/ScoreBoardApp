@@ -116,7 +116,7 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("{scoreboardId}/{teamName}")]
+        [HttpPost("{scoreboardId}/teamName")]
         public IActionResult CreateAndAddEmptyTeamToScoreboard(int scoreboardId,string teamName)
         {
             var team = new Team

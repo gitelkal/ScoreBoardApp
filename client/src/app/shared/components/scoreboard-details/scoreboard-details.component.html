@@ -56,7 +56,7 @@
           <div *ngIf="openTeamIndex === i" class="mt-2 rounded-md shadow-override p-3 bg-gray-100 bg-opacity-90 frosted-container"> 
             <div class="flex flex-wrap justify-center gap-2 text-center"> 
               <span *ngFor="let user of team.users" class="text-gray-700 text-sm">{{ user.username }}</span> 
-              <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300">
+              <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"(click)="toggleRegisterModal()">
                 + Add User
               </button>
             </div>   
