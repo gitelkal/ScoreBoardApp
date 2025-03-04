@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Diagnostics.SymbolStore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using server.Data;
 
@@ -21,6 +22,7 @@ namespace server.Controllers
             var users = dbContext.Users.ToList();
             return Ok(users);
         }
+
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetOneUser(int id)
@@ -32,6 +34,7 @@ namespace server.Controllers
             }
             return Ok(user);
         }
+
         [HttpPost]
         public IActionResult CreateUser([FromBody] User user)
         {
@@ -39,6 +42,7 @@ namespace server.Controllers
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
+
         [HttpDelete]
         [Route("{id}")]
         public IActionResult DeleteUser(int id)
