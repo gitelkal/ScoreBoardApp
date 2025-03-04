@@ -11,7 +11,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { TeamService } from '@app/core/services/teamService/team.service';
+import { TeamService } from '@app/core/services/TeamService/team.service';
 
 @Component({
   selector: 'app-manage-teams',
