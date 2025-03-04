@@ -52,4 +52,13 @@ deleteScoreboard(scoreboardId: number): Observable<any> {
       .get<ScoreboardResponse>(`${this.api}/scoreboards/rich/${id}`)
       .pipe(tap((response) => console.log('Service response:', response)));
   }
+
+  public CreateAndAddEmptyTeamToScoreboard(scoreboardId: string, teamName: string) {
+    const url = `${this.api}/ScoreboardTeams/${scoreboardId}/teamName?teamName=${teamName}`;
+    console.log("API URL:", url);
+    return this.http.post<any>(url, { responseType: 'json' });
+}
+
+
+
 }
