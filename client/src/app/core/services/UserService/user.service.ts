@@ -3,6 +3,8 @@ import { Users } from '../../../shared/models/users.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
+import { ScoreboardBasic } from '../../../shared/models/scoreboardBasic.model';
+import { UserTeams } from '../../../shared/models/userTeams.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +25,11 @@ export class UserService {
     return this.http.get<Users>(`${this.api}/users/${id}`);
   }
 
+  public getUserScoreboards(id: string): Observable<ScoreboardBasic[]> {
+    return this.http.get<ScoreboardBasic[]>(`${this.api}/userscoreboards/${id}/scoreboards`);
+  }
 
+  public getUserTeams(id: string): Observable<UserTeams[]> {
+    return this.http.get<UserTeams[]>(`${this.api}/teamusers/${id}/teams`);
+  }
 }
