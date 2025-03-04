@@ -9,6 +9,8 @@ import { switchMap } from 'rxjs/operators';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from '../register/register.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -18,6 +20,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./scoreboard-details.component.css']
 })
 export class ScoreboardDetailsComponent implements OnInit {
+  readonly dialog = inject(MatDialog);
   isAddingTeam = false;
   newTeamName = '';
   scoreboardService = inject(ScoreboardService);
@@ -74,20 +77,33 @@ export class ScoreboardDetailsComponent implements OnInit {
     event.preventDefault();
     
     if (!this.newTeamName.trim()) return;
-
-    const newTeam = { teamName: this.newTeamName };
-
-    this.http.post('/api/teams', newTeam).subscribe({
+  
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const scoreboardId = params.get('id'); // Get the scoreboard ID from the route
+        if (!scoreboardId) {
+          console.error("Scoreboard ID is missing");
+          return [];
+        }
+        
+        return this.scoreboardService.CreateAndAddEmptyTeamToScoreboard(scoreboardId, this.newTeamName);
+      })
+    ).subscribe({
       next: (response) => {
         console.log('Team added:', response);
         this.isAddingTeam = false;
         this.newTeamName = '';
+        this.loadInitialScoreboard(); // Reload scoreboard to reflect the new team
       },
       error: (error) => {
         console.error('Error adding team:', error);
       }
     });
   }
+  
+  toggleRegisterModal() {
+      this.dialog.open(RegisterComponent);
+    }
 
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;

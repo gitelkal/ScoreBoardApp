@@ -57,7 +57,7 @@ namespace server.Controllers
         }
 
 
-        [HttpPut("{scoreboardId}/{teamId}/{points}")]
+        [HttpPut("{scoreboardId}/{teamId}/addPoints")]
         public async Task<IActionResult> AddPointsToTeamAsync(int scoreboardId, int teamId, int points)
         {
             var scoreboardTeam = dbContext.ScoreboardTeams
@@ -116,7 +116,7 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("{scoreboardId}/{teamName}")]
+        [HttpPost("{scoreboardId}/teamName")]
         public IActionResult CreateAndAddEmptyTeamToScoreboard(int scoreboardId,string teamName)
         {
             var team = new Team
