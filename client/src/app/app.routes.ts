@@ -6,6 +6,7 @@ import { ScoreboardDetailsComponent } from '../app/shared/components/scoreboard-
 import { AdminComponent } from '../app/shared/components/admin/admin.component';
 import { TeamComponent } from '../app/shared/components/team/team.component';
 import { TeamDetailsComponent } from '../app/shared/components/team-details/team-details.component';
+import { UserComponent } from './shared/components/user/user.component';
 
 export const routes: Routes = [
   {
@@ -45,7 +46,7 @@ export const routes: Routes = [
   },
   {
     path: 'user/:userID',
-    component: AdminComponent, // Byt ut till riktiga UserComponent 
+    component: UserComponent, 
     title: 'Användare'
   }
 ];

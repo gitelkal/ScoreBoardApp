@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}"], // 🔹 Viktigt att detta ligger på högsta nivån!
-  darkMode: "class", // 🔹 Aktiverar Dark Mode
+  content: ["./src/**/*.{html,ts}"], //
+  darkMode: "class", // Aktiverar Dark Mode
   theme: {
     extend: {
       colors: {
@@ -27,5 +27,5 @@ module.exports = {
       },
     },
   },
-  plugins: [], // 🔹 Viktigt att detta också ligger på högsta nivån!
+  plugins: [],
 };
