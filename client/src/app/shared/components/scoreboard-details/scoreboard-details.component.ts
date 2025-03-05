@@ -10,6 +10,7 @@ import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from '../register/register.component';
+import {RegisterTeamUserComponent } from '../register-team-user/register-team-user.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
@@ -102,7 +103,7 @@ export class ScoreboardDetailsComponent implements OnInit {
   }
   
   toggleRegisterModal() {
-      this.dialog.open(RegisterComponent);
+      this.dialog.open(RegisterTeamUserComponent);
     }
 
   toggleDropdown(index: number): void {

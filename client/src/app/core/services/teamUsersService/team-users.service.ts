@@ -23,4 +23,8 @@ export class TeamUsersService {
     return this.http.post(`${this.api}/teamusers`, {userId: userID, teamId: teamID});
   }
 
+  createTeamUser(teamID: number, username: string, password: string, firstName: string, lastName: string)
+  {
+    return this.http.post(`${this.api}/teamusers`, {teamId: teamID, username: username, passwordHash: password, firstName: firstName, lastName: lastName});
+  }
 }

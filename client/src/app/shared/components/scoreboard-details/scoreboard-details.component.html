@@ -15,31 +15,33 @@
         </p>
 
         <p *ngIf="richScoreboard.scoreboard.endedAt" class="text-gray-700 mb-1 text-base">  
-          End Date: <span class="font-semibold text-gray-900">
+          Slutdatum: <span class="font-semibold text-gray-900">
             {{ richScoreboard.scoreboard.endedAt | date: 'EEEE, MMM d, y' }}
           </span>
         </p>
 
         <p class="font-semibold mb-3 text-sm" 
           [ngClass]="{ 'text-green-600 pulse': richScoreboard.scoreboard.active, 'text-red-600': !richScoreboard.scoreboard.active }">
-          {{ richScoreboard.scoreboard.active ? 'Active' : 'Inactive' }}
+          {{ richScoreboard.scoreboard.active ? 'Aktiv' : 'Inaktiv' }}
         </p>
 
         <p class="text-base font-medium text-gray-800">
-          Total Teams: <span class="text-gray-600 font-semibold">{{ richScoreboard.scoreboard.teams.length }}</span>
+          Antal lag: <span class="text-gray-600 font-semibold">{{ richScoreboard.scoreboard.teams.length }}</span>
         </p>
       </div>
 
 
-        <div *ngFor="let team of richScoreboard.scoreboard.teams; let i = index" 
-          class="relative overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container"
-          (click)="toggleDropdown(i)"  
-          [ngClass]="{  
-            'first-place': i === 0, 
-            'second-place': i === 1, 
-            'third-place': i === 2,
-            'default-team-color': i > 2
-          }"> 
+      <div *ngFor="let team of richScoreboard.scoreboard.teams; let i = index" 
+      class="relative overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container"
+      (click)="toggleDropdown(i)"  
+      [attr.data-team-id]="team.teamID"
+      [ngClass]="{  
+        'first-place': i === 0, 
+        'second-place': i === 1, 
+        'third-place': i === 2,
+        'default-team-color': i > 2
+      }"> 
+ 
 
           <div class="relative z-10 flex items-center justify-between px-3 py-2">
             <span class="text-lg font-bold text-gray-900">{{ i + 1 }}.</span>
