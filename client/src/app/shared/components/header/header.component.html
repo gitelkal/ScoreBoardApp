@@ -14,6 +14,7 @@
           <div *ngIf="isDropdownOpen" class="absolute w-[calc(100%-1rem)] bg-white border border-red6 mt-1 z-10 top-10 mr-4">
             <ul>
               <li *ngFor="let result of filteredResults.slice(0, 10), let i = index" class="p-2 border-b border-red6 cursor-pointer flex">
+                <!--img [src]="imageUrls[i]" alt="Icon" class="mr-2 w-6 h-6"-->
                 <img [src]="imageUrls[i]" alt="Icon" class="mr-2 w-6 h-6">
                 <a [routerLink]="getRouterLink(result)">
                   {{ getResultName(result) }}

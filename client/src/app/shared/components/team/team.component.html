@@ -13,8 +13,6 @@
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4 w-full" *ngIf="getAllTeamUsers$ | async as teamUsers">
             <li class="h-72" *ngFor="let team of teamUsers">
                 <div class="rounded-xl shadow-xl shadow-red-400/50 bg-gray-100 h-full flex flex-col">
-                    <!--img class="rounded-t-xl w-full h-36 object-cover" src="https://m.media-amazon.com/images/I/71MYezvnohL._AC_SL1500_.jpg" alt="{{ team.teamName }}"/-->
-            
                     <div class="h-16 bg-red5 flex items-center justify-center px-4 rounded-t hover:bg-red4 cursor-pointer" [routerLink]="['/team', team.team.teamID]">
                         <h2 class="text-white1 text-xl font-bold mt-1">{{ team.team.teamName }}</h2>
                     </div>
