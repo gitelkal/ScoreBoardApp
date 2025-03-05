@@ -129,5 +129,21 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created, new { teamUserId = teamUser.TeamID, username = user.Username });
         }
 
+        [HttpDelete("{teamId}/{userId}")]
+        public IActionResult RemoveUserFromTeam(int teamId, int userId)
+        {
+            var teamUser = new TeamUser
+            {
+                TeamID = teamId,
+                UserId = userId
+            };
+            dbContext.TeamUsers.Attach(teamUser); 
+            dbContext.TeamUsers.Remove(teamUser);   
+            dbContext.SaveChanges();                
+            return Ok(new { message = "Användaren har tagits bort från laget." });
+        }
+
+
+
     }
 }

@@ -46,5 +46,11 @@ export class TeamService {
     return this.http.put(`${this.api}/teams/${teamId}`, updatedTeam);
   }
   
-  
+  addUserToTeam(teamID: number, user: any): Observable<any> {
+    return this.http.post<any>(`/api/teams/${teamID}/users`, user);
+  }
+
+  removeUserFromTeam(teamID: number, user: any): Observable<any> {
+    return this.http.delete<any>(`/api/teams/${teamID}/users/${user.id}`);
+  }
 }
