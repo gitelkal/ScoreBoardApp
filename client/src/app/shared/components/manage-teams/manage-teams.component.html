@@ -1,7 +1,6 @@
-
 <h1 id="HandleTeamsAdmin">Hantera lag</h1>
+<div>
 <div class="head">
-
   <!-- 🔹 Skapa nytt lag -->
   <div>
     <form>
@@ -16,23 +15,14 @@
         placeholder="Lägg till lagnamn"
       />
 
-      <button
-        type="button"
-        (click)="createTeam()"
-      >
-        Skapa lag
-      </button>
+      <button type="button" (click)="createTeam()">Skapa lag</button>
     </form>
   </div>
 
-  <!-- 🔹 Hantera befintliga lag -->
+  <!-- 🔹 Hantera befintliga lag-->
   <div class="">
-    <form
-      (ngSubmit)="updateTeam()"
-      #editForm="ngForm"
-      class="border"
-    >
-      <h2> Hantera lag</h2>
+    <form (ngSubmit)="updateTeam()" #editForm="ngForm" class="border">
+      <h2>Hantera lag</h2>
       <label for="editname">Lagnamn:</label>
 
       <!-- 🔹 Dropdown och sök -->
@@ -47,11 +37,11 @@
           placeholder="Sök lag att hantera..."
           class="border md:p-2 rounded md:w-full text-black"
         />
-      
+
         <ul
           *ngIf="showDropdown && filteredTeams.length > 0"
           class="absolute top-full left-0 z-50 bg-white border rounded shadow-md md:max-h-40 overflow-y-auto w-full"
-         #dropdown 
+          #dropdown
         >
           <li
             *ngFor="let team of filteredTeams"
@@ -62,11 +52,9 @@
           </li>
         </ul>
       </div>
-      
 
       <!-- 🔹 Ändra lag -->
       <div class="" *ngIf="selectedTeam.teamID">
-
         <label class="">Nytt namn:</label>
         <input
           type="text"
@@ -77,74 +65,191 @@
       </div>
 
       <div class="flex justify-between">
-        <button
-          type="submit"
-          class=" transition  "
-        >
-          Uppdatera lag
-        </button>
-        <button
-          type="button"
-          (click)="deleteTeam()"
-          class="  "
-        >
+        <button type="submit" class="transition">Uppdatera lag</button>
+        <button type="button" (click)="deleteTeam()" class="  ">
           Ta bort lag
         </button>
       </div>
     </form>
   </div>
+
+  <div class="">
+ 
+    <form (ngSubmit)="joinTeam()" #editForm="ngForm" class="border">
+      <h2>Lägg till användare i lag</h2>
+
+      <label class="chooseMemberAdd">Välj användare</label>
+
+      <!-- 🔹 Dropdown och sök -->
+      <div class="relative w-full">
+        <input
+          type="text"
+          name="editname"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="searchManageQuery"
+          (input)="filterManageTeams()"
+          (focus)="showDropdown = true"
+          placeholder="Sök lag att hantera..."
+          class="border md:p-2 rounded md:w-full text-black"
+        />
+
+        <ul *ngIf="activeDropdown === 'addUser' && filteredUsers.length > 0">
+          <li
+            *ngFor="let user of filteredUsers"
+            (click)="selectUserToAdd(user)"
+            class="p-2 hover:bg-gray-200 cursor-pointer"
+          >
+            {{ user.username }}
+          </li>
+        </ul>
+
+        <div>
+          <label class="chooseTeamAdd">Välj lag</label>
+          <input
+            type="text"
+            name="searchListQuery"
+            [(ngModel)]="searchListQuery"
+            (input)="filterManageTeams()"
+            (focus)="activeDropdown = 'team'"
+            placeholder="Sök efter lag..."
+          />
+
+          <ul
+            *ngIf="activeDropdown === 'team' && filteredTeams.length > 0"
+            class="absolute top-full left-0 z-50 bg-white border rounded shadow-md max-h-60 overflow-y-auto w-full"
+          >
+            <li
+              *ngFor="let team of filteredTeams"
+              (click)="selectTeamToAdd(team)"
+              class="p-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ team.teamName }}
+            </li>
+          </ul>
+        </div>
+        <button type="button" (click)="joinTeam()">lägg till</button>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    <div>
+      <!--välj användare-->
+      <form (ngSubmit)="removeUserFromTeam()" #editForm="ngForm" class="border">
+        <h2 class="">Ta bort användare ur lag</h2>
+
+        <label class="chooseMemberDelete">Välj användare</label>
+        <input
+          type="text"
+          name="searchUserToRemoveQuery"
+          [(ngModel)]="searchUserToRemoveQuery"
+          (input)="filterUsers(searchUserToRemoveQuery)"
+          (focus)="activeDropdown = 'removeUser'"
+          placeholder="Sök efter användare..."
+          class="border md:p-2 rounded md:w-full text-black"
+        />
+        <ul
+          *ngIf="activeDropdown === 'removeUser' && filteredUsers.length > 0"
+          class="absolute top-full left-0 z-50 bg-white border rounded shadow-md max-h-60 overflow-y-auto w-full"
+        >
+          <li
+            *ngFor="let user of filteredUsers"
+            (click)="selectUserToRemove(user)"
+            class="p-2 hover:bg-gray-200 cursor-pointer"
+          >
+            {{ user.username }}
+          </li>
+        </ul>
+
+        <div class="relative w-full">
+          <!--välj lag-->
+          <label class="chooseFromTeamDelete">Välj lag</label>
+          <input
+            type="text"
+            name="removeUser"
+            [(ngModel)]="searchListQuery"
+            (input)="filterManageTeams()"
+            (focus)="activeDropdown = 'team'"
+            placeholder="Sök efter lag..."
+            class="border md:p-2 rounded md:w-full text-black"
+          />
+
+          <ul
+            *ngIf="activeDropdown === 'team' && filteredTeams.length > 0"
+            class="absolute top-full left-0 z-50 bg-white border rounded shadow-md max-h-60 overflow-y-auto w-full"
+          >
+            <li
+              *ngFor="let team of filteredTeams"
+              (click)="selectTeam(team)"
+              class="p-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ team.teamName }}
+            </li>
+          </ul>
+        </div>
+        <button type="button" (click)="removeUserFromTeam()">
+          Ta bort användare
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+  <!-- -------------------- -->
+
+<div>
+  <div class="flex flex-col items-center w-full mt-20 justify-between">
+    <p>
+    lägg till lag i scoreboard</p>
+    <p>Ta bort lag ur scoarboard</p>
+  </div>
 </div>
 
+<!-- --------------------- -->
+  <div class="flex flex-col items-center w-full mt-20 justify-between">
+    <!-- Sök efter Team -->
+    <h1 id="searchTeamsAdmin">Sök efter Teams</h1>
+    <input
+      type="text"
+      [(ngModel)]="searchListQuery"
+      (input)="filterTeamList()"
+      placeholder="Sök efter team..."
+      class="border p-2 rounded w-1/6 pt-4 h-1/2 max-w-md mb-4 text-center bg-white text-black"
+    />
 
-
-
-
-
-
-
-<div class="flex-col justify-between items-center w-full mt-40  text-3xl">
-  <!-- Sök efter Team -->
-  <h1 id="searchTeamsAdmin">Sök efter Teams</h1>
-  <input
-    type="text"
-    [(ngModel)]="searchListQuery"
-    (input)="filterTeamList()"
-    placeholder="Sök efter team..."
-    class="border p-2 rounded w-1/6 pt-4 h-1/2 max-w-md mb-4 text-center bg-white text-black"
-  />
-
-  <!-- Sorteringsdropdown -->
-  <select
-    [(ngModel)]="sortBy"
-    class="flex appearance-auto w-full max-w-md mb-4 bg-red-900 border border-black font-semibold py-2 px-4 pb-3 text-center text-white hover:bg-red-800 transition"
-  >
-    <option value="name" class="">Sortera efter namn</option>
-    <option value="date" class="">Sortera efter senast aktiv</option>
-  </select>
-
-  <ul
-    *ngIf="sortedTeams.length > 0; else noResults"
-    class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-  >
-    <li
-      *ngFor="let team of sortedTeams"
-      class="bg-white border-box rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center py-3 sm:py-4"
+    <!-- Sorteringsdropdown -->
+    <select
+      [(ngModel)]="sortBy"
+      class="flex appearance-auto w-full max-w-md mb-4 bg-red-900 border border-black font-semibold py-2 px-4 pb-3 text-center text-white hover:bg-red-800 transition"
     >
-      <div class="flex items-center space-x-3 rtl:space-x-reverse">
-        <div class="shrink-0">
-          <img
-            class="w-8 h-8 rounded-full"
-            src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg"
-            alt="Neil image"
-          />
+      <option value="name" class="">Sortera efter namn</option>
+      <option value="date" class="">Sortera efter senast aktiv</option>
+    </select>
+
+    <ul
+      *ngIf="sortedTeams.length > 0; else noResults"
+      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
+    >
+      <li
+        *ngFor="let team of sortedTeams"
+        class="bg-white border-box rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center py-3 sm:py-4"
+      >
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+          <div class="shrink-0">
+            <img
+              class="w-8 h-8 rounded-full"
+              src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg"
+              alt="Neil image"
+            />
+          </div>
+          <div class="flex flex-col items-start">
+            <strong class="text-lg">{{ team.teamName }}</strong>
+          </div>
         </div>
-        <div class="flex flex-col items-start ">
-          <strong class="text-lg">{{ team.teamName }}</strong>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <ng-template #noResults>
-    <p class="text-gray-500">Inga lag hittades.</p>
-  </ng-template>
+      </li>
+    </ul>
+    <ng-template #noResults>
+      <p class="text-gray-500">Inga lag hittades.</p>
+    </ng-template>
+  </div>
+
 </div>

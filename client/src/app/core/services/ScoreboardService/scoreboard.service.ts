@@ -9,7 +9,7 @@ import { ScoreboardResponse } from '../../../shared/models/richScoreboard.model'
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ScoreboardService {
   private readonly api: string;

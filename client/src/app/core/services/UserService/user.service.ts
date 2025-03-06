@@ -10,7 +10,6 @@ import { UserTeams } from '../../../shared/models/userTeams.model';
   providedIn: 'root'
 })
 export class UserService {
-
   private readonly api: string;
 
   constructor(private http: HttpClient, private apiService: ApiService) {
