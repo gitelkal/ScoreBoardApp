@@ -1,44 +1,48 @@
 <div class="flex flex-wrap justify-center fin-bakgrund min-h-screen" *ngIf="getOneTeamWithUsers$ | async as team">
     <div class="w-3/4 mt-4">
         <div class="w-1/3">
-            <h2 class="bg-red1 text-white1 text-center text-3xl p-7 font-semibold">{{ team.team.teamName }}</h2>
+            <h2 class="bg-h2Color text-white1 text-center text-3xl p-7 font-semibold">{{ team.team.teamName }}</h2>
         </div>
-        <div class="w-full flex flex-wrap">
-            <div class="w-1/2">
-                <h3 class="p-4 mr-4 font-bold mt-4 text-4xl font-digital bg-gray-100 border-t-2 border-l-2 border-black shadow-lg shadow-blue-400 rounded-sm">Medlemmar:</h3>
+        <div class="w-full grid grid-cols-2 gap-4 mt-4">
+            <div class="">
                 <ng-container *ngIf="team.users.length > 0; else noUsersList">
-                    <ul class="grid gap-4 mt-4">
-                        <li class="bg-gray-100 mr-4 border-b-2 border-r-2 border-black p-2 shadow-xl shadow-blue-400/50 rounded-sm" *ngFor="let user of team.users">
-                            <a class="text-red6 h-4 text-md font-bold" [routerLink]="['/user/', user.userId]">
-                                <p>ID: {{ user.userId }}</p>
-                                <p>Användarnamn: {{ user.username }}</p>
-                                <p>Namn: {{ user.firstname ? user.firstname : '-' }} {{ user.lastname ? user.lastname : '' }}</p>
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="bg-white/20 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-gray-300 mt-4">
+                    <h3 class="text-2xl font-bold text-white1 p-6 rounded-md border border-black/50 shadow-md text-center bg-gradient-to-br from-red-500 to-blue-500 [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]">Medlemmar:</h3>
+                        <ul class="grid gap-2 mt-4">
+                            <li class="bg-gray-100 border border-black p-1 px-3 rounded-md shadow-xl shadow-blue-400/50" *ngFor="let user of team.users">
+                                <a class="text-red6 h-4 text-md font-bold" [routerLink]="['/user/', user.userId]">
+                                    <p>Användarnamn: {{ user.username }}</p>
+                                    <p>Namn: {{ user.firstname ? user.firstname : '-' }} {{ user.lastname ? user.lastname : '' }}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </ng-container>
                 <ng-template #noUsersList>
-                    <div class="shadow-lg p-4 mt-4 bg-gray-200 mr-4">
+                    <div class="shadow-lg p-4 mt-4 bg-gray-200">
                         <h4 class="text-lg font-bold bg-gray-200">Inga medlemmar tillgängliga.</h4>
                     </div>
                 </ng-template>
             </div>
-            <div class="w-1/2">
-                <h3 class="p-4 font-bold mt-4 text-4xl font-digital bg-gray-100 border-t-2 border-l-2 border-black shadow-lg shadow-blue-400 rounded-sm">Poängtavlor:</h3>
+
+            <div class="">
                 <ng-container *ngIf="getOneScoreboardTeam$ | async as sbt; else noScoreboards">
-                    <ul class="grid gap-4 mt-4">
-                        <li *ngFor="let sb of sbt">
-                            <div class="shadow-lg border-b-2 border-black bg-white1">
-                                <div class="h-16 bg-red5 flex items-center justify-center px-4 hover:bg-red4 cursor-pointer" [routerLink]="['/scoreboard/', sb.scoreboardId]">
-                                    <h3 class="font-digital text-lg text-white1">{{ sb.name }}: {{ sb.startedAt | date:'shortDate' }} - {{ sb.endedAt | date:'shortDate'}}</h3>
+                    <div class="bg-white/20 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-gray-300 mt-4">
+                    <h3 class="text-2xl font-bold text-white1 p-6 rounded-md border border-black/50 shadow-md text-center bg-gradient-to-br from-red-500 to-blue-500 [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]">Poängtavlor:</h3>
+                        <ul class="grid gap-4 mt-4">
+                            <li *ngFor="let sb of sbt">
+                                <div>
+                                    <div class="h-16 bg-red-700 rounded-tr-lg rounded-tl-lg flex items-center justify-center px-4 hover:bg-red4 cursor-pointer" [routerLink]="['/scoreboard/', sb.scoreboardId]">
+                                        <h3 class="font-digital text-lg text-white1">{{ sb.name }}: {{ sb.startedAt | date:'shortDate' }} - {{ sb.endedAt | date:'shortDate'}}</h3>
+                                    </div>
+                                    <div class="h-24 bg-white1 p-4 rounded-br-lg rounded-bl-lg">
+                                        <p class="text-red6 h-8 text-md font-bold flex justify-center items-center">{{ sb.description}}</p>
+                                        <p class="text-red6 h-8 text-lg font-bold flex justify-center items-center">Poäng: {{ sb.points }} </p>
+                                    </div>
                                 </div>
-                                <div class="h-28 bg-white1 p-4 border-r-2 border-black">
-                                    <p class="text-red6 h-8 text-md font-bold flex justify-center items-center">{{ sb.description}}</p>
-                                    <p class="text-red6 h-8 text-md font-bold flex justify-center items-center">Poäng: {{ sb.points }} </p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </ng-container>
                 <ng-template #noScoreboards>
                     <div class="shadow-lg p-4 mt-4 bg-gray-200">

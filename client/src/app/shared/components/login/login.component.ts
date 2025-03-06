@@ -32,6 +32,7 @@ export class LoginComponent {
         this.success = true;
         this.firstname = response.firstname;
         setTimeout(() => {
+          window.location.reload();
           form.resetForm();
           this.dialog.closeAll();
         }, 2000);

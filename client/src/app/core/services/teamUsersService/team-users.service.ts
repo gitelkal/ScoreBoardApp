@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Observable } from 'rxjs';
 import { TeamUsers } from '@app/shared/models/teamUser.model';
+import { DropUserFromTeamRequest } from '@app/interfaces/drop-user-from-team-request';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,9 @@ export class TeamUsersService {
   joinTeam(userID: number, teamID: number): Observable<any> {
     return this.http.post(`${this.api}/teamusers`, {userId: userID, teamId: teamID});
   }
-  removeUserFromTeam(teamId: number, userId: number): Observable<any> {
-    return this.http.delete(`${this.api}/teamusers/${teamId}/${userId}`);
-}
-
-  createTeamUser(teamID: number, username: string, password: string, firstName: string, lastName: string)
-  {
-    return this.http.post(`${this.api}/teamusers`, {teamId: teamID, username: username, passwordHash: password, firstName: firstName, lastName: lastName});
+  removeUserFromTeam(teamId: number, userId: number): Observable<DropUserFromTeamRequest> {
+    const body = { teamId, userId };
+    return this.http.delete<DropUserFromTeamRequest>(`${this.api}/teamusers/`, { body });
   }
+  
 }
