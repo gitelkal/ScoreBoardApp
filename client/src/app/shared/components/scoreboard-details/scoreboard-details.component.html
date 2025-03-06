@@ -33,7 +33,6 @@
       <div *ngFor="let team of richScoreboard.scoreboard.teams; let i = index" 
       class="relative overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container"
       (click)="toggleDropdown(i)"  
-      [attr.data-team-id]="team.teamID"
       [ngClass]="{  
         'first-place': i === 0, 
         'second-place': i === 1, 
@@ -42,7 +41,7 @@
       }"> 
  
 
-          <div class="relative z-10 flex items-center justify-between px-3 py-2">
+          <div class="relative z-10 flex items-center justify-between px-3 py-2"> 
             <span class="text-lg font-bold text-gray-900">{{ i + 1 }}.</span>
             <h3 class="text-lg font-bold flex-1 text-center text-gray-900">{{ team.teamName }}</h3>
             <p class="text-base font-semibold text-gray-900">{{ team.points }}</p> 
@@ -56,6 +55,9 @@
             <div class="flex flex-wrap justify-center gap-2 text-center"> 
               <span *ngFor="let user of team.users" class="text-gray-700 text-sm">{{ user.username }}</span> 
               <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300" *ngIf="(loggedIn | async) === false" (click)="toggleRegisterModal()" >
+                + Gå med i laget
+              </button>
+              <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300" *ngIf="(loggedIn | async) === true" (click)="joinTeam(team.teamID)" > 
                 + Gå med i laget
               </button>
             </div>   
