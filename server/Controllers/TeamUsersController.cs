@@ -104,14 +104,15 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("{username}/{teamId}")]
-        public IActionResult CreateUserAndAddToTeam(string username,string passwordHash, int teamId)
+        [HttpPost("{teamId}/{username}")]
+        public IActionResult CreateUserAndAddToTeam(int teamId,string username,string passwordHash,string firstName, string lastName)
         {
             var user = new User
             {
                 Username = username,
-                PasswordHash = passwordHash
-               
+                PasswordHash = passwordHash,
+                Firstname = firstName,
+                Lastname = lastName
             };
 
             dbContext.Users.Add(user);
@@ -121,7 +122,6 @@ namespace server.Controllers
             {
                 TeamID = teamId,
                 UserId = user.UserId
-
             };
 
             dbContext.TeamUsers.Add(teamUser);

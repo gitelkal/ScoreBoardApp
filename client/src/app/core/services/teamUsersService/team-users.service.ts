@@ -26,4 +26,8 @@ export class TeamUsersService {
     return this.http.delete(`${this.api}/teamusers/${teamId}/${userId}`);
 }
 
+  createTeamUser(teamID: number, username: string, password: string, firstName: string, lastName: string)
+  {
+    return this.http.post(`${this.api}/teamusers`, {teamId: teamID, username: username, passwordHash: password, firstName: firstName, lastName: lastName});
+  }
 }
