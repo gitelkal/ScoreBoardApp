@@ -9,7 +9,7 @@ import { TeamUsersService } from '@app/core/services/teamUsersService/team-users
 @Component({
   selector: 'app-register-team-user',
   imports: [FormsModule, NgIf, NgClass],
-  templateUrl: './register-team-user.component.html',
+  templateUrl: '../register/register.component.html',
   styleUrl: '../register/register.component.css'
 })
 export class RegisterTeamUserComponent {
