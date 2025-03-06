@@ -104,30 +104,30 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("{username}/{teamId}")]
-        public IActionResult CreateUserAndAddToTeam(string username,string passwordHash, int teamId)
-        {
-            var user = new User
-            {
-                Username = username,
-                PasswordHash = passwordHash
+        //[HttpPost("{username}/{teamId}")]
+        //public IActionResult CreateUserAndAddToTeam(string username,string passwordHash, int teamId)
+        //{
+        //    var user = new User
+        //    {
+        //        Username = username,
+        //        PasswordHash = passwordHash
                
-            };
+        //    };
 
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
+        //    dbContext.Users.Add(user);
+        //    dbContext.SaveChanges();
 
-            var teamUser = new TeamUser
-            {
-                TeamID = teamId,
-                UserId = user.UserId
+        //    var teamUser = new TeamUser
+        //    {
+        //        TeamID = teamId,
+        //        UserId = user.UserId
 
-            };
+        //    };
 
-            dbContext.TeamUsers.Add(teamUser);
-            dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created, new { teamUserId = teamUser.TeamID, username = user.Username });
-        }
+        //    dbContext.TeamUsers.Add(teamUser);
+        //    dbContext.SaveChanges();
+        //    return StatusCode(StatusCodes.Status201Created, new { teamUserId = teamUser.TeamID, username = user.Username });
+        //}
 
     }
 }

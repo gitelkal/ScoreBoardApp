@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TeamService } from '@app/core/services/TeamService/team.service';
+import { TeamService } from '@app/core/services/teamService/team.service';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -64,15 +64,15 @@ export class TeamComponent implements OnInit {
   }
 
   subscribeToTeamUserUpdates() {
-    this.signalRService.userJoinTeamUpdates.subscribe((update) => {
+    this.signalRService.userJoinTeamUpdates.subscribe(update => {
       if (update) {
-        this.getAllTeamUsers$ = this.teamUsersService.getTeamWithUsers();
-        this.usersInTeam = this.usersInTeam.map((team) => {
-          if (team.teamID === update.teamId) {
-            return { teamID: team.teamID, userIDs: [...team.userIDs, Number(update.userId)] };
-          }
-          return team;
-        });
+        const currentTeamUsers = this.usersInTeam;
+
+        const updatedTeams = currentTeamUsers.map(team => 
+          team.teamID === update.teamId ? { ...team, userIDs: [...team.userIDs, Number(update.userId)] } : team
+        );
+
+        this.usersInTeam = updatedTeams;
       }
     });
   }
