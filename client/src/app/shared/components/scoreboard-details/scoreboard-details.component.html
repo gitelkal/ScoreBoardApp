@@ -1,5 +1,4 @@
 <div class="w-full relative">
-  <!-- Full-page background -->
   <div class="fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1] backdrop-blur-override" 
        style="background-image: url(../../../../assets/images/bakgrund-home.png);"></div>
 
@@ -49,50 +48,42 @@
             <p class="text-base font-semibold text-gray-900">{{ team.points }}</p> 
           </div>
 
-          <!-- Shimmer effect overlays --> 
+          <!-- Shimmy shimmy  --> 
           <div *ngIf="i === 0" class="shimmer-effect"></div>
           <div *ngIf="i === 1" class="moving-glow"></div>
           <div *ngIf="i === 2" class="subtle-glow"></div> 
-
-          <!-- Dropdown for users -->
           <div *ngIf="openTeamIndex === i" class="mt-2 rounded-md shadow-override p-3 bg-gray-100 bg-opacity-90 frosted-container"> 
             <div class="flex flex-wrap justify-center gap-2 text-center"> 
               <span *ngFor="let user of team.users" class="text-gray-700 text-sm">{{ user.username }}</span> 
-              <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"(click)="toggleRegisterModal()">
+              <button class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300" *ngIf="(loggedIn | async) === false" (click)="toggleRegisterModal()" >
                 + Gå med i laget
               </button>
             </div>   
           </div>
-        </div> <!-- Closes *ngFor loop -->
-
-        <!-- Add Team Row -->
+        </div> 
 <div class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container">
   <div class="relative z-10 flex flex-col items-center justify-center px-3 py-2">
-    <!-- Toggle Form Button -->
     <button *ngIf="!isAddingTeam" 
             (click)="isAddingTeam = true" 
             class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black">
-      + Add team 
+      + Lägg till lag
     </button>  
 
-    <!-- Add Team Form -->
     <form *ngIf="isAddingTeam" (submit)="addTeam($event)" class="w-full mt-3 flex flex-col items-center gap-2">
       <input type="text" [(ngModel)]="newTeamName" name="teamName"
              placeholder="Enter team name" 
              class="border p-2 rounded-lg w-3/4" required>
       <div class="flex gap-2">
         <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded-lg">
-          Save
+          Spara
         </button>
         <button type="button" (click)="isAddingTeam = false" class="bg-gray-300 px-4 py-1 rounded-lg">
-          Cancel
+          Avbryt
         </button>
       </div>
     </form>
   </div> 
 </div>
-
-
     </div>
   </div>
 </div>

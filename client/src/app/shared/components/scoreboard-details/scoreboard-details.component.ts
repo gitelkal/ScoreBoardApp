@@ -12,6 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from '../register/register.component';
 import {RegisterTeamUserComponent } from '../register-team-user/register-team-user.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AdminService } from '@app/core/services/adminService/admin.service';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { AdminCheckRequest } from '@app/interfaces/admin-check-request';  
+import { Console } from 'console';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -27,11 +31,14 @@ export class ScoreboardDetailsComponent implements OnInit {
   scoreboardService = inject(ScoreboardService);
   route = inject(ActivatedRoute);
   openTeamIndex: number | null = null;
+  isAdmin!: Observable<boolean>;
+  loggedIn!: Observable<boolean>;
+  
 
   private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
   getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
 
-  constructor(private signalRService: SignalRService,private http: HttpClient) {}
+  constructor(private signalRService: SignalRService, private authService: AuthService,private adminService: AdminService) {}
 
   ngOnInit() {
     this.signalRService.startConnection();
@@ -48,8 +55,13 @@ export class ScoreboardDetailsComponent implements OnInit {
     ).subscribe(ScoreboardResponse => {
       this.scoreboardResonseSubject.next(ScoreboardResponse); 
     });
-  }
 
+    this.authService.tokenExpirationCheck();
+    this.isAdmin = this.authService.isAdmin;
+    this.loggedIn = this.authService.loggedIn;
+    console.log('logged in: ',this.loggedIn)
+    console.log('admin: ',this.isAdmin)
+}
   subscribeToScoreUpdates() {
     this.signalRService.scoreUpdates.subscribe(update => {
       if (update) {
@@ -81,7 +93,7 @@ export class ScoreboardDetailsComponent implements OnInit {
   
     this.route.paramMap.pipe(
       switchMap(params => {
-        const scoreboardId = params.get('id'); // Get the scoreboard ID from the route
+        const scoreboardId = params.get('id'); 
         if (!scoreboardId) {
           console.error("Scoreboard ID is missing");
           return [];
@@ -94,7 +106,7 @@ export class ScoreboardDetailsComponent implements OnInit {
         console.log('Team added:', response);
         this.isAddingTeam = false;
         this.newTeamName = '';
-        this.loadInitialScoreboard(); // Reload scoreboard to reflect the new team
+        this.loadInitialScoreboard(); 
       },
       error: (error) => {
         console.error('Error adding team:', error);
