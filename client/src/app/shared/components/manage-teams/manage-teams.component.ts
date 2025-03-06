@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { TeamService } from '@app/core/services/teamService/team.service';
-import { UserService } from '@app/core/services/UserService/user.service';
+import { UserService } from '@app/core/services/userService/user.service';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 
 @Component({
