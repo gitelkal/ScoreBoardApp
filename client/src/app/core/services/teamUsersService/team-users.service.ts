@@ -22,5 +22,8 @@ export class TeamUsersService {
   joinTeam(userID: number, teamID: number): Observable<any> {
     return this.http.post(`${this.api}/teamusers`, {userId: userID, teamId: teamID});
   }
+  removeUserFromTeam(teamId: number, userId: number): Observable<any> {
+    return this.http.delete(`${this.api}/teamusers/${teamId}/${userId}`);
+}
 
 }

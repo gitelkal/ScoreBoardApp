@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { TeamService } from '@app/core/services/teamService/team.service';
+import { UserService } from '@app/core/services/userService/user.service';
+import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 
 @Component({
   selector: 'app-manage-teams',
@@ -22,25 +24,54 @@ import { TeamService } from '@app/core/services/teamService/team.service';
 })
 export class ManageTeamsComponent implements OnInit {
   private teamService = inject(TeamService);
+  private userService = inject(UserService);
+  private teamUsersService = inject(TeamUsersService);
 
   @Output() teamCreated = new EventEmitter<any>();
   @Output() teamDeleted = new EventEmitter<number>();
   sortBy: string = 'name';
+
   teams: any[] = [];
+
   filteredTeams: any[] = [];
-  showDropdown: boolean = false;
   selectedTeam: any = { teamID: null, teamName: '' };
+  searchManageQuery: string = '';
+  searchListQuery: string = '';
 
+  searchTeamToAddQuery: string = '';
+  searchTeamToRemoveQuery: string = '';
+  selectedTeamToAdd: any = null;
+  selectedTeamToRemove: any = null;
 
-  searchManageQuery: string = '';  // För hantera lag (ändra/tar bort)
-  searchListQuery: string = '';    // För listan "Sök efter Teams"
+  users: any[] = [];
+  searchUserQuery: string = '';
+  filteredUsers: any[] = [];
+  selectedUser: any = null;
+  activeDropdown: 'addUser' | 'removeUser' | 'team' | null = null;
 
+  searchUserToAddQuery: string = '';
+  searchUserToRemoveQuery: string = '';
+  selectedUserToAdd: any = null;
+  selectedUserToRemove: any = null;
 
+  showDropdown: boolean = false;
   @ViewChild('dropdown') dropdown!: ElementRef;
 
-
   ngOnInit() {
-    this.fetchTeams();
+    this.fetchTeams(); // Hämta lag
+    this.fetchUsers(); // Hämta användare
+  }
+
+  fetchUsers() {
+    this.userService.getAllUsers().subscribe(
+      (data: any) => {
+        this.users = data;
+        this.filteredUsers = data;
+      },
+      (error: any) => {
+        console.error('Fel vid hämtning av users:', error);
+      }
+    );
   }
 
   fetchTeams() {
@@ -65,7 +96,7 @@ export class ManageTeamsComponent implements OnInit {
     const payload = { teamID: 0, teamName: this.selectedTeam.teamName };
 
     this.teamService.createTeam(payload).subscribe(
-      (response) => {
+      (response: any) => {
         console.log('✅ Lagt till lag:', response);
         this.fetchTeams();
         this.teamCreated.emit(response);
@@ -80,43 +111,44 @@ export class ManageTeamsComponent implements OnInit {
 
   // Filtrera lag i sökrutan
   filterManageTeams() {
+    console.log('Alla teams:', this.teams);
+    console.log('Sökterm:', this.searchManageQuery);
+
     this.filteredTeams = this.searchManageQuery.trim()
-      ? this.teams.filter(team =>
-          team.teamName.toLowerCase().includes(this.searchManageQuery.toLowerCase())
+      ? this.teams.filter((team) =>
+          team.teamName
+            .toLowerCase()
+            .includes(this.searchManageQuery.toLowerCase())
         )
       : [...this.teams];
+
+    console.log('Filtrerade teams:', this.filteredTeams);
   }
-  
+
+  // Filtrera lag i sökrutan
   filterTeamList() {
     this.filteredTeams = this.searchListQuery.trim()
-      ? this.teams.filter(team =>
-          team.teamName.toLowerCase().includes(this.searchListQuery.toLowerCase())
+      ? this.teams.filter((team) =>
+          team.teamName
+            .toLowerCase()
+            .includes(this.searchListQuery.toLowerCase())
         )
       : [...this.teams];
   }
-  
-
-
+  // Sortera lag
   get sortedTeams() {
-    return [...(this.filteredTeams || [])].sort((a, b) => 
+    return [...(this.filteredTeams || [])].sort((a, b) =>
       this.sortBy === 'name' ? a.teamName.localeCompare(b.teamName) : 0
     );
   }
-  
-  
-
-
-
-
 
   // 🔹 Välj lag från dropdown
   selectTeam(team: any) {
     if (!team || this.selectedTeam.teamID === team.teamID) return;
     this.selectedTeam = { ...team };
-    this.searchManageQuery = team.teamName; 
+
+    this.searchManageQuery = team.teamName; // Denna som fyller iput med lagnamn
   }
-  
-  
 
   // 🔹 Ta bort lag
   deleteTeam() {
@@ -146,34 +178,154 @@ export class ManageTeamsComponent implements OnInit {
       return;
     }
 
-    this.teamService.updateTeam(this.selectedTeam.teamID, this.selectedTeam).subscribe(
-      (response) => {
-        console.log('✅ Lag uppdaterat:', response);
-        this.fetchTeams();
-        alert('Lag uppdaterat!');
-      },
-      (error) => {
-        console.error('Fel vid uppdatering av lag:', error);
-        alert('Ett fel uppstod vid uppdatering.');
-      }
-    );
+    this.teamService
+      .updateTeam(this.selectedTeam.teamID, this.selectedTeam)
+      .subscribe(
+        (response) => {
+          console.log('✅ Lag uppdaterat:', response);
+          this.fetchTeams();
+          alert('Lag uppdaterat!');
+        },
+        (error) => {
+          console.error('Fel vid uppdatering av lag:', error);
+          alert('Ett fel uppstod vid uppdatering.');
+        }
+      );
   }
 
-  // 🔹 Stänger dropdown om du klickar utanför
+  // Sortera användare
+  filterManageUser() {
+    this.filteredUsers = this.searchUserQuery.trim()
+      ? this.users.filter((user) =>
+          user.userName
+            .toLowerCase()
+            .includes(this.searchUserQuery.toLowerCase())
+        )
+      : [...this.users];
+  }
+  //  Sortera användare
+  filterUsers(query: string) {
+    this.filteredUsers = query.trim()
+      ? this.users.filter((user) =>
+          user.username.toLowerCase().includes(query.toLowerCase())
+        )
+      : [...this.users];
+  }
+
+  // 🔹 Välj lag från dropdown
+  selectUser(user: any) {
+    this.selectedUser = user;
+    this.searchUserQuery = user.username;
+    this.activeDropdown = null; // Stänger dropdown
+  }
+
+  // Lägg till användare i lag
+  joinTeam(user?: any): void {
+    const userToAdd = user || this.selectedUser;
+
+    if (!this.selectedTeam.teamID) {
+      alert('Välj ett lag först!');
+      return;
+    }
+
+    if (!userToAdd) {
+      alert('Välj en användare att lägga till!');
+      return;
+    }
+    console.log('Skickar till API:', {
+      userID: userToAdd.userID,
+      teamID: this.selectedTeam.teamID,
+    });
+    this.teamUsersService
+      .joinTeam(userToAdd.userID, this.selectedTeam.teamID)
+
+      .subscribe(
+        (response) => {
+          console.log('✅ Användare tillagd i lag:', response);
+          this.fetchTeams();
+          alert('Användare tillagd i lag!');
+          this.selectedUser = null;
+        },
+        (error) => {
+          console.error('Fel vid tillägg av användare i lag:', error);
+          alert('Något gick fel vid tillägg av användare i lag.');
+        }
+      );
+  }
+
+  //  Ta bort användare från lag
+  removeUserFromTeam(user?: any): void {
+    const userToRemove = user || this.selectedUser;
+
+    if (!userToRemove) {
+      alert('Välj en användare att ta bort!');
+      return;
+    }
+
+    if (!this.selectedTeam.teamID) {
+      alert('Välj ett lag först!');
+      return;
+    }
+
+    this.teamUsersService
+      .removeUserFromTeam(this.selectedTeam.teamID, userToRemove.userID)
+      .subscribe(
+        () => {
+          console.log(
+            `✅ Användare ${userToRemove.username} borttagen från lag ${this.selectedTeam.teamName}`
+          );
+          this.fetchTeams();
+          alert('Användaren har tagits bort!');
+          this.selectedUser = null;
+        },
+        (error) => {
+          console.error('Fel vid borttagning av användare:', error);
+          alert('Något gick fel vid borttagning av användaren.');
+        }
+      );
+  }
+  selectUserToAdd(user: any) {
+    this.selectedUserToAdd = user;
+    this.searchUserToAddQuery = user.username;
+    this.activeDropdown = null;
+  }
+
+  selectUserToRemove(user: any) {
+    this.selectedUserToRemove = user;
+    this.searchUserToRemoveQuery = user.username;
+    this.activeDropdown = null;
+  }
+
+  selectTeamToAdd(team: any) {
+    this.selectedTeamToAdd = team;
+    this.searchTeamToAddQuery = team.teamname;
+    this.activeDropdown = null;
+  }
+
+  selectTeamToRemove(team: any) {
+    this.selectedTeamToRemove = team;
+    this.searchTeamToRemoveQuery = team.teamname;
+    this.activeDropdown = null;
+  }
+
+  // Stänger dropdown om du klickar utanför
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event) {
     const clickedElement = event.target as HTMLElement;
     console.log('Klickat element:', clickedElement);
-    if (
-      this.dropdown?.nativeElement.contains(clickedElement) || 
-      clickedElement.getAttribute('name') === 'searchQuery' || 
-      clickedElement.getAttribute('name') === 'name' ||
-      clickedElement.getAttribute('name') === 'editname'
-    ) {
-      console.log('Dropdown ska vara kvar öppen');
-      return; 
+
+    const allowedNames = [
+      'searchUserQuery',
+      'removeUserQuery',
+      'searchUserToRemoveQuery',
+      'searchUserToAddQuery',
+      'searchListQuery',
+    ];
+
+    if (allowedNames.includes(clickedElement.getAttribute('name') || '')) {
+      return;
     }
-    console.log('Dropdown stängs');
-    this.showDropdown = false; 
+
+    this.activeDropdown = null;
   }
 }
