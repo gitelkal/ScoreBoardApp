@@ -17,6 +17,9 @@ module.exports = {
         grey4: "rgb(80, 80, 80)",
         black1: "rgb(0, 0, 0)",
         white1: "rgb(255, 255, 255)",
+        mainColor:"rgb(34, 46, 80)", 
+        mainColorHover:"rgb(57, 77, 134)", 
+        h2Color:"rgb(34, 46, 80)",
       },
       fontFamily: {
         digital: ['"Open Sans"', "sans-serif"],

@@ -1,19 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TeamService } from '@app/core/services/teamService/team.service';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { NgIf, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { TeamUsers } from '@app/shared/models/teamUser.model';
 
 @Component({
   selector: 'app-team',
-  imports: [NgIf, NgFor, AsyncPipe, RouterLink],
+  imports: [NgIf, NgFor, RouterLink],
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
