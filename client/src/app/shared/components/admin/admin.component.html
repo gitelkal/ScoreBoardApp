@@ -1,106 +1,107 @@
-<div class="bg-[#e9ecef]">
-  <app-manage-scoreboard
-    (scoreboardCreated)="handleScoreboardCreated($event)"
-    (scoreboardUpdated)="handleScoreboardUpdated($event)"
-  ></app-manage-scoreboard>
+<ng-container *ngIf="(isAdmin | async) === true; else unauthorized">
+  <div class="bg-[#e9ecef]">
+    <app-manage-scoreboard
+      (scoreboardCreated)="handleScoreboardCreated($event)"
+      (scoreboardUpdated)="handleScoreboardUpdated($event)"
+    ></app-manage-scoreboard>
 
-  <app-manage-teams
-    (teamCreated)="handleTeamCreated($event)"
-    (teamDeleted)="handleTeamDeleted(+$event)"
-    (teamUpdated)="handleTeamUpdated($event)"
-  >
-  </app-manage-teams>
-
-  <div class="flex flex-col items-center w-full mt-40 justify-between">
-    <h1 id="searchAdmins" class="searchAdmins">Sök efter Admins</h1>
-
-    <input
-      type="text"
-      [(ngModel)]="searchQuery"
-      placeholder="Sök admin..."
-      class="border p-2 rounded w-full max-w-md mb-4 text-center bg-white text-black"
-    />
-
-    <!-- Sorteringsdropdown -->
-    <select
-      [(ngModel)]="sortBy"
-      class="border-rounded w-full text-center max-w-md mb-4 bg-red5 border-black1 font-semibold py-2 px-4 text-white1 hover:bg-red1 transition"
+    <app-manage-teams
+      (teamCreated)="handleTeamCreated($event)"
+      (teamDeleted)="handleTeamDeleted(+$event)"
+      (teamUpdated)="handleTeamUpdated($event)"
     >
-      <option value="name">Sortera efter användarnamn</option>
-      <option value="date">Sortera efter senast aktiv</option>
-    </select>
+    </app-manage-teams>
 
-    <!-- Admin-lista -->
-    <ul
-      *ngIf="sortedAdmins.length > 0; else noResults"
-      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-    >
-      <li
-        *ngFor="let admin of sortedAdmins"
-        class="bg-white border-black1 rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center py-3 sm:py-4"
-        (click)="handleAdminClick(admin)"
+    <div class="flex flex-col items-center w-full mt-40 justify-between">
+      <h1 id="searchAdmins" class="searchAdmins">Sök efter Admins</h1>
+
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Sök admin..."
+        class="border p-2 rounded w-full max-w-md mb-4 text-center bg-white text-black"
+      />
+
+      <!-- Sorteringsdropdown -->
+      <select
+        [(ngModel)]="sortBy"
+        class="border-rounded w-full text-center max-w-md mb-4 bg-red5 border-black1 font-semibold py-2 px-4 text-white1 hover:bg-red1 transition"
       >
-        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-          <div class="shrink-0">
-            <img
-              class="w-8 h-8 rounded-full"
-              src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg"
-              alt="Neil image"
-            />
-          </div>
-          <div class="flex flex-col items-start truncate">
-            <strong class="text-lg">{{ admin.username }}</strong>
-            <!-- + " " + admin.lastname  flyttad ned denna eftersom för-efternamn är borttaget-!>
-      <span class="text-sm text-gray-500">{{ admin.email }}</span> -->
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-              <!-- email: {{ admin.email }} -->
-            </p>
-          </div>
-        </div>
-      </li>
-    </ul>
+        <option value="name">Sortera efter användarnamn</option>
+        <option value="date">Sortera efter senast aktiv</option>
+      </select>
 
-    <ng-template #noResults>
-      <p class="text-gray-500">Inga admins hittades.</p>
-    </ng-template>
-  </div>
-
-  <!-- Sidebar på Admin-sidan -->
-  <div class="sidenav">
-    <h2 id="title" class="title">
-      Sidans innehåll
-      <!-- <a href="/admin/#header" class="ml-2 flex items-center icon-parent"> -->
-      <!-- <img src="../../../../assets/images/arrow.png" alt="Gå till toppen av sidan" title="Gå upp" class="icon"> -->
-      <!-- </a> -->
-    </h2>
-    <ul>
-      <li id="CompetitionAdmin" class="nav-item active">
-        <a
-          href="/admin/#CompetitionAdmin"
-          title="h1Competition"
-          class="nav-link"
-          >Tävling</a
+      <!-- Admin-lista -->
+      <ul
+        *ngIf="sortedAdmins.length > 0; else noResults"
+        class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
+      >
+        <li
+          *ngFor="let admin of sortedAdmins"
+          class="bg-white border-black1 rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center py-3 sm:py-4"
+          (click)="handleAdminClick(admin)"
         >
-      </li>
-      <li id="HandleTeamsAdmin" class="nav-item">
-        <a href="/admin/#HandleTeamsAdmin" class="nav-link">Hantera Lag</a>
-      </li>
-      <li id="searchTeamsAdmin" class="nav-item">
-        <a href="/admin/#searchTeamsAdmin" class="nav-link">Sök efter Teams</a>
-      </li>
+          <div class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="shrink-0">
+              <img
+                class="w-8 h-8 rounded-full"
+                src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg"
+                alt="Neil image"
+              />
+            </div>
+            <div class="flex flex-col items-start truncate">
+              <strong class="text-lg">{{ admin.username }}</strong>
+              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                <!-- email: {{ admin.email }} -->
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
 
-      <!-- Denna fungerar ej, kolla upp så att länken är rätt -->
-      <li id="searchAdminInAdmin" class="nav-item">
-        <a href="/admin/#searchAdmins" class="nav-link">Sök efter Admins</a>
-      </li>
+      <ng-template #noResults>
+        <p class="text-gray-500">Inga admins hittades.</p>
+      </ng-template>
+    </div>
 
-      <li id="header" class="nav-item active">
-        <a href="/admin/#header" title="header" class="nav-link"
-          >Tillbaks till toppen</a
-        >
-      </li>
-    </ul>
+    <!-- Sidebar på Admin-sidan -->
+    <div class="sidenav">
+      <h2 id="title" class="title">
+        Sidans innehåll
+      </h2>
+      <ul>
+        <li id="CompetitionAdmin" class="nav-item active">
+          <a
+            href="/admin/#CompetitionAdmin"
+            title="h1Competition"
+            class="nav-link"
+            >Tävling</a
+          >
+        </li>
+        <li id="HandleTeamsAdmin" class="nav-item">
+          <a href="/admin/#HandleTeamsAdmin" class="nav-link">Hantera Lag</a>
+        </li>
+        <li id="searchTeamsAdmin" class="nav-item">
+          <a href="/admin/#searchTeamsAdmin" class="nav-link">Sök efter Teams</a>
+        </li>
+        <li id="searchAdminInAdmin" class="nav-item">
+          <a href="/admin/#searchAdmins" class="nav-link">Sök efter Admins</a>
+        </li>
+        <li id="header" class="nav-item active">
+          <a href="/admin/#header" title="header" class="nav-link"
+            >Tillbaks till toppen</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <footer>footer!</footer>
   </div>
+</ng-container>
 
-  <footer>footer!</footer>
-</div>
+<ng-template #unauthorized>
+  <div class="unauthorized-message flex flex-col items-center justify-center h-full text-center p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+    <h2 class="text-2xl font-bold mb-2">403 - Obehörig</h2>
+    <p class="text-lg">Du har inte behörighet att visa denna sida.</p>
+  </div>
+</ng-template>

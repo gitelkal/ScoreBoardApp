@@ -16,7 +16,7 @@
                             <li *ngIf="team.userIDs.length === 0">
                                 <p class="text-base text-red6 mt-2 ml-4 font-medium">Inga medlemmar ännu...</p>
                             </li>
-                            <h3 class="text-base text-red6 mt-2 ml-4 font-medium" *ngIf="team.userIDs.length != 0">Medlemmar:</h3>
+                            <h3 class="text-base text-red6 mt-2 ml-4 font-bold" *ngIf="team.userIDs.length != 0">Medlemmar:</h3>
                             <li *ngFor="let userId of team.userIDs; let i = index">
                                 <p class="text-base text-text-red6 mt-1 ml-4 font-medium" *ngIf="i < 5">{{ getUsername(userId) }}</p>
                             </li>
