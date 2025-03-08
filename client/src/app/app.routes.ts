@@ -7,6 +7,8 @@ import { AdminComponent } from '../app/shared/components/admin/admin.component';
 import { TeamComponent } from '../app/shared/components/team/team.component';
 import { TeamDetailsComponent } from '../app/shared/components/team-details/team-details.component';
 import { UserComponent } from './shared/components/user/user.component';
+import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -48,5 +50,15 @@ export const routes: Routes = [
     path: 'user/:userID',
     component: UserComponent, 
     title: 'Användare'
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    title: 'Glömt Lösenord'
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
+    title: 'Återställ Lösenord'
   }
 ];

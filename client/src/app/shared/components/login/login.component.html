@@ -18,8 +18,8 @@
     </div>
     <div class="flex items-center justify-between w-full" *ngIf="!success">
       <div class="flex items-center">
-        <button class="bg-red6 hover:bg-red4 text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline" type="submit" [disabled]="loginForm.invalid">Logga in</button>
-        <a class="inline-block align-baseline font-bold text-sm text-red-6 hover:text-red3 ml-4" href="#">Glömt lösenord?</a>
+        <button class="bg-mainColor hover:bg-mainColorHover text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline" type="submit" [disabled]="loginForm.invalid">Logga in</button>
+        <button class="font-bold py-2 px-4 text-sm text-red-6 hover:text-red3 ml-4 border border-mainColor" routerLink="/forgot-password" (click)="closeModal()">Glömt lösenord?</button>
       </div>
     </div>
     <div class="bg-green-600 w-full flex justify-center" *ngIf="success"> 

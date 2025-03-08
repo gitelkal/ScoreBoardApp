@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router, RouterLink } from '@angular/router';
 import { NgIf, NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, NgIf, NgClass],
+  imports: [FormsModule, NgIf, NgClass, RouterLink, MatDialogModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -72,5 +73,9 @@ export class LoginComponent {
     setTimeout(() => {
       this.resetErrorStates();
     }, 1000);
+  }
+
+  closeModal() {
+    this.dialog.closeAll();
   }
 }

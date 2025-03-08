@@ -24,20 +24,29 @@ namespace server.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var objUser = dbContext.Users.FirstOrDefault(x => x.Username == userDTO.Username);
-            if (objUser == null)
+            var objEmail = dbContext.Users.FirstOrDefault(x => x.Email == userDTO.Email);
+
+            if (objEmail != null)
             {
+                return BadRequest("Email already exists");
+            }
+            if (objUser != null)
+            {
+                return BadRequest("Username already exists");
+               
+            }
+            else
                 dbContext.Users.Add(new User
                 {
+                    Email = userDTO.Email,
                     Firstname = userDTO.Firstname,
                     Lastname = userDTO.Lastname,
                     Username = userDTO.Username,
                     PasswordHash = PasswordHashHandler.HashPassword(userDTO.Password)
                 });
-                dbContext.SaveChanges();
-                return StatusCode(StatusCodes.Status201Created);
-            }
-            else
-                return BadRequest("Username already exists");
+            dbContext.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
+
         }
     }
 }
