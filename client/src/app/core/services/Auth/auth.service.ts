@@ -50,11 +50,11 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this.http.post<AuthResponse>(`${this.api}/account/forgot-password`, { email });
+    return this.http.post(`${this.api}/account/forgot-password`, { email });
   }
 
-  resetPassword(email: string, token: string, password: string): Observable<any> {
-    return this.http.post<AuthResponse>(`${this.api}/account/reset-password`, { email, token, password });
+  resetPassword(Email: string, Token: string, NewPassword: string): Observable<any> {
+    return this.http.post(`${this.api}/account/reset-password`, { Email, Token, NewPassword });
   }
 
   logout() {

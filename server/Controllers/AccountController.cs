@@ -47,9 +47,9 @@ namespace server.Controllers
                         new Claim(ClaimTypes.Email, user.Email ?? string.Empty)
                     };
 
-            //var TokenExpiryTimeStamp = DateTime.UtcNow.AddHours(1);
+            var TokenExpiryTimeStamp = DateTime.UtcNow.AddHours(24);
             var accessToken = tokenService.GenerateToken(user.Username);
-            var resetLink = $"http://localhost:4200/reset-password?email={user.Email}&token={WebUtility.UrlEncode(accessToken)}";
+            var resetLink = $"http://localhost:4200/reset-password?email={user.Email}&token={WebUtility.UrlEncode(accessToken)}&expires={TokenExpiryTimeStamp:o}";
 
             var client = new RestClient("https://send.api.mailtrap.io/api/send");
             var request = new RestRequest

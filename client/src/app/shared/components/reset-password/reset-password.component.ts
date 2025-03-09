@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { NgIf } from '@angular/common';
 
@@ -12,18 +12,29 @@ import { NgIf } from '@angular/common';
 export class ResetPasswordComponent {
   email: string = '';
   token: string = '';
+  expiriation: Date = new Date();
   newPassword: string = '';
   confirmPassword: string = '';
   success: boolean = false;
   passwordMismatch: boolean = false;
   unknownError: boolean = false;
+  timedOut: boolean = false;
 
   constructor(private authService: AuthService) {
     const urlParams = new URLSearchParams(window.location.search);
     this.email = urlParams.get('email')?.toLowerCase() ?? '';
     this.token = urlParams.get('token') ?? '';
+    this.expiriation = new Date(urlParams.get('expires') ?? '');
+
   }
-  resetPassword() {
+  resetPassword(form: NgForm) {
+    if (new Date() > this.expiriation) {
+      this.timedOut = true;
+      setTimeout(() => {
+      this.timedOut = false;
+      }, 3000);
+      return;
+    }
     if (this.newPassword !== this.confirmPassword) {
       this.passwordMismatch = true;
       setTimeout(() => {
@@ -32,15 +43,14 @@ export class ResetPasswordComponent {
       return;
     } else {
       this.authService.resetPassword(this.email, this.token, this.newPassword).subscribe({
-        next: (response) => {
-          if (response.status === 200) {
+        next: () => {
             this.success = true;
             setTimeout(() => {
               this.success = false;
-            }, 3000);
-          }
+            }, 60000);
         },
         error: (error) => {
+          console.error(error);
             this.unknownError = true;
             setTimeout(() => {
               this.unknownError = false;
