@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
+import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';

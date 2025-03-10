@@ -264,7 +264,7 @@
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
     "Method": "AddPointsToTeamAsync",
-    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/{points}",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/addPoints",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -282,7 +282,7 @@
       {
         "Name": "points",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -316,7 +316,7 @@
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
     "Method": "CreateAndAddEmptyTeamToScoreboard",
-    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamName}",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/teamName",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -329,7 +329,7 @@
       {
         "Name": "teamName",
         "Type": "System.String",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -491,6 +491,27 @@
     "Parameters": [
       {
         "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.TeamUsersController",
+    "Method": "RemoveUserFromTeam",
+    "RelativePath": "api/TeamUsers/{teamId}/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": true
       }

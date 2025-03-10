@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Anpassad stil */
+
 h2 {
   @apply text-xl font-bold mb-1 text-center;
 }
@@ -48,9 +48,9 @@ li {
   @apply bg-gray-200;
 }
 
-/* .icon {
+ .icon {
   @apply w-[12px] h-[12px] bg-white text-center ml-48 -mt-5 mb-7;
-} */
+} 
 
 input, select {
   @apply p-10 rounded border-solid;

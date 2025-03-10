@@ -111,37 +111,38 @@ namespace server.Controllers
             {
                 Username = username,
                 PasswordHash = passwordHash
-               
             };
 
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
-
             var teamUser = new TeamUser
             {
                 TeamID = teamId,
                 UserId = user.UserId
-
             };
 
             dbContext.TeamUsers.Add(teamUser);
             dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created, new { teamUserId = teamUser.TeamID, username = user.Username });
         }
-
+        
         [HttpDelete("{teamId}/{userId}")]
         public IActionResult RemoveUserFromTeam(int teamId, int userId)
         {
-            var teamUser = new TeamUser
+            var teamUser = dbContext.TeamUsers
+                .FirstOrDefault(tu => tu.TeamID == teamId && tu.UserId == userId);
+
+            if (teamUser == null)
             {
-                TeamID = teamId,
-                UserId = userId
-            };
-            dbContext.TeamUsers.Attach(teamUser); 
-            dbContext.TeamUsers.Remove(teamUser);   
-            dbContext.SaveChanges();                
-            return Ok(new { message = "Användaren har tagits bort från laget." });
+                return NotFound();
+            }
+
+            dbContext.TeamUsers.Remove(teamUser);
+            dbContext.SaveChanges();
+
+            return Ok();
         }
+
 
 
 

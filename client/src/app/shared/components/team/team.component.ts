@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TeamService } from '@app/core/services/TeamService/team.service';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
+import { TeamService } from '@app/core/services/teamService/team.service';
+import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RouterLink } from '@angular/router';

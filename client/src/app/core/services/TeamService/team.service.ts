@@ -30,22 +30,21 @@ export class TeamService {
       responseType: 'json',
     });
   }
+  
 
   // Ta bort ett lag
   public deleteTeam(teamId: number): Observable<any> {
     return this.http.delete(`${this.api}/teams/${teamId}`);
   }
 
-
   public getTeamWithUsers(): Observable<any> {
-    return this.http.get<any>(`${this.api}/TeamUsers/`)
-    
+    return this.http.get<any>(`${this.api}/TeamUsers/`);
   }
-  
+
   public updateTeam(teamId: number, updatedTeam: any): Observable<any> {
     return this.http.put(`${this.api}/teams/${teamId}`, updatedTeam);
   }
-  
+
   addUserToTeam(teamID: number, user: any): Observable<any> {
     return this.http.post<any>(`/api/teams/${teamID}/users`, user);
   }
