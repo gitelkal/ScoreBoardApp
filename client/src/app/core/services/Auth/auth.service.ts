@@ -67,6 +67,10 @@ export class AuthService {
   }
 
   tokenExpirationCheck() {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return;
+    }
+
     let token = localStorage.getItem(this.tokenKey);
     if (token) {
       this.loggedIn.next(true);
@@ -76,6 +80,10 @@ export class AuthService {
       this.timeUntilExpiration = (new Date(expirationTime).getTime() - new Date().getTime()) / 1000;
     } 
     setInterval(() => {
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return;
+      }
+      let expirationTime = localStorage.getItem(this.tokenKey);
       if (expirationTime) {
         this.timeUntilExpiration = (new Date(expirationTime).getTime() - new Date().getTime()) / 1000;
       } 
@@ -89,11 +97,17 @@ export class AuthService {
   }
   
   getUserID() {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return null;
+    }
     const userID = localStorage.getItem('userID');
     return userID ? parseInt(userID, 10) : null;
   }
   getUsername() {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return null;
+    }
     const username = localStorage.getItem('username');
-    return username ? username : null;
+      return username ? username : null;
   }
 }
