@@ -19,6 +19,8 @@ export class ResetPasswordComponent {
   passwordMismatch: boolean = false;
   unknownError: boolean = false;
   timedOut: boolean = false;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   constructor(private authService: AuthService) {
     const urlParams = new URLSearchParams(window.location.search);
