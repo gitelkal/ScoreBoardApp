@@ -1,11 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '@app/core/services/adminService/admin.service';
 import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service'; // 
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
 import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboard.component';
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -15,6 +18,7 @@ import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboar
     FormsModule,
     ManageTeamsComponent,
     ManageScoreboardComponent,
+    AsyncPipe,
 
   ],
   providers: [AdminService, ScoreboardService], 
@@ -31,8 +35,9 @@ export class AdminComponent {
   searchQuery: string = '';
   sortBy: string = 'name';
   admins: any[] = [];
+  isAdmin!: Observable<boolean>;
 
-  constructor() {
+  constructor(private auth: AuthService) {
     this.adminService.getAllAdmins().subscribe(
       (data) => {
         console.log('Admins hämtade:', data);
@@ -42,6 +47,7 @@ export class AdminComponent {
         console.error('Fel vid hämtning av admins:', error);
       }
     );
+    this.isAdmin = this.auth.isAdmin;
   }
 
   get sortedAdmins() {

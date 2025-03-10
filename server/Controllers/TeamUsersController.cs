@@ -104,47 +104,25 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("{username}/{teamId}")]
-        public IActionResult CreateUserAndAddToTeam(string username,string passwordHash, int teamId)
-        {
-            var user = new User
-            {
-                Username = username,
-                PasswordHash = passwordHash
-            };
+ 
 
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
-            var teamUser = new TeamUser
-            {
-                TeamID = teamId,
-                UserId = user.UserId
-            };
-
-            dbContext.TeamUsers.Add(teamUser);
-            dbContext.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created, new { teamUserId = teamUser.TeamID, username = user.Username });
-        }
-        
-        [HttpDelete("{teamId}/{userId}")]
-        public IActionResult RemoveUserFromTeam(int teamId, int userId)
+        [HttpDelete]
+        public async Task <IActionResult> RemoveUserFromTeam(DropUserFromTeamRequest request)
         {
             var teamUser = dbContext.TeamUsers
-                .FirstOrDefault(tu => tu.TeamID == teamId && tu.UserId == userId);
+                .FirstOrDefault(tu => tu.TeamID == request.TeamID && tu.UserId == request.UserID);
 
             if (teamUser == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Användaren finns inte i laget." });
             }
 
             dbContext.TeamUsers.Remove(teamUser);
             dbContext.SaveChanges();
 
-            return Ok();
+            await _hubContext.Clients.All.SendAsync("ReceiveUserLeftTeam", teamUser.TeamID, teamUser.UserId);
+
+            return Ok(new { message = "Användaren har tagits bort från laget." });
         }
-
-
-
-
     }
 }

@@ -30,7 +30,6 @@ export class TeamService {
       responseType: 'json',
     });
   }
-  
 
   // Ta bort ett lag
   public deleteTeam(teamId: number): Observable<any> {
@@ -49,7 +48,16 @@ export class TeamService {
     return this.http.post<any>(`/api/teams/${teamID}/users`, user);
   }
 
-  removeUserFromTeam(teamID: number, user: any): Observable<any> {
-    return this.http.delete<any>(`/api/teams/${teamID}/users/${user.id}`);
-  }
+  // public getTeamWithUsers(): Observable<any> {
+  //   return this.http.get<any>(`${this.api}/TeamUsers/`)
+
+  // }
+
+  // addUserToTeam(teamID: number, user: any): Observable<any> {
+  //   return this.http.post<any>(`/api/teams/${teamID}/users`, user);
+  // }
+
+  // removeUserFromTeam(teamID: number, user: any): Observable<any> {
+  //   return this.http.delete<any>(`/api/teams/${teamID}/users/${user.id}`);
+  //}
 }

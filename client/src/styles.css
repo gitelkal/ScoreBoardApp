@@ -15,14 +15,13 @@
 }
 
 .fin-bakgrund {
-    background-image: url(../src/assets/images/bild_neutral.png);
+    background-image: url(../src/assets/images/Generic_Featured_AICoding_1200x628.jpg);
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    min-height: 100vh;
     background-attachment: fixed;
-  }
+}
 
 app-header {
     position: fixed;
