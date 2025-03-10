@@ -12,11 +12,13 @@ namespace server.Service
     {
         private readonly ServerDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly TokenService _tokenService;
 
-        public JwtService(ServerDbContext dbContext, IConfiguration configuration)
+        public JwtService(ServerDbContext dbContext, IConfiguration configuration, TokenService tokenService)
         {
             _dbContext = dbContext;
             _configuration = configuration;
+            _tokenService = tokenService;
         }
 
         public async Task<(LoginResponseModel? loginResponse, string? errorMessage)> Authenticate(LoginDTO request)
@@ -39,27 +41,11 @@ namespace server.Service
                 admin = true;
             }
 
-            var issuer = _configuration["JwtConfig:Issuer"];
-            var audience = _configuration["JwtConfig:Audience"];
-            var key = _configuration["JwtConfig:Key"];
             var tokenValidity = _configuration["JwtConfig:TokenExpirationInMinutes"];
             var tokenExpiryTimeStamp = DateTime.Now.AddMinutes(Convert.ToDouble(tokenValidity));
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
-                new[]
-                {
-                        new Claim(JwtRegisteredClaimNames.Name, request.Username),
-                }),
-                Expires = tokenExpiryTimeStamp,
-                Issuer = issuer,
-                Audience = audience,
-            };
+            var accessToken = _tokenService.GenerateToken(request.Username);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var accessToken = tokenHandler.WriteToken(securityToken);
             return (new LoginResponseModel
             {
                 ID = account.UserId,

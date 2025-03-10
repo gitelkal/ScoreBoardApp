@@ -9,11 +9,12 @@ import { RegisterService } from '@app/core/services/registerService/register.ser
   selector: 'app-register',
   imports: [FormsModule, NgIf, NgClass],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
+  email: string = '';
   username: string = '';
   password: string = '';
   firstname: string = '';
@@ -21,12 +22,13 @@ export class RegisterComponent {
   errorMessage: string = '';
   success: boolean = false;
   usernameExists: boolean = false;
+  emailExists: boolean = false;
 
   constructor(private registerService: RegisterService) {}
 
   submitRegister(form: NgForm) {
     if(form.invalid) { return; }
-      this.registerService.createNewUser({ username: this.username, password: this.password, firstname: this.firstname, lastname: this.lastname }).subscribe({
+      this.registerService.createNewUser({ email: this.email, username: this.username, password: this.password, firstname: this.firstname, lastname: this.lastname }).subscribe({
         next: () => {
           this.success = true;
           setTimeout(() => {
@@ -36,7 +38,11 @@ export class RegisterComponent {
         },
         error: (error) => {
           if (error.status === 400) {
-            this.triggerFieldError('username', 'Användarnamnet är upptaget');
+            if (error.error.field === 'username') {
+              this.triggerFieldError('username', 'Användarnamnet är upptaget');
+            } else if (error.error.field === 'email') {
+              this.triggerFieldError('email', 'E-postadressen är redan registrerad');
+            }
             return;
           } else {
             this.errorMessage = 'Ett oväntat fel inträffade.';          
@@ -51,12 +57,14 @@ export class RegisterComponent {
     this.errorMessage = '';
   }
   
-  private triggerFieldError(field: 'username', message: string): void {
+  private triggerFieldError(field: 'username' | 'email', message: string): void {
     this.errorMessage = message;
   
     if (field === 'username') {
       this.usernameExists = true;
-    } 
+    } else if (field === 'email') {
+      this.emailExists = true;
+    }
     setTimeout(() => {
       this.resetErrorStates();
     }, 1000);

@@ -6,6 +6,7 @@ namespace server
 {
     public class User
     {
+        public string? Email { get; set; } // Gör icke-nullable senare
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }

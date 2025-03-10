@@ -10,16 +10,16 @@
     </div>
     <div class="mb-8">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Lösenord</label>
-      <input id="password" type="password" [(ngModel)]="password" name="password" #passwordInput="ngModel" required minlength="4" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': (passwordInput.invalid && passwordInput.touched) || wrongPassword }" />
+      <input id="password" type="password" [(ngModel)]="password" name="password" #passwordInput="ngModel" required minlength="6" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': (passwordInput.invalid && passwordInput.touched) || wrongPassword }" />
       <div class="h-2 text-red-600 text-sm font-medium">
-        <p *ngIf="passwordInput.invalid && passwordInput.touched">Lösenord krävs (minst 4 tecken).</p>
+        <p *ngIf="passwordInput.invalid && passwordInput.touched">Lösenord krävs (minst 6 tecken).</p>
         <p *ngIf="wrongPassword">Felaktigt lösenord, försök igen.</p>
       </div>
     </div>
     <div class="flex items-center justify-between w-full" *ngIf="!success">
       <div class="flex items-center">
-        <button class="bg-red6 hover:bg-red4 text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline" type="submit" [disabled]="loginForm.invalid">Logga in</button>
-        <a class="inline-block align-baseline font-bold text-sm text-red-6 hover:text-red3 ml-4" href="#">Glömt lösenord?</a>
+        <button class="bg-mainColor hover:bg-mainColorHover text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline" type="submit" [disabled]="loginForm.invalid">Logga in</button>
+        <button class="font-bold py-2 px-4 text-sm text-red-6 hover:text-mainColorHover ml-4 border border-mainColor" routerLink="/forgot-password" (click)="closeModal()">Glömt lösenord?</button>
       </div>
     </div>
     <div class="bg-green-600 w-full flex justify-center" *ngIf="success"> 
