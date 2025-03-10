@@ -1,24 +1,32 @@
 <div class="w-full max-w-xs">
     <form class="bg-white shadow-md px-8 pt-6 pb-8 mb-4" #registerForm="ngForm" (ngSubmit)="submitRegister(registerForm)">
       <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">E-post</label>
+        <input id="email" type="email" [(ngModel)]="email" name="email" #emailInput="ngModel" required email class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': emailInput.invalid && emailInput.touched }" />
+        <div class="h-2 text-red-600 text-sm font-medium">
+            <p *ngIf="emailInput.invalid && emailInput.touched">Du behöver fylla i en giltig e-post</p>
+            <p class="text-red6 text-sm font-medium" *ngIf="emailExists">{{ errorMessage }}</p>
+        </div>
+      </div>
+      <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">Förnamn</label>
         <input id="firstname" type="text" [(ngModel)]="firstname" name="firstname" #firstnameInput="ngModel" required minlength="3" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': firstnameInput.invalid && firstnameInput.touched }" />
         <div class="h-2 text-red-600 text-sm font-medium">
-            <p *ngIf="firstnameInput.invalid && firstnameInput.touched">Förnamn krävs (minst 3 tecken).</p>
+            <p *ngIf="firstnameInput.invalid && firstnameInput.touched">Förnamn krävs (minst 3 tecken)</p>
         </div>
       </div>
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">Efternamn</label>
         <input id="lastname" type="text" [(ngModel)]="lastname" name="lastname" #lastnameInput="ngModel" required minlength="3" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': lastnameInput.invalid && lastnameInput.touched }" />
         <div class="h-2 text-red-600 text-sm font-medium">
-            <p *ngIf="lastnameInput.invalid && lastnameInput.touched">Efternamn krävs (minst 3 tecken).</p>
+            <p *ngIf="lastnameInput.invalid && lastnameInput.touched">Efternamn krävs (minst 3 tecken)</p>
         </div>
       </div>
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Användarnamn</label>
         <input id="username" type="text" [(ngModel)]="username" name="username" #usernameInput="ngModel" required minlength="4" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': usernameInput.invalid && usernameInput.touched }" />
         <div class="h-2 text-red-600 text-sm font-medium">
-          <p *ngIf="usernameInput.invalid && usernameInput.touched ">Användarnamn krävs (minst 4 tecken).</p>
+          <p *ngIf="usernameInput.invalid && usernameInput.touched ">Användarnamn krävs (minst 4 tecken)</p>
           <p class="text-red6 text-sm font-medium" *ngIf="usernameExists">{{ errorMessage }}</p>
         </div>
       </div>
@@ -26,12 +34,12 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Lösenord</label>
         <input id="password" type="password" [(ngModel)]="password" name="password" #passwordInput="ngModel" required minlength="6" class="shadow appearance-none border w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" [ngClass]="{ 'input-error': passwordInput.invalid && passwordInput.touched }" />
         <div class="h-2 text-red-600 text-sm font-medium">
-          <p *ngIf="passwordInput.invalid && passwordInput.touched">Lösenord krävs (minst 6 tecken).</p>
+          <p *ngIf="passwordInput.invalid && passwordInput.touched">Lösenord krävs (minst 6 tecken)</p>
         </div>
       </div>
       <div class="flex items-center justify-between w-full">
         <div class="flex items-center w-full" *ngIf="!success">
-          <button class="w-full bg-red6 hover:bg-red4 text-white1 font-bold py-2 px-4 focus:outline-none focus:shadow-outline" type="submit" [disabled]="registerForm.invalid">Registrera</button>
+          <button class="w-full bg-mainColor hover:bg-mainColorHover text-white1 font-bold py-3 px-4 focus:outline-none focus:shadow-outline" type="submit" [disabled]="registerForm.invalid">Registrera</button>
         </div>
       </div>
       <div class="bg-green-600 w-full flex justify-center" *ngIf="success"> 

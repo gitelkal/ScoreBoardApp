@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "server.Controllers.AccountController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/Account/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forgotPasswordDTO",
+        "Type": "server.Entities.ForgotPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.AccountController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Account/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "resetPasswordDTO",
+        "Type": "server.Entities.ResetPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.Controllers.AdminsController",
     "Method": "GetAllAdmins",
     "RelativePath": "api/Admins",

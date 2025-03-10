@@ -49,6 +49,14 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.api}/account/forgot-password`, { email });
+  }
+
+  resetPassword(Email: string, Token: string, NewPassword: string): Observable<any> {
+    return this.http.post(`${this.api}/account/reset-password`, { Email, Token, NewPassword });
+  }
+
   logout() {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('tokenExpiration');
@@ -88,5 +96,4 @@ export class AuthService {
     const username = localStorage.getItem('username');
     return username ? username : null;
   }
-
 }
