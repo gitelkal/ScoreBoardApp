@@ -136,4 +136,20 @@ export class ScoreboardDetailsComponent implements OnInit {
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
+
+  getBarHeight(points: number): number {
+    const maxPoints = Math.max(...(this.scoreboardResonseSubject.value?.scoreboard.teams.map(team => team.points) || [1])) || 1;
+    return (points / maxPoints) * 300;
+  }
+
+  getTeamColor(index: number): string {
+    const colors = [
+      'linear-gradient(to top, #b30000, #ff4d4d)',
+      'linear-gradient(to top, #ffcc00, #ffea00)',
+      'linear-gradient(to top, #ff6600, #ff9933)',
+      'linear-gradient(to top, #b30086, #ff00ff)',
+      'linear-gradient(to top, #0080ff, #00cfff)',
+    ];
+    return colors[index % colors.length];
+  }
 }
