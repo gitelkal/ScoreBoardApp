@@ -30,6 +30,7 @@ export class TeamComponent implements OnInit {
   hoveredTeamID: number | null = null;
 
   constructor() {
+    this.usersInTeam = [];
     this.getAllTeamUsers$.subscribe({
       next: (response) => {
         response.forEach((team) => {
