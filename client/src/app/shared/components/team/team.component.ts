@@ -34,8 +34,14 @@ export class TeamComponent implements OnInit {
     this.getAllTeamUsers$.subscribe({
       next: (response) => {
         response.forEach((team) => {
-          this.usersInTeam.push({ teamID: team.team.teamID, userIDs: team.users.map((user) => Number(user.userId)) });
-          this.teamsList.push({ teamID: team.team.teamID, teamName: team.team.teamName });
+          const existingTeam = this.usersInTeam.find(t => t.teamID === team.team.teamID);
+          if (!existingTeam) {
+            this.usersInTeam.push({ teamID: team.team.teamID, userIDs: team.users.map((user) => Number(user.userId)) });
+          }
+          const existingTeamInList = this.teamsList.find(t => t.teamID === team.team.teamID);
+          if (!existingTeamInList) {
+            this.teamsList.push({ teamID: team.team.teamID, teamName: team.team.teamName });
+          }
           team.users.forEach(user => {
             if (!this.usersList.some(u => u.userID === user.userId)) {
               this.usersList.push({ userID: Number(user.userId), username: user.username });
