@@ -20,15 +20,15 @@ export class UserService {
     return this.http.get<Users[]>(`${this.api}/users`);
   }
 
-  public getOneUser(id: string): Observable<Users> {
+  public getOneUser(id: number): Observable<Users> {
     return this.http.get<Users>(`${this.api}/users/${id}`);
   }
 
-  public getUserScoreboards(id: string): Observable<ScoreboardBasic[]> {
+  public getUserScoreboards(id: number): Observable<ScoreboardBasic[]> {
     return this.http.get<ScoreboardBasic[]>(`${this.api}/userscoreboards/${id}/scoreboards`);
   }
 
-  public getUserTeams(id: string): Observable<UserTeams[]> {
+  public getUserTeams(id: number): Observable<UserTeams[]> {
     return this.http.get<UserTeams[]>(`${this.api}/teamusers/${id}/teams`);
   }
 }

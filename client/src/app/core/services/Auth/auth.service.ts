@@ -4,6 +4,7 @@ import { LoginRequest } from '@app/interfaces/login-request';
 import { AuthResponse } from '@app/interfaces/auth-response';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../userService/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,23 @@ export class AuthService {
   loggedIn = new BehaviorSubject<boolean>(false); 
   tokenExpirationDateTime: Date = new Date();
   timeUntilExpiration:number = 0;
+  userID: number = 0;
+  username: string = '';
   firstname: string = '';
   lastname: string = '';
   errorMessage: string = '';
 
-  constructor(private apiService: ApiService, private http: HttpClient) {
+  constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService) {
     this.api = this.apiService.api;
+    this.tokenExpirationCheck();
+    this.userService.getOneUser(this.getUserID()).subscribe({
+      next: (response) => {
+        this.firstname = response.firstname;
+        this.lastname = response.lastname;
+        this.username = response.username;
+      }
+    });
   }
-
   
   login(data: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.api}/login`, data).pipe(
@@ -67,9 +77,14 @@ export class AuthService {
   }
 
   tokenExpirationCheck() {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
+
     let token = localStorage.getItem(this.tokenKey);
     if (token) {
       this.loggedIn.next(true);
+      this.userID = parseInt(localStorage.getItem('userID')!);
     }
     let expirationTime = localStorage.getItem('tokenExpiration');
     if (expirationTime) {
@@ -85,15 +100,19 @@ export class AuthService {
         console.log("Token har utgått");
         this.logout();
       }
-    },360000); // 1 timme
+    }, 360000); // 1 timme
   }
   
   getUserID() {
-    const userID = localStorage.getItem('userID');
-    return userID ? parseInt(userID, 10) : null;
+    return this.userID;
   }
   getUsername() {
-    const username = localStorage.getItem('username');
-    return username ? username : null;
+    return this.username;
+  }
+  getFirstname() {
+    return this.firstname;
+  }
+  getLastname() {
+    return this.lastname;
   }
 }

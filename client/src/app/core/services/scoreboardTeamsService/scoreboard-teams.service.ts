@@ -18,7 +18,7 @@ export class ScoreboardTeamsService {
   getScoreboardWithTeam(): Observable<ScoreboardTeams[]> {
     return this.http.get<ScoreboardTeams[]>(`${this.api}/ScoreboardTeams/`);
   }
-  getOneScoreboardTeam(id: string): Observable<ScoreboardTeamsResponseOne[]> {
+  getOneScoreboardTeam(id: number): Observable<ScoreboardTeamsResponseOne[]> {
     return this.http.get<ScoreboardTeamsResponseOne[]>(`${this.api}/ScoreboardTeams/${id}`);
   }
 }
