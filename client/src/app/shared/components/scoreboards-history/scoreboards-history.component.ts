@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service';
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { NgFor, DatePipe } from '@angular/common';
 import { RouterLink, Router, NavigationEnd} from '@angular/router';
 import { map } from 'rxjs/operators';
