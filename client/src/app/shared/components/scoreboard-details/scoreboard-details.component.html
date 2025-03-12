@@ -87,7 +87,7 @@
             class="text-base font-semibold text-gray-900"
             *ngIf="(isAdmin | async) === false"
           >
-            {{ team.points }}
+            {{ team.points || 0 }} 
           </p>
         </div>
 
@@ -146,21 +146,21 @@
             </button>
 
             <button
-              *ngIf="(loggedIn | async) === true && !isJoiningTeam"
+              *ngIf="(loggedIn | async) === true && !isJoiningTeam && userTeamsNotInScoreboard.length > 0"
               (click)="toggleTeamDropdown()"
               class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
             >
               + Delta med lag
             </button>
 
-            <div *ngIf="isTeamDropdownOpen" class="bg-white border border-mainColor rounded-lg shadow-lg mt-2 w-48">
-              <ul class="p-2"> <!-- Lägg till en border för att se om elementen finns -->
-                <li *ngFor="let team of userTeams" class="p-2 hover:bg-gray-100 cursor-pointer" (click)="appendTeam(team.teamID)">
+            <div *ngIf="isTeamDropdownOpen && userTeamsNotInScoreboard.length > 0" class="bg-white border border-mainColor rounded-lg shadow-lg mt-2 w-48">
+              <ul class="p-2">
+                <li *ngFor="let team of userTeamsNotInScoreboard" class="p-2 hover:bg-gray-100 cursor-pointer" (click)="appendTeam(team.teamID)">
                   {{ team.teamName }}
                 </li>
               </ul>
               <button class="ml-2 px-3 py-1 bg-blue-500 text-white rounded" (click)="$event.stopPropagation(); toggleTeamDropdown()" style="margin-bottom: 1rem">
-                Avbryt
+              Avbryt
               </button>
             </div>
           </div>

@@ -93,6 +93,8 @@ export class ScoreboardDetailsComponent implements OnInit {
       next: (response) => {
         this.userTeamsNotInScoreboard = response;
         console.log(this.userTeamsNotInScoreboard)
+      }, error: (error) => {
+        console.log('Error getting teams:', error);
       }
     });
 }
