@@ -5,6 +5,68 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Account/forgot-password": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Account/reset-password": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Admins": {
       "get": {
         "tags": [
@@ -15,9 +77,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/api/Admins/Register": {
+      },
       "post": {
         "tags": [
           "Admins"
@@ -26,17 +86,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminDTO"
+                "$ref": "#/components/schemas/CreateAdminDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminDTO"
+                "$ref": "#/components/schemas/CreateAdminDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminDTO"
+                "$ref": "#/components/schemas/CreateAdminDTO"
               }
             }
           }
@@ -92,6 +152,37 @@
         }
       }
     },
+    "/api/Admins/check": {
+      "post": {
+        "tags": [
+          "Admins"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCheckDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCheckDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCheckDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Login": {
       "post": {
         "tags": [
@@ -123,6 +214,42 @@
         }
       }
     },
+    "/api/Proxy/user-image": {
+      "get": {
+        "tags": [
+          "Proxy"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Proxy/team-image": {
+      "get": {
+        "tags": [
+          "Proxy"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Proxy/scoreboard-image": {
+      "get": {
+        "tags": [
+          "Proxy"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Register": {
       "post": {
         "tags": [
@@ -132,17 +259,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminDTO"
+                "$ref": "#/components/schemas/UserDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminDTO"
+                "$ref": "#/components/schemas/UserDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AdminDTO"
+                "$ref": "#/components/schemas/UserDTO"
               }
             }
           }
@@ -169,23 +296,25 @@
         "tags": [
           "Scoreboards"
         ],
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "startedAt",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreboardDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreboardDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreboardDTO"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -194,6 +323,67 @@
       }
     },
     "/api/Scoreboards/{scoreboardId}": {
+      "put": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreboardDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreboardDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScoreboardDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Scoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "get": {
         "tags": [
           "Scoreboards"
@@ -216,53 +406,7 @@
         }
       }
     },
-    "/rich/{scoreboardId}": {
-      "get": {
-        "tags": [
-          "Scoreboards"
-        ],
-        "parameters": [
-          {
-            "name": "scoreboardId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/rich/{scoreboardId}": {
-      "get": {
-        "tags": [
-          "Scoreboards"
-        ],
-        "parameters": [
-          {
-            "name": "scoreboardId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/rich/{scoreboardId}": {
+    "/api/Scoreboards/rich/{scoreboardId}": {
       "get": {
         "tags": [
           "Scoreboards"
@@ -295,6 +439,34 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "ScoreboardTeams"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "teamId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/ScoreboardTeams/{teamId}": {
@@ -320,36 +492,141 @@
         }
       }
     },
-    "/api/ScoreboardTeams/{teamid}/add-points": {
+    "/api/ScoreboardTeams/{scoreboardId}/{teamId}/addPoints": {
       "put": {
         "tags": [
           "ScoreboardTeams"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "pointsToAdd",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "teamid",
+            "name": "scoreboardId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "points",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ScoreboardTeams/{scoreboardId}/{teamId}/points": {
+      "put": {
+        "tags": [
+          "ScoreboardTeams"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "points",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ScoreboardTeams/{scoreboardId}/teamName": {
+      "post": {
+        "tags": [
+          "ScoreboardTeams"
+        ],
+        "parameters": [
+          {
+            "name": "scoreboardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "teamName",
+            "in": "query",
             "schema": {
               "type": "string"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Search": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Search/all": {
+      "get": {
+        "tags": [
+          "Search"
         ],
         "responses": {
           "200": {
@@ -441,6 +718,46 @@
             "description": "OK"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Teams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Team"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Team"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Team"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/TeamUsers": {
@@ -458,18 +775,71 @@
         "tags": [
           "TeamUsers"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddUserToTeamRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddUserToTeamRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddUserToTeamRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TeamUsers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DropUserFromTeamRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DropUserFromTeamRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DropUserFromTeamRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TeamUsers/{teamId}": {
+      "get": {
+        "tags": [
+          "TeamUsers"
+        ],
         "parameters": [
           {
-            "name": "userId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
             "name": "teamId",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -483,26 +853,19 @@
         }
       }
     },
-    "/api/TeamUsers/{teamid}": {
+    "/api/TeamUsers/{userId}/teams": {
       "get": {
         "tags": [
           "TeamUsers"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "teamid",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -597,28 +960,91 @@
           }
         }
       }
+    },
+    "/api/UserScoreboards/{id}/scoreboards": {
+      "get": {
+        "tags": [
+          "UserScoreboards"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "AdminDTO": {
+      "AddUserToTeamRequest": {
         "type": "object",
         "properties": {
-          "firstname": {
-            "type": "string",
-            "nullable": true
+          "userId": {
+            "type": "integer",
+            "format": "int32"
           },
-          "lastname": {
-            "type": "string",
-            "nullable": true
-          },
+          "teamId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdminCheckDTO": {
+        "type": "object",
+        "properties": {
           "username": {
             "type": "string",
             "nullable": true
-          },
-          "password": {
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateAdminDTO": {
+        "type": "object",
+        "properties": {
+          "username": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DropUserFromTeamRequest": {
+        "type": "object",
+        "properties": {
+          "teamID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForgotPasswordDTO": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
           }
         },
         "additionalProperties": false
@@ -633,6 +1059,56 @@
           "password": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPasswordDTO": {
+        "required": [
+          "email",
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScoreboardDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "active": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -654,15 +1130,53 @@
       "User": {
         "type": "object",
         "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
           "userId": {
             "type": "integer",
             "format": "int32"
           },
-          "userName": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstname": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastname": {
             "type": "string",
             "nullable": true
           },
           "passwordHash": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstname": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastname": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
             "type": "string",
             "nullable": true
           }

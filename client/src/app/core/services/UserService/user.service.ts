@@ -7,7 +7,7 @@ import { ScoreboardBasic } from '../../../shared/models/scoreboardBasic.model';
 import { Teams } from '../../../shared/models/teams.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private readonly api: string;
@@ -30,5 +30,9 @@ export class UserService {
 
   public getUserTeams(id: number): Observable<Teams[]> {
     return this.http.get<Teams[]>(`${this.api}/teamusers/${id}/teams`);
+  }
+
+  public deleteUser(id: string): Observable<Users> {
+    return this.http.delete<Users>(`${this.api}/users/${id}`);
   }
 }
