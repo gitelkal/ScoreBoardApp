@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
@@ -22,6 +22,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   signalRService = inject(SignalRService);
   route = inject(ActivatedRoute);
   auth = inject(AuthService);
+  router = inject(Router);
 
   teamName: string = '';
   teamID: number = 0;
@@ -45,6 +46,11 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.signalRService.startConnection();
     this.subscribeToTeamUserUpdates();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -1,24 +1,25 @@
-<div class="flex flex-wrap justify-center fin-bakgrund">
+<div class="flex flex-wrap justify-center">
     <div class="w-3/4 mt-4">
-        <div class="w-100 flex justify-between">
-            <div class="w-1/3">
-                <h2 class="bg-h2Color  shadow-b-lg shadow-[0_12px_12px_rgba(255,255,255,0.25)] text-white1 text-center text-3xl p-7 font-semibold">Lag:</h2>
+        <div class="w-full flex justify-between">
+            <div class="w-full flex justify-between">
+                <h2 class="bg-h2Color w-1/3 shadow-b-lg shadow-[0_12px_12px_rgba(255,255,255,0.25)] text-white1 text-center text-3xl p-7 font-semibold">Lag:</h2>
+                <input type="text" class="p-2 mt-4 h-12 border border-gray-300 rounded" placeholder="Filtrera lag..." [(ngModel)]="query" (input)="filterTeams()"/>
             </div>
         </div>
         <div class="bg-white/20 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-gray-300 mt-4 mb-8">
             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full">
-                <li class="h-72" *ngFor="let team of usersInTeam">
+                <li class="h-72" *ngFor="let team of filteredTeams">
                     <div class="rounded-xl bg-gray-100 h-full flex flex-col">
                         <div class="h-16 bg-mainColor flex items-center justify-center px-4 rounded-t hover:bg-mainColorHover cursor-pointer" [routerLink]="['/team', team.teamID]">
                             <h2 class="text-white1 text-xl font-bold mt-1">{{ getTeamName(team.teamID) }}</h2>
                         </div>
                         <ul class="h-48">
                             <li *ngIf="team.userIDs.length === 0">
-                                <p class="text-base text-red6 mt-2 ml-4 font-bold">Inga medlemmar ännu...</p>
+                                <p class="text-base text-mainColor mt-2 ml-4 font-bold">Inga medlemmar ännu...</p>
                             </li>
-                            <h3 class="text-base text-red6 mt-2 ml-4 font-bold" *ngIf="team.userIDs.length != 0">Medlemmar:</h3>
+                            <h3 class="text-base text-black mt-2 ml-4 font-bold" *ngIf="team.userIDs.length != 0">Medlemmar:</h3>
                             <li *ngFor="let userId of team.userIDs; let i = index">
-                                <p class="text-base text-text-red6 mt-1 ml-4 font-medium" *ngIf="i < 5">{{ getUsername(userId) }}</p>
+                                <p class="text-base text-text-mainColorHover mt-1 ml-4 font-medium" *ngIf="i < 5">{{ getUsername(userId) }}</p>
                             </li>
                         </ul>
                         <div>
@@ -32,6 +33,11 @@
                     </div>
                 </li>
             </ul>
+            <div>
+            <div *ngIf="filteredTeams.length === 0 && query" class="text-center">
+                <p class="font-bold px-24 py-12 bg-mainColor text-xl text-white1 rounded-xl">Inga lag matchar din sökning</p>
+            </div>
+        </div>
         </div>
     </div>
 </div>

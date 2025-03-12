@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { TeamService } from '@app/core/services/teamService/team.service';
 import { NgIf, NgFor } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Observable, Subscription } from 'rxjs';
@@ -10,10 +10,11 @@ import { UserService } from '@app/core/services/userService/user.service';
 import { Teams } from '@app/shared/models/teams.models';
 import { Users } from '@app/shared/models/users.model';
 import { UserTeamsList } from '@app/shared/models/userTeamList.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-team',
-  imports: [NgIf, NgFor, RouterLink],
+  imports: [NgIf, NgFor, RouterLink, FormsModule],
   templateUrl: './team.component.html',
   styleUrl: './team.component.css'
 })
@@ -24,10 +25,13 @@ export class TeamComponent implements OnInit, OnDestroy {
   signalRService = inject(SignalRService);
   cdr = inject(ChangeDetectorRef);
   userService = inject(UserService);
+  router = inject(Router);
 
   isAdmin: Observable<boolean> = this.authService.isAdmin;
   loggedInUsername = this.authService.getUsername();
   userID = this.authService.getUserID() ?? 0;
+  query: string = '';
+  filteredTeams: UserTeamsList[] = [];
   usersInTeam: UserTeamsList[] = [];
   usersList: Users  [] = [];
   teamsList: Teams[] = [];
@@ -44,6 +48,11 @@ export class TeamComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.signalRService.startConnection();
     this.subscribeToTeamUserUpdates();
+        this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+            window.scrollTo(0, 0);
+          }
+        });
   }
 
   ngOnDestroy(): void {
@@ -73,16 +82,19 @@ export class TeamComponent implements OnInit, OnDestroy {
             lastname: user.lastname
           }));
         });
+        this.filterTeams()
       },
     });
   }
 
   joinTeam(userID: number, teamID: number): void {
     this.teamUsersService.joinTeam(userID, teamID).subscribe();
+    this.filterTeams()
   }
 
   dropFromTeam(userID: number, teamID: number): void {
     this.teamUsersService.removeUserFromTeam(teamID, userID).subscribe();
+    this.filterTeams()
   }
 
   isUserInTeam(teamID: number, userID: number): boolean {
@@ -107,6 +119,7 @@ export class TeamComponent implements OnInit, OnDestroy {
         this.usersInTeam = this.usersInTeam.map(team =>
           team.teamID === update.teamId ? { ...team, userIDs: [...team.userIDs, Number(update.userId)] } : team
         );
+        this.filterTeams()
         this.cdr.detectChanges();
       }
     });
@@ -116,9 +129,20 @@ export class TeamComponent implements OnInit, OnDestroy {
         this.usersInTeam = this.usersInTeam.map(team =>
           team.teamID === update.teamId ? { ...team, userIDs: team.userIDs.filter(id => id !== Number(update.userId)) } : team
         );
+        this.filterTeams()
         this.cdr.detectChanges();
       }
     });
+  }
+
+  filterTeams() {
+    if (this.query) {
+      this.filteredTeams = this.usersInTeam.filter(team =>
+        this.getTeamName(team.teamID).toLowerCase().includes(this.query.toLowerCase())
+      );
+    } else {
+      this.filteredTeams = [...this.usersInTeam];
+    }
   }
 
   onJoinMouseEnter(teamID: number) {

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { NgFor, DatePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router, NavigationEnd} from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Scoreboards } from '@app/shared/models/scoreboards.model';
 
@@ -15,10 +15,16 @@ import { Scoreboards } from '@app/shared/models/scoreboards.model';
 })
 export class ScoreboardsHistoryComponent implements OnInit {
   scoreboardService = inject(ScoreboardService);
+  router = inject(Router);
   inactiveScoreboards: Scoreboards[] = [];
 
   ngOnInit(): void {
     this.loadScoreboards();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
   }
 
   loadScoreboards(): void {

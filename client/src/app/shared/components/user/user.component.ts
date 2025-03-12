@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { NgIf, NgFor } from '@angular/common';
 import { UserService } from '@app/core/services/userService/user.service';
 import { ScoreboardBasic } from '@app/shared/models/scoreboardBasic.model';
@@ -20,6 +20,7 @@ export class UserComponent implements OnInit, OnDestroy {
   adminService = inject(AdminService);
   route = inject(ActivatedRoute);
   auth = inject(AuthService);
+  router = inject(Router);
 
   isAdmin: boolean = false;
   userID: number = 0;
@@ -39,6 +40,11 @@ export class UserComponent implements OnInit, OnDestroy {
       const id = params.get('userID');
       this.userID = Number(id);
       this.loadUser();
+    });
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
     });
   }
 
