@@ -96,6 +96,8 @@ export class ScoreboardDetailsComponent implements OnInit {
       next: (response) => {
         this.userTeamsNotInScoreboard = response;
         console.log(this.userTeamsNotInScoreboard)
+      }, error: (error) => {
+        console.log('Error getting teams:', error);
       }
     });
   }
@@ -197,44 +199,6 @@ export class ScoreboardDetailsComponent implements OnInit {
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
-  toggleTeamDropdown(){
-    this.isTeamDropdownOpen = !this.isTeamDropdownOpen
-    this.isJoiningTeam = !this.isJoiningTeam
-    console.log(this.isTeamDropdownOpen)
-  }
-
-  isUserInTeam(teamID: number): boolean {
-    const team = this.userTeams.find(t => t.teamID === teamID);
-    if (team)
-    {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
- 
-  setPoints(teamid : number, points: number)
-  {
-      this.route.paramMap.pipe(
-        switchMap(params => {
-          const scoreboardId = params.get('id'); 
-          if (!scoreboardId) {
-            console.error("Scoreboard ID is missing");
-            return [];
-          }
-          return this.scoreboardTeamsService.setScoreboardTeamPoints(scoreboardId,teamid,points);
-        })
-      ).subscribe({
-        next: (response) => {
-          console.log('points set:', response);
-          this.loadInitialScoreboard(); 
-        },
-        error: (error) => {
-          console.error('Error settings points:', error);
-        }
-      });
-    } 
 
   getBarHeight(points: number): number {
     const maxPoints = Math.max(...(this.scoreboardResonseSubject.value?.scoreboard.teams.map(team => team.points) || [1])) || 1;
