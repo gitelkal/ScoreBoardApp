@@ -153,25 +153,13 @@
               + Delta med lag
             </button>
 
-            <div
-              *ngIf="isTeamDropdownOpen"
-              class="bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-48"
-            >
-              <ul class="p-2">
-                <li
-                  *ngFor="let team of userTeamsNotInScoreboard"
-                  class="p-2 hover:bg-gray-100 cursor-pointer"
-                  (click)="appendTeam(team.teamID)"
-                >
+            <div *ngIf="isTeamDropdownOpen" class="bg-white border border-mainColor rounded-lg shadow-lg mt-2 w-48">
+              <ul class="p-2"> <!-- Lägg till en border för att se om elementen finns -->
+                <li *ngFor="let team of userTeams" class="p-2 hover:bg-gray-100 cursor-pointer" (click)="appendTeam(team.teamID)">
                   {{ team.teamName }}
                 </li>
               </ul>
-              <button
-                class="ml-2 px-3 py-1 bg-blue-500 text-white rounded"
-                (click)="$event.stopPropagation()"
-                (click)="toggleTeamDropdown()"
-                style="margin-bottom: 1rem"
-              >
+              <button class="ml-2 px-3 py-1 bg-blue-500 text-white rounded" (click)="$event.stopPropagation(); toggleTeamDropdown()" style="margin-bottom: 1rem">
                 Avbryt
               </button>
             </div>
