@@ -109,13 +109,15 @@
               class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
               *ngIf="(loggedIn | async) === false"
               (click)="toggleRegisterModal()"
+              (click)="$event.stopPropagation()"
             >
               + Registrera användare
             </button>
             <button
               class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
-              *ngIf="(loggedIn | async) === true"
+              *ngIf="(loggedIn | async) === true && !isUserInTeam(team.teamID)"
               (click)="joinTeam(team.teamID)"
+              (click)="$event.stopPropagation()"
             >
               + Gå med i laget
             </button>
@@ -156,9 +158,13 @@
               class="bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-48"
             >
               <ul class="p-2">
-                <li class="p-2 hover:bg-gray-100 cursor-pointer">Option 1</li>
-                <li class="p-2 hover:bg-gray-100 cursor-pointer">Option 2</li>
-                <li class="p-2 hover:bg-gray-100 cursor-pointer">Option 3</li>
+                <li
+                  *ngFor="let team of userTeamsNotInScoreboard"
+                  class="p-2 hover:bg-gray-100 cursor-pointer"
+                  (click)="appendTeam(team.teamID)"
+                >
+                  {{ team.teamName }}
+                </li>
               </ul>
               <button
                 class="ml-2 px-3 py-1 bg-blue-500 text-white rounded"

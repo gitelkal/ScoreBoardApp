@@ -25,4 +25,13 @@ export class ScoreboardTeamsService {
   {
     return this.http.put<any>(`${this.api}/ScoreboardTeams/${scoreboardId}/${teamId}/points?points=${points}`, { responseType: 'json' });
   }
+
+  getUserTeamsNotInScoreboard(scoreboardId: number, userId: number){
+    return this.http.get<any>(`${this.api}/ScoreboardTeams/${scoreboardId}/userId?userId=${userId}`, { responseType: 'json' });
+  }
+  addTeamToScoreboard(scoreboardId: number, teamId: number)
+  {
+    console.log(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`)
+    return this.http.post<any>(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`, { responseType: 'json' });
+  }
 }
