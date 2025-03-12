@@ -19,13 +19,12 @@ export class ForgotPasswordComponent {
 
   forgotPassword() {
     this.authService.forgotPassword(this.email).subscribe({
-      next: (response) => {
-        if (response.status === 200) {
+      next: () => {
           this.success = true;
           setTimeout(() => {
             this.success = false;
           }, 3000);
-        }},
+        },
       error: (error) => {
         if (error.status === 400) {
           this.emailNotFound = true;
@@ -40,6 +39,5 @@ export class ForgotPasswordComponent {
         }
         console.log('Error: ', error);
       }});
-
   }
 }

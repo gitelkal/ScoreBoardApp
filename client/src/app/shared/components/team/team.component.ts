@@ -1,78 +1,100 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { TeamService } from '@app/core/services/teamService/team.service';
 import { NgIf, NgFor } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
-import { ChangeDetectorRef } from '@angular/core';
+import { UserService } from '@app/core/services/userService/user.service';
+import { Teams } from '@app/shared/models/teams.models';
+import { Users } from '@app/shared/models/users.model';
+import { UserTeamsList } from '@app/shared/models/userTeamList.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-team',
-  imports: [NgIf, NgFor, RouterLink],
+  imports: [NgIf, NgFor, RouterLink, FormsModule],
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css']
+  styleUrl: './team.component.css'
 })
-export class TeamComponent implements OnInit {
+export class TeamComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   teamService = inject(TeamService);
   teamUsersService = inject(TeamUsersService);
   signalRService = inject(SignalRService);
   cdr = inject(ChangeDetectorRef);
+  userService = inject(UserService);
+  router = inject(Router);
 
   isAdmin: Observable<boolean> = this.authService.isAdmin;
-  getAllTeamUsers$ = this.teamUsersService.getTeamWithUsers();
-  usersInTeam: { teamID: number; userIDs: number[] }[] = [];
-  teamsList: { teamID: number; teamName: string }[] = [];
-  usersList: { userID: number; username: string }[] = [];
-
+  loggedInUsername = this.authService.getUsername();
+  userID = this.authService.getUserID() ?? 0;
+  query: string = '';
+  filteredTeams: UserTeamsList[] = [];
+  usersInTeam: UserTeamsList[] = [];
+  usersList: Users  [] = [];
+  teamsList: Teams[] = [];
   hoveredTeamID: number | null = null;
 
+  private teamSubscription: Subscription | undefined;
+  private joinUpdateSubscription: Subscription | undefined;
+  private leaveUpdateSubscription: Subscription | undefined;
+
   constructor() {
-    this.getAllTeamUsers$.subscribe({
-      next: (response) => {
-        response.forEach((team) => {
-          this.usersInTeam.push({ teamID: team.team.teamID, userIDs: team.users.map((user) => Number(user.userId)) });
-          this.teamsList.push({ teamID: team.team.teamID, teamName: team.team.teamName });
-          team.users.forEach(user => {
-            if (!this.usersList.some(u => u.userID === user.userId)) {
-              this.usersList.push({ userID: Number(user.userId), username: user.username });
-            }
-          });
-        });
-      },
-    });
+    this.loadTeamData();
   }
 
   ngOnInit(): void {
     this.signalRService.startConnection();
     this.subscribeToTeamUserUpdates();
+        this.router.events.subscribe(event => {
+          if (event instanceof NavigationEnd) {
+            window.scrollTo(0, 0);
+          }
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.teamSubscription?.unsubscribe();
+    this.joinUpdateSubscription?.unsubscribe();
+    this.leaveUpdateSubscription?.unsubscribe();
+  }
+
+  loadTeamData() {
+    this.teamSubscription = this.teamUsersService.getTeamWithUsers().subscribe({
+      next: (response) => {
+        this.usersInTeam = response.map(team => ({
+          teamID: team.team.teamID,
+          userIDs: team.users.map(user => Number(user.userId))
+        }));
+
+        this.teamsList = response.map(team => ({
+          teamID: team.team.teamID,
+          teamName: team.team.teamName
+        }));
+
+        this.userService.getAllUsers().subscribe(users => {
+          this.usersList = users.map(user => ({
+            userId: Number(user.userId),
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname
+          }));
+        });
+        this.filterTeams()
+      },
+    });
   }
 
   joinTeam(userID: number, teamID: number): void {
-    this.teamUsersService.joinTeam(userID, teamID).subscribe({
-      next: () => {
-        const team = this.usersInTeam.find(t => t.teamID === teamID);
-        if (team && !team.userIDs.includes(userID)) {
-          team.userIDs.push(userID);
-        }
-      },
-    });
+    this.teamUsersService.joinTeam(userID, teamID).subscribe();
+    this.filterTeams()
   }
 
   dropFromTeam(userID: number, teamID: number): void {
-    this.teamUsersService.removeUserFromTeam(teamID, userID).subscribe({
-      next: () => {
-        this.usersInTeam = this.usersInTeam.map(team =>
-          team.teamID === teamID ? { ...team, userIDs: team.userIDs.filter(id => id !== userID) } : team
-        );
-      },
-    });
-  }
-
-  get userID(): number {
-    return this.authService.getUserID() ?? 0;
+    this.teamUsersService.removeUserFromTeam(teamID, userID).subscribe();
+    this.filterTeams()
   }
 
   isUserInTeam(teamID: number, userID: number): boolean {
@@ -86,36 +108,41 @@ export class TeamComponent implements OnInit {
   }
 
   getUsername(userID: number): string {
-    const user = this.usersList.find(u => u.userID === userID);
+    const user = this.usersList.find(u => u.userId === userID);
     return user ? user.username : 'Okänd användare';
   }
 
   subscribeToTeamUserUpdates() {
-    this.signalRService.userJoinTeamUpdates.subscribe(update => {
+    this.joinUpdateSubscription = this.signalRService.userJoinTeamUpdates.subscribe(update => {
       if (update) {
-        const currentTeamUsers = this.usersInTeam;
-
-        const updatedTeams = currentTeamUsers.map(team =>
+        if (this.isUserInTeam(update.teamId, update.userId)) return;
+        this.usersInTeam = this.usersInTeam.map(team =>
           team.teamID === update.teamId ? { ...team, userIDs: [...team.userIDs, Number(update.userId)] } : team
         );
-
-        this.usersInTeam = updatedTeams;
+        this.filterTeams()
         this.cdr.detectChanges();
       }
     });
 
-    this.signalRService.userLeftTeamUpdates.subscribe(update => {
+    this.leaveUpdateSubscription = this.signalRService.userLeftTeamUpdates.subscribe(update => {
       if (update) {
-        const currentTeamUsers = this.usersInTeam;
-
-        const updatedTeams = currentTeamUsers.map(team =>
+        this.usersInTeam = this.usersInTeam.map(team =>
           team.teamID === update.teamId ? { ...team, userIDs: team.userIDs.filter(id => id !== Number(update.userId)) } : team
         );
-
-        this.usersInTeam = updatedTeams;
+        this.filterTeams()
         this.cdr.detectChanges();
       }
     });
+  }
+
+  filterTeams() {
+    if (this.query) {
+      this.filteredTeams = this.usersInTeam.filter(team =>
+        this.getTeamName(team.teamID).toLowerCase().includes(this.query.toLowerCase())
+      );
+    } else {
+      this.filteredTeams = [...this.usersInTeam];
+    }
   }
 
   onJoinMouseEnter(teamID: number) {

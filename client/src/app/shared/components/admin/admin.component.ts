@@ -118,8 +118,13 @@ export class AdminComponent {
 
   handleTeamCreated(teamData: any) {
     console.log('Nytt lag skapat:', teamData);
-    alert(`Laget "${teamData.teamName}" har skapats!`);
-  }
+    if (teamData) {
+        alert(`Laget "${teamData.teamName}" har skapats!`);
+    } else {
+        alert('Ett nytt lag har skapats, men inget teamData returnerades.');
+    }
+}
+
 
   handleTeamDeleted(teamData: any) {
     console.log('Bortaget lag med ID:', teamData);
