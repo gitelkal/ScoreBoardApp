@@ -26,7 +26,9 @@ export class TeamService {
 
   // Skapa ett nytt lag
   public createTeam(team: { teamName: string }): Observable<any> {
-    return this.http.post<any>(`${this.api}/Teams`, team,);
+    return this.http.post<any>(`${this.api}/Teams`, team, {
+      responseType: 'json',
+    });
   }
 
   // Ta bort ett lag
@@ -45,4 +47,17 @@ export class TeamService {
   addUserToTeam(teamID: number, user: any): Observable<any> {
     return this.http.post<any>(`/api/teams/${teamID}/users`, user);
   }
+
+  // public getTeamWithUsers(): Observable<any> {
+  //   return this.http.get<any>(`${this.api}/TeamUsers/`)
+
+  // }
+
+  // addUserToTeam(teamID: number, user: any): Observable<any> {
+  //   return this.http.post<any>(`/api/teams/${teamID}/users`, user);
+  // }
+
+  // removeUserFromTeam(teamID: number, user: any): Observable<any> {
+  //   return this.http.delete<any>(`/api/teams/${teamID}/users/${user.id}`);
+  //}
 }

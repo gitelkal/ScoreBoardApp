@@ -91,23 +91,34 @@ export class ManageScoreboardComponent implements OnInit {
       description: this.scoreboardData.description,
     };
 
+    console.log('📤 Skickar till backend:', JSON.stringify(payload, null, 2));
 
     this.scoreboardService.createScoreboard(payload).subscribe(
       (response) => {
+        console.log('✅ Scoreboard skapad:', response);
+
         if (response) {
           console.log(`Ny scoreboard skapad:`, response);
           this.fetchScoreboards();
           this.scoreboardCreated.emit(response);
-          this.resetScoreboardData(); 
+          this.scoreboardData = {
+            scoreboardId: 0,
+            name: '',
+            startedAt: '',
+            endedAt: '',
+            active: false,
+            description: '',
+          };
         } else {
+          console.warn(' API returnerade null! Kolla backend.');
           alert('API returnerade null. Kontrollera backend.');
         }
       },
       (error) => {
+        console.error('❌ Fel vid skapande:', error);
         alert('Något gick fel vid skapandet av tävling.');
       }
     );
-    
   }
 
   // Filtrera scoreboards i sökrutan
@@ -128,9 +139,9 @@ export class ManageScoreboardComponent implements OnInit {
   selectScoreboard(scoreboard: any) {
     console.log('Scoreboard valt:', scoreboard);
 
-    this.selectedScoreboard = { ...scoreboard }; 
-    this.searchQuery = scoreboard.name; 
-    this.showDropdown = false; 
+    this.selectedScoreboard = { ...scoreboard }; // Kopiera objektet
+    this.searchQuery = scoreboard.name; // Behåll det gamla namnet i sökrutan
+    this.showDropdown = false; // Stäng dropdownen
   }
 
   updateScoreboard() {
@@ -145,7 +156,6 @@ export class ManageScoreboardComponent implements OnInit {
         next: () => {
           alert('Tävlingspoängtavlan uppdaterad!');
           this.fetchScoreboards();
-          this.resetScoreboardData();
         },
         error: (err) => {
           console.error('Fel vid uppdatering:', err);
@@ -153,58 +163,31 @@ export class ManageScoreboardComponent implements OnInit {
         },
       });
   }
-
-
   deleteScoreboard(scoreboardId: number) {
     if (confirm('Är du säker på att du vill ta bort denna tävling?')) {
       this.scoreboardService.deleteScoreboard(scoreboardId).subscribe(() => {
         alert('Tävlingspoängtavlan har tagits bort.');
-        this.fetchScoreboards(); 
-        this.resetScoreboardData();
+        this.fetchScoreboards(); // Uppdaterar listan
       }, error => {
         console.error('Fel vid borttagning:', error);
         alert('Ett fel uppstod vid borttagning.');
       });
     }
   }
-
-  resetScoreboardData() {
-    this.selectedScoreboard = {
-      scoreboardId: null,
-      name: '',
-      startedAt: '',
-      endedAt: '',
-      active: false,
-      description: '',
-    };
   
-    this.scoreboardData = {
-      scoreboardId: 0,
-      name: '',
-      startedAt: '',
-      endedAt: '',
-      active: false,
-      description: '',
-    };
-  
-    this.searchQuery = '';
-    this.showDropdown = false;
-  }
-  
-
   @HostListener('document:click', ['$event'])
   closeDropdown(event: Event) {
     const clickedElement = event.target as HTMLElement;
   
     if (
-      this.dropdown?.nativeElement.contains(clickedElement) || 
-      clickedElement.getAttribute('name') === 'searchQuery' || 
-      clickedElement.getAttribute('name') === 'editName' 
+      this.dropdown?.nativeElement.contains(clickedElement) || // Om klicket är inom dropdownen
+      clickedElement.getAttribute('name') === 'searchQuery' || // Om klicket är i sökfältet
+      clickedElement.getAttribute('name') === 'editName' // Om klicket är i namnändringsfältet
     ) {
-      return; 
+      return; // Låt dropdownen vara öppen
     }
   
-    this.showDropdown = false; 
+    this.showDropdown = false; // Annars, stäng dropdownen
   }
   
 }

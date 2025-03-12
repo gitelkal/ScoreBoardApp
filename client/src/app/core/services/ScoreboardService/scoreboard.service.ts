@@ -9,7 +9,7 @@ import { ScoreboardResponse } from '../../../shared/models/richScoreboard.model'
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ScoreboardService {
   private readonly api: string;
@@ -18,21 +18,24 @@ export class ScoreboardService {
     this.api = this.apiService.api;
   }
 
+  // ------------------------------------
   public createScoreboard(scoreboard: Scoreboards): Observable<Scoreboards> {
+    console.log('🚀 Skickar PUT till API:', this.api + '/scoreboards');
+
     return this.http.post<Scoreboards>(`${this.api}/scoreboards`, scoreboard);
   }
 
-  updateScoreboard(id: string, updatedScoreboard: any) {
-    console.log('API URL för PUT:', `${this.api}/scoreboards/${id}`);
 
-    return this.http.put<Scoreboards>(
-      `${this.api}/scoreboards/${id}`,
-      updatedScoreboard
-    );
-  }
-  deleteScoreboard(scoreboardId: number): Observable<any> {
-    return this.http.delete(`${this.api}/scoreboards/${scoreboardId}`);
-  }
+updateScoreboard(id: string, updatedScoreboard: any) {
+  console.log("API URL för PUT:", `${this.api}/scoreboards/${id}`);
+
+  return this.http.put<Scoreboards>(`${this.api}/scoreboards/${id}`, updatedScoreboard);
+}
+deleteScoreboard(scoreboardId: number): Observable<any> {
+  return this.http.delete(`${this.api}/scoreboards/${scoreboardId}`);
+}
+
+  
 
   // ------------------------------------
 
@@ -50,19 +53,12 @@ export class ScoreboardService {
       .pipe(tap((response) => console.log('Service response:', response)));
   }
 
-  public CreateAndAddEmptyTeamToScoreboard(
-    scoreboardId: string,
-    teamName: string
-  ) {
+  public CreateAndAddEmptyTeamToScoreboard(scoreboardId: string, teamName: string) {
     const url = `${this.api}/ScoreboardTeams/${scoreboardId}/teamName?teamName=${teamName}`;
-    console.log('API URL:', url);
+    console.log("API URL:", url);
     return this.http.post<any>(url, { responseType: 'json' });
-  }
-  public addTeamToScoreboard(scoreboardId: number, teamId: number): Observable<any> {
-    return this.http.post(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`, {});
-  }
-  public removeTeamFromScoreboard(scoreboardId: number, teamId: number): Observable<any> {
-    return this.http.delete(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`);
-  }
-  
+}
+
+
+
 }
