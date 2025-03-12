@@ -26,15 +26,23 @@ namespace server.Controllers
             var objUser = dbContext.Users.FirstOrDefault(x => x.Username == userDTO.Username);
             var objEmail = dbContext.Users.FirstOrDefault(x => x.Email == userDTO.Email);
 
+            //if (objEmail != null)
+            //{
             if (objEmail != null)
             {
-                return BadRequest("Email already exists");
+                return Conflict(new { message = "Email already exists" });
             }
             if (objUser != null)
             {
-                return BadRequest("Username already exists");
-               
+                return Conflict(new { message = "Username already exists" });
             }
+            //return BadRequest("Email already exists");
+            //}
+            //if (objUser != null)
+            //{
+            //    return BadRequest("Username already exists");
+               
+            //}
             else
                 dbContext.Users.Add(new User
                 {
