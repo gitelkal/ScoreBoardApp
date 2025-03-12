@@ -15,6 +15,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AdminService } from '@app/core/services/adminService/admin.service';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
+import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class ScoreboardDetailsComponent implements OnInit {
   private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
   getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
 
-  constructor(private signalRService: SignalRService, private authService: AuthService,private adminService: AdminService,private teamUserService: TeamUsersService) {}
+  constructor(private signalRService: SignalRService, private authService: AuthService,private adminService: AdminService,private teamUserService: TeamUsersService, private scoreboardTeamsService : ScoreboardTeamsService) {}
 
   ngOnInit() {
     this.signalRService.startConnection();
@@ -136,4 +137,32 @@ export class ScoreboardDetailsComponent implements OnInit {
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
+
+  setPoints(scoreboardId: number,teamid : number, points: number)
+  {
+      console.log(scoreboardId)
+      console.log(teamid)
+      console.log(points)
+      //console.log(this.scoreboardTeamsService.setScoreboardTeamPoints(scoreboardId,teamid,points))
+
+      this.route.paramMap.pipe(
+        switchMap(params => {
+          const scoreboardId = params.get('id'); 
+          if (!scoreboardId) {
+            console.error("Scoreboard ID is missing");
+            return [];
+          }
+          
+          return this.scoreboardTeamsService.setScoreboardTeamPoints(scoreboardId,teamid,points);
+        })
+      ).subscribe({
+        next: (response) => {
+          console.log('points set:', response);
+          this.loadInitialScoreboard(); 
+        },
+        error: (error) => {
+          console.error('Error settings points:', error);
+        }
+      });
+  } 
 }
