@@ -78,15 +78,9 @@
             <button
               class="ml-2 px-3 py-1 bg-blue-500 text-white rounded"
               (click)="$event.stopPropagation()"
-              (click)="
-                setPoints(
-                  richScoreboard.scoreboard.scoreboardId,
-                  team.teamID,
-                  team.points
-                )
-              "
+              (click)="setPoints(team.teamID, team.points)"
             >
-              Set
+              Spara
             </button>
           </div>
           <p
@@ -116,7 +110,7 @@
               *ngIf="(loggedIn | async) === false"
               (click)="toggleRegisterModal()"
             >
-              + Gå med i laget
+              + Registrera användare
             </button>
             <button
               class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
@@ -134,13 +128,48 @@
         <div
           class="relative z-10 flex flex-col items-center justify-center px-3 py-2"
         >
-          <button
-            *ngIf="!isAddingTeam"
-            (click)="isAddingTeam = true"
-            class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+          <div
+            class="flex gap-12"
+            [ngClass]="{
+              'height: auto': isTeamDropdownOpen,
+              'overflow-visible': isTeamDropdownOpen
+            }"
           >
-            + Lägg till lag
-          </button>
+            <button
+              *ngIf="!isAddingTeam && !isJoiningTeam"
+              (click)="isAddingTeam = true"
+              class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+            >
+              + Skapa lag
+            </button>
+
+            <button
+              *ngIf="(loggedIn | async) === true && !isJoiningTeam"
+              (click)="toggleTeamDropdown()"
+              class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+            >
+              + Delta med lag
+            </button>
+
+            <div
+              *ngIf="isTeamDropdownOpen"
+              class="bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-48"
+            >
+              <ul class="p-2">
+                <li class="p-2 hover:bg-gray-100 cursor-pointer">Option 1</li>
+                <li class="p-2 hover:bg-gray-100 cursor-pointer">Option 2</li>
+                <li class="p-2 hover:bg-gray-100 cursor-pointer">Option 3</li>
+              </ul>
+              <button
+                class="ml-2 px-3 py-1 bg-blue-500 text-white rounded"
+                (click)="$event.stopPropagation()"
+                (click)="toggleTeamDropdown()"
+                style="margin-bottom: 1rem"
+              >
+                Avbryt
+              </button>
+            </div>
+          </div>
 
           <form
             *ngIf="isAddingTeam"

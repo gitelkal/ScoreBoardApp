@@ -36,6 +36,8 @@ export class ScoreboardDetailsComponent implements OnInit {
   loggedIn!: Observable<boolean>;
   userID: number = 0;
   usersInTeam = []
+  isTeamDropdownOpen = false;
+  isJoiningTeam = false;
   
 
   private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
@@ -137,14 +139,14 @@ export class ScoreboardDetailsComponent implements OnInit {
   toggleDropdown(index: number): void {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
-
-  setPoints(scoreboardId: number,teamid : number, points: number)
+  toggleTeamDropdown(){
+    this.isTeamDropdownOpen = !this.isTeamDropdownOpen
+    this.isJoiningTeam = !this.isJoiningTeam
+    console.log(this.isTeamDropdownOpen)
+  }
+ 
+  setPoints(teamid : number, points: number)
   {
-      console.log(scoreboardId)
-      console.log(teamid)
-      console.log(points)
-      //console.log(this.scoreboardTeamsService.setScoreboardTeamPoints(scoreboardId,teamid,points))
-
       this.route.paramMap.pipe(
         switchMap(params => {
           const scoreboardId = params.get('id'); 
