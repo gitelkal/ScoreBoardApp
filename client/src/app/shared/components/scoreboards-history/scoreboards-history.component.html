@@ -1,23 +1,25 @@
-<div class="flex flex-wrap justify-center"> 
+<div class="flex flex-wrap justify-center">
     <div class="w-3/4 mt-4">
-        <div class="w-1/3">
-            <h2 class="bg-h2Color shadow-b-lg shadow-[0_12px_12px_rgba(255,255,255,0.25)] text-white1 text-center text-3xl p-7 font-semibold">
-            Gamla poängtavlor:
-            </h2>
+        <div class="w-full flex justify-between">
+            <h2 class="bg-h2Color w-1/3 shadow-b-lg shadow-[0_12px_12px_rgba(255,255,255,0.25)] text-white1 text-center text-3xl p-7 font-semibold">Gamla poängtavlor:</h2>
+            <input type="text" class="p-2 mt-4 h-12 border border-gray-300 rounded" placeholder="Filtrera poängtavlor..." [(ngModel)]="query" (input)="filterScoreboards()"/>
         </div>
         <div class="bg-white/20 backdrop-blur-lg p-4 rounded-lg shadow-lg border border-gray-300 mt-4 mb-8">
-            <ul class="grid grid-cols-2 gap-4 w-full" >
-                <li class="rounded-sm" *ngFor="let scoreboard of inactiveScoreboards">
-                <a [routerLink]="['/scoreboard/', scoreboard.scoreboardId]">
-                    <div class="bg-mainColor text-white p-4 rounded-tr-lg rounded-tl-lg text-lg font-semibold text-center transition hover:bg-mainColorHover cursor-pointer">
-                        <h3 class="font-digital text-lg text-white1">{{ scoreboard.name }}: {{ scoreboard.startedAt | date:'shortDate' }} - {{ scoreboard.endedAt | date:'shortDate'}}</h3>
-                    </div>
-                    <div class="h-16 bg-white1 rounded-br-lg rounded-bl-lg">
-                        <p class="text-red6 p-4 text-md font-bold flex justify-center items-center">{{ scoreboard.description }}</p>
-                    </div>
-                </a>
-                </li>
-            </ul>
+        <ul class="grid grid-cols-2 gap-4 w-full">
+          <li class="rounded-sm" *ngFor="let scoreboard of filteredScoreboards">
+            <a [routerLink]="['/scoreboard/', scoreboard.scoreboardId]">
+                <div class="bg-mainColor text-white p-4 rounded-tr-lg rounded-tl-lg text-lg font-semibold text-center transition hover:bg-mainColorHover cursor-pointer">
+                <h3 class="font-digital text-lg text-white1">{{ scoreboard.name }}: {{ scoreboard.startedAt | date:'shortDate' }} - {{ scoreboard.endedAt | date:'shortDate'}}</h3>
+                </div>
+                <div class="h-16 bg-white1 rounded-br-lg rounded-bl-lg">
+                <p class="text-black p-4 text-md font-bold flex justify-center items-center">{{ scoreboard.description }}</p>
+                </div>
+            </a>
+            </li>
+        </ul>
+        <div *ngIf="filteredScoreboards.length === 0 && query" class="text-center">
+            <p class="font-bold px-24 py-12 bg-mainColor text-xl text-white1 rounded-xl">Inga poängtavlor matchar din sökning.</p>
+        </div>
         </div>
     </div>
 </div>
