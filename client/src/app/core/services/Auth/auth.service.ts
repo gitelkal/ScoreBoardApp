@@ -5,6 +5,7 @@ import { AuthResponse } from '@app/interfaces/auth-response';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../userService/user.service';
+import { AdminService } from '../adminService/admin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AuthService {
   lastname: string = '';
   errorMessage: string = '';
 
-  constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService) {
+  constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService, private adminService: AdminService) {
     this.api = this.apiService.api;
     this.tokenExpirationCheck();
     this.userService.getOneUser(this.getUserID()).subscribe({
@@ -30,8 +31,15 @@ export class AuthService {
         this.firstname = response.firstname;
         this.lastname = response.lastname;
         this.username = response.username;
+        this.adminService.checkIfAdmin({ username: this.getUsername() }).subscribe({
+          next: (response) => {
+            if (response) {
+              this.isAdmin.next(true);
+            }
+          }
       }
-    });
+    )}
+  });
   }
   
   login(data: LoginRequest): Observable<AuthResponse> {
@@ -80,7 +88,6 @@ export class AuthService {
     if (typeof localStorage === 'undefined') {
       return;
     }
-
     let token = localStorage.getItem(this.tokenKey);
     if (token) {
       this.loggedIn.next(true);
