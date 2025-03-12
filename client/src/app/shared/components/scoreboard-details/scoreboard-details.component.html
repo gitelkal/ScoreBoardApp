@@ -203,8 +203,8 @@
             class="relative flex flex-col items-center w-1/6 transition-all duration-500">
           <div class="relative w-full rounded-t-lg transition-all duration-500 border border-black shadow-lg flex items-end justify-center"
               [ngStyle]="{'height': getBarHeight(team.points) + 'px','background': getTeamColor(i)}">
-            <div *ngIf="team.points > 0" class="absolute bottom-2 text-black text-sm font-bold">
-              {{ team.points }}
+            <div class="absolute bottom-2 text-black text-sm font-bold"> <!-- tog bort *ngIf="team.points" från denna rad  -->
+              {{ team.points || 0 }}
             </div>
           </div>
           <div class="flex items-center justify-center w-full h-12 bg-gray-800 text-white text-sm font-bold rounded-b-lg p-2 shadow-md">
