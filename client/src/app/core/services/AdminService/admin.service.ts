@@ -6,10 +6,9 @@ import { ApiService } from '../api/api.service';
 import { AdminCheckRequest } from '@app/interfaces/admin-check-request';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
-
   private readonly api: string;
 
   constructor(private http: HttpClient, private apiService: ApiService) {
@@ -24,13 +23,31 @@ export class AdminService {
     return this.http.get<Admins>(`${this.api}/admins/${id}`);
   }
 
-  // Ny funktion: Skapa tävling
-  public createCompetition(competition: { name: string; startedAt: string }): Observable<any> {
-    return this.http.post(`${this.api}/scoreboards?name=${competition.name}&startedAt=${competition.startedAt}`, {});
+  public createCompetition(competition: {
+    name: string;
+    startedAt: string;
+  }): Observable<any> {
+    return this.http.post(
+      `${this.api}/scoreboards?name=${competition.name}&startedAt=${competition.startedAt}`,
+      {}
+    );
   }
 
-  public checkIfAdmin(data: AdminCheckRequest): Observable<{ success: boolean }> {
-    return this.http.post<{ success: boolean }>(`${this.api}/admins/check`, data);
+  public checkIfAdmin(
+    data: AdminCheckRequest
+  ): Observable<{ success: boolean }> {
+    return this.http.post<{ success: boolean }>(
+      `${this.api}/admins/check`,
+      data
+    );
   }
+
+  public makeAdmin(payload: { username: string }): Observable<any> {
+    return this.http.post(`${this.api}/admins`, payload);
+  }
+  public deleteAdmin( id: string ): Observable<any> {
+    return this.http.delete(`${this.api}/admins/${id}`);
+  }
+
+  
 }
-
