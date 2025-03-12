@@ -52,6 +52,8 @@ export class ScoreboardDetailsComponent implements OnInit {
   private pointsChangeSubject = new Subject<{ teamID: number; points: number }>();
   private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
   getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
+  teamColorAssignments: Map<string, string> = new Map();
+
 
   constructor(private signalRService: SignalRService, private authService: AuthService,private teamUserService: TeamUsersService, private scoreboardTeamsService : ScoreboardTeamsService, private userService : UserService) {}
 
@@ -60,7 +62,7 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.isBarChartView = false;
     this.loadInitialScoreboard();
     this.subscribeToScoreUpdates();
-    this.pointsChangeSubject.pipe(debounceTime(500)).subscribe(({ teamID, points }) => {
+    this.pointsChangeSubject.pipe(debounceTime(200)).subscribe(({ teamID, points }) => {
       this.setPoints(teamID, points);
     });
   }
@@ -246,16 +248,44 @@ export class ScoreboardDetailsComponent implements OnInit {
     return (points / maxPoints) * 300;
   }
 
-  getTeamColor(index: number): string {
+  getTeamColor(teamName: string, existingAssignments: Map<string, string>): string {
     const colors = [
-      'linear-gradient(to top, #b30000, #ff4d4d)',
-      'linear-gradient(to top, #ffcc00, #ffea00)',
-      'linear-gradient(to top, #ff6600, #ff9933)',
-      'linear-gradient(to top, #b30086, #ff00ff)',
-      'linear-gradient(to top, #0080ff, #00cfff)',
+        'linear-gradient(to top, #b30000, #ff4d4d)', // Röd
+        'linear-gradient(to top, #ffcc00, #ffea00)', // Gul
+        'linear-gradient(to top, #ff6600, #ff9933)', // Orange
+        'linear-gradient(to top, #b30086, #ff00ff)', // Rosa/Lila
+        'linear-gradient(to top, #0080ff, #00cfff)', // Blå
+        'linear-gradient(to top, #008000, #00ff00)', // Grön
+        'linear-gradient(to top, #ff1493, #ff69b4)', // Mörkrosa
+        'linear-gradient(to top, #4b0082, #8a2be2)', // Indigo/Lila
+        'linear-gradient(to top, #ff4500, #ff8c00)', // Röd-orange
+        'linear-gradient(to top, #4682b4, #87ceeb)'  // Stålblå
     ];
-    return colors[index % colors.length];
-  }
+
+    // Om laget redan har en tilldelad färg, använd den
+    if (existingAssignments.has(teamName)) {
+        return existingAssignments.get(teamName)!;
+    }
+
+    // Skapa en ny färgtilldelning om laget saknar en
+    let assignedColor: string;
+    if (existingAssignments.size < colors.length) {
+        // Ta en unik färg från listan
+        assignedColor = colors[existingAssignments.size];
+    } else {
+        // Generera en ny färg om vi har fler lag än färger i listan
+        assignedColor = this.generateRandomGradient();
+    }
+
+    existingAssignments.set(teamName, assignedColor);
+    return assignedColor;
+}
+
+// Genererar en slumpmässig gradient-färg
+generateRandomGradient(): string {
+    const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
+    return `linear-gradient(to top, #${randomColor()}, #${randomColor()})`;
+}
 
   onPointsChange(teamID: number, points: any) {
     this.pointsChangeSubject.next({ teamID, points: points });
