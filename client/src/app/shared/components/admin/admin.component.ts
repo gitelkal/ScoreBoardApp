@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '@app/core/services/adminService/admin.service';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; // 
+import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service'; // 
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -118,8 +118,13 @@ export class AdminComponent {
 
   handleTeamCreated(teamData: any) {
     console.log('Nytt lag skapat:', teamData);
-    alert(`Laget "${teamData.teamName}" har skapats!`);
-  }
+    if (teamData) {
+        alert(`Laget "${teamData.teamName}" har skapats!`);
+    } else {
+        alert('Ett nytt lag har skapats, men inget teamData returnerades.');
+    }
+}
+
 
   handleTeamDeleted(teamData: any) {
     console.log('Bortaget lag med ID:', teamData);

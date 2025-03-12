@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
+import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';

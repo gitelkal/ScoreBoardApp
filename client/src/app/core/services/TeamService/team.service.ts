@@ -36,16 +36,23 @@ export class TeamService {
     return this.http.delete(`${this.api}/teams/${teamId}`);
   }
 
+  public getTeamWithUsers(): Observable<any> {
+    return this.http.get<any>(`${this.api}/TeamUsers/`);
+  }
 
-  // public getTeamWithUsers(): Observable<any> {
-  //   return this.http.get<any>(`${this.api}/TeamUsers/`)
-    
-  // }
-  
   public updateTeam(teamId: number, updatedTeam: any): Observable<any> {
     return this.http.put(`${this.api}/teams/${teamId}`, updatedTeam);
   }
-  
+
+  addUserToTeam(teamID: number, user: any): Observable<any> {
+    return this.http.post<any>(`/api/teams/${teamID}/users`, user);
+  }
+
+  // public getTeamWithUsers(): Observable<any> {
+  //   return this.http.get<any>(`${this.api}/TeamUsers/`)
+
+  // }
+
   // addUserToTeam(teamID: number, user: any): Observable<any> {
   //   return this.http.post<any>(`/api/teams/${teamID}/users`, user);
   // }
