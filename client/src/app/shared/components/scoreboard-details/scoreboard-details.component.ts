@@ -19,7 +19,7 @@ import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsServic
 import { UserService } from '@app/core/services/userService/user.service';
 import { Subscription } from 'rxjs';
 import { Teams } from '@app/shared/models/teams.models';
-
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -28,6 +28,7 @@ import { Teams } from '@app/shared/models/teams.models';
   templateUrl: './scoreboard-details.component.html',
   styleUrls: ['./scoreboard-details.component.css']
 })
+
 export class ScoreboardDetailsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   isAddingTeam = false;
@@ -46,7 +47,9 @@ export class ScoreboardDetailsComponent implements OnInit {
   teamsSubscription: Subscription | undefined;
   userTeamSubscription: Subscription | undefined;
   scoreboardID: string| null = "0";
+  isBarChartView: boolean = false;
 
+  private pointsChangeSubject = new Subject<{ teamID: number; points: number }>();
   private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
   getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
 
@@ -54,14 +57,15 @@ export class ScoreboardDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.signalRService.startConnection();
-    this.subscribeToScoreUpdates();
+    this.isBarChartView = false;
     this.loadInitialScoreboard();
+    this.subscribeToScoreUpdates();
+    this.pointsChangeSubject.pipe(debounceTime(500)).subscribe(({ teamID, points }) => {
+      this.setPoints(teamID, points);
+    });
   }
 
   loadInitialScoreboard() {
-
-    
-
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
@@ -76,7 +80,6 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.isAdmin = this.authService.isAdmin;
     this.loggedIn = this.authService.loggedIn;
     this.userID = this.authService.getUserID() ?? 0;
-
 
     console.log('logged in: ',this.loggedIn)
     console.log('admin: ',this.isAdmin)
@@ -95,12 +98,17 @@ export class ScoreboardDetailsComponent implements OnInit {
         console.log(this.userTeamsNotInScoreboard)
       }
     });
-}
+  }
+
+  toggleView() {
+    this.isBarChartView = !this.isBarChartView;
+    this.subscribeToScoreUpdates();
+  }
+
   subscribeToScoreUpdates() {
     this.signalRService.scoreUpdates.subscribe(update => {
       if (update) {
         const currentScoreboard = this.scoreboardResonseSubject.value;
-  
         if (currentScoreboard?.scoreboard?.teams) {  
           const updatedTeams = currentScoreboard.scoreboard.teams.map(team => 
             team.teamID === update.teamId ? { ...team, points: update.points } : team
@@ -114,12 +122,13 @@ export class ScoreboardDetailsComponent implements OnInit {
               ...currentScoreboard.scoreboard,
               teams: sortedTeams
             }
+            
           });
         }
       }
     });
   } 
-
+  
   appendTeam(teamId: number)
   {
     console.log(teamId)
@@ -134,7 +143,6 @@ export class ScoreboardDetailsComponent implements OnInit {
           console.error("Scoreboard ID is missing");
           return [];
         }
-        
         return this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID ?? "0"),teamId)
       })
     ).subscribe({
@@ -150,9 +158,7 @@ export class ScoreboardDetailsComponent implements OnInit {
 
   addTeam(event: Event) {
     event.preventDefault();
-    
     if (!this.newTeamName.trim()) return;
-  
     this.route.paramMap.pipe(
       switchMap(params => {
         const scoreboardId = params.get('id'); 
@@ -160,7 +166,6 @@ export class ScoreboardDetailsComponent implements OnInit {
           console.error("Scoreboard ID is missing");
           return [];
         }
-        
         return this.scoreboardService.CreateAndAddEmptyTeamToScoreboard(scoreboardId, this.newTeamName);
       })
     ).subscribe({
@@ -193,7 +198,6 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
   toggleTeamDropdown(){
-    
     this.isTeamDropdownOpen = !this.isTeamDropdownOpen
     this.isJoiningTeam = !this.isJoiningTeam
     console.log(this.isTeamDropdownOpen)
@@ -219,7 +223,6 @@ export class ScoreboardDetailsComponent implements OnInit {
             console.error("Scoreboard ID is missing");
             return [];
           }
-          
           return this.scoreboardTeamsService.setScoreboardTeamPoints(scoreboardId,teamid,points);
         })
       ).subscribe({
@@ -231,5 +234,27 @@ export class ScoreboardDetailsComponent implements OnInit {
           console.error('Error settings points:', error);
         }
       });
-  } 
+    } 
+
+  getBarHeight(points: number): number {
+    const maxPoints = Math.max(...(this.scoreboardResonseSubject.value?.scoreboard.teams.map(team => team.points) || [1])) || 1;
+    return (points / maxPoints) * 300;
+  }
+
+  getTeamColor(index: number): string {
+    const colors = [
+      'linear-gradient(to top, #b30000, #ff4d4d)',
+      'linear-gradient(to top, #ffcc00, #ffea00)',
+      'linear-gradient(to top, #ff6600, #ff9933)',
+      'linear-gradient(to top, #b30086, #ff00ff)',
+      'linear-gradient(to top, #0080ff, #00cfff)',
+    ];
+    return colors[index % colors.length];
+  }
+
+  onPointsChange(teamID: number, points: any) {
+    this.pointsChangeSubject.next({ teamID, points: points });
+  }
 }
+
+
