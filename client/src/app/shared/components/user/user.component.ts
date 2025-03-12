@@ -4,9 +4,9 @@ import { NgIf, NgFor } from '@angular/common';
 import { UserService } from '@app/core/services/userService/user.service';
 import { ScoreboardBasic } from '@app/shared/models/scoreboardBasic.model';
 import { AdminService } from '@app/core/services/adminService/admin.service';
-import { UserTeams } from '@app/shared/models/userTeams.model';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { Teams } from '@app/shared/models/teams.models';
 
 @Component({
   selector: 'app-user',
@@ -27,7 +27,7 @@ export class UserComponent implements OnInit, OnDestroy {
   firstname: string = '';
   lastname: string = '';
   userScoreboards: ScoreboardBasic[] = [];
-  userTeams: UserTeams[] = [];
+  userTeams: Teams[] = [];
 
   private routeSubscription: Subscription | undefined;
   private userSubscription: Subscription | undefined;

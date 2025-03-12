@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api/api.service';
 import { ScoreboardBasic } from '../../../shared/models/scoreboardBasic.model';
-import { UserTeams } from '../../../shared/models/userTeams.model';
+import { Teams } from '../../../shared/models/teams.models';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class UserService {
     return this.http.get<ScoreboardBasic[]>(`${this.api}/userscoreboards/${id}/scoreboards`);
   }
 
-  public getUserTeams(id: number): Observable<UserTeams[]> {
-    return this.http.get<UserTeams[]>(`${this.api}/teamusers/${id}/teams`);
+  public getUserTeams(id: number): Observable<Teams[]> {
+    return this.http.get<Teams[]>(`${this.api}/teamusers/${id}/teams`);
   }
 }

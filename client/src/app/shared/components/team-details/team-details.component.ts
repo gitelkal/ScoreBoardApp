@@ -6,6 +6,8 @@ import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Subscription } from 'rxjs';
+import { ScoreboardTeamsResponseOne } from '@app/shared/models/scoreboardTeamsOne.model';
+import { Users } from '@app/shared/models/users.model';
 
 @Component({
   selector: 'app-team-details',
@@ -25,8 +27,8 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   teamID: number = 0;
   userID = this.auth.getUserID() ?? 0;
   isInTeam: boolean = false;
-  usersList: { userId: number; username: string; firstname: string; lastname: string }[] = [];
-  scoreboardsList: { scoreboardId: number; name: string; description: string; startedAt: Date; endedAt: Date; active: boolean; points: number | null }[] = [];
+  usersList: Users[] = [];
+  scoreboardsList: ScoreboardTeamsResponseOne[] = [];
   
   private userSubscription: Subscription | undefined;
   private teamSubscription: Subscription | undefined;

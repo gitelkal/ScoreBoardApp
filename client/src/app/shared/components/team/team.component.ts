@@ -7,6 +7,9 @@ import { AuthService } from '@app/core/services/auth/auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { UserService } from '@app/core/services/userService/user.service';
+import { Teams } from '@app/shared/models/teams.models';
+import { Users } from '@app/shared/models/users.model';
+import { UserTeamsList } from '@app/shared/models/userTeamList.model';
 
 @Component({
   selector: 'app-team',
@@ -24,11 +27,10 @@ export class TeamComponent implements OnInit, OnDestroy {
 
   isAdmin: Observable<boolean> = this.authService.isAdmin;
   loggedInUsername = this.authService.getUsername();
-  getAllTeamUsers$ = this.teamUsersService.getTeamWithUsers();
   userID = this.authService.getUserID() ?? 0;
-  usersInTeam: { teamID: number; userIDs: number[] }[] = [];
-  teamsList: { teamID: number; teamName: string }[] = [];
-  usersList: { userID: number; username: string }[] = [];
+  usersInTeam: UserTeamsList[] = [];
+  usersList: Users  [] = [];
+  teamsList: Teams[] = [];
   hoveredTeamID: number | null = null;
 
   private teamSubscription: Subscription | undefined;
@@ -51,7 +53,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   loadTeamData() {
-    this.teamSubscription = this.getAllTeamUsers$.subscribe({
+    this.teamSubscription = this.teamUsersService.getTeamWithUsers().subscribe({
       next: (response) => {
         this.usersInTeam = response.map(team => ({
           teamID: team.team.teamID,
@@ -65,8 +67,10 @@ export class TeamComponent implements OnInit, OnDestroy {
 
         this.userService.getAllUsers().subscribe(users => {
           this.usersList = users.map(user => ({
-            userID: Number(user.userId),
-            username: user.username
+            userId: Number(user.userId),
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname
           }));
         });
       },
@@ -92,7 +96,7 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   getUsername(userID: number): string {
-    const user = this.usersList.find(u => u.userID === userID);
+    const user = this.usersList.find(u => u.userId === userID);
     return user ? user.username : 'Okänd användare';
   }
 
