@@ -82,12 +82,19 @@
             >
               Spara
             </button>
+            <button
+              class="ml-2 px-3 py-1 bg-red-500 text-white rounded"
+              (click)="$event.stopPropagation()"
+              (click)="removeTeam(team.teamID)"
+            >
+              Ta bort
+            </button>
           </div>
           <p
             class="text-base font-semibold text-gray-900"
             *ngIf="(isAdmin | async) === false"
           >
-            {{ team.points || 0 }} 
+            {{ team.points }}
           </p>
         </div>
 
@@ -104,11 +111,11 @@
               *ngFor="let user of team.users"
               class="text-gray-700 text-sm"
               >{{ user.username }}</span
-            >
+            > 
             <button
               class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
               *ngIf="(loggedIn | async) === false"
-              (click)="toggleRegisterModal()"
+              (click)="toggleRegisterModal(team.teamID)"
               (click)="$event.stopPropagation()"
             >
               + Registrera användare
@@ -125,7 +132,7 @@
         </div>
       </div>
       <div
-        class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container"
+        class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override transition-all max-w-lg mx-auto fade-in frosted-container"
       >
         <div
           class="relative z-10 flex flex-col items-center justify-center px-3 py-2"
@@ -140,27 +147,39 @@
             <button
               *ngIf="!isAddingTeam && !isJoiningTeam"
               (click)="isAddingTeam = true"
-              class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+              class="ml-2 px-8 py-1 bg-blue-500 text-white rounded"
             >
               + Skapa lag
             </button>
 
             <button
-              *ngIf="(loggedIn | async) === true && !isJoiningTeam && userTeamsNotInScoreboard.length > 0"
+              *ngIf="(loggedIn | async) === true && !isJoiningTeam"
               (click)="toggleTeamDropdown()"
-              class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+              class="ml-2 px-8 py-1 bg-green-500 text-white rounded"
             >
               + Delta med lag
             </button>
 
-            <div *ngIf="isTeamDropdownOpen && userTeamsNotInScoreboard.length > 0" class="bg-white border border-mainColor rounded-lg shadow-lg mt-2 w-48">
+            <div
+              *ngIf="isTeamDropdownOpen"
+              class="bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-48"
+            >
               <ul class="p-2">
-                <li *ngFor="let team of userTeamsNotInScoreboard" class="p-2 hover:bg-gray-100 cursor-pointer" (click)="appendTeam(team.teamID)">
+                <li
+                  *ngFor="let team of userTeamsNotInScoreboard"
+                  class="p-2 hover:bg-gray-100 cursor-pointer"
+                  (click)="appendTeam(team.teamID)"
+                >
                   {{ team.teamName }}
                 </li>
               </ul>
-              <button class="ml-2 px-3 py-1 bg-blue-500 text-white rounded" (click)="$event.stopPropagation(); toggleTeamDropdown()" style="margin-bottom: 1rem">
-              Avbryt
+              <button
+                class="ml-2 px-3 py-1 bg-blue-500 text-white rounded"
+                (click)="$event.stopPropagation()"
+                (click)="toggleTeamDropdown()"
+                style="margin-bottom: 1rem"
+              >
+                Avbryt
               </button>
             </div>
           </div>
