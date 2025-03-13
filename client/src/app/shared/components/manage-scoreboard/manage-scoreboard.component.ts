@@ -1,4 +1,4 @@
-// ★ Scoreboard Component
+// Scoreboard Component
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

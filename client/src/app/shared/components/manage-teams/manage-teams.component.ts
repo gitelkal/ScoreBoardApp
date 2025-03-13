@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TeamService } from '@app/core/services/teamService/team.service';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
-import { forkJoin } from 'rxjs';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { UserService } from '@app/core/services/userService/user.service';
 @Component({
@@ -32,24 +31,23 @@ export class ManageTeamsComponent implements OnInit {
   selectedTeam: any = null;
   selectedScoreboard: any = null;
   selectedUser: any = null;
-  selectedRemoveTeam: any = null;
+
   teams: any[] = [];
   teamName: string = '';
 
   searchManageQuery: string = '';
-  searchListQuery: string = '';
   searchUserQuery: string = '';
   searchTeamQuery: string = '';
   searchUserToRemoveQuery: string = '';
-  searchRemoveTeamQuery: string = '';
   searchScoreboardQuery: string = '';
 
   sortBy: string = 'name';
 
+  scoreboards: any[] = [];
   users: any[] = [];
+
   filteredUsers: any[] = [];
   filteredTeams: any[] = [];
-  scoreboards: any[] = [];
   filteredScoreboards: any[] = [];
 
   activeDropdown:
@@ -116,14 +114,6 @@ export class ManageTeamsComponent implements OnInit {
 
   filterManageTeams(query: string) {
     this.filterTeams(query);
-  }
-
-  filterTeamList() {
-    this.filteredTeams = this.searchListQuery.trim()
-      ? this.teams.filter((t) =>
-          t.teamName.toLowerCase().includes(this.searchListQuery.toLowerCase())
-        )
-      : [...this.teams];
   }
 
   get sortedTeams() {
@@ -226,14 +216,7 @@ export class ManageTeamsComponent implements OnInit {
     }
   }
 
-  // Ta bort lag från listan
-  removeTeam(team: any) {
-    this.selectedTeams = this.selectedTeams.filter(
-      (t) => t.teamID !== team.teamID
-    );
-  }
-
-  // 🔹 1️⃣ Tar bort ett lag från den lokala listan (men inte från API)
+  // Tar bort ett lag från  valda lag listan 
   removeTeamFromList(team: any) {
     this.selectedTeams = this.selectedTeams.filter(
       (t) => t.teamID !== team.teamID

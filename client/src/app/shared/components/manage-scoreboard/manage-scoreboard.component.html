@@ -55,7 +55,7 @@
     </div> 
 
       
-<!-- checkbox -->
+<!-- Checkbox -->
     <div class="inline-grid grid-cols-2 gap-4 pl-5">
       <input
         type="checkbox"
@@ -68,7 +68,7 @@
       <label for="editActiveCheck" class="block text-gray-700 font-semibold mb-1">Aktiv</label>
     </div>
     
-<!-- beskrivning -->
+<!-- Beskrivning -->
     <div class="mb-4 mx-6">
       <label class="block text-gray-700 font-semibold mb-1" for="description"
         >Beskrivning:</label
@@ -117,7 +117,7 @@
         class="block border border-gray-700 p-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
       />
 
-      <!-- 🔹 Dropdown-lista -->
+      <!-- Dropdown-lista -->
       <ul
         *ngIf="showDropdown && filteredScoreboards.length > 0"
         class="md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto"
@@ -132,7 +132,7 @@
       </ul>
     </div>
 
-    <!-- ändra namnet -->
+    <!-- Ändra namnet -->
     <div class="mb-4 mx-6" *ngIf="selectedScoreboard && selectedScoreboard.   scoreboardId">
       <label class="block text-gray-700 font-semibold mb-1" for="editName">
         Nytt tävlingsnamn:
