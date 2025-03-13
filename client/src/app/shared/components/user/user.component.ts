@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Users } from '@app/shared/models/users.model';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { NgIf, AsyncPipe, NgFor } from '@angular/common';
-import { UserService } from '@app/core/services/UserService/user.service';
+import { UserService } from '@app/core/services/userService/user.service';
 import { ScoreboardBasic } from '@app/shared/models/scoreboardBasic.model';
 import { RouterLink } from '@angular/router';
 import { AdminService } from '@app/core/services/adminService/admin.service';
