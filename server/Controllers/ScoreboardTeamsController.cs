@@ -160,5 +160,19 @@ namespace server.Controllers
             return Ok(availableTeams);
         }
 
+        [HttpDelete("{scoreboardId}/teamId")]
+        public IActionResult DeleteScoreboardTeam(int scoreboardId, int teamId)
+        {
+            var scoreboardTeam = dbContext.ScoreboardTeams.Where(
+                st => st.ScoreboardID == scoreboardId && st.TeamID ==  teamId);
+
+            if (scoreboardTeam == null)
+                return NotFound();
+
+            dbContext.ScoreboardTeams.Remove(scoreboardTeam.First());
+            dbContext.SaveChanges();
+            dbContext.SaveChanges();
+            return Ok();
+        }
     }
 }

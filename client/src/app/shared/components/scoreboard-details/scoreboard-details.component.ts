@@ -110,6 +110,14 @@ export class ScoreboardDetailsComponent implements OnInit {
       });
   }
 
+  removeTeam(teamId: number)
+  {
+    this.scoreboardTeamsService.removeTeamFromScoreboard(Number(this.scoreboardID),teamId).subscribe(() => {
+      this.loadInitialScoreboard();
+    });
+
+  }
+
   toggleRegisterModal() {
     this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
       this.loadInitialScoreboard();

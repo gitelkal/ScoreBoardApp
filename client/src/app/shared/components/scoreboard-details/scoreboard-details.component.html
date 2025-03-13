@@ -82,6 +82,13 @@
             >
               Spara
             </button>
+            <button
+              class="ml-2 px-3 py-1 bg-red-500 text-white rounded"
+              (click)="$event.stopPropagation()"
+              (click)="removeTeam(team.teamID)"
+            >
+              Ta bort
+            </button>
           </div>
           <p
             class="text-base font-semibold text-gray-900"
