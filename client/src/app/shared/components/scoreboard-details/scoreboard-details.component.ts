@@ -7,7 +7,6 @@ import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from '../register/register.component';
 // import {RegisterTeamUserComponent } from '../register-team-user/register-team-user.component';
@@ -179,7 +178,9 @@ export class ScoreboardDetailsComponent implements OnInit {
   }
    
   toggleRegisterModal() {
-      // this.dialog.open(RegisterTeamUserComponent);
+       this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
+        this.loadInitialScoreboard();
+    });
     }
   joinTeam(teamId: number) {
     console.log('Tried to join team: ',teamId)
