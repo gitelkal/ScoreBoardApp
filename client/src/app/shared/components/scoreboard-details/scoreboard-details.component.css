@@ -13,9 +13,9 @@
 }
 
 .default-team-color {
-  background-color: #4b5563;
+  background-color: #4a535e;
   border: 1px solid #e5e7eb;
-  color: #4b5563; 
+  color: #4a535e; 
 }
 .scrollable-container {
   max-height: 470px;
@@ -123,7 +123,7 @@
   color: #7FFFD4; 
 }
 
-.simple-snack-bar {
+.mdc-snackbar__surface{
   background-color: #4caf50 !important; 
   color: white !important; 
 }

@@ -150,7 +150,7 @@ export class ScoreboardDetailsComponent implements OnInit {
     if (!this.userID) return;
     this.teamUserService.joinTeam(this.userID, teamId).subscribe(() => {
       this.loadInitialScoreboard();
-      this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
+      this.snackBar.open('Gick med i lag', 'Stäng', { duration: 222000 });
       
     });
   }

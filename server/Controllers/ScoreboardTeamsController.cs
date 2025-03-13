@@ -163,13 +163,13 @@ namespace server.Controllers
         [HttpDelete("{scoreboardId}/teamId")]
         public IActionResult DeleteScoreboardTeam(int scoreboardId, int teamId)
         {
-            var scoreboardTeam = dbContext.ScoreboardTeams.Where(
+            var scoreboardTeams = dbContext.ScoreboardTeams.Where(
                 st => st.ScoreboardID == scoreboardId && st.TeamID ==  teamId);
 
-            if (scoreboardTeam == null)
+            if (scoreboardTeams == null)
                 return NotFound();
 
-            dbContext.ScoreboardTeams.Remove(scoreboardTeam.First());
+            dbContext.ScoreboardTeams.Remove(scoreboardTeams.First());
             dbContext.SaveChanges();
             dbContext.SaveChanges();
             return Ok();
