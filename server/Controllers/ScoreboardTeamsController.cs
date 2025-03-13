@@ -139,5 +139,26 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created, new { teamId = team.TeamID, scoreboardId = scoreboardId });
         }
 
+        [HttpGet("{scoreboardId}/userId")]
+        public IActionResult GetTeamsNotInScoreboard(int scoreboardId, int userId)
+        {
+
+            var userTeams = dbContext.TeamUsers
+                .Where(ut => ut.UserId == userId)
+                .Select(ut => ut.TeamID)
+                .ToList();
+
+            var scoreboardTeams = dbContext.ScoreboardTeams
+                .Where(st => st.ScoreboardID == scoreboardId)
+                .Select(st => st.TeamID)
+                .ToList();
+
+            var availableTeams = dbContext.Teams
+                .Where(t => userTeams.Contains(t.TeamID) && !scoreboardTeams.Contains(t.TeamID))
+                .ToList();
+
+            return Ok(availableTeams);
+        }
+
     }
 }

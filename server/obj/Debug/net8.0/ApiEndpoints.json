@@ -368,6 +368,27 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "GetTeamsNotInScoreboard",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/userId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
     "Method": "GetScoreboardsForTeam",
     "RelativePath": "api/ScoreboardTeams/{teamId}",
     "HttpMethod": "GET",
