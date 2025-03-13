@@ -143,7 +143,7 @@ namespace server.Controllers
         public IActionResult GetTeamsNotInScoreboard(int scoreboardId, int userId)
         {
 
-            var userTeams = dbContext.TeamUsers
+            var userTeams = dbContext.TeamUsers 
                 .Where(ut => ut.UserId == userId)
                 .Select(ut => ut.TeamID)
                 .ToList();

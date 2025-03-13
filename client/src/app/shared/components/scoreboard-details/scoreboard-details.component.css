@@ -1,27 +1,27 @@
 
 
-/* Base styles for podium places */
+
 .first-place {
-  background: #FFD700; /* Constant Gold */
+  background: #FFD700; 
   color: #3d3d3d;
 }
 .second-place {
-  background: #C0C0C0; /* Constant Silver */
+  background: #C0C0C0; 
   color: #3d3d3d;
 }
 .third-place {
-  background: #CD7F32; /* Constant Bronze */
+  background: #CD7F32;
   color: #fff;
 }
 
 .default-team-color {
-  background-color: #E9DCC9; /* Light gray background */
-  border: 1px solid #e5e7eb; /* Border color */
-  color: #4b5563; /* Text color */
+  background-color: #E9DCC9; 
+  border: 1px solid #e5e7eb; 
+  color: #4b5563; 
 }
 .scrollable-container {
   max-height: 470px;
-  overflow-y: scroll; /* Keep it scrollable */
+  overflow-y: scroll; 
   margin-top: 1rem;
 }
 
@@ -30,13 +30,12 @@
   display: none;
 }
 
-/* For other browsers (optional) */
+
 .scrollable-container {
   -ms-overflow-style: none; /* For IE and Edge */
   scrollbar-width: none; /* For Firefox */
 }
 
-/* ✨ Stronger Shimmer Overlay */
 @keyframes shimmer {
   0% { left: -70%; opacity: 0.6; }
   50% { left: 50%; opacity: 1; }
@@ -54,7 +53,6 @@
   pointer-events: none;
 }
 
-/* ✨ Stronger Glow Effect for Silver */
 @keyframes movingGlow {
   0% { left: -70%; opacity: 0.4; }
   50% { left: 50%; opacity: 0.9; }
@@ -72,7 +70,6 @@
   pointer-events: none;
 }
 
-/* ✨ Stronger Glow Effect for Bronze */
 @keyframes subtleGlow {
   0% { left: -70%; opacity: 0.4; }
   50% { left: 50%; opacity: 0.9; }
@@ -126,5 +123,5 @@
   display: inline-block;
   animation: pulse 1.5s infinite ease-in-out;
   font-weight: bold;
-  color: #7FFFD4; /* Adjust the color as needed */
+  color: #7FFFD4; 
 }
