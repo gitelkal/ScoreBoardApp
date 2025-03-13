@@ -136,10 +136,13 @@ export class ScoreboardDetailsComponent implements OnInit {
     });
   }
 
-  toggleRegisterModal() {
+  toggleRegisterModal(teamId: number) {
     this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
-      this.loadInitialScoreboard();
       this.snackBar.open('Registrerade ny användare', 'Stäng', { duration: 2000 });
+      this.loadInitialScoreboard();
+      this.teamUserService.joinTeam(this.userID,teamId).subscribe(() => {
+        this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
+      });
     });
   }
 
@@ -148,6 +151,7 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.teamUserService.joinTeam(this.userID, teamId).subscribe(() => {
       this.loadInitialScoreboard();
       this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
+      
     });
   }
 

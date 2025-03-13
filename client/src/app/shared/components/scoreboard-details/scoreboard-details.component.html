@@ -111,11 +111,11 @@
               *ngFor="let user of team.users"
               class="text-gray-700 text-sm"
               >{{ user.username }}</span
-            >
+            > 
             <button
               class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
               *ngIf="(loggedIn | async) === false"
-              (click)="toggleRegisterModal()"
+              (click)="toggleRegisterModal(team.teamID)"
               (click)="$event.stopPropagation()"
             >
               + Registrera användare
