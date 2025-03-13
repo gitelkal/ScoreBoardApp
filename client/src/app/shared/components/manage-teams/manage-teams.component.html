@@ -294,57 +294,5 @@
         </div>
       </form>
     </div>
-
-    <div>
-      <div class="flex flex-col items-center w-full mt-20">
-        <h1
-          class="font-digital text-black1 font-semibold text-center text-4xl w-full my-6"
-          id="searchTeamsAdmin"
-        >
-          Sök efter Teams
-        </h1>
-        <input
-          type="text"
-          [(ngModel)]="searchListQuery"
-          (input)="filterTeamList()"
-          placeholder="Sök efter team..."
-          class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
-        />
-
-        <select
-          [(ngModel)]="sortBy"
-          class="flex appearance-auto w-full max-w-md mb-4 bg-red-900 border border-black font-semibold py-2 px-4 pb-3 text-center text-white hover:bg-red-800 transition"
-        >
-          <option
-            class="font-digital text-white1 font-bold text-center"
-            value="name"
-          >
-            Sortera efter namn
-          </option>
-          <option
-            class="font-digital text-white1 font-bold text-center"
-            value="date"
-          >
-            Sortera efter senast aktiv
-          </option>
-        </select>
-
-        <ul
-          *ngIf="sortedTeams.length > 0; else noResults"
-          class="md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto"
-        >
-          <li
-            *ngFor="let team of sortedTeams"
-            class="bg-white p-4 shadow-md hover:bg-blue-100 cursor-pointer md:p-2"
-          >
-            <strong>{{ team.teamName }}</strong>
-          </li>
-        </ul>
-
-        <ng-template #noResults>
-          <p class="text-gray-500">Inga lag hittades.</p>
-        </ng-template>
-      </div>
-    </div>
   </div>
 </div>
