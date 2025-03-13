@@ -13,8 +13,8 @@
 }
 
 .default-team-color {
-  background-color: #E9DCC9; 
-  border: 1px solid #e5e7eb; 
+  background-color: #4b5563;
+  border: 1px solid #e5e7eb;
   color: #4b5563; 
 }
 .scrollable-container {
@@ -121,4 +121,9 @@
   animation: pulse 1.5s infinite ease-in-out;
   font-weight: bold;
   color: #7FFFD4; 
+}
+
+.simple-snack-bar {
+  background-color: #4caf50 !important; 
+  color: white !important; 
 }

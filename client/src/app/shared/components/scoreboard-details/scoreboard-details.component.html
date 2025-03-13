@@ -132,7 +132,7 @@
         </div>
       </div>
       <div
-        class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override cursor-pointer transition-all max-w-lg mx-auto fade-in frosted-container"
+        class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override transition-all max-w-lg mx-auto fade-in frosted-container"
       >
         <div
           class="relative z-10 flex flex-col items-center justify-center px-3 py-2"
@@ -147,7 +147,7 @@
             <button
               *ngIf="!isAddingTeam && !isJoiningTeam"
               (click)="isAddingTeam = true"
-              class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+              class="ml-2 px-8 py-1 bg-blue-500 text-white rounded"
             >
               + Skapa lag
             </button>
@@ -155,7 +155,7 @@
             <button
               *ngIf="(loggedIn | async) === true && !isJoiningTeam"
               (click)="toggleTeamDropdown()"
-              class="text-xl font-bold text-gray-900 border-2 rounded-lg px-3 border-black"
+              class="ml-2 px-8 py-1 bg-green-500 text-white rounded"
             >
               + Delta med lag
             </button>

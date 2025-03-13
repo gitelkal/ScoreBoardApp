@@ -14,6 +14,8 @@ import { TeamUsersService } from '@app/core/services/teamUsersService/team-users
 import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
 import { UserService } from '@app/core/services/userService/user.service';
 import { Teams } from '@app/shared/models/teams.models';
+import { PopUpComponent } from '../pop-up/pop-up.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-scoreboard-details',
@@ -23,6 +25,8 @@ import { Teams } from '@app/shared/models/teams.models';
   styleUrls: ['./scoreboard-details.component.css']
 })
 export class ScoreboardDetailsComponent implements OnInit {
+  
+
   private readonly dialog = inject(MatDialog);
   private readonly scoreboardService = inject(ScoreboardService);
   private readonly route = inject(ActivatedRoute);
@@ -31,6 +35,7 @@ export class ScoreboardDetailsComponent implements OnInit {
   private readonly scoreboardTeamsService = inject(ScoreboardTeamsService);
   private readonly userService = inject(UserService);
   private readonly signalRService = inject(SignalRService);
+  private readonly snackBar = inject(MatSnackBar);
 
   isAddingTeam = false; 
   newTeamName = '';
@@ -68,6 +73,18 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.loadUserTeams();
   }
 
+  openPopup(color: string, text: string) {
+    this.dialog.open(PopUpComponent, {
+      data: { color, text },
+      position: { bottom: '20px', right: '20px' }, 
+      panelClass: 'popup-dialog'
+    });
+    
+    setTimeout(() => {
+      this.dialog.closeAll();
+    }, 3000); 
+  }
+
   private loadUserTeams() {
     if (!this.userID) return;
     this.userService.getUserTeams(this.userID).subscribe(response => {
@@ -96,6 +113,7 @@ export class ScoreboardDetailsComponent implements OnInit {
     if (!this.scoreboardID) return;
     this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID), teamId)
       .subscribe(() => this.loadInitialScoreboard());
+    this.snackBar.open('Lade till lag', 'Stäng', { duration: 2000 });
   }
 
   addTeam(event: Event) {
@@ -114,13 +132,14 @@ export class ScoreboardDetailsComponent implements OnInit {
   {
     this.scoreboardTeamsService.removeTeamFromScoreboard(Number(this.scoreboardID),teamId).subscribe(() => {
       this.loadInitialScoreboard();
+      this.snackBar.open('Tog bort lag', 'Stäng', { duration: 2000 });
     });
-
   }
 
   toggleRegisterModal() {
     this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
       this.loadInitialScoreboard();
+      this.snackBar.open('Registrerade ny användare', 'Stäng', { duration: 2000 });
     });
   }
 
@@ -128,6 +147,7 @@ export class ScoreboardDetailsComponent implements OnInit {
     if (!this.userID) return;
     this.teamUserService.joinTeam(this.userID, teamId).subscribe(() => {
       this.loadInitialScoreboard();
+      this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
     });
   }
 
@@ -148,5 +168,6 @@ export class ScoreboardDetailsComponent implements OnInit {
     if (!this.scoreboardID) return;
     this.scoreboardTeamsService.setScoreboardTeamPoints(this.scoreboardID, teamId, points)
       .subscribe(() => this.loadInitialScoreboard());
+      this.snackBar.open('Uppdaterade poäng', 'Stäng', { duration: 2000 });
   }
 }
