@@ -2,54 +2,49 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { AsyncPipe, NgIf, NgFor } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RegisterComponent } from '../register/register.component';
-// import {RegisterTeamUserComponent } from '../register-team-user/register-team-user.component';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { AdminService } from '@app/core/services/adminService/admin.service';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
 import { UserService } from '@app/core/services/userService/user.service';
-import { Subscription } from 'rxjs';
 import { Teams } from '@app/shared/models/teams.models';
-
 
 @Component({
   selector: 'app-scoreboard-details',
   standalone: true,
-  imports: [NgIf, AsyncPipe, CommonModule, FormsModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './scoreboard-details.component.html',
   styleUrls: ['./scoreboard-details.component.css']
 })
 export class ScoreboardDetailsComponent implements OnInit {
-  readonly dialog = inject(MatDialog);
-  isAddingTeam = false;
+  private readonly dialog = inject(MatDialog);
+  private readonly scoreboardService = inject(ScoreboardService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly authService = inject(AuthService);
+  private readonly teamUserService = inject(TeamUsersService);
+  private readonly scoreboardTeamsService = inject(ScoreboardTeamsService);
+  private readonly userService = inject(UserService);
+  private readonly signalRService = inject(SignalRService);
+
+  isAddingTeam = false; 
   newTeamName = '';
-  scoreboardService = inject(ScoreboardService);
-  route = inject(ActivatedRoute);
   openTeamIndex: number | null = null;
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
   userID: number = 0;
-  usersInTeam = []
-  isTeamDropdownOpen = false;
-  isJoiningTeam = false;
   userTeams: Teams[] = [];
   userTeamsNotInScoreboard: Teams[] = [];
-  teamsSubscription: Subscription | undefined;
-  userTeamSubscription: Subscription | undefined;
-  scoreboardID: string| null = "0";
-
-  private scoreboardResonseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
-  getRichScoreboard$ = this.scoreboardResonseSubject.asObservable();
-
-  constructor(private signalRService: SignalRService, private authService: AuthService,private teamUserService: TeamUsersService, private scoreboardTeamsService : ScoreboardTeamsService, private userService : UserService) {}
+  scoreboardID: string | null = "0";
+  isTeamDropdownOpen = false; 
+  isJoiningTeam = false;
+  private scoreboardResponseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
+  getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
 
   ngOnInit() {
     this.signalRService.startConnection();
@@ -57,18 +52,12 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.loadInitialScoreboard();
   }
 
-  loadInitialScoreboard() {
+  private loadInitialScoreboard() {
+    this.scoreboardID = this.route.snapshot.paramMap.get('id');
+    if (!this.scoreboardID) return;
 
-    
-
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        const id = params.get('id');
-        this.scoreboardID = id; 
-        return this.scoreboardService.getRichScoreboard(id!);
-      })
-    ).subscribe(ScoreboardResponse => {
-      this.scoreboardResonseSubject.next(ScoreboardResponse); 
+    this.scoreboardService.getRichScoreboard(this.scoreboardID).subscribe(response => {
+      this.scoreboardResponseSubject.next(response);
     });
 
     this.authService.tokenExpirationCheck();
@@ -76,163 +65,80 @@ export class ScoreboardDetailsComponent implements OnInit {
     this.loggedIn = this.authService.loggedIn;
     this.userID = this.authService.getUserID() ?? 0;
 
+    this.loadUserTeams();
+  }
 
-    console.log('logged in: ',this.loggedIn)
-    console.log('admin: ',this.isAdmin)
-    console.log('userid: ',this.userID)
-
-    this.teamsSubscription = this.userService.getUserTeams(this.userID).subscribe({
-      next: (response) => {
-        this.userTeams = response;
-        console.log(this.userTeams)
-      }
+  private loadUserTeams() {
+    if (!this.userID) return;
+    this.userService.getUserTeams(this.userID).subscribe(response => {
+      this.userTeams = response;
     });
 
-    this.userTeamSubscription = this.scoreboardTeamsService.getUserTeamsNotInScoreboard(Number(this.scoreboardID ?? "0"),this.userID).subscribe({
-      next: (response) => {
-        this.userTeamsNotInScoreboard = response;
-        console.log(this.userTeamsNotInScoreboard)
-      }, error: (error) => {
-        console.log('Error getting teams:', error);
-      }
-    });
-}
-  subscribeToScoreUpdates() {
+    this.scoreboardTeamsService.getUserTeamsNotInScoreboard(Number(this.scoreboardID), this.userID)
+      .subscribe(response => this.userTeamsNotInScoreboard = response);
+  }
+
+  private subscribeToScoreUpdates() {
     this.signalRService.scoreUpdates.subscribe(update => {
-      if (update) {
-        const currentScoreboard = this.scoreboardResonseSubject.value;
-  
-        if (currentScoreboard?.scoreboard?.teams) {  
-          const updatedTeams = currentScoreboard.scoreboard.teams.map(team => 
-            team.teamID === update.teamId ? { ...team, points: update.points } : team
-          );
+      if (!update) return;
+      const currentScoreboard = this.scoreboardResponseSubject.value;
+      if (!currentScoreboard?.scoreboard?.teams) return;
 
-          const sortedTeams = updatedTeams.sort((a, b) => b.points - a.points);
-  
-          this.scoreboardResonseSubject.next({
-            ...currentScoreboard,
-            scoreboard: {
-              ...currentScoreboard.scoreboard,
-              teams: sortedTeams
-            }
-          });
-        }
-      }
+      currentScoreboard.scoreboard.teams = currentScoreboard.scoreboard.teams
+        .map(team => team.teamID === update.teamId ? { ...team, points: update.points } : team)
+        .sort((a, b) => b.points - a.points);
+
+      this.scoreboardResponseSubject.next({ ...currentScoreboard });
     });
-  } 
+  }
 
-  appendTeam(teamId: number)
-  {
-    console.log(teamId)
-    console.log(Number(this.scoreboardID ?? "0"))
-    console.log(this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID ?? "0"),teamId))
-
-
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        const scoreboardId = params.get('id'); 
-        if (!scoreboardId) {
-          console.error("Scoreboard ID is missing");
-          return [];
-        }
-        
-        return this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID ?? "0"),teamId)
-      })
-    ).subscribe({
-      next: (response) => {
-        console.log('added team:', response);
-        this.loadInitialScoreboard(); 
-      },
-      error: (error) => {
-        console.error('Error adding team:', error);
-      }
-    });
+  appendTeam(teamId: number) {
+    if (!this.scoreboardID) return;
+    this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID), teamId)
+      .subscribe(() => this.loadInitialScoreboard());
   }
 
   addTeam(event: Event) {
     event.preventDefault();
+    if (!this.newTeamName.trim() || !this.scoreboardID) return;
     
-    if (!this.newTeamName.trim()) return;
-  
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        const scoreboardId = params.get('id'); 
-        if (!scoreboardId) {
-          console.error("Scoreboard ID is missing");
-          return [];
-        }
-        
-        return this.scoreboardService.CreateAndAddEmptyTeamToScoreboard(scoreboardId, this.newTeamName);
-      })
-    ).subscribe({
-      next: (response) => {
-        console.log('Team added:', response);
+    this.scoreboardService.CreateAndAddEmptyTeamToScoreboard(this.scoreboardID, this.newTeamName)
+      .subscribe(() => {
         this.isAddingTeam = false;
         this.newTeamName = '';
-        this.loadInitialScoreboard(); 
-      },
-      error: (error) => {
-        console.error('Error adding team:', error);
-      }
-    });
+        this.loadInitialScoreboard();
+      });
   }
-   
+
   toggleRegisterModal() {
-       this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
-        this.loadInitialScoreboard();
-    });
-    }
-  joinTeam(teamId: number) {
-    console.log('Tried to join team: ',teamId)
-    console.log('with user id',this.userID)
-    this.teamUserService.joinTeam(this.userID,teamId).subscribe({
-      next: () => {
-        this.loadInitialScoreboard();
-      },
+    this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
+      this.loadInitialScoreboard();
     });
   }
 
-  toggleDropdown(index: number): void {
+  joinTeam(teamId: number) {
+    if (!this.userID) return;
+    this.teamUserService.joinTeam(this.userID, teamId).subscribe(() => {
+      this.loadInitialScoreboard();
+    });
+  }
+
+  toggleDropdown(index: number) {
     this.openTeamIndex = this.openTeamIndex === index ? null : index;
   }
-  toggleTeamDropdown(){
-    
-    this.isTeamDropdownOpen = !this.isTeamDropdownOpen
-    this.isJoiningTeam = !this.isJoiningTeam
-    console.log(this.isTeamDropdownOpen)
+
+  toggleTeamDropdown() {
+    this.isTeamDropdownOpen = !this.isTeamDropdownOpen;
+    this.isJoiningTeam = !this.isJoiningTeam;
   }
 
   isUserInTeam(teamID: number): boolean {
-    const team = this.userTeams.find(t => t.teamID === teamID);
-    if (team)
-    {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return this.userTeams.some(team => team.teamID === teamID);
   }
- 
-  setPoints(teamid : number, points: number)
-  {
-      this.route.paramMap.pipe(
-        switchMap(params => {
-          const scoreboardId = params.get('id'); 
-          if (!scoreboardId) {
-            console.error("Scoreboard ID is missing");
-            return [];
-          }
-          
-          return this.scoreboardTeamsService.setScoreboardTeamPoints(scoreboardId,teamid,points);
-        })
-      ).subscribe({
-        next: (response) => {
-          console.log('points set:', response);
-          this.loadInitialScoreboard(); 
-        },
-        error: (error) => {
-          console.error('Error settings points:', error);
-        }
-      });
-  } 
+
+  setPoints(teamId: number, points: number) {
+    if (!this.scoreboardID) return;
+    this.scoreboardTeamsService.setScoreboardTeamPoints(this.scoreboardID, teamId, points)
+      .subscribe(() => this.loadInitialScoreboard());
+  }
 }
