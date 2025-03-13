@@ -1042,3 +1042,5 @@ C:\Users\paulk\Documents\TrafikverketScoreboard\ScoreBoardApp\server\obj\Debug\n
 C:\Users\paulk\Documents\TrafikverketScoreboard\ScoreBoardApp\server\obj\Debug\net8.0\server.genruntimeconfig.cache
 C:\Users\paulk\Documents\TrafikverketScoreboard\ScoreBoardApp\server\obj\Debug\net8.0\ref\server.dll
 D:\GitHub\ScoreBoardApp\server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\paulk\Documents\TrafikverketScoreboard\ScoreBoardApp\server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\paulk\Documents\TrafikverketScoreboard\ScoreBoardApp\server\bin\Debug\net8.0\RestSharp.dll

@@ -20,7 +20,7 @@ namespace server.Controllers
         public IActionResult Search([FromQuery] string query)
         {
             var scoreboards = dbContext.ScoreBoards
-                .Where(sb => sb.Name.Contains(query))
+                .Where(sb => sb.Name.Contains(query) || sb.Description.Contains(query))
                 .ToList();
 
             var teams = dbContext.Teams

@@ -31,7 +31,10 @@ export class ScoreboardTeamsService {
   }
   addTeamToScoreboard(scoreboardId: number, teamId: number)
   {
-    console.log(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`)
     return this.http.post<any>(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`, { responseType: 'json' });
+  }
+  removeTeamFromScoreboard(scoreboardId: number, teamId: number)
+  {
+    return this.http.delete<any>(`${this.api}/ScoreboardTeams/${scoreboardId}/teamId?teamId=${teamId}`, { responseType: 'json' });
   }
 }
