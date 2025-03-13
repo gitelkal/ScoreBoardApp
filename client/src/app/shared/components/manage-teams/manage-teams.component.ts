@@ -9,10 +9,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TeamService } from '@app/core/services/teamService/team.service';
-import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service';
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { forkJoin } from 'rxjs';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
-import { UserService } from '@app/core/services/UserService/user.service';
+import { UserService } from '@app/core/services/userService/user.service';
 @Component({
   selector: 'app-manage-teams',
   standalone: true,

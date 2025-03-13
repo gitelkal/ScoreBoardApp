@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '@app/core/services/adminService/admin.service';
-import { UserService } from '@app/core/services/UserService/user.service';
-import { ScoreboardService } from '@app/core/services/ScoreboardService/scoreboard.service'; //
+import { UserService } from '@app/core/services/userService/user.service';
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; //
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
