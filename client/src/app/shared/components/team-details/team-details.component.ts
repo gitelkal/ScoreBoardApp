@@ -2,7 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angula
 import { ActivatedRoute, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { NgIf, NgFor, DatePipe, AsyncPipe } from '@angular/common';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { Teams } from '@app/shared/models/teams.models';
 
 @Component({
   selector: 'app-team-details',
-  imports: [NgIf, NgFor, DatePipe, RouterLink],
+  imports: [NgIf, NgFor, DatePipe, RouterLink, AsyncPipe],
   templateUrl: './team-details.component.html',
   styleUrl: './team-details.component.css'
 })
@@ -30,6 +30,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   teamName: string = '';
   teamID: number = 0;
   userID = this.auth.getUserID() ?? 0;
+  loggedIn = this.auth.loggedIn;
   isInTeam: boolean = false;
   usersList: Users[] = [];
   usersInTeam: Teams[] = [];

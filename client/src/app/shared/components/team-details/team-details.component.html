@@ -2,8 +2,8 @@
     <div class="w-3/4 mt-4">
         <div class="w-full flex justify-between">
             <h2 class="bg-h2Color text-white1 text-center text-3xl p-7 font-semibold w-1/3">{{ teamName }}</h2>
-            <button class="bg-green-600 hover:bg-green-800 text-white font-bold px-24 py-2 rounded-lg" (click)="joinTeam(userID, teamID)" *ngIf="!isInTeam">Gå med i detta lag</button>
-            <button class="bg-red4 hover:bg-red5 text-white font-bold px-36 py-2 rounded-lg" (click)="dropFromTeam(userID, teamID)" *ngIf="isInTeam">Gå ur lag</button>
+            <button class="bg-green-600 hover:bg-green-800 text-white font-bold px-24 py-2 rounded-lg" (click)="joinTeam(userID, teamID)" *ngIf="!isInTeam && (loggedIn | async) === true">Gå med i detta lag</button>
+            <button class="bg-red4 hover:bg-red5 text-white font-bold px-36 py-2 rounded-lg" (click)="dropFromTeam(userID, teamID)" *ngIf="isInTeam && (loggedIn | async) === true">Gå ur lag</button>
         </div>
         <div class="w-full grid grid-cols-2 gap-4 mt-4">
             <div class="">
