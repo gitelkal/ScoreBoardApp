@@ -65,6 +65,8 @@ export class HeaderComponent {
     this.onSearchInputChange();
     if (this.searchQuery.trim()) {
       this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
+      this.isDropdownOpen = false;
+      form.resetForm();
     }
   }
 
