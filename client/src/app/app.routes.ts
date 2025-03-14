@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './shared/components/forgot-password/for
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
 import { BlackBoardComponent } from './shared/components/black-board/black-board.component';
 import { ScoreboardStapleViewComponent } from './shared/components/scoreboard-staple-view/scoreboard-staple-view.component';
+import { SearchComponent } from './shared/components/search/search.component';
 
 export const routes: Routes = [
   {
@@ -72,5 +73,10 @@ export const routes: Routes = [
     path: 'scoreboard-staple-view/:id',
     component: ScoreboardStapleViewComponent,
     title: 'Poängtavla - Stapelvy'
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
+    title: 'Sökresultat'
   }
 ];

@@ -1,0 +1,22 @@
+<div *ngIf="sortedResults.length > 0; else noResults" class="flex flex-col items-center space-y-4">
+    <h2 class="text-2xl font-bold mt-12 bg-white1 p-4 px-10 border border-mainColor rounded-lg shadow">Sökresultat för: "{{ searchQuery }}"</h2>
+    <ul class="w-full max-w-lg space-y-4">
+        <li *ngFor="let result of sortedResults | slice:0:20" class="p-4 border border-mainColor rounded-lg shadow bg-white1 hover:shadow-lg transition-shadow duration-300 flex items-center relative">
+            <div [ngClass]="{'bg-blue-500': result.type === 'user', 'bg-green-500': result.type === 'team', 'bg-yellow-500': result.type === 'scoreboard'}" class="w-4 h-4 rounded-full absolute left-4 top-1/2 transform -translate-y-1/2"></div>
+
+            <div class="flex-1 flex flex-col items-start ml-12">
+                <div class="flex items-center w-full">
+                    <h3 class="text-lg font-semibold text-mainColor hover:text-mainColorHover">{{ getResultTitle(result) }}</h3>
+                    <p class="text-gray-600 ml-4 font-bold">{{ getResultName(result) }}</p>
+                </div>
+                <p *ngIf="isScoreboard(result)" class="text-gray-600 mt-2">{{ getScoreboardDescription(result) | slice:0:40 }}...</p>
+                <p *ngIf="isUser(result)" class="text-gray-600 mt-2">{{ getUserFullName(result) }}</p>
+            </div>
+            <a [routerLink]="getRouterLink(result)" class="text-mainColor font-bold hover:text-mainColorHover absolute right-4 top-1/2 transform -translate-y-1/2">Gå till</a>
+        </li>
+    </ul>
+</div>
+
+<ng-template #noResults>
+    <p class="text-gray-500 text-center">Inga resultat hittades för: "{{ searchQuery }}".</p>
+</ng-template>

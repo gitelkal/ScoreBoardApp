@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, HostListener, ElementRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
@@ -23,6 +23,8 @@ import { ThirdPartyApiService } from '@app/core/services/thirdPartyApiService/th
 export class HeaderComponent {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
+  router = inject(Router);
+  
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
   userID: number = 0;
@@ -61,6 +63,9 @@ export class HeaderComponent {
 
   submitQuery(form: NgForm) {
     this.onSearchInputChange();
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
+    }
   }
 
   onSearchInputChange() {
@@ -69,7 +74,7 @@ export class HeaderComponent {
       this.isDropdownOpen = false;
       return;
     }
-  
+
     this.search.getAllTeamsUsersScoreboards().subscribe(
       (response) => {
         this.scoreboards = response.scoreboards || [];
