@@ -23,7 +23,7 @@
   margin-top: 1rem;
 }
 
-/* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
+/* (Chrome, Safari, Edge) */
 .scrollable-container::-webkit-scrollbar {
   display: none;
 }

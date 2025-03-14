@@ -1,7 +1,7 @@
 
   <button 
       class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition"
-      [routerLink]="['/scoreboard-staple-view', scoreboardID]">Visa stapel-läge
+      [routerLink]="['/scoreboard-v-bar-view', scoreboardID]">Visa stapel-läge
     </button>
 
     <div class="w-full relative">
@@ -80,11 +80,13 @@
                   style="width: 150px"
                   [(ngModel)]="team.points"
                   (click)="$event.stopPropagation()"
+                  
                 />
                 <button
                   class="ml-2 px-3 py-1 bg-blue-500 text-white rounded"
                   (click)="$event.stopPropagation()"
                   (click)="setPoints(team.teamID, team.points)"
+                  (click)="onPointsChange(team.teamID, $event)"
                 >
                   Spara
                 </button>
@@ -120,14 +122,6 @@
                 > 
                 <button
                   class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
-                  *ngIf="(loggedIn | async) === false"
-                  (click)="toggleRegisterModal(team.teamID)"
-                  (click)="$event.stopPropagation()"
-                >
-                  + Registrera användare
-                </button>
-                <button
-                  class="text-gray-700 text-sm border rounded-lg px-3 border-gray-300"
                   *ngIf="(loggedIn | async) === true && !isUserInTeam(team.teamID)"
                   (click)="joinTeam(team.teamID)"
                   (click)="$event.stopPropagation()"
@@ -138,12 +132,15 @@
             </div>
           </div>
           <div
+
             class="default-team-color overflow-hidden rounded-lg border p-3 my-2 shadow-override transition-all max-w-lg mx-auto fade-in frosted-container"
+            *ngIf="(loggedIn | async) === true"
           >
             <div
               class="relative z-10 flex flex-col items-center justify-center px-3 py-2"
             >
               <div
+              
                 class="flex gap-12"
                 [ngClass]="{
                   'height: auto': isTeamDropdownOpen,
@@ -170,8 +167,12 @@
                   *ngIf="isTeamDropdownOpen"
                   class="bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-48"
                 >
-                  <ul class="p-2">
+                  <ul class="p-2"
+                  > 
+
+                  
                     <li
+                    
                       *ngFor="let team of userTeamsNotInScoreboard"
                       class="p-2 hover:bg-gray-100 cursor-pointer"
                       (click)="appendTeam(team.teamID)"
@@ -184,10 +185,11 @@
                     (click)="$event.stopPropagation()"
                     (click)="toggleTeamDropdown()"
                     style="margin-bottom: 1rem"
-                  >
+                  > 
                     Avbryt
                   </button>
                 </div>
+
               </div>
     
               <form
