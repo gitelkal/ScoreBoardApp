@@ -42,12 +42,12 @@ export class AdminService {
     );
   }
 
+
+
   public makeAdmin(payload: { username: string }): Observable<any> {
     return this.http.post(`${this.api}/admins`, payload);
   }
-  public deleteAdmin( id: string ): Observable<any> {
+  public deleteAdmin(id: string): Observable<any> {
     return this.http.delete(`${this.api}/admins/${id}`);
   }
-
-  
 }

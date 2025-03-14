@@ -10,6 +10,7 @@ import { UserComponent } from './shared/components/user/user.component';
 import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
 import { BlackBoardComponent } from './shared/components/black-board/black-board.component';
+import { ScoreboardStapleViewComponent } from './shared/components/scoreboard-staple-view/scoreboard-staple-view.component';
 
 export const routes: Routes = [
   {
@@ -66,5 +67,10 @@ export const routes: Routes = [
     path: 'black-board/:id',
     component: BlackBoardComponent,
     title: 'The race track'
+  },
+  {
+    path: 'scoreboard-staple-view/:id',
+    component: ScoreboardStapleViewComponent,
+    title: 'Poängtavla - Stapelvy'
   }
 ];

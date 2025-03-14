@@ -6,10 +6,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-scoreboard-details',
+  selector: 'app-scoreboard-staple-view',
   standalone: true,
   imports: [CommonModule, AsyncPipe, NgIf, NgFor, FormsModule, MatDialogModule, RouterModule],
-  templateUrl: './scoreboard-details.component.html',
-  styleUrls: ['./scoreboard-details.component.css']
+  templateUrl: './scoreboard-staple-view.component.html',
+  styleUrls: ['./scoreboard-staple-view.component.css']
 })
-export class ScoreboardDetailsComponent extends ScoreboardBaseComponent {}
+export class ScoreboardStapleViewComponent extends ScoreboardBaseComponent {}

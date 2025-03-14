@@ -43,6 +43,7 @@ namespace server.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
+
         [HttpDelete]
         [Route("{id}")]
         public IActionResult DeleteUser(int id)
@@ -50,11 +51,20 @@ namespace server.Controllers
             var user = dbContext.Users.Find(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Användaren hittades inte." });
             }
-            dbContext.Users.Remove(user);
+
+            var admin = dbContext.Admins.FirstOrDefault(a => a.Username == user.        Username);
+            if (admin != null)
+            {
+                dbContext.Admins.Remove(admin); // Ta bort användaren från      admin-tabellen
+            }
+
+            dbContext.Users.Remove(user); // Ta bort användaren
             dbContext.SaveChanges();
-            return Ok();
+
+            return Ok(new { message = "Användaren och dess admin-roll har tagits bort." });
         }
+
     }
 }
