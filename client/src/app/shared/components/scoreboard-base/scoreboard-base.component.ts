@@ -44,7 +44,7 @@ import { firstValueFrom } from 'rxjs';
   isJoiningTeam = false;
   isBarChartView: boolean = false;
 
-  protected pointsChangeSubject = new Subject<{ teamID: number; points: number }>();
+  protected pointsChangeSubject = new Subject<{ scoreboardID: number,teamID: number; points: number }>();
   protected scoreboardResponseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
 
   getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
@@ -56,8 +56,13 @@ import { firstValueFrom } from 'rxjs';
     this.scoreboardID = this.route.snapshot.paramMap.get('id');
     this.loadInitialScoreboard();
     this.subscribeToScoreUpdates();
-    this.pointsChangeSubject.pipe(debounceTime(200)).subscribe(({ teamID, points }) => {
-      this.setPoints(teamID, points);
+    this.pointsChangeSubject.pipe(debounceTime(200)).subscribe(({ scoreboardID,teamID, points }) => {
+      if (scoreboardID == Number(this.scoreboardID))
+      {
+
+        this.setPoints(teamID, points);
+      }
+      
     });
   }
 
@@ -192,6 +197,9 @@ import { firstValueFrom } from 'rxjs';
 
   setPoints(teamId: number, points: number) {
     if (!this.scoreboardID) return;
+
+
+    console.log(Number(this.scoreboardID))
     this.scoreboardTeamsService.setScoreboardTeamPoints(this.scoreboardID, teamId, points)
       .subscribe();
       this.snackBar.open('Uppdaterade poäng', 'Stäng', { duration: 2000 });
@@ -234,7 +242,7 @@ generateRandomGradient(): string {
 }
 
   onPointsChange(teamID: number, points: any) {
-    this.pointsChangeSubject.next({ teamID, points: points });
+    this.pointsChangeSubject.next({scoreboardID: Number(this.scoreboardID), teamID, points: points });
   }
 
   private animateScoreChange(start: number, end: number, maxDuration: number, teamToUpdate: any, currentScoreboard: any) {
