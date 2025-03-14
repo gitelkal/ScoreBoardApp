@@ -67,8 +67,18 @@
               'default-team-color': i > 2
             }"
           >
+
             <div class="relative z-10 flex items-center justify-between px-3 py-2">
-              <span class="text-lg font-bold text-gray-900">{{ i + 1 }}.</span>
+              <span *ngIf="i === 0">
+                🥇
+              </span>
+              <span *ngIf="i === 1">
+                🥈
+              </span>
+              <span *ngIf="i === 2">
+                🥉
+              </span> 
+            
               <h3 class="text-lg font-bold flex-1 text-center text-gray-900">
                 {{ team.teamName }}
               </h3>
@@ -102,6 +112,8 @@
                 class="text-base font-semibold text-gray-900"
                 *ngIf="(isAdmin | async) === false"
               >
+              <span
+              >🏆</span>
                 {{ team.points }}
               </p>
             </div>
