@@ -99,16 +99,25 @@ import { firstValueFrom } from 'rxjs';
   protected subscribeToScoreUpdates() {
     this.signalRService.scoreUpdates.subscribe(update => {
       if (!update) return;
+  
       const currentScoreboard = this.scoreboardResponseSubject.value;
       if (!currentScoreboard?.scoreboard?.teams) return;
-
-      currentScoreboard.scoreboard.teams = currentScoreboard.scoreboard.teams
-        .map(team => team.teamID === update.teamId ? { ...team, points: update.points } : team)
-        .sort((a, b) => b.points - a.points);
-
-      this.scoreboardResponseSubject.next({ ...currentScoreboard });
+  
+      const teamToUpdate = currentScoreboard.scoreboard.teams.find(team => team.teamID === update.teamId);
+      if (teamToUpdate) {
+        const targetScore = update.points;
+        const currentScore = teamToUpdate.points;
+        if (currentScore !== targetScore) {
+          this.animateScoreChange(currentScore, targetScore, 2000, teamToUpdate, currentScoreboard);
+        } else {
+          teamToUpdate.points = targetScore;
+          currentScoreboard.scoreboard.teams.sort((a, b) => b.points - a.points);
+          this.scoreboardResponseSubject.next(currentScoreboard);
+        }
+      }
     });
   }
+  
 
 
   appendTeam(teamId: number) {
@@ -228,7 +237,29 @@ generateRandomGradient(): string {
     this.pointsChangeSubject.next({ teamID, points: points });
   }
 
+  private animateScoreChange(start: number, end: number, maxDuration: number, teamToUpdate: any, currentScoreboard: any) {
+    let current = start;
+    const step = start < end ? 1 : -1;
+    const interval = 50;
+    const steps = maxDuration / interval; 
+    const stepIncrement = (end - start) / steps;
   
+    let elapsed = 0;
+    const animationInterval = setInterval(() => {
+      elapsed += interval;
+      current += stepIncrement;
+      teamToUpdate.points = Math.round(current); 
+  
+      currentScoreboard.scoreboard.teams.sort((a: any, b: any) => b.points - a.points);
+      this.scoreboardResponseSubject.next(currentScoreboard);
+      if (Math.round(current) === end || elapsed >= maxDuration) {
+        clearInterval(animationInterval);
+        teamToUpdate.points = end;
+        currentScoreboard.scoreboard.teams.sort((a: any, b: any) => b.points - a.points);
+        this.scoreboardResponseSubject.next(currentScoreboard);
+      }
+    }, interval);
+  }
 }
 
 
