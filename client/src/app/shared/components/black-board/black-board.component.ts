@@ -17,6 +17,7 @@ import { Teams } from '@app/shared/models/teams.models';
   templateUrl: './black-board.component.html',
   styleUrl: './black-board.component.css'
 })
+
 export class BlackBoardComponent implements OnInit {
   scoreboardTeamsService = inject(ScoreboardTeamsService);
   scoreboardService = inject(ScoreboardService);

@@ -8,6 +8,7 @@ import { SignalRService } from '@app/core/services/signalRService/signal-r.servi
 import { Subscription } from 'rxjs';
 import { ScoreboardTeamsResponseOne } from '@app/shared/models/scoreboardTeamsOne.model';
 import { Users } from '@app/shared/models/users.model';
+import { UserTeamsList } from '@app/shared/models/userTeamList.model';
 
 @Component({
   selector: 'app-team-details',
@@ -29,6 +30,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   userID = this.auth.getUserID() ?? 0;
   isInTeam: boolean = false;
   usersList: Users[] = [];
+  usersInTeam: UserTeamsList[] = [];
   scoreboardsList: ScoreboardTeamsResponseOne[] = [];
   
   private userSubscription: Subscription | undefined;
