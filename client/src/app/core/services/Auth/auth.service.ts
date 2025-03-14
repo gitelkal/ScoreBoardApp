@@ -82,6 +82,7 @@ export class AuthService {
     localStorage.removeItem('userID');
     this.isAdmin.next(false);
     this.loggedIn.next(false);
+    window.location.reload();
   }
 
   tokenExpirationCheck() {

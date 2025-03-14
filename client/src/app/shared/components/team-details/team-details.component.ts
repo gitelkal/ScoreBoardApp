@@ -2,25 +2,27 @@ import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angula
 import { ActivatedRoute, RouterLink, Router, NavigationEnd } from '@angular/router';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsService/scoreboard-teams.service';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { NgIf, NgFor, DatePipe, AsyncPipe } from '@angular/common';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Subscription } from 'rxjs';
 import { ScoreboardTeamsResponseOne } from '@app/shared/models/scoreboardTeamsOne.model';
 import { Users } from '@app/shared/models/users.model';
-import { UserTeamsList } from '@app/shared/models/userTeamList.model';
+import { UserService } from '@app/core/services/userService/user.service';
+import { Teams } from '@app/shared/models/teams.models';
 
 @Component({
   selector: 'app-team-details',
-  imports: [NgIf, NgFor, DatePipe, RouterLink],
+  imports: [NgIf, NgFor, DatePipe, RouterLink, AsyncPipe],
   templateUrl: './team-details.component.html',
   styleUrl: './team-details.component.css'
 })
 export class TeamDetailsComponent implements OnInit, OnDestroy {
-  cdr = inject(ChangeDetectorRef);
-  teamUsersService = inject(TeamUsersService);
   scoreboardTeamsService = inject(ScoreboardTeamsService);
+  teamUsersService = inject(TeamUsersService);
   signalRService = inject(SignalRService);
+  userService = inject(UserService);
+  cdr = inject(ChangeDetectorRef);
   route = inject(ActivatedRoute);
   auth = inject(AuthService);
   router = inject(Router);
@@ -28,14 +30,15 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   teamName: string = '';
   teamID: number = 0;
   userID = this.auth.getUserID() ?? 0;
+  loggedIn = this.auth.loggedIn;
   isInTeam: boolean = false;
   usersList: Users[] = [];
-  usersInTeam: UserTeamsList[] = [];
+  usersInTeam: Teams[] = [];
   scoreboardsList: ScoreboardTeamsResponseOne[] = [];
   
   private userSubscription: Subscription | undefined;
   private teamSubscription: Subscription | undefined;
-  private scoreboardSubscription: Subscription | undefined;
+  private scoreboardSubscription: Subscription | undefined;;
 
   constructor() {
     this.route.paramMap.subscribe(params => {
@@ -88,12 +91,19 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
         }));
       }
     });
+    this.userService.getUserTeams(this.userID).subscribe((teams) => {
+      this.usersInTeam = teams;
+    });
   }
 
   joinTeam(userID: number, teamID: number): void {
     if (this.isUserInTeam(userID)) return;
     this.teamUsersService.joinTeam(userID, teamID).subscribe();
     this.isInTeam = true;
+  }
+
+  dropFromTeam(userID: number, teamID: number): void {
+    this.teamUsersService.removeUserFromTeam(teamID, userID).subscribe();
   }
 
   isUserInTeam(userID: number): boolean {
@@ -112,5 +122,13 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }
     });
+    this.signalRService.userLeftTeamUpdates.subscribe(update => {
+      if (update) {
+        this.usersList = this.usersList.filter(user => user.userId !== update.userId);
+        this.isInTeam = this.isUserInTeam(this.userID);
+        this.cdr.detectChanges();
+      }
+    });
   }
+  
 }

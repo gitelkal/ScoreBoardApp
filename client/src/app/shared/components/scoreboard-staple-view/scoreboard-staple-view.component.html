@@ -28,13 +28,13 @@
             <div class="absolute top-4 right-6 bg-white/20 backdrop-blur-lg border border-gray-300 rounded-lg shadow-lg p-3">
               <div class="relative flex flex-col items-center justify-center gap-2">
                 <button
-                  *ngIf="!isAddingTeam && !isJoiningTeam"
+                  *ngIf="!isAddingTeam && !isJoiningTeam && richScoreboard.scoreboard.active"
                   (click)="isAddingTeam = true"
                   class="text-sm font-bold text-gray-900 border-2 rounded-lg px-3 py-1 border-black bg-white hover:bg-gray-200 transition">
                   + Skapa lag
                 </button>
                 <button
-                  *ngIf="(loggedIn | async) === true && !isJoiningTeam"
+                  *ngIf="(loggedIn | async) === true && !isJoiningTeam && richScoreboard.scoreboard.active"
                   (click)="toggleTeamDropdown()"
                   class="text-sm font-bold text-gray-900 border-2 rounded-lg px-3 py-1 border-black bg-white hover:bg-gray-200 transition">
                   + Delta med lag

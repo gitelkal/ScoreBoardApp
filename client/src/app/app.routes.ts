@@ -66,7 +66,7 @@ export const routes: Routes = [
   {
     path: 'black-board/:id',
     component: BlackBoardComponent,
-    title: 'The race track'
+    title: 'Poängtavla - Black'
   },
   {
     path: 'scoreboard-staple-view/:id',
