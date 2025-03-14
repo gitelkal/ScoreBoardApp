@@ -14,6 +14,7 @@ import { Teams } from '@app/shared/models/teams.models';
 import { RegisterComponent } from '../register/register.component';
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   template: ''
@@ -45,12 +46,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
   protected pointsChangeSubject = new Subject<{ teamID: number; points: number }>();
   protected scoreboardResponseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
+
   getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
   teamColorAssignments: Map<string, string> = new Map();
 
   ngOnInit() {
     this.signalRService.startConnection();
     this.isBarChartView = false;
+    this.scoreboardID = this.route.snapshot.paramMap.get('id');
     this.loadInitialScoreboard();
     this.subscribeToScoreUpdates();
     this.pointsChangeSubject.pipe(debounceTime(200)).subscribe(({ teamID, points }) => {
@@ -59,14 +62,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   }
 
   protected loadInitialScoreboard() {
-    this.scoreboardID = this.route.snapshot.paramMap.get('id');
+    
     if (!this.scoreboardID) return;
 
     this.scoreboardService.getRichScoreboard(this.scoreboardID).subscribe(response => {
       this.scoreboardResponseSubject.next(response);
     });
-
-    this.authService.tokenExpirationCheck();
     this.isAdmin = this.authService.isAdmin;
     this.loggedIn = this.authService.loggedIn;
     this.userID = this.authService.getUserID() ?? 0;
@@ -91,7 +92,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     this.userService.getUserTeams(this.userID).subscribe(response => {
       this.userTeams = response;
     });
-
     this.scoreboardTeamsService.getUserTeamsNotInScoreboard(Number(this.scoreboardID), this.userID)
       .subscribe(response => this.userTeamsNotInScoreboard = response);
   }
@@ -108,7 +108,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
       this.scoreboardResponseSubject.next({ ...currentScoreboard });
     });
-  } 
+  }
+
 
   appendTeam(teamId: number) {
     if (!this.scoreboardID) return;
@@ -129,20 +130,32 @@ import { MatSnackBar } from '@angular/material/snack-bar';
       });
   }
 
-  removeTeam(teamId: number)
-  {
-    this.scoreboardTeamsService.removeTeamFromScoreboard(Number(this.scoreboardID),teamId).subscribe(() => {
-      this.loadInitialScoreboard();
+  removeTeam(teamId: number) {
+    this.scoreboardTeamsService.removeTeamFromScoreboard(Number(this.scoreboardID), teamId).subscribe(() => {
+      const currentScoreboard = this.scoreboardResponseSubject.value;
+  
+      if (!currentScoreboard?.scoreboard?.teams) return;
+      currentScoreboard.scoreboard.teams = currentScoreboard.scoreboard.teams.filter(team => team.teamID !== teamId);
+      this.scoreboardResponseSubject.next({ ...currentScoreboard });
+      
+      
       this.snackBar.open('Tog bort lag', 'Stäng', { duration: 2000 });
     });
   }
 
-  toggleRegisterModal(teamId: number) {
+  async toggleRegisterModal(teamId: number) {
     this.dialog.open(RegisterComponent).afterClosed().subscribe(() => {
       this.snackBar.open('Registrerade ny användare', 'Stäng', { duration: 2000 });
       this.loadInitialScoreboard();
-      this.teamUserService.joinTeam(this.userID,teamId).subscribe(() => {
-        this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
+      firstValueFrom(this.loggedIn).then(isLoggedIn => {
+        if (isLoggedIn) {
+          this.teamUserService.joinTeam(this.userID,teamId).subscribe(() => {
+            this.loadInitialScoreboard();
+            this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
+          });
+        } else {
+          this.snackBar.open('Kunde inte ej gå med i lag, försök igen', 'Stäng', { duration: 2000 });
+        }
       });
     });
   }
@@ -151,8 +164,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     if (!this.userID) return;
     this.teamUserService.joinTeam(this.userID, teamId).subscribe(() => {
       this.loadInitialScoreboard();
-      this.snackBar.open('Gick med i lag', 'Stäng', { duration: 222000 });
-      
+      this.snackBar.open('Gick med i lag', 'Stäng', { duration: 2000 });
     });
   }
 
@@ -172,7 +184,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   setPoints(teamId: number, points: number) {
     if (!this.scoreboardID) return;
     this.scoreboardTeamsService.setScoreboardTeamPoints(this.scoreboardID, teamId, points)
-      .subscribe(() => this.loadInitialScoreboard());
+      .subscribe();
       this.snackBar.open('Uppdaterade poäng', 'Stäng', { duration: 2000 });
   }
 
@@ -215,6 +227,8 @@ generateRandomGradient(): string {
   onPointsChange(teamID: number, points: any) {
     this.pointsChangeSubject.next({ teamID, points: points });
   }
+
+  
 }
 
 
