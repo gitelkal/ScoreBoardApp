@@ -1,4 +1,13 @@
 <button 
+(click)="openFullscreen()"
+class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition">
+Fullskärm</button>
+<button (click)="closeFullscreen()"
+class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition"
+>Avbryt fullskärm</button>
+
+
+<button 
 class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition"
 [routerLink]="['/scoreboard', scoreboardID]">
 Visa standardvy

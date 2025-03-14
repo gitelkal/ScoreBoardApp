@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
@@ -15,6 +15,7 @@ import { RegisterComponent } from '../register/register.component';
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   template: ''
@@ -30,6 +31,7 @@ import { firstValueFrom } from 'rxjs';
   protected readonly userService = inject(UserService);
   protected readonly signalRService = inject(SignalRService);
   protected readonly snackBar = inject(MatSnackBar);
+  
   
   isAddingTeam = false;
   newTeamName = '';
@@ -50,7 +52,12 @@ import { firstValueFrom } from 'rxjs';
   getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
   teamColorAssignments: Map<string, string> = new Map();
 
+  constructor(@Inject(DOCUMENT) protected document: any) {}
+  fullscreenElement: any;
+
+
   ngOnInit() {
+    this.fullscreenElement = document.documentElement;
     this.signalRService.startConnection();
     this.isBarChartView = false;
     this.scoreboardID = this.route.snapshot.paramMap.get('id');
@@ -60,6 +67,38 @@ import { firstValueFrom } from 'rxjs';
       this.setPoints(teamID, points);
     });
   }
+
+  openFullscreen() {
+    if (this.fullscreenElement.requestFullscreen) {
+      this.fullscreenElement.requestFullscreen();
+    } else if (this.fullscreenElement.mozRequestFullScreen) {
+      /* Firefox */
+      this.fullscreenElement.mozRequestFullScreen();
+    } else if (this.fullscreenElement.webkitRequestFullscreen) {
+      /* Chrome, Safari and Opera */
+      this.fullscreenElement.webkitRequestFullscreen();
+    } else if (this.fullscreenElement.msRequestFullscreen) {
+      /* IE/Edge */
+      this.fullscreenElement.msRequestFullscreen();
+    }
+  }
+
+  /* Close fullscreen */
+  closeFullscreen() {
+    if (this.document.exitFullscreen) {
+      this.document.exitFullscreen();
+    } else if (this.document.mozCancelFullScreen) {
+      /* Firefox */
+      this.document.mozCancelFullScreen();
+    } else if (this.document.webkitExitFullscreen) {
+      /* Chrome, Safari and Opera */
+      this.document.webkitExitFullscreen();
+    } else if (this.document.msExitFullscreen) {
+      /* IE/Edge */
+      this.document.msExitFullscreen();
+    }
+  }
+
 
   protected loadInitialScoreboard() {
     
