@@ -10,7 +10,7 @@ import { UserComponent } from './shared/components/user/user.component';
 import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
 import { BlackBoardComponent } from './shared/components/black-board/black-board.component';
-import { ScoreboardStapleViewComponent } from './shared/components/scoreboard-staple-view/scoreboard-staple-view.component';
+import { ScoreboardVBarViewComponent } from './shared/components/scoreboard-v-bar-view/scoreboard-v-bar-view.component';
 
 export const routes: Routes = [
   {
@@ -69,8 +69,8 @@ export const routes: Routes = [
     title: 'Poängtavla - Black'
   },
   {
-    path: 'scoreboard-staple-view/:id',
-    component: ScoreboardStapleViewComponent,
+    path: 'scoreboard-v-bar-view/:id',
+    component: ScoreboardVBarViewComponent,
     title: 'Poängtavla - Stapelvy'
   }
 ];
