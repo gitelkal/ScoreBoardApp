@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using server.Handlers;
 using server.Service;
+using Microsoft.IdentityModel.Tokens;
 
 namespace server.Controllers
 {
@@ -47,8 +48,11 @@ namespace server.Controllers
                         new Claim(ClaimTypes.Email, user.Email ?? string.Empty)
                     };
 
-            var TokenExpiryTimeStamp = DateTime.UtcNow.AddHours(24);
+            var TokenExpiryTimeStamp = DateTime.UtcNow.AddHours(1);
             var accessToken = tokenService.GenerateToken(user.Username);
+
+            //Console.WriteLine("Token: " + accessToken); // Avkommentera denna rad för att skriva ut token i konsolen
+
             var resetLink = $"http://localhost:4200/reset-password?email={user.Email}&token={WebUtility.UrlEncode(accessToken)}&expires={TokenExpiryTimeStamp:o}";
 
             var client = new RestClient("https://send.api.mailtrap.io/api/send");
@@ -99,8 +103,13 @@ namespace server.Controllers
                 return BadRequest("Ingen användare hittades med e-posten du angav");
             }
 
-            resetPasswordDTO.Token = WebUtility.UrlDecode(resetPasswordDTO.Token); // Försök att fixa något faktiskt kontroll om det finns tid
+            var validatedUsername = tokenService.ValidateToken(resetPasswordDTO.Token);
 
+            if (validatedUsername == null)
+            {
+                return BadRequest("Ogiltig eller utgången token");
+            }
+            
             user.PasswordHash = PasswordHashHandler.HashPassword(resetPasswordDTO.NewPassword);
             dbContext.Users.Update(user);
             await dbContext.SaveChangesAsync();
