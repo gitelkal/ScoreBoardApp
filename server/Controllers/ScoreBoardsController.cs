@@ -124,6 +124,7 @@ namespace server.Controllers
                     sb.ScoreboardId,
                     sb.Name,
                     sb.StartedAt,
+                    sb.EndedAt,
                     sb.Active
                 })
                 .FirstOrDefault();
@@ -173,6 +174,7 @@ namespace server.Controllers
                     scoreboard.ScoreboardId,
                     scoreboard.Name,
                     scoreboard.StartedAt,
+                    scoreboard.EndedAt,
                     scoreboard.Active,
                     Teams = teamsWithUsers
                 }
