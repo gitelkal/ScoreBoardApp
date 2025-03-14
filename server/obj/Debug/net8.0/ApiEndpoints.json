@@ -274,7 +274,7 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
-    "Method": "AddTeamToScoreboard",
+    "Method": "AddTeamToScoreboardAsync",
     "RelativePath": "api/ScoreboardTeams",
     "HttpMethod": "POST",
     "IsController": true,

@@ -21,6 +21,9 @@ export class ScoreboardTeamsService {
   getOneScoreboardTeam(id: number): Observable<ScoreboardTeamsResponseOne[]> {
     return this.http.get<ScoreboardTeamsResponseOne[]>(`${this.api}/ScoreboardTeams/${id}`);
   }
+  givePointsToTeam(scoreboardId: number, teamId: number, points: number) {
+    return this.http.put(`${this.api}/ScoreboardTeams/${scoreboardId}/${teamId}/addPoints?points=${points}`, { responseType: 'json' });
+  }
   setScoreboardTeamPoints(scoreboardId: string, teamId : number, points : number)
   {
     return this.http.put<any>(`${this.api}/ScoreboardTeams/${scoreboardId}/${teamId}/points?points=${points}`, { responseType: 'json' });

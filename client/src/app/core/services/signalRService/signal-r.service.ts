@@ -11,6 +11,7 @@ export class SignalRService {
   public userJoinTeamUpdates = new BehaviorSubject<{teamId: number; userId: number } | null>(null);
   public userLeftTeamUpdates = new BehaviorSubject<{teamId: number; userId: number } | null>(null);
   public scoreboardCreation = new BehaviorSubject<number | null>(null);
+  public teamJoinedScoreboard = new BehaviorSubject<{teamId: number; scoreboardId: number} | null>(null);
 
   constructor() { }
 
@@ -43,6 +44,10 @@ export class SignalRService {
     this.hubConnection.on('ReceiveScoreboardCreation', (scoreboardId: number) => {
       console.log(`Scoreboard ${scoreboardId} was created`);
       this.scoreboardCreation.next(scoreboardId);
+    });
+    this.hubConnection.on('TeamJoinedScoreboard', (scoreboardId: number, teamId: number) => {
+      console.log(`Team ${teamId} joined scoreboard ${scoreboardId}`);
+      this.teamJoinedScoreboard.next({ scoreboardId, teamId });
     });
   }
 }
