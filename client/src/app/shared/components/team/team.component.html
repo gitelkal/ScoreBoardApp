@@ -15,7 +15,7 @@
                         </div>
                         <ul class="h-48">
                             <li *ngIf="team.userIDs.length === 0">
-                                <p class="text-base text-mainColor mt-2 ml-4 font-bold">Inga medlemmar ännu...</p>
+                                <p class="text-base text-black mt-2 ml-4 font-bold">Inga medlemmar ännu...</p>
                             </li>
                             <h3 class="text-base text-black mt-2 ml-4 font-bold" *ngIf="team.userIDs.length != 0">Medlemmar:</h3>
                             <li *ngFor="let userId of team.userIDs; let i = index">

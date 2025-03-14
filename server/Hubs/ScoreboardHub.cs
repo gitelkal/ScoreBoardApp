@@ -19,4 +19,8 @@ public class ScoreboardHub : Hub
     {
         await Clients.All.SendAsync("ScoreboardCreated", scoreboardId);
     }
+    public async Task NotifyTeamJoinedScoreboard(int scoreboardId, int teamId)
+    {
+        await Clients.All.SendAsync("TeamJoinedScoreboard", scoreboardId, teamId);
+    }
 }

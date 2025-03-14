@@ -103,7 +103,7 @@ namespace server.Controllers
 
 
         [HttpPost]
-        public IActionResult AddTeamToScoreboard(int scoreboardId,int teamId)
+        public async Task <IActionResult> AddTeamToScoreboardAsync(int scoreboardId,int teamId)
         {
             var scoreboardTeam = new ScoreBoardTeams
             {
@@ -113,6 +113,9 @@ namespace server.Controllers
 
             dbContext.ScoreboardTeams.Add(scoreboardTeam);
             dbContext.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("TeamJoinedScoreboard", scoreboardId, teamId);
+
             return StatusCode(StatusCodes.Status201Created);
         }
 
