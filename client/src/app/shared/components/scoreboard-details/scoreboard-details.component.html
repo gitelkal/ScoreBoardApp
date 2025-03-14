@@ -1,8 +1,13 @@
 
-  <button 
-      class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition"
-      [routerLink]="['/scoreboard-v-bar-view', scoreboardID]">Visa stapel-läge
-    </button>
+<div class="relative inline-block text-left">
+  <button class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition" (click)="toggleViewDropdown()">Ändra vy</button>
+  <div *ngIf="isViewDropdownOpen" class="origin-top-right absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+      <a [routerLink]="['/scoreboard-dark', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" >Mörk tavla</a>
+      <a [routerLink]="['/scoreboard-v-bar-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" >Stapel-vy</a >
+    </div>
+  </div>
+</div>
 
     <div class="w-full relative">
       <div
@@ -67,8 +72,18 @@
               'default-team-color': i > 2
             }"
           >
+
             <div class="relative z-10 flex items-center justify-between px-3 py-2">
-              <span class="text-lg font-bold text-gray-900">{{ i + 1 }}.</span>
+              <span *ngIf="i === 0">
+                🥇
+              </span>
+              <span *ngIf="i === 1">
+                🥈
+              </span>
+              <span *ngIf="i === 2">
+                🥉
+              </span> 
+            
               <h3 class="text-lg font-bold flex-1 text-center text-gray-900">
                 {{ team.teamName }}
               </h3>
@@ -102,6 +117,8 @@
                 class="text-base font-semibold text-gray-900"
                 *ngIf="(isAdmin | async) === false"
               >
+              <span
+              >🏆</span>
                 {{ team.points }}
               </p>
             </div>

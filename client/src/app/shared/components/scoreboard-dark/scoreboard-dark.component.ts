@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DatePipe, NgFor, CommonModule, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,12 +13,12 @@ import { UserService } from '@app/core/services/userService/user.service';
 import { Teams } from '@app/shared/models/teams.models';
 
 @Component({
-  imports: [DatePipe, NgFor, CommonModule, FormsModule, AsyncPipe],
-  templateUrl: './black-board.component.html',
-  styleUrl: './black-board.component.css'
+  selector: 'app-scoreboard-dark',
+  imports: [DatePipe, NgFor, CommonModule, FormsModule, AsyncPipe, RouterLink],
+  templateUrl: './scoreboard-dark.component.html',
+  styleUrl: './scoreboard-dark.component.css'
 })
-
-export class BlackBoardComponent implements OnInit {
+export class ScoreboardDarkComponent implements OnInit {
   scoreboardTeamsService = inject(ScoreboardTeamsService);
   scoreboardService = inject(ScoreboardService);
   teamUsersService = inject(TeamUsersService);
@@ -40,6 +40,11 @@ export class BlackBoardComponent implements OnInit {
   scoreboards: ScoreboardResponse[] = [];
   myTeams: Teams[] = [];
   availableTeams: Teams[] = [];
+  isViewDropdownOpen = false;
+
+  toggleViewDropdown() {
+    this.isViewDropdownOpen = !this.isViewDropdownOpen;
+  }
 
   private routeSubscription: Subscription | undefined;
   private pointsSubscription: Subscription | undefined;

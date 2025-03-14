@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BlackBoardComponent } from './black-board.component';
+import { ScoreboardDarkComponent } from './scoreboard-dark.component';
 
-describe('BlackBoardComponent', () => {
-  let component: BlackBoardComponent;
-  let fixture: ComponentFixture<BlackBoardComponent>;
+describe('ScoreboardDarkComponent', () => {
+  let component: ScoreboardDarkComponent;
+  let fixture: ComponentFixture<ScoreboardDarkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BlackBoardComponent]
+      imports: [ScoreboardDarkComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BlackBoardComponent);
+    fixture = TestBed.createComponent(ScoreboardDarkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

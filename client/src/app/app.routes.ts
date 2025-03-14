@@ -9,9 +9,9 @@ import { TeamDetailsComponent } from '../app/shared/components/team-details/team
 import { UserComponent } from './shared/components/user/user.component';
 import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
-import { BlackBoardComponent } from './shared/components/black-board/black-board.component';
 import { ScoreboardVBarViewComponent } from './shared/components/scoreboard-v-bar-view/scoreboard-v-bar-view.component';
 import { SearchComponent } from './shared/components/search/search.component';
+import { ScoreboardDarkComponent } from './shared/components/scoreboard-dark/scoreboard-dark.component';
 
 export const routes: Routes = [
   {
@@ -65,8 +65,8 @@ export const routes: Routes = [
     title: 'Återställ Lösenord'
   },
   {
-    path: 'black-board/:id',
-    component: BlackBoardComponent,
+    path: 'scoreboard-dark/:id',
+    component: ScoreboardDarkComponent,
     title: 'Poängtavla - Black'
   },
   {
