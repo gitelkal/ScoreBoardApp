@@ -8,6 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   public scoreUpdates = new BehaviorSubject<{scoreboardId: number; teamId: number; points: number } | null>(null);
+  public taskCountUpdates = new BehaviorSubject<{scoreboardId: number; taskCount: number} | null>(null);
+  public taskPointsUpdates = new BehaviorSubject<{scoreboardId: number; pointsPerTask: number} | null>(null);
+  public taskCompletionUpdates = new BehaviorSubject<{scoreboardId: number; teamId: number; points: number} | null>(null);
   public userJoinTeamUpdates = new BehaviorSubject<{teamId: number; userId: number } | null>(null);
   public userLeftTeamUpdates = new BehaviorSubject<{teamId: number; userId: number } | null>(null);
   public scoreboardCreation = new BehaviorSubject<number | null>(null);
@@ -48,6 +51,18 @@ export class SignalRService {
     this.hubConnection.on('TeamJoinedScoreboard', (scoreboardId: number, teamId: number) => {
       console.log(`Team ${teamId} joined scoreboard ${scoreboardId}`);
       this.teamJoinedScoreboard.next({ scoreboardId, teamId });
+    });
+    this.hubConnection.on('TaskCountUpdated', (scoreboardId: number, taskCount: number) => {
+      console.log(`Scoreboard ${scoreboardId} has ${taskCount} tasks.`);
+      this.taskCountUpdates.next({ scoreboardId, taskCount });
+    });
+    this.hubConnection.on('TaskPointsUpdated', (scoreboardId: number, pointsPerTask: number) => {
+      console.log(`Scoreboard ${scoreboardId} gives ${pointsPerTask} points/task.`);
+      this.taskPointsUpdates.next({ scoreboardId, pointsPerTask });
+    });
+    this.hubConnection.on('TaskCompleted', (scoreboardId: number, teamId: number, points: number) => {
+      console.log(`Task done. Team ${teamId} got ${points} points in scoreboard ${scoreboardId}.`);
+      this.taskCompletionUpdates.next({ scoreboardId, teamId, points });
     });
   }
 }

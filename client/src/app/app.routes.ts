@@ -12,6 +12,7 @@ import { ResetPasswordComponent } from './shared/components/reset-password/reset
 import { ScoreboardVBarViewComponent } from './shared/components/scoreboard-v-bar-view/scoreboard-v-bar-view.component';
 import { SearchComponent } from './shared/components/search/search.component';
 import { ScoreboardDarkComponent } from './shared/components/scoreboard-dark/scoreboard-dark.component';
+import { ScoreboardTaskViewComponent } from './shared/components/scoreboard-task-view/scoreboard-task-view.component';
 
 export const routes: Routes = [
   {
@@ -78,5 +79,10 @@ export const routes: Routes = [
     path: 'search',
     component: SearchComponent,
     title: 'Sökresultat'
+  },
+  {
+    path: 'scoreboard-task-view/:id',
+    component: ScoreboardTaskViewComponent,
+    title: 'Poängtavla - Uppgifter'
   }
 ];
