@@ -22,7 +22,6 @@ namespace server.Service
             var key = jwtConfig["Key"];
             var tokenValidity = double.Parse(jwtConfig["TokenExpirationInMinutes"]);
             var tokenExpiryTimeStamp = DateTime.UtcNow.AddMinutes(tokenValidity);
-            Console.WriteLine("Token Expiry Time Stamp: " + tokenExpiryTimeStamp);
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -71,7 +70,6 @@ namespace server.Service
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
 
-                // Ensure the token is a JWT
                 if (validatedToken is JwtSecurityToken jwtSecurityToken)
                 {
                     var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
@@ -84,8 +82,7 @@ namespace server.Service
                 return principal;
             }
             catch (Exception ex)
-            {
-                // Handle token validation errors
+            
                 throw new SecurityTokenException("Token validation failed", ex);
             }
         }

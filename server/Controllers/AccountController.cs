@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using server.Handlers;
 using server.Service;
-using Microsoft.IdentityModel.Tokens;
 
 namespace server.Controllers
 {
@@ -51,8 +50,6 @@ namespace server.Controllers
             var TokenExpiryTimeStamp = DateTime.UtcNow.AddHours(1);
             var accessToken = tokenService.GenerateToken(user.Username);
 
-            //Console.WriteLine("Token: " + accessToken); // Avkommentera denna rad för att skriva ut token i konsolen
-
             var resetLink = $"http://localhost:4200/reset-password?email={user.Email}&token={WebUtility.UrlEncode(accessToken)}&expires={TokenExpiryTimeStamp:o}";
 
             var client = new RestClient("https://send.api.mailtrap.io/api/send");
@@ -68,7 +65,7 @@ namespace server.Controllers
 
             var requestBody = new
             {
-                from = new { email = "hello@demomailtrap.co" },
+                from = new { email = configuration["Mailtrap:E-Mail"] },
                 to = new[] { new { email = user.Email.ToLower() } },
                 template_uuid = configuration["Mailtrap:UUID"],
                 template_variables = new { user_email = user.Email.ToLower(), pass_reset_link = resetLink }
