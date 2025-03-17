@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using server.Data;
 using server.Entities;
 using server.Handlers;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+
 
 namespace server.Service
 {

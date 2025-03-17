@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using System.Security.Cryptography;
 
 namespace server.Handlers

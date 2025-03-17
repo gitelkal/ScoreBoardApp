@@ -3,114 +3,116 @@
   "WorkspaceRootPath": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\loginresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\loginresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\service\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:service\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\handlers\\passwordhashhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:handlers\\passwordhashhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\scoreboardteamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\scoreboardteamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardteamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\hubs\\scoreboardhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\loginresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\loginresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\handlers\\passwordhashhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:handlers\\passwordhashhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\adminscontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\hubs\\scoreboardhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:hubs\\scoreboardhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\controllers\\teamuserscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\teamuserscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamuserscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|d:\\github\\scoreboardapp\\server\\server.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\server.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:server.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:data\\serverdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:1:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:2:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\ScoreBoardApp\\server\\Entities\\AdminDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\teamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:3:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:3:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:entities\\scoreboardteams.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|c:\\users\\paulk\\documents\\trafikverketscoreboard\\scoreboardapp\\server\\controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{1D288B86-D683-4FC4-8493-23FF7AF3893D}|server.csproj|solutionrelative:controllers\\scoreboardscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -120,7 +122,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -128,352 +130,126 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RegisterController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\RegisterController.cs",
-              "RelativeDocumentMoniker": "Controllers\\RegisterController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\RegisterController.cs",
-              "RelativeToolTip": "Controllers\\RegisterController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T10:48:50.617Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LoginController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\LoginController.cs",
-              "RelativeDocumentMoniker": "Controllers\\LoginController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\LoginController.cs",
-              "RelativeToolTip": "Controllers\\LoginController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T10:44:01.318Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "JwtService.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Service\\JwtService.cs",
-              "RelativeDocumentMoniker": "Service\\JwtService.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Service\\JwtService.cs",
-              "RelativeToolTip": "Service\\JwtService.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAqwCAAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T09:45:01.458Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "LoginDTO.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\LoginDTO.cs",
-              "RelativeDocumentMoniker": "Entities\\LoginDTO.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\LoginDTO.cs",
-              "RelativeToolTip": "Entities\\LoginDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T09:09:28.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AdminsControllers.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminsControllers.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
-              "RelativeToolTip": "Controllers\\AdminsControllers.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAwEYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T09:18:16.121Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "LoginResponseModel.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\LoginResponseModel.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\LoginResponseModel.cs",
               "RelativeDocumentMoniker": "Entities\\LoginResponseModel.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\LoginResponseModel.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\LoginResponseModel.cs",
               "RelativeToolTip": "Entities\\LoginResponseModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T09:50:59.092Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T09:50:59.092Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "PasswordHashHandler.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Handlers\\PasswordHashHandler.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Handlers\\PasswordHashHandler.cs",
               "RelativeDocumentMoniker": "Handlers\\PasswordHashHandler.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Handlers\\PasswordHashHandler.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Handlers\\PasswordHashHandler.cs",
               "RelativeToolTip": "Handlers\\PasswordHashHandler.cs",
               "ViewState": "AgIAACIAAAAAAAAAAADwv0cAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T09:57:57.012Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T09:57:57.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T16:12:41.207Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T16:12:41.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "Scoreboard.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\Scoreboard.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\Scoreboard.cs",
               "RelativeDocumentMoniker": "Entities\\Scoreboard.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\Scoreboard.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\Scoreboard.cs",
               "RelativeToolTip": "Entities\\Scoreboard.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T12:55:24.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-12T12:55:24.666Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 17,
               "Title": "AdminDTO.cs",
               "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\AdminDTO.cs",
-              "RelativeDocumentMoniker": "Entities\\AdminDTO.cs",
               "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\AdminDTO.cs",
-              "RelativeToolTip": "Entities\\AdminDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T09:07:08.423Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T09:07:08.423Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-06T09:56:04.995Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\Admin.cs",
-              "RelativeDocumentMoniker": "Entities\\Admin.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\Admin.cs",
-              "RelativeToolTip": "Entities\\Admin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-19T08:43:52.755Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ScoreboardHub.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Hubs\\ScoreboardHub.cs",
-              "RelativeDocumentMoniker": "Hubs\\ScoreboardHub.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Hubs\\ScoreboardHub.cs",
-              "RelativeToolTip": "Hubs\\ScoreboardHub.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-14T21:34:40.225Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 0,
               "Title": "ScoreboardTeamsController.cs",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\ScoreboardTeamsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ScoreboardTeamsController.cs",
               "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\ScoreboardTeamsController.cs",
               "RelativeToolTip": "Controllers\\ScoreboardTeamsController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAQwDsAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAswDEAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-07T15:57:19.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "TeamUsersController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamUsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TeamUsersController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamUsersController.cs",
-              "RelativeToolTip": "Controllers\\TeamUsersController.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAIBJwCMAAAAWAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "AdminsControllers.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminsControllers.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\AdminsControllers.cs",
+              "RelativeToolTip": "Controllers\\AdminsControllers.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAwEYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T15:50:15.565Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-06T09:18:16.121Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "TeamsController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
-              "RelativeToolTip": "Controllers\\TeamsController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAuwCEAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "Entities\\LoginDTO.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\LoginDTO.cs",
+              "RelativeToolTip": "Entities\\LoginDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T10:07:39.634Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T09:09:28.833Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ScoreBoardTeams.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
-              "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
-              "RelativeToolTip": "Entities\\ScoreBoardTeams.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "RegisterController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\RegisterController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RegisterController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\RegisterController.cs",
+              "RelativeToolTip": "Controllers\\RegisterController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T16:12:41.207Z"
+              "WhenOpened": "2025-02-19T10:48:50.617Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwCYAAAARAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "Controllers\\LoginController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T15:56:45.854Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-19T10:44:01.318Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "server.http",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
-              "RelativeDocumentMoniker": "server.http",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\server.http",
-              "RelativeToolTip": "server.http",
-              "ViewState": "AgIAAAMAAAAAAAAAAIBJwAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-02-07T16:33:21.007Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "ServerDbContext.cs",
-              "DocumentMoniker": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
-              "ToolTip": "D:\\GitHub\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
-              "RelativeToolTip": "Data\\ServerDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T15:46:08.959Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T09:05:52.335Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T09:18:25.363Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "TeamUser.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\TeamUser.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T09:05:52.335Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "secrets.json",
-              "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
-              "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-06T09:56:04.995Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "RelativeToolTip": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAhwBEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T09:18:25.363Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T09:05:52.335Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T09:17:58.797Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Team.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "RelativeToolTip": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T09:09:33.059Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 8,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -481,20 +257,218 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-06T09:56:04.995Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\Admin.cs",
+              "RelativeDocumentMoniker": "Entities\\Admin.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\Admin.cs",
+              "RelativeToolTip": "Entities\\Admin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T08:43:52.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ScoreboardHub.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Hubs\\ScoreboardHub.cs",
+              "RelativeDocumentMoniker": "Hubs\\ScoreboardHub.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Hubs\\ScoreboardHub.cs",
+              "RelativeToolTip": "Hubs\\ScoreboardHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-14T21:34:40.225Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TeamUsersController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\TeamUsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TeamUsersController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\TeamUsersController.cs",
+              "RelativeToolTip": "Controllers\\TeamUsersController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAIBJwCMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T15:50:15.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "TeamsController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "RelativeToolTip": "Controllers\\TeamsController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAuwCEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T10:07:39.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ScoreBoardTeams.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeToolTip": "Entities\\ScoreBoardTeams.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T16:32:20.079Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ScoreBoardsController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ScoreBoardsController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
+              "RelativeToolTip": "Controllers\\ScoreBoardsController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwCYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T15:56:45.854Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBJwAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T16:33:21.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "server.http",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\server.http",
+              "RelativeDocumentMoniker": "server.http",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\server.http",
+              "RelativeToolTip": "server.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-02-07T15:46:08.959Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Team.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "RelativeToolTip": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Team.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T09:05:52.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
+              "RelativeToolTip": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\User.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T09:18:25.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "secrets.json",
+              "DocumentMoniker": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "ToolTip": "C:\\Users\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Raman\\AppData\\Roaming\\Microsoft\\UserSecrets\\0c86aa84-e1be-4d53-bf70-85b06d541de5\\secrets.json",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-07T09:05:52.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ScoreBoardTeams.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeToolTip": "Entities\\ScoreBoardTeams.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T09:56:04.995Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TeamsController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TeamsController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\TeamsController.cs",
+              "RelativeToolTip": "Controllers\\TeamsController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAhwBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T09:18:25.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T09:05:52.335Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\Admin.cs",
+              "RelativeDocumentMoniker": "Entities\\Admin.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\Admin.cs",
+              "RelativeToolTip": "Entities\\Admin.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T09:17:58.797Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ServerDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ServerDbContext.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Data\\ServerDbContext.cs",
+              "RelativeToolTip": "Data\\ServerDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T09:09:33.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ScoreBoardTeams.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeDocumentMoniker": "Entities\\ScoreBoardTeams.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Entities\\ScoreBoardTeams.cs",
+              "RelativeToolTip": "Entities\\ScoreBoardTeams.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-06T09:17:58.793Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "ToolTip": "C:\\Users\\paulk\\Documents\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
-              "RelativeToolTip": "..\\..\\..\\skol\\mikaela_grupp\\ScoreBoardApp\\server\\Admin.cs",
+              "DocumentIndex": 28,
+              "Title": "ScoreBoardsController.cs",
+              "DocumentMoniker": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ScoreBoardsController.cs",
+              "ToolTip": "C:\\Users\\paulk\\Documents\\TrafikverketScoreboard\\ScoreBoardApp\\server\\Controllers\\ScoreBoardsController.cs",
+              "RelativeToolTip": "Controllers\\ScoreBoardsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T09:17:58.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-06T09:17:58.793Z"
             }
           ]
         }

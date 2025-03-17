@@ -1,0 +1,132 @@
+<div class="min-h-screen bg-gray-800 text-white flex mt-12 justify-center p-6 relative">
+    <div class="absolute top-0 left-0">
+        <button class="bg-red5 text-white1 px-4 py-2 rounded-b transition" (click)="toggleViewDropdown()">Ändra vy</button>
+        <div *ngIf="isViewDropdownOpen" class="origin-top-left absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem">Hackaton</a>
+                <a [routerLink]="['/scoreboard-v-bar-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Stapel-vy</a>
+                <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Tasks</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-6xl">
+        <ng-container *ngIf="scoreboards && scoreboards.length > 0; else failedToLoad">
+            <div class="bg-gray-900 border border-gray-800 rounded-lg p-6 shadow-lg" *ngFor="let scoreboard of scoreboards">
+                <div class="flex flex-col items-center mb-4 relative">
+                    <h2 class="text-red-500 text-2xl font-bold tracking-wide uppercase text-center">
+                        {{ scoreboard.scoreboard.name }}
+                    </h2>
+                    <div
+                        class="text-lg font-bold mt-2"
+                        [ngClass]="{'text-green-500': scoreboard.scoreboard.active, 'text-red-500': !scoreboard.scoreboard.active}"
+                    >
+                        {{ scoreboard.scoreboard.active ? 'Aktiv' : 'Inaktiv' }}
+                    </div>
+                    <div class="absolute right-0 top-0 text-right space-y-2">
+                        <div class="text-gray-400 font-semibold">Start: {{ scoreboard.scoreboard.startedAt | date: 'short' }}</div>
+                        <div *ngIf="scoreboard.scoreboard.endedAt" class="text-gray-400 font-semibold">
+                            Slut: {{ scoreboard.scoreboard.endedAt | date: 'short' }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-gray-800 rounded-lg">
+                        <thead>
+                            <tr class="text-gray-400 text-left">
+                                <th class="py-2 px-4 uppercase tracking-wide">Placering</th>
+                                <th class="py-2 px-4 uppercase tracking-wide">Lag</th>
+                                <th class="py-2 px-4 uppercase tracking-wide">Medlemmar</th>
+                                <th class="py-2 px-4 uppercase tracking-wide">Poäng</th>
+                                <th class="py-2 px-4 uppercase tracking-wide">Senast uppdaterad</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700">
+                            <tr *ngFor="let team of sortedTeams; let i = index" class="bg-gray-900 hover:bg-gray-800">
+                                <td class="py-3 px-4 text-gray-300 flex items-center">
+                                    <i class="mr-2"></i>
+                                    {{ i + 1 }}
+                                </td>
+                                <td class="py-3 px-4 text-gray-300">{{ team.teamName }}</td>
+                                <td class="py-3 px-4 text-gray-300">
+                                    <div class="flex flex-wrap gap-1">
+                                        <span *ngFor="let user of team.users" class="text-sm">{{ user.username }}</span>
+                                    </div>
+                                </td>
+                                <td id="team-points-{{ team.teamID }}" class="py-3 px-4 text-gray-300 font-bold text-blue-500">
+                                    {{ team.points || 0 }} pts
+                                </td>
+                                <td class="py-3 px-4 text-gray-400 text-sm">{{ team.lastUpdated | date: 'short' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #failedToLoad>
+            <div class="bg-red-900 mt-12 border border-red-800 rounded-lg p-6 shadow-lg text-center">
+                <h2 class="text-white1 text-2xl font-bold tracking-wide uppercase">Failed to load scoreboard</h2>
+                <p class="text-gray-100 mt-4">Please try again later.</p>
+            </div>
+        </ng-template>
+    </div>
+
+    <!-- Dropdowns -->
+    <div class="absolute top-0 right-0 mt-6 mr-4 z-50 space-y-2">
+        <!-- Team Participate Dropdown -->
+        <div *ngIf="(loggedIn | async) && noConflict" class="dropdown-menu">
+            <div class="relative inline-block text-left">
+                <button (click)="toggleJoinDropdown()" class="bg-blue-900 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
+                    <span>Delta i tävling</span>
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div *ngIf="isJoinDropdownOpen" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 dropdown-menu">
+                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <form (ngSubmit)="participate(selectedJoinTeamId, scoreboardID)" class="px-4 py-2">
+                            <div class="mb-2">
+                                <label for="joinTeamSelect" class="block text-sm font-medium text-gray-300">Välj Lag</label>
+                                <select id="joinTeamSelect" [(ngModel)]="selectedJoinTeamId" name="joinTeamSelect" class="mt-1 block w-full py-2 px-3 border border-gray-600 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-700 sm:text-sm">
+                                    <option *ngFor="let team of availableTeams" [value]="team.teamID">{{ team.teamName }}</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">Gå med</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Points Dropdown -->
+        <div *ngIf="(isAdmin | async) === true" class="dropdown-menu">
+            <div class="relative inline-block text-left">
+                <button (click)="togglePointsDropdown()" class="bg-blue-900 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
+                    <span>Tilldela Poäng</span>
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div *ngIf="isPointsDropdownOpen" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5">
+                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <form (ngSubmit)="submitPoints()" class="px-4 py-2">
+                            <div class="mb-2">
+                                <label for="teamSelect" class="block text-sm font-medium text-gray-300">Välj Lag</label>
+                                <select id="teamSelect" [(ngModel)]="selectedTeamId" name="teamSelect" class="mt-1 block w-full py-2 px-3 border border-gray-600 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-700 sm:text-sm">
+                                    <option *ngFor="let team of teams" [value]="team.teamID">{{ team.teamName }}</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label for="pointsInput" class="block text-sm font-medium text-gray-300">Poäng</label>
+                                <input type="number" id="pointsInput" [(ngModel)]="pointsToGive" name="pointsInput" class="mt-1 block w-full py-2 px-3 border border-gray-600 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-700 focus:border-blue-700 sm:text-sm" required />
+                            </div>
+                            <button type="submit" class="w-full bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-700">Give Points</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

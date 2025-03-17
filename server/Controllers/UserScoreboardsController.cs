@@ -7,22 +7,22 @@ namespace server.Controllers
     [ApiController]
     public class UserScoreboardsController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
 
         public UserScoreboardsController(ServerDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         [HttpGet("{id}/scoreboards")]
         public IActionResult GetUserScoreboards(int id)
         {
-            var scoreboards = dbContext.ScoreboardTeams
-                .Where(st => dbContext.TeamUsers
+            var scoreboards = _dbContext.ScoreboardTeams
+                .Where(st => _dbContext.TeamUsers
                     .Where(tu => tu.UserId == id)
                     .Select(tu => tu.TeamID)
                     .Contains(st.TeamID))
-                .Join(dbContext.ScoreBoards,
+                .Join(_dbContext.ScoreBoards,
                 st => st.ScoreboardID,
                 sb => sb.ScoreboardId,
                 (st, sb) => new { sb.ScoreboardId, sb.Name, sb.Active })

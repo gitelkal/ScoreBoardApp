@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject, HostListener, ElementRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, ChangeDetectionStrategy, inject, HostListener, ElementRef, OnDestroy } from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { NgIf, AsyncPipe, NgFor } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { RegisterComponent } from '../register/register.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SearchService } from '@app/core/services/searchService/search.service';
@@ -20,9 +20,11 @@ import { ThirdPartyApiService } from '@app/core/services/thirdPartyApiService/th
   styleUrls: ['./header.component.css'],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
+  router = inject(Router);
+  
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
   userID: number = 0;
@@ -38,13 +40,19 @@ export class HeaderComponent {
   scoreboardImageUrl: string = '';
   imageUrls: { [key: string]: string } = {};
 
+  private destroy$ = new Subject<void>();
+
   constructor(private search: SearchService, private elementRef: ElementRef, private thirdPartyApiService: ThirdPartyApiService) {
     if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
-      this.authService.tokenExpirationCheck();
       this.isAdmin = this.authService.isAdmin;
       this.loggedIn = this.authService.loggedIn;
       this.userID = this.authService.getUserID() ?? 0;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   toggleLoginModal() {
@@ -61,6 +69,11 @@ export class HeaderComponent {
 
   submitQuery(form: NgForm) {
     this.onSearchInputChange();
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
+      this.isDropdownOpen = false;
+      form.resetForm();
+    }
   }
 
   onSearchInputChange() {
@@ -69,8 +82,8 @@ export class HeaderComponent {
       this.isDropdownOpen = false;
       return;
     }
-  
-    this.search.getAllTeamsUsersScoreboards().subscribe(
+
+    this.search.getAllTeamsUsersScoreboards().then(
       (response) => {
         this.scoreboards = response.scoreboards || [];
         this.teams = response.teams || [];
@@ -129,19 +142,19 @@ export class HeaderComponent {
 
   getImageFromApi(result: any, key: string): void {
     if (result.type === 'scoreboard') {
-      this.thirdPartyApiService.getScoreboardImage().subscribe(
+      this.thirdPartyApiService.getScoreboardImage().then(
         (response) => {
           this.imageUrls[key] = this.getImageSize(response);
         },
       );
     } else if (result.type === 'team') {
-      this.thirdPartyApiService.getTeamImage().subscribe(
+      this.thirdPartyApiService.getTeamImage().then(
         (response) => {
           this.imageUrls[key] = this.getImageSize(response);
         },
       );
     } else if (result.type === 'user') {
-      this.thirdPartyApiService.getUserImage().subscribe(
+      this.thirdPartyApiService.getUserImage().then(
         (response) => {
           this.imageUrls[key] = this.getImageSize(response);
         },

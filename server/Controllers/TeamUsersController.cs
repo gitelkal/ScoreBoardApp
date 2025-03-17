@@ -10,25 +10,25 @@ namespace server.Controllers
     [ApiController]
     public class TeamUsersController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
         private readonly IHubContext<ScoreboardHub> _hubContext;
 
         public TeamUsersController(ServerDbContext dbContext, IHubContext<ScoreboardHub> hubContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
             _hubContext = hubContext;
         }
 
         [HttpGet]
         public IActionResult GetAllTeamUsers()
         {
-            var teamsUsers = dbContext.Teams
+            var teamsUsers = _dbContext.Teams
                 .Select(team => new
                 {
                     Team = team,
-                    Users = dbContext.TeamUsers
+                    Users = _dbContext.TeamUsers
                         .Where(tu => tu.TeamID == team.TeamID)
-                        .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
+                        .Join(_dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => user)
                         .ToList()
                 })
                 .ToList();
@@ -40,14 +40,14 @@ namespace server.Controllers
         [Route("{teamId}")]
         public IActionResult GetTeamUsers(int teamId)
         {
-            var teamUsers = dbContext.Teams
+            var teamUsers = _dbContext.Teams
                 .Where(team => team.TeamID == teamId)
                 .Select(team => new
                 {
                     Team = team,
-                    Users = dbContext.TeamUsers
+                    Users = _dbContext.TeamUsers
                         .Where(tu => tu.TeamID == team.TeamID)
-                        .Join(dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => new
+                        .Join(_dbContext.Users, tu => tu.UserId, user => user.UserId, (tu, user) => new
                         {
                             user.UserId,
                             user.Username,
@@ -69,9 +69,9 @@ namespace server.Controllers
         [HttpGet("{userId}/teams")]
         public IActionResult GetUserTeams(int userId)
         {
-            var teams = dbContext.TeamUsers
+            var teams = _dbContext.TeamUsers
                 .Where(tu => tu.UserId == userId)
-                .Join(dbContext.Teams,
+                .Join(_dbContext.Teams,
                 tu => tu.TeamID,
                 t => t.TeamID,
                 (tu, t) => new
@@ -96,43 +96,20 @@ namespace server.Controllers
                 TeamID = request.TeamId
             };
 
-            dbContext.TeamUsers.Add(teamUser);
-            dbContext.SaveChanges();
+            _dbContext.TeamUsers.Add(teamUser);
+            _dbContext.SaveChanges();
 
             await _hubContext.Clients.All.SendAsync("ReceiveUserJoinedTeam", teamUser.TeamID, teamUser.UserId);
 
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        //[HttpPost("{username}/{teamId}")]
-        //public IActionResult CreateUserAndAddToTeam(string username,string passwordHash, int teamId)
-        //{
-        //    var user = new User
-        //    {
-        //        Username = username,
-        //        PasswordHash = passwordHash
-               
-        //    };
-
-        //    dbContext.Users.Add(user);
-        //    dbContext.SaveChanges();
-
-        //    var teamUser = new TeamUser
-        //    {
-        //        TeamID = teamId,
-        //        UserId = user.UserId
-
-        //    };
-
-        //    dbContext.TeamUsers.Add(teamUser);
-        //    dbContext.SaveChanges();
-        //    return StatusCode(StatusCodes.Status201Created, new { teamUserId = teamUser.TeamID, username = user.Username });
-        //}
+ 
 
         [HttpDelete]
         public async Task <IActionResult> RemoveUserFromTeam(DropUserFromTeamRequest request)
         {
-            var teamUser = dbContext.TeamUsers
+            var teamUser = _dbContext.TeamUsers
                 .FirstOrDefault(tu => tu.TeamID == request.TeamID && tu.UserId == request.UserID);
 
             if (teamUser == null)
@@ -140,8 +117,8 @@ namespace server.Controllers
                 return NotFound(new { message = "Användaren finns inte i laget." });
             }
 
-            dbContext.TeamUsers.Remove(teamUser);
-            dbContext.SaveChanges();
+            _dbContext.TeamUsers.Remove(teamUser);
+            _dbContext.SaveChanges();
 
             await _hubContext.Clients.All.SendAsync("ReceiveUserLeftTeam", teamUser.TeamID, teamUser.UserId);
 

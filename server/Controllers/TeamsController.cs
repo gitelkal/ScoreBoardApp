@@ -8,24 +8,24 @@ namespace server.Controllers
     [ApiController]
     public class TeamsController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
 
         public TeamsController(ServerDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         [HttpGet]
         public IActionResult GetAllTeams()
         {
-            var teams = dbContext.Teams.ToList();
+            var teams = _dbContext.Teams.ToList();
             return Ok(teams);
         }
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetOneTeam(int id)
         {
-            var team = dbContext.Teams.Find(id);
+            var team = _dbContext.Teams.Find(id);
             if (team == null)
             {
                 return NotFound();
@@ -35,37 +35,37 @@ namespace server.Controllers
         [HttpPost]
         public IActionResult CreateTeam([FromBody] Team team)
         {
-            dbContext.Teams.Add(team);
-            dbContext.SaveChanges();
+            _dbContext.Teams.Add(team);
+            _dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
         [HttpDelete]
         [Route("{id}")]
         public IActionResult DeleteTeam(int id)
         {
-            var team = dbContext.Teams.Find(id);
+            var team = _dbContext.Teams.Find(id);
             if (team == null)
             {
                 return NotFound();
             }
-            dbContext.Teams.Remove(team);
-            dbContext.SaveChanges();
+            _dbContext.Teams.Remove(team);
+            _dbContext.SaveChanges();
             return Ok();
         }
-        [HttpPut]
-        public IActionResult UpdateTeam([FromBody] Team updatedTeam)
+        [HttpPut("{id}")]
+        public IActionResult UpdateTeam(int id, [FromBody] Team updatedTeam)
         {
-            var team = dbContext.Teams.Find(updatedTeam.TeamID);
+            var team = _dbContext.Teams.Find(id);
             if (team == null)
             {
                 return NotFound();
             }
 
-            // Uppdatera endast namnet (eller fler fält om nödvändigt)
             team.TeamName = updatedTeam.TeamName;
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
             return Ok(team);
         }
+
     }
 }

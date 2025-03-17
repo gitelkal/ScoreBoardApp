@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Threading.Tasks;
 
 public class ScoreboardHub : Hub
 {
@@ -18,5 +17,9 @@ public class ScoreboardHub : Hub
     public async Task NotifyScoreboardCreated(int scoreboardId)
     {
         await Clients.All.SendAsync("ScoreboardCreated", scoreboardId);
+    }
+    public async Task NotifyTeamJoinedScoreboard(int scoreboardId, int teamId)
+    {
+        await Clients.All.SendAsync("TeamJoinedScoreboard", scoreboardId, teamId);
     }
 }

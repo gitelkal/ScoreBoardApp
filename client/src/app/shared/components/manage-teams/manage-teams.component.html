@@ -1,255 +1,298 @@
-<h1 id="HandleTeamsAdmin">Hantera lag</h1>
-<div>
-<div class="head">
-  <!-- 🔹 Skapa nytt lag -->
-  <div>
-    <form>
-      <h2>Skapa ett nytt lag</h2>
-
-      <label for="name">Lagnamn:</label>
-      <input
-        type="text"
-        id="editName"
-        name="editTeamName"
-        [(ngModel)]="selectedTeam.teamName"
-        placeholder="Lägg till lagnamn"
-      />
-
-      <button type="button" (click)="createTeam()">Skapa lag</button>
-    </form>
-  </div>
-
-  <!-- 🔹 Hantera befintliga lag-->
-  <div class="">
-    <form (ngSubmit)="updateTeam()" #editForm="ngForm" class="border">
-      <h2>Hantera lag</h2>
-      <label for="editname">Lagnamn:</label>
-
-      <!-- 🔹 Dropdown och sök -->
-      <div class="relative w-full">
-        <input
-          type="text"
-          name="editname"
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="searchManageQuery"
-          (input)="filterManageTeams()"
-          (focus)="showDropdown = true"
-          placeholder="Sök lag att hantera..."
-          class="border md:p-2 rounded md:w-full text-black"
-        />
-
-        <ul
-          *ngIf="showDropdown && filteredTeams.length > 0"
-          class="absolute top-full left-0 z-50 bg-white border rounded shadow-md md:max-h-40 overflow-y-auto w-full"
-          #dropdown
+<h1
+  class="font-digital text-black1 font-semibold text-center text-4xl w-full my-6"
+  id="HandleTeamsAdmin"
+>
+  Hantera lag
+</h1>
+<div class="font-digital text-grey4 font-semibold">
+  <div class="grid grid-cols-2 gap-4 justify-self-center bg-[#e9ecef]">
+    <!-- Skapa nytt lag -->
+    <div class="">
+      <form
+        class="w-full max-w-lg bg-white mb-4 rounded-lg shadow-lg overflow-hidden mx-4"
+      >
+        <h2
+          class="font-digital text-white1 font-semibold text-center bg-red5 text-xl w-full mb-5 p-4"
         >
-          <li
-            *ngFor="let team of filteredTeams"
-            (click)="selectTeam(team)"
-            class="md:p-2 hover:bg-gray-200 cursor-pointer"
+          Skapa ett nytt lag
+        </h2>
+        <div class="mb-4 mx-6">
+          <label class="block text-gray-700 font-semibold ;" for="name"
+            >Lagnamn:</label
           >
-            {{ team.teamName }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- 🔹 Ändra lag -->
-      <div class="" *ngIf="selectedTeam.teamID">
-        <label class="">Nytt namn:</label>
-        <input
-          type="text"
-          name="editTeamName"
-          [(ngModel)]="selectedTeam.teamName"
-          class=""
-        />
-      </div>
-
-      <div class="flex justify-between">
-        <button type="submit" class="transition">Uppdatera lag</button>
-        <button type="button" (click)="deleteTeam()" class="  ">
-          Ta bort lag
+          <input
+            class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
+            type="text"
+            id="addName"
+            name="addTeamName"
+            [(ngModel)]="teamName"
+            placeholder="Lägg till lagnamn"
+          />
+        </div>
+        <button
+          type="button"
+          (click)="createTeam()"
+          class="text-xl text-white font-bold m-5 p-3 rounded-lg bg-red5 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+        >
+          Skapa lag
         </button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
 
-  <div class="">
- 
-    <form (ngSubmit)="joinTeam()" #editForm="ngForm" class="border">
-      <h2>Lägg till användare i lag</h2>
-
-      <label class="chooseMemberAdd">Välj användare</label>
-
-      <!-- 🔹 Dropdown och sök -->
-      <div class="relative w-full">
-        <input
-          type="text"
-          name="editname"
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="searchManageQuery"
-          (input)="filterManageTeams()"
-          (focus)="showDropdown = true"
-          placeholder="Sök lag att hantera..."
-          class="border md:p-2 rounded md:w-full text-black"
-        />
-
-        <ul *ngIf="activeDropdown === 'addUser' && filteredUsers.length > 0">
-          <li
-            *ngFor="let user of filteredUsers"
-            (click)="selectUserToAdd(user)"
-            class="p-2 hover:bg-gray-200 cursor-pointer"
-          >
-            {{ user.username }}
-          </li>
-        </ul>
-
-        <div>
-          <label class="chooseTeamAdd">Välj lag</label>
-          <input
-            type="text"
-            name="searchListQuery"
-            [(ngModel)]="searchListQuery"
-            (input)="filterManageTeams()"
-            (focus)="activeDropdown = 'team'"
-            placeholder="Sök efter lag..."
-          />
-
-          <ul
-            *ngIf="activeDropdown === 'team' && filteredTeams.length > 0"
-            class="absolute top-full left-0 z-50 bg-white border rounded shadow-md max-h-60 overflow-y-auto w-full"
-          >
-            <li
-              *ngFor="let team of filteredTeams"
-              (click)="selectTeamToAdd(team)"
-              class="p-2 hover:bg-gray-200 cursor-pointer"
-            >
-              {{ team.teamName }}
-            </li>
-          </ul>
-        </div>
-        <button type="button" (click)="joinTeam()">lägg till</button>
-      </div>
-    </form>
-  </div>
-
-  <div>
-    <div>
-      <!--välj användare-->
-      <form (ngSubmit)="removeUserFromTeam()" #editForm="ngForm" class="border">
-        <h2 class="">Ta bort användare ur lag</h2>
-
-        <label class="chooseMemberDelete">Välj användare</label>
-        <input
-          type="text"
-          name="searchUserToRemoveQuery"
-          [(ngModel)]="searchUserToRemoveQuery"
-          (input)="filterUsers(searchUserToRemoveQuery)"
-          (focus)="activeDropdown = 'removeUser'"
-          placeholder="Sök efter användare..."
-          class="border md:p-2 rounded md:w-full text-black"
-        />
-        <ul
-          *ngIf="activeDropdown === 'removeUser' && filteredUsers.length > 0"
-          class="absolute top-full left-0 z-50 bg-white border rounded shadow-md max-h-60 overflow-y-auto w-full"
+    <!-- Hantera befintliga lag -->
+    <div class="dropdown-container">
+      <form
+        (ngSubmit)="updateTeam()"
+        class="w-full max-w-lg bg-white mb-4 rounded-lg shadow-lg overflow-hidden mx-4"
+      >
+        <h2
+          class="font-digital text-white1 font-semibold text-center bg-red5 text-xl w-full mb-5 p-4"
         >
-          <li
-            *ngFor="let user of filteredUsers"
-            (click)="selectUserToRemove(user)"
-            class="p-2 hover:bg-gray-200 cursor-pointer"
+          Uppdatera eller ta bort lag
+        </h2>
+        <div class="mb-4 mx-6">
+          <label for="editname" class="block text-gray-700 font-semibold mb-1;"
+            >Sök lag:</label
           >
-            {{ user.username }}
-          </li>
-        </ul>
-
-        <div class="relative w-full">
-          <!--välj lag-->
-          <label class="chooseFromTeamDelete">Välj lag</label>
           <input
             type="text"
-            name="removeUser"
-            [(ngModel)]="searchListQuery"
-            (input)="filterManageTeams()"
-            (focus)="activeDropdown = 'team'"
-            placeholder="Sök efter lag..."
-            class="border md:p-2 rounded md:w-full text-black"
+            name="searchManageQuery"
+            [(ngModel)]="searchManageQuery"
+            (input)="filterManageTeams(searchManageQuery)"
+            (focus)="activeDropdown = 'manageTeams'"
+            placeholder="Sök lag att hantera..."
+            class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
           />
 
           <ul
-            *ngIf="activeDropdown === 'team' && filteredTeams.length > 0"
-            class="absolute top-full left-0 z-50 bg-white border rounded shadow-md max-h-60 overflow-y-auto w-full"
+            *ngIf="activeDropdown === 'manageTeams' && filteredTeams.length > 0"
+            class="md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto"
+            #dropdown
           >
             <li
               *ngFor="let team of filteredTeams"
-              (click)="selectTeam(team)"
+              (click)="selectTeam(team, 'add')"
               class="p-2 hover:bg-gray-200 cursor-pointer"
             >
               {{ team.teamName }}
             </li>
           </ul>
+
+          <div *ngIf="selectedTeam?.teamID" class="mb-3">
+            <label class="block text-gray-700 font-semibold mb-1"
+              >Ändra namn på lag:</label
+            >
+            <input
+              type="text"
+              name="editTeamName"
+              [(ngModel)]="selectedTeam.teamName"
+              class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
         </div>
-        <button type="button" (click)="removeUserFromTeam()">
+
+        <div class="flex justify-between mt-4">
+          <button
+            type="submit"
+            class="text-xl text-white font-bold m-5 p-3 rounded-lg bg-red5 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900;"
+          >
+            Uppdatera lag
+          </button>
+          <button
+            type="button"
+            (click)="deleteTeam()"
+            class="text-xl text-white font-bold m-5 p-3 rounded-lg bg-red5 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900;"
+          >
+            Ta bort lag
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Hantera användare i lag -->
+    <div class="dropdown-container">
+      <form
+        class="w-full max-w-lg bg-white mb-4 rounded-lg shadow-lg overflow-hidden mx-4"
+        (ngSubmit)="modifyTeam('add')"
+        #editForm="ngForm"
+      >
+        <h2
+          class="font-digital text-white1 font-semibold text-center bg-red5 text-xl w-full mb-5 p-4"
+        >
+          Lägg till eller ta bort användare i lag
+        </h2>
+        <div class="mb-4 mx-6">
+          <label class="block text-gray-700 font-semibold mb-1"
+            >Välj användare</label
+          >
+          <input
+            class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
+            type="text"
+            name="searchUserQuery"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="searchUserQuery"
+            (input)="filterUsers(searchUserQuery)"
+            (focus)="activeDropdown = 'user'"
+            placeholder="Sök användare..."
+          />
+
+          <ul
+            class="md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto"
+            *ngIf="activeDropdown === 'user' && filteredUsers.length > 0"
+          >
+            <li
+              class="md:p-2 hover:bg-gray-200 cursor-pointer;"
+              *ngFor="let user of filteredUsers"
+              (click)="selectUser(user, 'add')"
+            >
+              {{ user.username }}
+            </li>
+          </ul>
+
+          <label class="block text-gray-700 font-semibold mb-1;"
+            >Välj lag</label
+          >
+          <input
+            class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
+            type="text"
+            name="searchTeamQuery"
+            [(ngModel)]="searchTeamQuery"
+            (input)="filterTeams(searchTeamQuery)"
+            (focus)="activeDropdown = 'team'"
+            placeholder="Sök efter lag..."
+          />
+
+          <ul
+            class="md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto"
+            *ngIf="activeDropdown === 'team' && filteredTeams.length > 0"
+          >
+            <li
+              class="md:p-2 hover:bg-gray-200 cursor-pointer;"
+              *ngFor="let team of filteredTeams"
+              (click)="selectTeam(team, 'add')"
+            >
+              {{ team.teamName }}
+            </li>
+          </ul>
+        </div>
+        <button
+          class="text-xl text-white font-bold m-5 p-3 rounded-lg bg-red5 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900;"
+          type="button"
+          (click)="modifyTeam('add')"
+        >
+          Lägg till
+        </button>
+        <button
+          class="text-xl text-white font-bold m-5 p-3 rounded-lg bg-red5 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900;"
+          type="button"
+          (click)="modifyTeam('remove')"
+        >
           Ta bort användare
         </button>
       </form>
     </div>
-  </div>
-</div>
-  <!-- -------------------- -->
 
-<div>
-  <div class="flex flex-col items-center w-full mt-20 justify-between">
-    <p>
-    lägg till lag i scoreboard</p>
-    <p>Ta bort lag ur scoarboard</p>
-  </div>
-</div>
+    <!-- Hantera lag i scoreboard -->
 
-<!-- --------------------- -->
-  <div class="flex flex-col items-center w-full mt-20 justify-between">
-    <!-- Sök efter Team -->
-    <h1 id="searchTeamsAdmin">Sök efter Teams</h1>
-    <input
-      type="text"
-      [(ngModel)]="searchListQuery"
-      (input)="filterTeamList()"
-      placeholder="Sök efter team..."
-      class="border p-2 rounded w-1/6 pt-4 h-1/2 max-w-md mb-4 text-center bg-white text-black"
-    />
-
-    <!-- Sorteringsdropdown -->
-    <select
-      [(ngModel)]="sortBy"
-      class="flex appearance-auto w-full max-w-md mb-4 bg-red-900 border border-black font-semibold py-2 px-4 pb-3 text-center text-white hover:bg-red-800 transition"
-    >
-      <option value="name" class="">Sortera efter namn</option>
-      <option value="date" class="">Sortera efter senast aktiv</option>
-    </select>
-
-    <ul
-      *ngIf="sortedTeams.length > 0; else noResults"
-      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-    >
-      <li
-        *ngFor="let team of sortedTeams"
-        class="bg-white border-box rounded-md flex justify-center mt-4 p-4 shadow-md hover:bg-blue-100 hover:shadow-lg transition-all cursor-pointer text-center py-3 sm:py-4"
+    <div class="dropdown-container">
+      <form
+        class="w-full max-w-lg bg-white mb-4 rounded-lg shadow-lg overflow-hidden mx-4"
       >
-        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-          <div class="shrink-0">
-            <img
-              class="w-8 h-8 rounded-full"
-              src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg"
-              alt="Neil image"
-            />
-          </div>
-          <div class="flex flex-col items-start">
-            <strong class="text-lg">{{ team.teamName }}</strong>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <ng-template #noResults>
-      <p class="text-gray-500">Inga lag hittades.</p>
-    </ng-template>
-  </div>
+        <h2
+          class="font-digital text-white1 font-semibold text-center bg-red5 text-xl w-full mb-5 p-4"
+        >
+          Lägg till i scoreboard
+        </h2>
+        <div class="mb-4 mx-6">
+          <!-- Sök lag -->
+          <label class="block text-gray-700 font-semibold mb-1;"
+            >Välj lag</label
+          >
+          <input
+            type="text"
+            name="searchTeamQuery"
+            [(ngModel)]="searchTeamQuery"
+            (input)="filterTeams(searchTeamQuery)"
+            (focus)="activeDropdown = 'team'"
+            placeholder="Sök efter lag..."
+            class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base"
+          />
 
+          <!-- Lista med filtrerade lag -->
+          <ul
+            *ngIf="activeDropdown === 'team' && filteredTeams.length > 0"
+            class="border rounded shadow-md h-40 overflow-y-auto"
+          >
+            <li
+              *ngFor="let team of filteredTeams"
+              (click)="selectTeamsForScoreboard(team)"
+              class="p-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ team.teamName }}
+            </li>
+          </ul>
+
+          <h3 class="mt-4 font-semibold">Valda lag:</h3>
+          <ul
+            *ngIf="selectedTeams.length > 0"
+            class="border p-2 rounded shadow-md max-h-40 overflow-y-auto"
+          >
+            <li
+              *ngFor="let team of selectedTeams"
+              class="flex justify-between items-center p-2"
+            >
+              {{ team.teamName }}
+
+              <!-- Tar bort laget från den lokala listan -->
+              <button
+                (click)="removeTeamFromList(team)"
+                class="ml-2 text-red-500"
+              >
+                ❌
+              </button>
+            </li>
+          </ul>
+
+          <!-- Sök scoreboard -->
+          <label class="block text-gray-700 font-semibold mb-1 mt-4;"
+            >Välj scoreboard</label
+          >
+          <input
+            type="text"
+            name="searchScoreboardQuery"
+            [(ngModel)]="searchScoreboardQuery"
+            (input)="filterScoreboards(searchScoreboardQuery)"
+            (focus)="activeDropdown = 'scoreboard'"
+            placeholder="Sök efter scoreboard..."
+            class="block border border-gray-700 p-2 my-2 rounded text-grey4 w-full bg-white1 text-base focus:ring-blue-500 focus:border-blue-500"
+          />
+
+          <!-- Lista med filtrerade scoreboards -->
+          <ul
+            *ngIf="
+              activeDropdown === 'scoreboard' && filteredScoreboards.length > 0
+            "
+            class="md:z-10 md:w-full bg-white border rounded shadow-md h-[370px] overflow-y-auto"
+          >
+            <li
+              *ngFor="let scoreboard of filteredScoreboards"
+              (click)="selectScoreboard(scoreboard)"
+              class="p-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ scoreboard.name }}
+            </li>
+          </ul>
+
+          <!-- Knapp för att lägga till valda lag i scoreboard -->
+          <button
+            type="button"
+            (click)="addTeamsToScoreboard()"
+            class="text-xl text-white font-bold m-5 p-3 rounded-lg bg-red5 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900"
+          >
+            Lägg till
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

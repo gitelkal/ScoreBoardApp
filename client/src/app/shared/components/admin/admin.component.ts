@@ -1,13 +1,20 @@
-import { Component, inject } from '@angular/core';
-import { AdminService } from '@app/core/services/adminService/admin.service';
-import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; // 
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { Observable, Subject, takeUntil } from 'rxjs';
+
+import { AdminService } from '@app/core/services/adminService/admin.service';
+import { UserService } from '@app/core/services/userService/user.service';
+import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service'; //
+import { AuthService } from '@app/core/services/auth/auth.service';
+import { TeamService } from '@app/core/services/teamService/team.service';
+
 import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
 import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboard.component';
-import { AuthService } from '@app/core/services/auth/auth.service';
-import { Observable } from 'rxjs';
+import { Admins } from '@app/shared/models/admins.model';
+import { Teams } from '@app/shared/models/teams.models';
 
 @Component({
   selector: 'app-admin',
@@ -19,72 +26,217 @@ import { Observable } from 'rxjs';
     ManageTeamsComponent,
     ManageScoreboardComponent,
     AsyncPipe,
-
   ],
-  providers: [AdminService, ScoreboardService], 
+  providers: [AdminService, ScoreboardService, UserService, TeamService],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit, OnDestroy {
+  // Admin
   adminService = inject(AdminService);
-  scoreboardService = inject(ScoreboardService); 
-
+  auth = inject(AuthService);
   getAllAdmins$ = this.adminService.getAllAdmins();
-  router = inject(Router);
+  admins: any[] = [];
+  isAdmin = this.auth.isAdmin;;
+  openedFromAdmins: boolean = false;
 
+  //User
+  userService = inject(UserService);
+  getAllUsers$ = this.userService.getAllUsers();
+  users: any[] = [];
+  userID: number = 0;
+  searchUserQuery: string = '';
+
+  // Team
+  teamService = inject(TeamService);
+  teams: any[] = [];
+  searchTeamQuery: string = '';
+
+  //övrigt
+  scoreboardService = inject(ScoreboardService);
   searchQuery: string = '';
   sortBy: string = 'name';
-  admins: any[] = [];
-  isAdmin!: Observable<boolean>;
+  selectedUser: any = null;
 
-  constructor(private auth: AuthService) {
-    this.adminService.getAllAdmins().subscribe(
-      (data) => {
-        console.log('Admins hämtade:', data);
+  private destroy$ = new Subject<void>();
+
+  constructor(private router: Router) {}
+  
+  ngOnInit() {
+    this.adminService.getAllAdmins().then(
+      (data: Admins[]) => {
+        // console.log('Admins hämtade:', data);
         this.admins = data;
       },
-      (error) => {
+      (error: any) => {
         console.error('Fel vid hämtning av admins:', error);
       }
     );
-    this.isAdmin = this.auth.isAdmin;
+
+    this.userService.getAllUsers().then(
+      (data) => {
+        // console.log('Users hämtade:', data);
+        this.users = data;
+      },
+      (error) => {
+        console.error('Fel vid hämtning av users:', error);
+      }
+    );
+  
+    this.teamService.getAllTeams().then(
+      (data: Teams[]) => {
+        // console.log('teams hämtade:', data);
+        this.teams = data;
+      },
+      (error: any) => {
+        console.error('Fel vid hämtning av teams:', error);
+      }
+    );
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // Admin
   get sortedAdmins() {
     if (!this.filteredAdmins || this.filteredAdmins.length === 0) return [];
     return this.filteredAdmins.sort((a: any, b: any) => {
       if (!this.sortBy) return 0;
       if (this.sortBy === 'name') return a.username.localeCompare(b.username);
-      if (this.sortBy === 'date') {
-        return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
-      }
+      if (this.sortBy === 'nameReversed')
+        return b.username.localeCompare(a.username);
+
       return 0;
     });
   }
 
-  // Navigera till admin-detaljer
   handleAdminClick(admin: any) {
-    console.log('Admin clicked:', admin);
-    this.router.navigate(['/admin', admin.adminID]);
+    this.selectedUser = admin;
+    this.openedFromAdmins = true;
   }
 
   get filteredAdmins() {
+    if (!this.admins?.length) return [];
+
     return this.admins.filter((admin: any) =>
-      (admin.firstname + ' ' + admin.lastname)
-        .toLowerCase()
-        .includes(this.searchQuery.toLowerCase())
+      admin.username.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+  
+  makeAdmin(user: any) {
+    if (!confirm(`Vill du göra ${user.username} till admin?`)) return;
+
+    const payload = { username: user.username };
+
+    this.adminService.makeAdmin(payload).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
+      () => {
+        alert(`${user.username} är nu admin!`);
+        this.selectedUser = null;
+      },
+      (error) => {
+        alert(error.error || 'Något gick fel, försök igen.');
+      }
     );
   }
 
+  deleteAdmin(admin: any) {
+    this.adminService.deleteAdmin(admin.adminID).subscribe(
+      (response) => {
+        this.admins = this.admins.filter((a) => a.adminID !== admin.adminID);
+
+        alert('Användaren har tagits bort!');
+      },
+      (error) => {
+        alert('Något gick fel vid borttagning av admin.');
+      }
+    );
+  }
+  // __________________User______________________
+  get sortedUsers() {
+    if (!this.filteredUsers || this.filteredUsers.length === 0) return [];
+    return this.filteredUsers.sort((a: any, b: any) => {
+      if (!this.sortBy) return 0;
+      if (this.sortBy === 'name') return a.username.localeCompare(b.username);
+      if (this.sortBy === 'nameReversed')
+        return b.username.localeCompare(a.username);
+      return 0;
+    });
+  }
+  handleUserClick(user: any) {
+    this.selectedUser = user;
+    this.openedFromAdmins = false;
+  }
+
+  get filteredUsers() {
+    if (!this.users?.length) return [];
+
+    return this.users.filter((user: any) =>
+      user.username.toLowerCase().includes(this.searchUserQuery.toLowerCase())
+    );
+  }
+
+  goToUserPage(user: any) {
+    if (!user?.userId) return;
+
+    this.router.navigate(['/user', user.userId]).catch((error) => {
+      alert('Något gick fel vid navigering.');
+    });
+  }
+
+  deleteUser(user: any) {
+    this.userService.deleteUser(user.userId).subscribe(
+      (response) => {
+        this.users = this.users.filter((u) => u.userId !== user.userId);
+        alert('Användaren har tagits bort!');
+      },
+      (error) => {
+        alert('Något gick fel vid borttagning av användare.');
+      }
+    );
+  }
+  // Team
+  get sortedTeam() {
+    if (!this.filteredTeams || this.filteredTeams.length === 0) return [];
+    return this.filteredTeams.sort((a: any, b: any) => {
+      if (!this.sortBy) return 0;
+      if (this.sortBy === 'name') return a.teamName.localeCompare(b.teamName);
+      if (this.sortBy === 'nameReversed')
+        return b.teamName.localeCompare(a.teamName);
+      return 0;
+    });
+  }
+
+  get filteredTeams() {
+    if (!this.teams?.length) return [];
+
+    return this.teams.filter((team: any) =>
+      team.teamName.toLowerCase().includes(this.searchTeamQuery.toLowerCase())
+    );
+  }
+
+  goToTeamPage(team: any) {
+    if (!team || !team.teamID) {
+      alert('Något gick fel: teamID saknas.');
+      return;
+    }
+
+    this.router.navigate(['/team', team.teamID]).catch((error) => {
+      alert('Något gick fel vid navigering.');
+      console.error('Navigeringsfel:', error);
+    });
+  }
+  // Handle...
 
   handleScoreboardCreated(scoreboardData: any) {
     this.scoreboardService.createScoreboard(scoreboardData).subscribe(
       (response) => {
-        console.log('Tävling skapad:', response);
         alert('Tävling skapad!');
       },
       (error) => {
-        console.error('Fel vid skapande av tävling:', error);
         alert('Något gick fel vid skapandet av tävling.');
       }
     );
@@ -95,39 +247,32 @@ export class AdminComponent {
       alert('Ingen tävlingspoängtavla vald för uppdatering!');
       return;
     }
-  
-    this.scoreboardService.updateScoreboard(scoreboardData.scoreboardId, scoreboardData).subscribe(
-      (response) => {
-        console.log('Tävlingspoängtavlan uppdaterad:', response);
-        alert('Tävlingspoängtavlan har uppdaterats!');
-      },
-      (error) => {
-        console.error('Fel vid uppdatering av tävling:', error);
-        alert('Något gick fel vid uppdatering av tävling.');
-      }
-    );
+
+    this.scoreboardService
+      .updateScoreboard(scoreboardData.scoreboardId, scoreboardData)
+      .subscribe(
+        (response) => {
+          alert('Tävlingspoängtavlan har uppdaterats!');
+        },
+        (error) => {
+          alert('Något gick fel vid uppdatering av tävling.');
+        }
+      );
   }
-  
-
-
-
-
-
-
-
 
   handleTeamCreated(teamData: any) {
-    console.log('Nytt lag skapat:', teamData);
-    alert(`Laget "${teamData.teamName}" har skapats!`);
+    if (teamData) {
+      alert(`Laget "${teamData.teamName}" har skapats!`);
+    } else {
+      alert('Laget har skapats.');
+    }
   }
 
   handleTeamDeleted(teamData: any) {
-    console.log('Bortaget lag med ID:', teamData);
     alert(`Laget med ID "${teamData}" har tagits bort!`);
   }
 
   handleTeamUpdated(teamData: any) {
-    console.log('Lag uppdaterat:', teamData);
     alert(`Laget "${teamData.name}" har uppdaterats!`);
   }
 }

@@ -4,6 +4,9 @@ import { LoginRequest } from '@app/interfaces/login-request';
 import { AuthResponse } from '@app/interfaces/auth-response';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../userService/user.service';
+import { AdminService } from '../adminService/admin.service';
+import { RegisterRequest } from '@app/interfaces/register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +18,20 @@ export class AuthService {
   loggedIn = new BehaviorSubject<boolean>(false); 
   tokenExpirationDateTime: Date = new Date();
   timeUntilExpiration:number = 0;
+  userID: number = 0;
+  username: string = '';
   firstname: string = '';
   lastname: string = '';
   errorMessage: string = '';
+  authService: any;
 
-  constructor(private apiService: ApiService, private http: HttpClient) {
+  constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService, private adminService: AdminService) {
     this.api = this.apiService.api;
+    this.tokenExpirationCheck();
   }
-
   
   login(data: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.api}/login`, data).pipe(
+    return this.http.post<AuthResponse>(`${this.api}/account/login`, data).pipe(
       map((response: AuthResponse) => {
         if (response.token) localStorage.setItem(this.tokenKey, response.token);
         const expirationDate = new Date();
@@ -49,6 +55,15 @@ export class AuthService {
     );
   }
 
+  createNewUser(data: RegisterRequest): Observable<any> {
+    return this.http.post(`${this.api}/account/register`, data).pipe(
+      map((response: any) => {
+        this.login({ username: data.username, password: data.password }).subscribe();
+        return response;
+      })
+    );
+  }
+
   forgotPassword(email: string): Observable<any> {
     return this.http.post(`${this.api}/account/forgot-password`, { email });
   }
@@ -64,12 +79,21 @@ export class AuthService {
     localStorage.removeItem('userID');
     this.isAdmin.next(false);
     this.loggedIn.next(false);
+    this.userID = 0;
+    this.username = '';
+    this.firstname = '';
+    this.lastname = '';
   }
 
   tokenExpirationCheck() {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
     let token = localStorage.getItem(this.tokenKey);
     if (token) {
       this.loggedIn.next(true);
+      this.userID = parseInt(localStorage.getItem('userID')!);
+      this.loadUserData();
     }
     let expirationTime = localStorage.getItem('tokenExpiration');
     if (expirationTime) {
@@ -85,15 +109,35 @@ export class AuthService {
         console.log("Token har utgått");
         this.logout();
       }
-    },360000); // 1 timme
+    }, 360000); // 1 timme
   }
   
-  getUserID() {
-    const userID = localStorage.getItem('userID');
-    return userID ? parseInt(userID, 10) : null;
+  private loadUserData() {
+    this.userService.getOneUser(this.getUserID()).then((response: { firstname: string; lastname: string; username: string }) => {
+      this.firstname = response.firstname;
+      this.lastname = response.lastname;
+      this.username = response.username;
+      this.adminService.checkIfAdmin({ username: this.getUsername() }).subscribe((response: { success: boolean }) => {
+        if (response.success) {
+          this.isAdmin.next(true);
+        }
+      });
+    });
   }
+
+  getUserID() {
+    return this.userID;
+  }
+
   getUsername() {
-    const username = localStorage.getItem('username');
-    return username ? username : null;
+    return this.username;
+  }
+
+  getFirstname() {
+    return this.firstname;
+  }
+
+  getLastname() {
+    return this.lastname;
   }
 }

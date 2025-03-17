@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Scoreboards } from '@app/shared/models/scoreboards.model';
-import { map } from 'rxjs/operators';
+import { map, from, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +16,12 @@ import { map } from 'rxjs/operators';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     scoreboardService = inject(ScoreboardService);
     getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
     activeScoreboards: Scoreboards[] = [];
+
+    private destroy$ = new Subject<void>();
 
     constructor(private signalRService: SignalRService) { }
 
@@ -29,19 +31,27 @@ export class HomeComponent implements OnInit {
         this.loadScoreboards();
     }
 
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
     loadScoreboards(): void {
-        this.scoreboardService.getAllScoreboards().pipe(
-        map(scoreboards => scoreboards.filter(scoreboard => scoreboard.active))
-        ).subscribe(filteredScoreboards => {
+    from(this.scoreboardService.getAllScoreboards()).pipe(
+        map(scoreboards => scoreboards.filter(scoreboard => scoreboard.active)),
+        takeUntil(this.destroy$)
+    ).subscribe(filteredScoreboards => {
         this.activeScoreboards = filteredScoreboards;
-        });
+    });
     }
 
     subscribeToScoreboardCreation() {
-        this.signalRService.scoreboardCreation.subscribe(scoreboardId => {
-            if (scoreboardId) {
-                this.getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
-            }
-        });
+    this.signalRService.scoreboardCreation.pipe(
+        takeUntil(this.destroy$)
+    ).subscribe(scoreboardId => {
+        if (scoreboardId) {
+        this.getAllScoreboards$ = this.scoreboardService.getAllScoreboards();
+        }
+    });
     }
 }

@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NgIf, NgClass } from '@angular/common';
-import { RegisterService } from '@app/core/services/registerService/register.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +11,7 @@ import { RegisterService } from '@app/core/services/registerService/register.ser
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
   email: string = '';
@@ -24,49 +24,65 @@ export class RegisterComponent {
   usernameExists: boolean = false;
   emailExists: boolean = false;
 
-  constructor(private registerService: RegisterService) {}
+  private destroy$ = new Subject<void>();
+
+  constructor(private auth: AuthService) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   submitRegister(form: NgForm) {
-    if(form.invalid) { return; }
-      this.registerService.createNewUser({ email: this.email, username: this.username, password: this.password, firstname: this.firstname, lastname: this.lastname }).subscribe({
-        next: () => {
-          this.success = true;
-          setTimeout(() => {
-            this.dialog.closeAll();
-            form.resetForm();
-          }, 2000);
-        },
-        error: (error) => {
-          if (error.status === 400) {
-            if (error.error.field === 'username') {
-              this.triggerFieldError('username', 'Användarnamnet är upptaget');
-            } else if (error.error.field === 'email') {
-              this.triggerFieldError('email', 'E-postadressen är redan registrerad');
-            }
-            return;
+    if (form.invalid) {
+      return;
+    }
+
+    this.auth.createNewUser({
+      email: this.email,
+      username: this.username,
+      password: this.password,
+      firstname: this.firstname,
+      lastname: this.lastname
+    }).subscribe({
+      next: () => {
+        this.success = true;
+        setTimeout(() => {
+          this.dialog.closeAll();
+          form.resetForm();
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        if (error.error.message) {
+          if (error.error.message === 'Username already exists') {
+            this.triggerFieldError('username', 'Användarnamnet är upptaget');
+          } else if (error.error.message === 'Email already exists') {
+            this.triggerFieldError('email', 'E-postadressen är redan registrerad');
           } else {
-            this.errorMessage = 'Ett oväntat fel inträffade.';          
+            this.errorMessage = 'Ett oväntat fel inträffade.';
           }
-        setTimeout(() => this.resetErrorStates(), 2500);
-      } 
+        } else {
+          this.errorMessage = 'Ett oväntat fel inträffade.';
+        }
+        setTimeout(() => this.resetErrorStates(), 5000);
+      }
     });
-  }        
+  }
 
   private resetErrorStates(): void {
     this.usernameExists = false;
+    this.emailExists = false;
     this.errorMessage = '';
   }
-  
+
   private triggerFieldError(field: 'username' | 'email', message: string): void {
     this.errorMessage = message;
-  
+
     if (field === 'username') {
       this.usernameExists = true;
     } else if (field === 'email') {
       this.emailExists = true;
     }
-    setTimeout(() => {
-      this.resetErrorStates();
-    }, 1000);
   }
 }

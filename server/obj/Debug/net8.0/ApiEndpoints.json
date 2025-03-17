@@ -274,7 +274,7 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
-    "Method": "AddTeamToScoreboard",
+    "Method": "AddTeamToScoreboardAsync",
     "RelativePath": "api/ScoreboardTeams",
     "HttpMethod": "POST",
     "IsController": true,
@@ -368,6 +368,27 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "GetTeamsNotInScoreboard",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/userId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
     "Method": "GetScoreboardsForTeam",
     "RelativePath": "api/ScoreboardTeams/{teamId}",
     "HttpMethod": "GET",
@@ -436,22 +457,6 @@
   },
   {
     "ContainingType": "server.Controllers.TeamsController",
-    "Method": "UpdateTeam",
-    "RelativePath": "api/Teams",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "updatedTeam",
-        "Type": "server.Team",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "server.Controllers.TeamsController",
     "Method": "GetOneTeam",
     "RelativePath": "api/Teams/{id}",
     "HttpMethod": "GET",
@@ -477,6 +482,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.TeamsController",
+    "Method": "UpdateTeam",
+    "RelativePath": "api/Teams/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedTeam",
+        "Type": "server.Team",
         "IsRequired": true
       }
     ],

@@ -9,25 +9,25 @@ namespace server.Controllers
     [ApiController]
     public class SearchController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
 
         public SearchController(ServerDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         [HttpGet]
         public IActionResult Search([FromQuery] string query)
         {
-            var scoreboards = dbContext.ScoreBoards
-                .Where(sb => sb.Name.Contains(query))
+            var scoreboards = _dbContext.ScoreBoards
+                .Where(sb => sb.Name.Contains(query) || sb.Description.Contains(query))
                 .ToList();
 
-            var teams = dbContext.Teams
+            var teams = _dbContext.Teams
                 .Where(t => t.TeamName.Contains(query))
                 .ToList();
 
-            var users = dbContext.Users
+            var users = _dbContext.Users
                 .Where(u => u.Username.Contains(query) || u.Firstname.Contains(query) || u.Lastname.Contains(query))
                 .ToList();
 
@@ -50,9 +50,9 @@ namespace server.Controllers
         [Route("all")]
         public IActionResult GetAll()
         {
-            var scoreboards = dbContext.ScoreBoards.ToList();
-            var teams = dbContext.Teams.ToList();
-            var users = dbContext.Users.ToList();
+            var scoreboards = _dbContext.ScoreBoards.ToList();
+            var teams = _dbContext.Teams.ToList();
+            var users = _dbContext.Users.ToList();
 
             var searchResults = new
             {
