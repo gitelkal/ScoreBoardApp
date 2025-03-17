@@ -82,7 +82,7 @@ namespace server.Service
                 return principal;
             }
             catch (Exception ex)
-            
+            {             
                 throw new SecurityTokenException("Token validation failed", ex);
             }
         }
