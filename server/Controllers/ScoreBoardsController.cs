@@ -9,19 +9,19 @@ namespace server.Controllers
     [ApiController]
     public class ScoreboardsController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
         private readonly IHubContext<ScoreboardHub> _hubContext;
 
         public ScoreboardsController(ServerDbContext dbContext, IHubContext<ScoreboardHub> hubContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
             _hubContext = hubContext;
         }
 
         [HttpGet]
         public IActionResult GetAllScoreboards()
         {
-            var scoreBoards = dbContext.ScoreBoards.ToList();
+            var scoreBoards = _dbContext.ScoreBoards.ToList();
             return Ok(scoreBoards);
         }
 
@@ -47,8 +47,8 @@ namespace server.Controllers
                     Active = scoreboardDTO.Active
                 };
 
-                dbContext.ScoreBoards.Add(scoreboard);
-                dbContext.SaveChanges();
+                _dbContext.ScoreBoards.Add(scoreboard);
+                _dbContext.SaveChanges();
 
                 await _hubContext.Clients.All.SendAsync("ReceiveScoreboardCreation", scoreboard.ScoreboardId);
 
@@ -69,7 +69,7 @@ namespace server.Controllers
                     return BadRequest(new { message = "Invalid scoreboard data." });
                 }
 
-                var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
+                var scoreboard = _dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
                 if (scoreboard == null)
                 {
                     return NotFound(new { message = "Scoreboard not found." });
@@ -81,7 +81,7 @@ namespace server.Controllers
                 scoreboard.Description = scoreboardDTO.Description;
                 scoreboard.Active = scoreboardDTO.Active;
 
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 return Ok(new { message = "Scoreboard updated successfully!" });
             }
@@ -89,14 +89,14 @@ namespace server.Controllers
         [HttpDelete("{scoreboardId}")]
         public IActionResult DeleteScoreboard(int scoreboardId)
         {
-            var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
+            var scoreboard = _dbContext.ScoreBoards.Find(scoreboardId);
             if (scoreboard == null)
             {
                 return NotFound(new { message = "Scoreboard not found." });
             }
 
-            dbContext.ScoreBoards.Remove(scoreboard);
-            dbContext.SaveChanges();
+            _dbContext.ScoreBoards.Remove(scoreboard);
+            _dbContext.SaveChanges();
     
             return Ok(new { message = "Scoreboard deleted successfully!" });
         }
@@ -107,7 +107,7 @@ namespace server.Controllers
         [HttpGet("{scoreboardId}")]
         public IActionResult GetScoreboardById(int scoreboardId)
         {
-            var scoreboard = dbContext.ScoreBoards.Find(scoreboardId);
+            var scoreboard = _dbContext.ScoreBoards.Find(scoreboardId);
             if (scoreboard == null)
                 return NotFound();
             return Ok(scoreboard);
@@ -117,7 +117,7 @@ namespace server.Controllers
         public IActionResult GetRichScoreboardById(int scoreboardId)
         {
             // Fetch the scoreboard details
-            var scoreboard = dbContext.ScoreBoards
+            var scoreboard = _dbContext.ScoreBoards
                 .Where(sb => sb.ScoreboardId == scoreboardId)
                 .Select(sb => new
                 {
@@ -134,11 +134,11 @@ namespace server.Controllers
                 return NotFound("Scoreboard not found.");
             }
 
-            var teamsWithUsers = (from sbt in dbContext.ScoreboardTeams
-                                  join t in dbContext.Teams on sbt.TeamID equals t.TeamID
-                                  join tu in dbContext.TeamUsers on t.TeamID equals tu.TeamID into teamUsersGroup // Left Join
+            var teamsWithUsers = (from sbt in _dbContext.ScoreboardTeams
+                                  join t in _dbContext.Teams on sbt.TeamID equals t.TeamID
+                                  join tu in _dbContext.TeamUsers on t.TeamID equals tu.TeamID into teamUsersGroup // Left Join
                                   from tu in teamUsersGroup.DefaultIfEmpty()
-                                  join u in dbContext.Users on tu.UserId equals u.UserId into usersGroup // Left Join
+                                  join u in _dbContext.Users on tu.UserId equals u.UserId into usersGroup // Left Join
                                   from u in usersGroup.DefaultIfEmpty()
                                   where sbt.ScoreboardID == scoreboardId
                                   group u by new

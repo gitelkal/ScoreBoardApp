@@ -3,7 +3,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NgIf, NgClass } from '@angular/common';
-import { RegisterService } from '@app/core/services/registerService/register.service';
 
 @Component({
   selector: 'app-register',
@@ -24,14 +23,14 @@ export class RegisterComponent {
   usernameExists: boolean = false;
   emailExists: boolean = false;
 
-  constructor(private registerService: RegisterService) {}
+  constructor(private auth: AuthService) {}
 
   submitRegister(form: NgForm) {
     if (form.invalid) {
       return;
     }
 
-    this.registerService.createNewUser({
+    this.auth.createNewUser({
       email: this.email,
       username: this.username,
       password: this.password,

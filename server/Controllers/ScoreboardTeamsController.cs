@@ -8,18 +8,18 @@ namespace server.Controllers
 [Route("api/[controller]")]
     public class ScoreboardTeamsController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
         private readonly IHubContext<ScoreboardHub> _hubContext;
 
         public ScoreboardTeamsController(ServerDbContext context, IHubContext<ScoreboardHub> hubContext)
         {
-            dbContext = context;
+            _dbContext = context;
             _hubContext = hubContext;
         }
         [HttpGet]
         public IActionResult GetAllScoreboardTeams()
         {
-            var scoreboardTeams = dbContext.ScoreboardTeams.ToList();
+            var scoreboardTeams = _dbContext.ScoreboardTeams.ToList();
             return Ok(scoreboardTeams);
         }
 
@@ -27,7 +27,7 @@ namespace server.Controllers
         [Route("{teamId}")]
         public IActionResult GetScoreboardsForTeam(int teamId)
         {
-            var scoreboards = dbContext.ScoreboardTeams
+            var scoreboards = _dbContext.ScoreboardTeams
                 .Where(st => st.TeamID == teamId)
                 .Select(st => new { st.ScoreboardID, st.Points })
                 .Distinct()
@@ -38,7 +38,7 @@ namespace server.Controllers
                 return NotFound(new { message = "No scoreboards found for this team" });
             }
 
-            var scoreboardDetails = dbContext.ScoreBoards
+            var scoreboardDetails = _dbContext.ScoreBoards
                 .Where(sb => scoreboards.Select(s => s.ScoreboardID).Contains(sb.ScoreboardId))
                 .ToList();
 
@@ -60,7 +60,7 @@ namespace server.Controllers
         [HttpPut("{scoreboardId}/{teamId}/addPoints")]
         public async Task<IActionResult> AddPointsToTeamAsync(int scoreboardId, int teamId, int points)
         {
-            var scoreboardTeam = dbContext.ScoreboardTeams
+            var scoreboardTeam = _dbContext.ScoreboardTeams
                 .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
 
             if (scoreboardTeam == null)
@@ -71,7 +71,7 @@ namespace server.Controllers
             scoreboardTeam.Points = (scoreboardTeam.Points ?? 0) + points;
             scoreboardTeam.LastUpdated = DateTime.UtcNow;
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             // Send the updated points to all connected clients
             await _hubContext.Clients.All.SendAsync("ReceiveScoreUpdate", scoreboardTeam.ScoreboardID, scoreboardTeam.TeamID, scoreboardTeam.Points);
@@ -82,7 +82,7 @@ namespace server.Controllers
         [HttpPut("{scoreboardId}/{teamId}/points")]
         public async Task<IActionResult> SetPointsToTeamAsync(int scoreboardId, int teamId, int points)
         {
-            var scoreboardTeam = dbContext.ScoreboardTeams
+            var scoreboardTeam = _dbContext.ScoreboardTeams
                 .FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
 
             if (scoreboardTeam == null)
@@ -93,7 +93,7 @@ namespace server.Controllers
             scoreboardTeam.Points = points;
             scoreboardTeam.LastUpdated = DateTime.UtcNow;
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             // Send the updated points to all connected clients
             await _hubContext.Clients.All.SendAsync("ReceiveScoreUpdate", scoreboardTeam.ScoreboardID, scoreboardTeam.TeamID, scoreboardTeam.Points);
@@ -111,8 +111,8 @@ namespace server.Controllers
                 TeamID = teamId
             };
 
-            dbContext.ScoreboardTeams.Add(scoreboardTeam);
-            dbContext.SaveChanges();
+            _dbContext.ScoreboardTeams.Add(scoreboardTeam);
+            _dbContext.SaveChanges();
 
             await _hubContext.Clients.All.SendAsync("TeamJoinedScoreboard", scoreboardId, teamId);
 
@@ -127,8 +127,8 @@ namespace server.Controllers
                 TeamName = teamName
             };
 
-            dbContext.Teams.Add(team);
-            dbContext.SaveChanges();
+            _dbContext.Teams.Add(team);
+            _dbContext.SaveChanges();
 
             var scoreboardTeam = new ScoreBoardTeams
             {
@@ -136,8 +136,8 @@ namespace server.Controllers
                 TeamID = team.TeamID 
             };
 
-            dbContext.ScoreboardTeams.Add(scoreboardTeam);
-            dbContext.SaveChanges();
+            _dbContext.ScoreboardTeams.Add(scoreboardTeam);
+            _dbContext.SaveChanges();
 
             return StatusCode(StatusCodes.Status201Created, new { teamId = team.TeamID, scoreboardId = scoreboardId });
         }
@@ -146,17 +146,17 @@ namespace server.Controllers
         public IActionResult GetTeamsNotInScoreboard(int scoreboardId, int userId)
         {
 
-            var userTeams = dbContext.TeamUsers
+            var userTeams = _dbContext.TeamUsers
                 .Where(ut => ut.UserId == userId)
                 .Select(ut => ut.TeamID)
                 .ToList();
 
-            var scoreboardTeams = dbContext.ScoreboardTeams
+            var scoreboardTeams = _dbContext.ScoreboardTeams
                 .Where(st => st.ScoreboardID == scoreboardId)
                 .Select(st => st.TeamID)
                 .ToList();
 
-            var availableTeams = dbContext.Teams
+            var availableTeams = _dbContext.Teams
                 .Where(t => userTeams.Contains(t.TeamID) && !scoreboardTeams.Contains(t.TeamID))
                 .ToList();
 
@@ -166,15 +166,15 @@ namespace server.Controllers
         [HttpDelete("{scoreboardId}/teamId")]
         public IActionResult DeleteScoreboardTeam(int scoreboardId, int teamId)
         {
-            var scoreboardTeams = dbContext.ScoreboardTeams.Where(
+            var scoreboardTeams = _dbContext.ScoreboardTeams.Where(
                 st => st.ScoreboardID == scoreboardId && st.TeamID ==  teamId);
 
             if (scoreboardTeams == null)
                 return NotFound();
 
-            dbContext.ScoreboardTeams.Remove(scoreboardTeams.First());
-            dbContext.SaveChanges();
-            dbContext.SaveChanges();
+            _dbContext.ScoreboardTeams.Remove(scoreboardTeams.First());
+            _dbContext.SaveChanges();
+            _dbContext.SaveChanges();
             return Ok();
         }
     }

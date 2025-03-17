@@ -9,17 +9,17 @@ namespace server.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ServerDbContext dbContext;
+        private readonly ServerDbContext _dbContext;
 
         public UsersController(ServerDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         [HttpGet]
         public IActionResult GetAllUsers()
         {
-            var users = dbContext.Users.ToList();
+            var users = _dbContext.Users.ToList();
             return Ok(users);
         }
 
@@ -27,7 +27,7 @@ namespace server.Controllers
         [Route("{id}")]
         public IActionResult GetOneUser(int id)
         {
-            var user = dbContext.Users.Find(id);
+            var user = _dbContext.Users.Find(id);
             if (user == null)
             {
                 return NotFound();
@@ -38,8 +38,8 @@ namespace server.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] User user)
         {
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
             return StatusCode(StatusCodes.Status201Created);
         }
 
@@ -48,20 +48,20 @@ namespace server.Controllers
         [Route("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            var user = dbContext.Users.Find(id);
+            var user = _dbContext.Users.Find(id);
             if (user == null)
             {
                 return NotFound(new { message = "Användaren hittades inte." });
             }
 
-            var admin = dbContext.Admins.FirstOrDefault(a => a.Username == user.        Username);
+            var admin = _dbContext.Admins.FirstOrDefault(a => a.Username == user.        Username);
             if (admin != null)
             {
-                dbContext.Admins.Remove(admin); // Ta bort användaren från      admin-tabellen
+                _dbContext.Admins.Remove(admin); // Ta bort användaren från      admin-tabellen
             }
 
-            dbContext.Users.Remove(user); // Ta bort användaren
-            dbContext.SaveChanges();
+            _dbContext.Users.Remove(user); // Ta bort användaren
+            _dbContext.SaveChanges();
 
             return Ok(new { message = "Användaren och dess admin-roll har tagits bort." });
         }

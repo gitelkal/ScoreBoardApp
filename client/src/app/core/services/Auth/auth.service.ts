@@ -6,6 +6,7 @@ import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../userService/user.service';
 import { AdminService } from '../adminService/admin.service';
+import { RegisterRequest } from '@app/interfaces/register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class AuthService {
   firstname: string = '';
   lastname: string = '';
   errorMessage: string = '';
+  authService: any;
 
   constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService, private adminService: AdminService) {
     this.api = this.apiService.api;
@@ -43,7 +45,7 @@ export class AuthService {
   }
   
   login(data: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.api}/login`, data).pipe(
+    return this.http.post<AuthResponse>(`${this.api}/account/login`, data).pipe(
       map((response: AuthResponse) => {
         if (response.token) localStorage.setItem(this.tokenKey, response.token);
         const expirationDate = new Date();
@@ -63,6 +65,15 @@ export class AuthService {
           this.errorMessage = error.error;
         }
         return throwError(error);
+      })
+    );
+  }
+
+  createNewUser(data: RegisterRequest): Observable<any> {
+    return this.http.post(`${this.api}/account/register`, data).pipe(
+      map((response: any) => {
+        this.login({ username: data.username, password: data.password }).subscribe();
+        return response;
       })
     );
   }
