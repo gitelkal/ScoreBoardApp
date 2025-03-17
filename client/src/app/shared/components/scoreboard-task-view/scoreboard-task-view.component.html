@@ -4,6 +4,7 @@
     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
       <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Hackaton</a>
       <a [routerLink]="['/scoreboard-dark', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Mörk tavla</a>
+      <a [routerLink]="['/scoreboard-v-bar-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Stapel-vy</a>
     </div>
   </div>
 </div>
@@ -15,37 +16,83 @@
 
 <div *ngIf="getRichScoreboard$ | async as richScoreboard" class="w-full min-h-screen fin-bakgrund flex items-start justify-center pt-6">
   <div class="max-w-5xl w-full mx-auto p-6 rounded-lg shadow-lg backdrop-blur-lg bg-white/20 border border-gray-300 flex flex-col min-w-[min-content]">
-    <div class="bg-gradient-to-r from-red-700 to-yellow-500 p-4 rounded-lg shadow-md text-center relative">    
+    
+    <div class="bg-gradient-to-r from-red-700 to-yellow-500 p-4 rounded-lg shadow-md text-center relative min-h-[180px]">    
       <h2 class="text-3xl font-bold text-white mb-2 [text-shadow:_0_4px_4px_rgb(0_0_0_/_0.8)]">
         {{ richScoreboard.scoreboard.name }}
       </h2>
-      <div *ngIf="(isAdmin | async) === true" class="mt-4 flex flex-col items-center space-y-2 bg-white/20 p-4 rounded-lg shadow-md">
-        <label class="text-gray-900 font-semibold">
-          Antal uppgifter per lag:
-          <input type="number" [value]="taskCount" (input)="onTaskCountChange($event)" class="border border-gray-300 rounded px-2 py-1 w-20 text-center">
-        </label>
-        <label class="text-gray-900 font-semibold">
-          Poäng per uppgift:
-          <input type="number" [value]="pointsPerTask" (input)="onPointsPerTaskChange($event)" class="border border-gray-300 rounded px-2 py-1 w-20 text-center">
-        </label>
+      <p class="text-gray-700 mb-1 text-base">
+        <span class="font-semibold text-gray-900">
+          {{ richScoreboard.scoreboard.startedAt | date: 'EEEE, MMM d, y' }}
+        </span>
+      </p>
+      <p class="font-semibold mb-1 text-sm" 
+        [ngClass]="{ 'text-text-green-600 pulse': richScoreboard.scoreboard.active, 'text-red-600': !richScoreboard.scoreboard.active }">
+        {{ richScoreboard.scoreboard.active ? 'Aktiv' : 'Inaktiv' }}
+      </p>
+      <p class="text-base font-medium text-gray-800">
+        Antal lag: <span class="text-gray-600 font-semibold">{{ richScoreboard.scoreboard.teams.length }}</span>
+      </p>
+  
+      <div *ngIf="(isAdmin | async) === true" class="absolute top-4 left-6 bg-white/20 backdrop-blur-lg border border-gray-300 rounded-lg shadow-lg p-3">
+        <div class="relative flex flex-col items-center justify-center gap-2">
+          <div class="w-full flex flex-col gap-2">
+            <label class="text-gray-900 flex flex-col items-center">
+              Antal uppgifter per lag:
+                <input type="number" [value]="taskCount" (input)="onTaskCountChange($event)" class="border border-gray-300 rounded px-3 py-1 w-full text-center">
+            </label>
+            <label class="text-gray-900 flex flex-col items-center">
+              Poäng per uppgift:
+              <input type="number" [value]="pointsPerTask"  (input)="onPointsPerTaskChange($event)" class="border border-gray-300 rounded px-3 py-1 w-full text-center">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="(loggedIn | async) === true && richScoreboard.scoreboard.active" class="absolute top-4 right-6 bg-white/20 backdrop-blur-lg border border-gray-300 rounded-lg shadow-lg p-3">
+        <div class="relative flex flex-col items-center justify-center gap-2">
+          <button *ngIf="!isAddingTeam && !isJoiningTeam" (click)="isAddingTeam = true" class="text-sm text-gray-900 border-2 rounded-lg px-3 py-1 border-black bg-orange-100 hover:bg-opacity-80 transition shadow-lg">
+            + Skapa lag
+          </button>
+          <button *ngIf="!isJoiningTeam" (click)="toggleTeamDropdown()" class="text-sm text-gray-900 border-2 rounded-lg px-3 py-1 border-black bg-orange-100 hover:bg-opacity-80 transition shadow-lg">
+            + Delta med lag
+          </button>
+          <div *ngIf="isTeamDropdownOpen" class="absolute top-full mt-2 bg-white border border-mainColor rounded-lg shadow-lg w-48 z-[999]">
+            <ul class="p-2">
+              <li *ngFor="let team of userTeams" class="p-2 hover:bg-gray-100 cursor-pointer" (click)="appendTeam(team.teamID)">
+                {{ team.teamName }}
+              </li>
+            </ul>
+            <button class="ml-2 px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition shadow-lg" (click)="$event.stopPropagation(); toggleTeamDropdown()" style="margin-bottom: 1rem">
+              Avbryt
+            </button>
+          </div>
+        </div>
+        <form *ngIf="isAddingTeam" (submit)="addTeam($event)" class="w-full mt-3 flex flex-col items-center gap-2">
+          <input type="text" [(ngModel)]="newTeamName" name="teamName" placeholder="Ange lagnamn" class="border p-2 rounded-lg w-3/4" required/>
+          <div class="flex gap-2">
+            <button type="submit" class="bg-green-500/60 hover:bg-green-500/30 px-4 py-1 rounded-lg">
+              Spara
+            </button>
+            <button type="button" (click)="isAddingTeam = false" class="bg-gray-200 px-4 py-1 rounded-lg hover:bg-gray-300">
+              Avbryt
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div class="mt-4 p-6 bg-white/10 backdrop-blur-md rounded-lg shadow-md border border-gray-300 min-w-[min-content] flex flex-col justify-end items-center"
-     [ngStyle]="{'min-height': (taskCount * 25 + 200) + 'px'}">
+    <div class="mt-4 p-6 bg-white/10 backdrop-blur-md rounded-lg shadow-md border border-gray-300 min-w-[min-content] flex flex-col justify-end items-center z-[-1]" [ngStyle]="{'min-height': (taskCount * 25 + 200) + 'px'}">
       <div class="flex justify-center w-full space-x-6 items-end"> 
         <div *ngFor="let team of richScoreboard.scoreboard.teams" class="relative flex flex-col items-center w-[10%] transition-all duration-500">
-          <div class="relative flex flex-col justify-end items-center w-full"
-                [ngStyle]="{'height': (taskCount * 20) + 'px'}"> 
+          <div class="relative flex flex-col justify-end items-center w-full" [ngStyle]="{'height': (taskCount * 20) + 'px'}"> 
             <div class="absolute bottom-0 w-12 border-2 border-gray-300 opacity-50 rounded-md flex flex-col justify-end">
               <div *ngFor="let task of [].constructor(taskCount)" class="w-full h-4 bg-gray-300 rounded-sm m-[1px]">
               </div>
             </div>
 
-            <div class="absolute bottom-0 w-12 flex flex-col justify-end items-center transition-all duration-500"
-                [ngStyle]="{'height': (getCompletedTasks(team.teamID) * 20) + 'px'}">
-              <div *ngFor="let task of [].constructor(getCompletedTasks(team.teamID)); let i = index"
-                  [ngStyle]="{'background': getTaskColor(i), 'height': '20px', 'opacity': '1'}" class="w-full rounded-sm m-[1px] shadow-md">
+            <div class="absolute bottom-0 w-12 flex flex-col justify-end items-center transition-all duration-500" [ngStyle]="{'height': (getCompletedTasks(team.teamID) * 20) + 'px'}">
+              <div *ngFor="let task of [].constructor(getCompletedTasks(team.teamID)); let i = index" [ngStyle]="{'background': getTaskColor(i), 'height': '20px', 'opacity': '1'}" class="w-full rounded-sm m-[1px] shadow-md">
               </div>
             </div>
           </div>
@@ -58,8 +105,8 @@
               Poäng: {{ team.points }}
             </div>
           </div>
-
-          <button (click)="completeTask(team.teamID)" class="mt-3 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-sm rounded-lg shadow-lg transition">
+ 
+          <button *ngIf="(isAdmin | async) === true" (click)="completeTask(team.teamID)" class="mt-3 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-sm rounded-lg shadow-lg transition">
             Uppgift Klar
           </button>
         </div>
