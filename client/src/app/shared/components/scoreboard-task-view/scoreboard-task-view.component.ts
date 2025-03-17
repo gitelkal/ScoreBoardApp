@@ -106,17 +106,14 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
     if (!this.completedTasksMap.has(scoreboardId)) {
       this.completedTasksMap.set(scoreboardId, new Map());
     }
-
+  
     const teamTasks = this.completedTasksMap.get(scoreboardId)!;
     teamTasks.set(teamId, (teamTasks.get(teamId) || 0) + 1);
     const teamPoints = this.pointsPerTask;
-    const updatedPoints = (this.scoreboardResponseSubject.value?.scoreboard?.teams.find(team => team.teamID === teamId)?.points || 0) + teamPoints;
-
-    this.updateTeamProgress(scoreboardId, teamId, updatedPoints);
-
-    if (this.scoreboardResponseSubject.value?.scoreboard) {
-      this.scoreboardResponseSubject.next({ scoreboard: this.scoreboardResponseSubject.value.scoreboard });
-    }
+    const currentPoints = this.scoreboardResponseSubject.value?.scoreboard?.teams.find(team => team.teamID === teamId)?.points || 0;
+    const updatedPoints = currentPoints + teamPoints;
+  
+    this.setPoints(teamId, updatedPoints);
   }
 
   getCompletedTasks(teamId: number): number {

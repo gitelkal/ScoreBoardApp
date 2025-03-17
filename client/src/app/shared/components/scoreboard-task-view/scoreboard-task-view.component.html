@@ -1,6 +1,6 @@
 <div class="relative inline-block text-left">
   <button class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition" (click)="toggleViewDropdown()">Ändra vy</button>
-  <div *ngIf="isViewDropdownOpen" class="origin-top-right absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+  <div *ngIf="isViewDropdownOpen" class="origin-top-right absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
       <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Hackaton</a>
       <a [routerLink]="['/scoreboard-dark', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Mörk tavla</a>
