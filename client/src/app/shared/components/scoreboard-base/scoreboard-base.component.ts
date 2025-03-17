@@ -48,6 +48,11 @@ import { DOCUMENT } from '@angular/common';
 
   protected pointsChangeSubject = new Subject<{ scoreboardID: number,teamID: number; points: number }>();
   protected scoreboardResponseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
+  protected updateTeamProgress(scoreboardId: number, teamId: number, points: number): void {}
+  protected taskCountMap = new Map<number, number>(); 
+  protected pointsPerTaskMap = new Map<number, number>();
+  protected completedTasksMap = new Map<number, Map<number, number>>();
+
 
   getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
   teamColorAssignments: Map<string, string> = new Map();
@@ -88,7 +93,6 @@ import { DOCUMENT } from '@angular/common';
     }
   }
 
-  /* Close fullscreen */
   closeFullscreen() {
     if (this.document.exitFullscreen) {
       this.document.exitFullscreen();
@@ -161,9 +165,6 @@ import { DOCUMENT } from '@angular/common';
       }
     });
   }
-  
-
-
   appendTeam(teamId: number) {
     if (!this.scoreboardID) return;
     this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID), teamId)
@@ -251,16 +252,16 @@ import { DOCUMENT } from '@angular/common';
 
   getTeamColor(teamName: string, existingAssignments: Map<string, string>): string {
     const colors = [
-        'linear-gradient(to top, #b30000, #ff4d4d)', // Röd
-        'linear-gradient(to top, #ffcc00, #ffea00)', // Gul
-        'linear-gradient(to top, #ff6600, #ff9933)', // Orange
-        'linear-gradient(to top, #b30086, #ff00ff)', // Rosa/Lila
-        'linear-gradient(to top, #0080ff, #00cfff)', // Blå
-        'linear-gradient(to top, #008000, #00ff00)', // Grön
-        'linear-gradient(to top, #ff1493, #ff69b4)', // Mörkrosa
-        'linear-gradient(to top, #4b0082, #8a2be2)', // Indigo/Lila
-        'linear-gradient(to top, #ff4500, #ff8c00)', // Röd-orange
-        'linear-gradient(to top, #4682b4, #87ceeb)'  // Stålblå
+        'linear-gradient(to top, #b30000, #ff4d4d)',
+        'linear-gradient(to top, #ffcc00, #ffea00)',
+        'linear-gradient(to top, #ff6600, #ff9933)',
+        'linear-gradient(to top, #b30086, #ff00ff)',
+        'linear-gradient(to top, #0080ff, #00cfff)',
+        'linear-gradient(to top, #008000, #00ff00)',
+        'linear-gradient(to top, #ff1493, #ff69b4)',
+        'linear-gradient(to top, #4b0082, #8a2be2)', 
+        'linear-gradient(to top, #ff4500, #ff8c00)',
+        'linear-gradient(to top, #4682b4, #87ceeb)' 
     ];
     if (existingAssignments.has(teamName)) {
         return existingAssignments.get(teamName)!;

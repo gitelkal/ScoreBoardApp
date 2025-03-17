@@ -15,19 +15,19 @@ import { RouterModule } from '@angular/router';
 export class ScoreboardVBarViewComponent extends ScoreboardBaseComponent {
   isViewDropdownOpen = false;
 
-  isFullscreen = false;
+  //isFullscreen = false;
 
   toggleViewDropdown() {
     this.isViewDropdownOpen = !this.isViewDropdownOpen;
   }
 
-  override openFullscreen() {
-    this.isFullscreen = true;
+  //override openFullscreen() {
+    //this.isFullscreen = true;
     // Add logic to enter fullscreen mode
-  }
+  //}
 
-  override closeFullscreen() {
-    this.isFullscreen = false;
+  //override closeFullscreen() {
+    //this.isFullscreen = false;
     // Add logic to exit fullscreen mode
-  }
+  //}
 }
