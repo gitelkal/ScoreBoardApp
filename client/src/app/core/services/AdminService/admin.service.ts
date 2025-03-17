@@ -15,12 +15,27 @@ export class AdminService {
     this.api = this.apiService.api;
   }
 
-  public getAllAdmins(): Observable<Admins[]> {
-    return this.http.get<Admins[]>(`${this.api}/admins`);
+  public async getAllAdmins(): Promise<Admins[]> {
+    try {
+      const admins = await this.http.get<Admins[]>(`${this.api}/admins`).toPromise();
+      return admins || [];
+    } catch (error) {
+      console.error('Error fetching all admins', error);
+      throw error;
+    }
   }
 
-  public getOneAdmin(id: string): Observable<Admins> {
-    return this.http.get<Admins>(`${this.api}/admins/${id}`);
+  public async getOneAdmin(id: string): Promise<Admins> {
+    try {
+      const admin = await this.http.get<Admins>(`${this.api}/admins/${id}`).toPromise();
+      if (!admin) {
+        throw new Error(`Admin with id ${id} not found`);
+      }
+      return admin;
+    } catch (error) {
+      console.error(`Error fetching admin with id ${id}`, error);
+      throw error;
+    }
   }
 
   public createCompetition(competition: {

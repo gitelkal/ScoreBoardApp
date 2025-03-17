@@ -5,7 +5,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf, NgClass } from '@angular/common';
 
-
 @Component({
   selector: 'app-login',
   imports: [FormsModule, NgIf, NgClass, RouterLink, MatDialogModule],
@@ -33,7 +32,6 @@ export class LoginComponent {
         this.success = true;
         this.firstname = response.firstname;
         setTimeout(() => {
-          window.location.reload();
           form.resetForm();
           this.dialog.closeAll();
         }, 2000);

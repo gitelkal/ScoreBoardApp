@@ -23,31 +23,47 @@ export class ScoreboardService {
   }
 
   updateScoreboard(id: string, updatedScoreboard: any) {
-    console.log('API URL för PUT:', `${this.api}/scoreboards/${id}`);
-
-    return this.http.put<Scoreboards>(
-      `${this.api}/scoreboards/${id}`,
-      updatedScoreboard
-    );
+    return this.http.put<Scoreboards>(`${this.api}/scoreboards/${id}`,updatedScoreboard);
   }
+
   deleteScoreboard(scoreboardId: number): Observable<any> {
     return this.http.delete(`${this.api}/scoreboards/${scoreboardId}`);
   }
 
-  // ------------------------------------
-
-  public getAllScoreboards(): Observable<Scoreboards[]> {
-    return this.http.get<Scoreboards[]>(`${this.api}/scoreboards`);
+  public async getAllScoreboards(): Promise<Scoreboards[]> {
+    try {
+      const scoreboards = await this.http.get<Scoreboards[]>(`${this.api}/scoreboards`).toPromise();
+      return scoreboards || [];
+    } catch (error) {
+      console.error('Error fetching all scoreboards', error);
+      throw error;
+    }
   }
 
-  public getOneScoreboard(id: string): Observable<Scoreboards> {
-    return this.http.get<Scoreboards>(`${this.api}/scoreboards/${id}`);
+  public async getOneScoreboard(id: string): Promise<Scoreboards> {
+    try {
+      const scoreboard = await this.http.get<Scoreboards>(`${this.api}/scoreboards/${id}`).toPromise();
+      if (!scoreboard) {
+        throw new Error(`Scoreboard with id ${id} not found`);
+      }
+      return scoreboard;
+    } catch (error) {
+      console.error(`Error fetching scoreboard with id ${id}`, error);
+      throw error;
+    }
   }
 
-  public getRichScoreboard(id: string): Observable<ScoreboardResponse> {
-    return this.http
-      .get<ScoreboardResponse>(`${this.api}/scoreboards/rich/${id}`)
-      .pipe(tap((response) => console.log('Service response:', response)));
+  public async getRichScoreboard(id: string): Promise<ScoreboardResponse> {
+    try {
+      const richScoreboard = await this.http.get<ScoreboardResponse>(`${this.api}/scoreboards/rich/${id}`).toPromise();
+      if (!richScoreboard) {
+        throw new Error(`Rich scoreboard with id ${id} not found`);
+      }
+      return richScoreboard;
+    } catch (error) {
+      console.error(`Error fetching rich scoreboard with id ${id}`, error);
+      throw error;
+    }
   }
 
   public CreateAndAddEmptyTeamToScoreboard(

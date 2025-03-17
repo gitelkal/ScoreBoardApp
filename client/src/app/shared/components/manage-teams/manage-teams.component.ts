@@ -5,6 +5,7 @@ import {
   HostListener,
   Output,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +13,7 @@ import { TeamService } from '@app/core/services/teamService/team.service';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { TeamUsersService } from '@app/core/services/teamUsersService/team-users.service';
 import { UserService } from '@app/core/services/userService/user.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-manage-teams',
   standalone: true,
@@ -19,7 +21,7 @@ import { UserService } from '@app/core/services/userService/user.service';
   styleUrl: './manage-teams.component.css',
   imports: [CommonModule, FormsModule],
 })
-export class ManageTeamsComponent implements OnInit {
+export class ManageTeamsComponent implements OnInit, OnDestroy {
   private teamService = inject(TeamService);
   private scoreboardService = inject(ScoreboardService);
   private teamUsersService = inject(TeamUsersService);
@@ -50,14 +52,17 @@ export class ManageTeamsComponent implements OnInit {
   filteredTeams: any[] = [];
   filteredScoreboards: any[] = [];
 
+  
   activeDropdown:
-    | 'user'
-    | 'team'
-    | 'manageTeams'
-    | 'removeUser'
-    | 'removeTeam'
-    | 'scoreboard'
-    | null = null;
+  | 'user'
+  | 'team'
+  | 'manageTeams'
+  | 'removeUser'
+  | 'removeTeam'
+  | 'scoreboard'
+  | null = null;
+  
+  private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.fetchTeams();
@@ -65,22 +70,27 @@ export class ManageTeamsComponent implements OnInit {
     this.fetchScoreboards();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   fetchTeams() {
-    this.teamService.getAllTeams().subscribe((teams) => {
+    this.teamService.getAllTeams().then((teams) => {
       this.teams = teams;
       this.filteredTeams = teams;
     });
   }
 
   fetchUsers() {
-    this.userService.getAllUsers().subscribe((users) => {
+    this.userService.getAllUsers().then((users) => {
       this.users = users;
       this.filteredUsers = users;
     });
   }
 
   fetchScoreboards() {
-    this.scoreboardService.getAllScoreboards().subscribe((scoreboards) => {
+    this.scoreboardService.getAllScoreboards().then((scoreboards) => {
       this.scoreboards = scoreboards;
       this.filteredScoreboards = scoreboards;
     });
@@ -163,7 +173,9 @@ export class ManageTeamsComponent implements OnInit {
       return;
     }
     const payload = { teamID: 0, teamName: this.teamName };
-    this.teamService.createTeam(payload).subscribe(
+    this.teamService.createTeam(payload).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
       (response: any) => {
         console.log('Lagt till lag:', response);
         this.fetchTeams();

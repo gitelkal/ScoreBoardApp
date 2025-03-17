@@ -62,28 +62,26 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   loadTeamData() {
-    this.teamSubscription = this.teamUsersService.getTeamWithUsers().subscribe({
-      next: (response) => {
-        this.usersInTeam = response.map(team => ({
-          teamID: team.team.teamID,
-          userIDs: team.users.map(user => Number(user.userId))
-        }));
+    this.teamUsersService.getTeamWithUsers().then(response => {
+      this.usersInTeam = response.map(team => ({
+        teamID: team.team.teamID,
+        userIDs: team.users.map(user => Number(user.userId))
+      }));
 
-        this.teamsList = response.map(team => ({
-          teamID: team.team.teamID,
-          teamName: team.team.teamName
-        }));
+      this.teamsList = response.map(team => ({
+        teamID: team.team.teamID,
+        teamName: team.team.teamName
+      }));
 
-        this.userService.getAllUsers().subscribe(users => {
-          this.usersList = users.map(user => ({
-            userId: Number(user.userId),
-            username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname
-          }));
-        });
-        this.filterTeams()
-      },
+      this.userService.getAllUsers().then(users => {
+        this.usersList = users.map(user => ({
+          userId: Number(user.userId),
+          username: user.username,
+          firstname: user.firstname,
+          lastname: user.lastname
+        }));
+      });
+      this.filterTeams();
     });
   }
 

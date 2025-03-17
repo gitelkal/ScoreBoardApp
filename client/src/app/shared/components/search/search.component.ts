@@ -31,24 +31,22 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  performSearch(): void {
-    this.searchService.submit(this.searchQuery).subscribe(
-      (response) => {
-        this.scoreboards = response.scoreboards || [];
-        this.teams = response.teams || [];
-        this.users = response.users || [];
+  async performSearch(): Promise<void> {
+    try {
+      const response = await this.searchService.submit(this.searchQuery);
+      this.scoreboards = response.scoreboards || [];
+      this.teams = response.teams || [];
+      this.users = response.users || [];
   
-        this.filteredResults = [
-          ...this.scoreboards.map(scoreboard => ({ ...scoreboard, type: 'scoreboard' })),
-          ...this.teams.map(team => ({ ...team, type: 'team' })),
-          ...this.users.map(user => ({ ...user, type: 'user' }))
-        ];
-        this.sortResults(this.filteredResults);
-      },
-          (error) => {
-        console.error('Error fetching data:', error);
-      }
-    );
+      this.filteredResults = [
+        ...this.scoreboards.map(scoreboard => ({ ...scoreboard, type: 'scoreboard' })),
+        ...this.teams.map(team => ({ ...team, type: 'team' })),
+        ...this.users.map(user => ({ ...user, type: 'user' }))
+      ];
+      this.sortResults(this.filteredResults);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }
 
   getResultName(result: Scoreboards | Teams | Users): string {

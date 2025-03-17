@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { switchMap, debounceTime } from 'rxjs/operators';
+import { switchMap, debounceTime, takeUntil } from 'rxjs/operators';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
@@ -60,6 +60,7 @@ import { DOCUMENT } from '@angular/common';
   constructor(@Inject(DOCUMENT) protected document: any) {}
   fullscreenElement: any;
 
+  protected destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.fullscreenElement = document.documentElement;
@@ -68,13 +69,13 @@ import { DOCUMENT } from '@angular/common';
     this.scoreboardID = this.route.snapshot.paramMap.get('id');
     this.loadInitialScoreboard();
     this.subscribeToScoreUpdates();
-    this.pointsChangeSubject.pipe(debounceTime(200)).subscribe(({ scoreboardID,teamID, points }) => {
-      if (scoreboardID == Number(this.scoreboardID))
-      {
-
+    this.pointsChangeSubject.pipe(
+      debounceTime(200),
+      takeUntil(this.destroy$)
+    ).subscribe(({ scoreboardID, teamID, points }) => {
+      if (scoreboardID == Number(this.scoreboardID)) {
         this.setPoints(teamID, points);
       }
-      
     });
   }
 
@@ -110,16 +111,18 @@ import { DOCUMENT } from '@angular/common';
 
 
   protected loadInitialScoreboard() {
-    
     if (!this.scoreboardID) return;
-
-    this.scoreboardService.getRichScoreboard(this.scoreboardID).subscribe(response => {
+  
+    this.scoreboardService.getRichScoreboard(this.scoreboardID).then(response => {
       this.scoreboardResponseSubject.next(response);
+    }).catch(error => {
+      console.error('Error loading initial scoreboard:', error);
     });
+  
     this.isAdmin = this.authService.isAdmin;
     this.loggedIn = this.authService.loggedIn;
     this.userID = this.authService.getUserID() ?? 0;
-
+  
     this.loadUserTeams();
   }
 
@@ -137,11 +140,11 @@ import { DOCUMENT } from '@angular/common';
 
   protected loadUserTeams() {
     if (!this.userID) return;
-    this.userService.getUserTeams(this.userID).subscribe(response => {
+    this.userService.getUserTeams(this.userID).then(response => {
       this.userTeams = response;
     });
     this.scoreboardTeamsService.getUserTeamsNotInScoreboard(Number(this.scoreboardID), this.userID)
-      .subscribe(response => this.userTeamsNotInScoreboard = response);
+      .then(response => this.userTeamsNotInScoreboard = response);
   }
 
   protected subscribeToScoreUpdates() {

@@ -56,32 +56,25 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   loadUser() {
-    this.userSubscription = this.userService.getOneUser(this.userID).subscribe({
-      next: (response) => {
-        this.firstname = response.firstname;
-        this.lastname = response.lastname;
-        this.username = response.username;
-        this.checkAdminStatus(response.username);
-      }
+    this.userService.getOneUser(this.userID).then(response => {
+      this.firstname = response.firstname;
+      this.lastname = response.lastname;
+      this.username = response.username;
+      this.checkAdminStatus(response.username);
     });
 
-    this.scoreboardsSubscription = this.userService.getUserScoreboards(this.userID).subscribe({
-      next: (response) => {
-        this.userScoreboards = response;
-      }
+    this.userService.getUserScoreboards(this.userID).then(response => {
+      this.userScoreboards = response;
     });
 
-    this.teamsSubscription = this.userService.getUserTeams(this.userID).subscribe({
-      next: (response) => {
-        this.userTeams = response;
-      }
+    this.userService.getUserTeams(this.userID).then(response => {
+      this.userTeams = response;
     });
   }
 
   checkAdminStatus(username: string) {
     this.adminService.checkIfAdmin({ username }).subscribe(response => {
       this.isAdmin = response.success;
-      console.log("Is admin:", this.isAdmin);
     });
   }
 }

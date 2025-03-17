@@ -28,20 +28,6 @@ export class AuthService {
   constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService, private adminService: AdminService) {
     this.api = this.apiService.api;
     this.tokenExpirationCheck();
-    this.userService.getOneUser(this.getUserID()).subscribe({
-      next: (response) => {
-        this.firstname = response.firstname;
-        this.lastname = response.lastname;
-        this.username = response.username;
-        this.adminService.checkIfAdmin({ username: this.getUsername() }).subscribe({
-          next: (response) => {
-            if (response) {
-              this.isAdmin.next(true);
-            }
-          }
-      }
-    )}
-  });
   }
   
   login(data: LoginRequest): Observable<AuthResponse> {
@@ -93,7 +79,10 @@ export class AuthService {
     localStorage.removeItem('userID');
     this.isAdmin.next(false);
     this.loggedIn.next(false);
-    window.location.reload();
+    this.userID = 0;
+    this.username = '';
+    this.firstname = '';
+    this.lastname = '';
   }
 
   tokenExpirationCheck() {
@@ -104,6 +93,7 @@ export class AuthService {
     if (token) {
       this.loggedIn.next(true);
       this.userID = parseInt(localStorage.getItem('userID')!);
+      this.loadUserData();
     }
     let expirationTime = localStorage.getItem('tokenExpiration');
     if (expirationTime) {
@@ -122,15 +112,31 @@ export class AuthService {
     }, 360000); // 1 timme
   }
   
+  private loadUserData() {
+    this.userService.getOneUser(this.getUserID()).then((response: { firstname: string; lastname: string; username: string }) => {
+      this.firstname = response.firstname;
+      this.lastname = response.lastname;
+      this.username = response.username;
+      this.adminService.checkIfAdmin({ username: this.getUsername() }).subscribe((response: { success: boolean }) => {
+        if (response.success) {
+          this.isAdmin.next(true);
+        }
+      });
+    });
+  }
+
   getUserID() {
     return this.userID;
   }
+
   getUsername() {
     return this.username;
   }
+
   getFirstname() {
     return this.firstname;
   }
+
   getLastname() {
     return this.lastname;
   }

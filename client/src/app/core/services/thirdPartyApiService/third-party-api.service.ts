@@ -12,16 +12,34 @@ export class ThirdPartyApiService {
     this.api = this.apiService.api;
    }
 
-  getUserImage() {
-    return this.http.get(`${this.api}/proxy/user-image`);
+   public async getUserImage(): Promise<any> {
+    try {
+      const userImage = await this.http.get(`${this.api}/proxy/user-image`).toPromise();
+      return userImage;
+    } catch (error) {
+      console.error('Error fetching user image', error);
+      throw error;
+    }
   }
-  
-  getTeamImage() {
-    return this.http.get(`${this.api}/proxy/team-image`);
+
+  public async getTeamImage(): Promise<any> {
+    try {
+      const teamImage = await this.http.get(`${this.api}/proxy/team-image`).toPromise();
+      return teamImage;
+    } catch (error) {
+      console.error('Error fetching team image', error);
+      throw error;
+    }
   }
-  
-  getScoreboardImage() {
-    return this.http.get(`${this.api}/proxy/scoreboard-image`);
+
+  public async getScoreboardImage(): Promise<any> {
+    try {
+      const scoreboardImage = await this.http.get(`${this.api}/proxy/scoreboard-image`).toPromise();
+      return scoreboardImage;
+    } catch (error) {
+      console.error('Error fetching scoreboard image', error);
+      throw error;
+    }
   }
   
 }

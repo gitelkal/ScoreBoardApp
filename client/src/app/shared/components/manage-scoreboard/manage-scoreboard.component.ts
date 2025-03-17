@@ -13,6 +13,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { NgForOf } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-manage-scoreboard',
@@ -60,12 +61,19 @@ export class ManageScoreboardComponent implements OnInit {
     description: '',
   };
 
+  private destroy$ = new Subject<void>();
+
   ngOnInit(): void {
     this.fetchScoreboards();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   fetchScoreboards() {
-    this.scoreboardService.getAllScoreboards().subscribe(
+    this.scoreboardService.getAllScoreboards().then(
       (data) => {
         this.scoreboards = data;
         this.filteredScoreboards = data;
@@ -78,7 +86,7 @@ export class ManageScoreboardComponent implements OnInit {
 
   createScoreboard() {
     if (!this.scoreboardData || !this.scoreboardData.name.trim()) {
-      alert('Tävlingsnamn  krävs!');
+      alert('Tävlingsnamn krävs!');
       return;
     }
 
@@ -91,14 +99,15 @@ export class ManageScoreboardComponent implements OnInit {
       description: this.scoreboardData.description,
     };
 
-
-    this.scoreboardService.createScoreboard(payload).subscribe(
+    this.scoreboardService.createScoreboard(payload).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
       (response) => {
         if (response) {
           console.log(`Ny scoreboard skapad:`, response);
           this.fetchScoreboards();
           this.scoreboardCreated.emit(response);
-          this.resetScoreboardData(); 
+          this.resetScoreboardData();
         } else {
           alert('API returnerade null. Kontrollera backend.');
         }
@@ -107,8 +116,8 @@ export class ManageScoreboardComponent implements OnInit {
         alert('Något gick fel vid skapandet av tävling.');
       }
     );
-    
   }
+
 
   // Filtrera scoreboards i sökrutan
   filterScoreboards() {

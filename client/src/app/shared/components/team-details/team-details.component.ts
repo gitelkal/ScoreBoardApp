@@ -5,7 +5,7 @@ import { ScoreboardTeamsService } from '@app/core/services/scoreboardTeamsServic
 import { NgIf, NgFor, DatePipe, AsyncPipe } from '@angular/common';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { ScoreboardTeamsResponseOne } from '@app/shared/models/scoreboardTeamsOne.model';
 import { Users } from '@app/shared/models/users.model';
 import { UserService } from '@app/core/services/userService/user.service';
@@ -65,8 +65,7 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
   }
 
   loadTeamDetails() {
-    this.teamSubscription = this.teamUsersService.getOneTeamWithUsers(this.teamID).subscribe({
-      next: (response) => {
+    this.teamSubscription = from(this.teamUsersService.getOneTeamWithUsers(this.teamID)).subscribe((response) => {
         this.teamName = response.team.teamName;
         this.usersList = response.users.map(user => ({
           userId: user.userId,
@@ -75,23 +74,20 @@ export class TeamDetailsComponent implements OnInit, OnDestroy {
           lastname: user.lastname
         }));
         this.isInTeam = this.isUserInTeam(this.userID);
-      }
-    });
+      });
 
-    this.scoreboardSubscription = this.scoreboardTeamsService.getOneScoreboardTeam(this.teamID).subscribe({
-      next: (response) => {
-        this.scoreboardsList = response.map(scoreboard => ({
-          scoreboardId: scoreboard.scoreboardId,
-          name: scoreboard.name,
-          description: scoreboard.description,
-          startedAt: scoreboard.startedAt,
-          endedAt: scoreboard.endedAt,
-          active: scoreboard.active,
-          points: scoreboard.points
-        }));
-      }
+    from(this.scoreboardTeamsService.getOneScoreboardTeam(this.teamID)).subscribe((response) => {
+      this.scoreboardsList = response.map(scoreboard => ({
+        scoreboardId: scoreboard.scoreboardId,
+        name: scoreboard.name,
+        description: scoreboard.description,
+        startedAt: scoreboard.startedAt,
+        endedAt: scoreboard.endedAt,
+        active: scoreboard.active,
+        points: scoreboard.points
+      }));
     });
-    this.userService.getUserTeams(this.userID).subscribe((teams) => {
+    this.userService.getUserTeams(this.userID).then((teams) => {
       this.usersInTeam = teams;
     });
   }

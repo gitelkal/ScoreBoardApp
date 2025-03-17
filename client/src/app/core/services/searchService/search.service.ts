@@ -13,22 +13,23 @@ export class SearchService {
     this.api = this.apiService.api;
   }
 
-  submit(query: string): Observable<any> {
-    return this.http.get(`${this.api}/search?query=${query}`).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((error) => {
-        return throwError(error);
-      }))
+  public async submit(query: string): Promise<any> {
+    try {
+      const response = await this.http.get(`${this.api}/search?query=${query}`).toPromise();
+      return response;
+    } catch (error) {
+      console.error('Error submitting query', error);
+      throw error;
+    }
   }
-  getAllTeamsUsersScoreboards(): Observable<any> {
-    return this.http.get(`${this.api}/search/all`).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((error) => {
-        return throwError(error);
-      }))
+
+  public async getAllTeamsUsersScoreboards(): Promise<any> {
+    try {
+      const response = await this.http.get(`${this.api}/search/all`).toPromise();
+      return response;
+    } catch (error) {
+      console.error('Error fetching all teams, users, and scoreboards', error);
+      throw error;
+    }
   }
 }

@@ -4,6 +4,7 @@ import { CommonModule, AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule, RouterLink } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-scoreboard-task-view',
@@ -18,25 +19,39 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
   isEditingTaskCount = false;
   isEditingTaskPoints = false;
 
+  override destroy$ = new Subject<void>();
+
   override ngOnInit() {
     super.ngOnInit();
     this.subscribeToTaskUpdates();
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   
   private subscribeToTaskUpdates() {
-    this.signalRService.taskCountUpdates.subscribe(data => {
+    this.signalRService.taskCountUpdates.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(data => {
       if (data) {
         this.taskCountMap.set(Number(this.scoreboardID), data.taskCount);
       }
     });
-  
-    this.signalRService.taskPointsUpdates.subscribe(data => {
+
+    this.signalRService.taskPointsUpdates.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(data => {
       if (data) {
         this.pointsPerTaskMap.set(Number(this.scoreboardID), data.pointsPerTask);
       }
     });
-  
-    this.signalRService.taskCompletionUpdates.subscribe(data => {
+
+    this.signalRService.taskCompletionUpdates.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(data => {
       if (data) {
         this.updateTeamProgress(data.scoreboardId, data.teamId, data.points);
       }

@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '@app/core/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NgIf, NgClass } from '@angular/common';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import { NgIf, NgClass } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
   email: string = '';
@@ -23,7 +24,14 @@ export class RegisterComponent {
   usernameExists: boolean = false;
   emailExists: boolean = false;
 
+  private destroy$ = new Subject<void>();
+
   constructor(private auth: AuthService) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   submitRegister(form: NgForm) {
     if (form.invalid) {

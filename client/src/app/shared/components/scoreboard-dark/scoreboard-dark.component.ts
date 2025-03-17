@@ -67,18 +67,22 @@ export class ScoreboardDarkComponent implements OnInit {
     this.routeSubscription = this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.scoreboardID = Number(id);
-      this.scoreboardService.getRichScoreboard(id!).subscribe((scoreboard: ScoreboardResponse) => {
+      this.scoreboardService.getRichScoreboard(id!).then((scoreboard: ScoreboardResponse) => {
         const exists = this.scoreboards.some(sb => sb.scoreboard.scoreboardId === scoreboard.scoreboard.scoreboardId);
         if (!exists) {
           this.scoreboards.push(scoreboard);
         }
+      }).catch(error => {
+        console.error('Error loading scoreboard:', error);
       });
     });
     this.updateAvailableTeams();
-    this.userService.getUserTeams(this.userID).subscribe((teams) => {
+    this.userService.getUserTeams(this.userID).then((teams) => {
       this.myTeams = teams;
       this.updateAvailableTeams();
       console.log(`User ${this.userID} teams:`, teams);
+    }).catch(error => {
+      console.error('Error fetching user teams:', error);
     });
   }
 
@@ -115,7 +119,7 @@ export class ScoreboardDarkComponent implements OnInit {
         if (scoreboardId === this.scoreboardID) {
           const scoreboard = this.scoreboards.find(sb => sb.scoreboard.scoreboardId === this.scoreboardID);
           if (scoreboard) {
-              this.scoreboardService.getRichScoreboard(scoreboardId.toString()).subscribe((updatedScoreboard: ScoreboardResponse) => {
+              this.scoreboardService.getRichScoreboard(scoreboardId.toString()).then((updatedScoreboard: ScoreboardResponse) => {
                 const newTeam = updatedScoreboard.scoreboard.teams.find(team => team.teamID === teamId);
                 if (newTeam) {
                   scoreboard.scoreboard.teams.push(newTeam);
@@ -129,7 +133,7 @@ export class ScoreboardDarkComponent implements OnInit {
   }
 
   updateAvailableTeams(): void {
-    this.scoreboardTeamsService.getUserTeamsNotInScoreboard(this.scoreboardID, this.userID).subscribe((teams) => {
+    this.scoreboardTeamsService.getUserTeamsNotInScoreboard(this.scoreboardID, this.userID).then((teams) => {
       this.availableTeams = teams;
       const scoreboard = this.scoreboards.find(sb => sb.scoreboard.scoreboardId === this.scoreboardID);
       if (scoreboard) {

@@ -16,22 +16,56 @@ export class UserService {
     this.api = this.apiService.api;
   }
 
-  public getAllUsers(): Observable<Users[]> {
-    return this.http.get<Users[]>(`${this.api}/users`);
+  public async getAllUsers(): Promise<Users[]> {
+    try {
+      const users = await this.http.get<Users[]>(`${this.api}/users`).toPromise();
+      if (!users) {
+        throw new Error('Failed to fetch users');
+      }
+      return users;
+    } catch (error) {
+      console.error('Error fetching all users', error);
+      throw error;
+    }
   }
 
-  public getOneUser(id: number): Observable<Users> {
-    return this.http.get<Users>(`${this.api}/users/${id}`);
+  public async getOneUser(id: number): Promise<Users> {
+    try {
+      const user = await this.http.get<Users>(`${this.api}/users/${id}`).toPromise();
+      if (!user) {
+        throw new Error(`User with id ${id} not found`);
+      }
+      return user;
+    } catch (error) {
+      console.error(`Error fetching user with id ${id}`, error);
+      throw error;
+    }
   }
 
-  public getUserScoreboards(id: number): Observable<ScoreboardBasic[]> {
-    return this.http.get<ScoreboardBasic[]>(
-      `${this.api}/userscoreboards/${id}/scoreboards`
-    );
+  public async getUserScoreboards(id: number): Promise<ScoreboardBasic[]> {
+    try {
+      const scoreboards = await this.http.get<ScoreboardBasic[]>(`${this.api}/userscoreboards/${id}/scoreboards`).toPromise();
+      if (!scoreboards) {
+        throw new Error(`Failed to fetch scoreboards for user with id ${id}`);
+      }
+      return scoreboards;
+    } catch (error) {
+      console.error(`Error fetching scoreboards for user with id ${id}`, error);
+      throw error;
+    }
   }
 
-  public getUserTeams(id: number): Observable<Teams[]> {
-    return this.http.get<Teams[]>(`${this.api}/teamusers/${id}/teams`);
+  public async getUserTeams(id: number): Promise<Teams[]> {
+    try {
+      const teams = await this.http.get<Teams[]>(`${this.api}/teamusers/${id}/teams`).toPromise();
+      if (!teams) {
+        throw new Error(`Failed to fetch teams for user with id ${id}`);
+      }
+      return teams;
+    } catch (error) {
+      console.error(`Error fetching teams for user with id ${id}`, error);
+      throw error;
+    }
   }
 
   public deleteUser(id: number): Observable<Users> {

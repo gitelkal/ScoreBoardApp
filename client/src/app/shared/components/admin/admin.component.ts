@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 import { AdminService } from '@app/core/services/adminService/admin.service';
 import { UserService } from '@app/core/services/userService/user.service';
@@ -13,6 +13,8 @@ import { TeamService } from '@app/core/services/teamService/team.service';
 
 import { ManageTeamsComponent } from '../manage-teams/manage-teams.component';
 import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboard.component';
+import { Admins } from '@app/shared/models/admins.model';
+import { Teams } from '@app/shared/models/teams.models';
 
 @Component({
   selector: 'app-admin',
@@ -29,12 +31,13 @@ import { ManageScoreboardComponent } from '../manage-scoreboard/manage-scoreboar
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit, OnDestroy {
   // Admin
   adminService = inject(AdminService);
+  auth = inject(AuthService);
   getAllAdmins$ = this.adminService.getAllAdmins();
   admins: any[] = [];
-  isAdmin!: Observable<boolean>;
+  isAdmin = this.auth.isAdmin;;
   openedFromAdmins: boolean = false;
 
   //User
@@ -55,37 +58,47 @@ export class AdminComponent {
   sortBy: string = 'name';
   selectedUser: any = null;
 
-  constructor(private auth: AuthService, private router: Router) {
-    this.adminService.getAllAdmins().subscribe(
-      (data) => {
-        console.log('Admins hämtade:', data);
+  private destroy$ = new Subject<void>();
+
+  constructor(private router: Router) {}
+  
+  ngOnInit() {
+    this.adminService.getAllAdmins().then(
+      (data: Admins[]) => {
+        // console.log('Admins hämtade:', data);
         this.admins = data;
       },
-      (error) => {
+      (error: any) => {
         console.error('Fel vid hämtning av admins:', error);
       }
     );
-    this.isAdmin = this.auth.isAdmin;
 
-    this.userService.getAllUsers().subscribe(
+    this.userService.getAllUsers().then(
       (data) => {
-        console.log('Users hämtade:', data);
+        // console.log('Users hämtade:', data);
         this.users = data;
       },
       (error) => {
         console.error('Fel vid hämtning av users:', error);
       }
     );
-    this.teamService.getAllTeams().subscribe(
-      (data) => {
-        console.log('teams hämtade:', data);
+  
+    this.teamService.getAllTeams().then(
+      (data: Teams[]) => {
+        // console.log('teams hämtade:', data);
         this.teams = data;
       },
-      (error) => {
+      (error: any) => {
         console.error('Fel vid hämtning av teams:', error);
       }
     );
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   // Admin
   get sortedAdmins() {
     if (!this.filteredAdmins || this.filteredAdmins.length === 0) return [];
@@ -111,12 +124,15 @@ export class AdminComponent {
       admin.username.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
+  
   makeAdmin(user: any) {
     if (!confirm(`Vill du göra ${user.username} till admin?`)) return;
 
     const payload = { username: user.username };
 
-    this.adminService.makeAdmin(payload).subscribe(
+    this.adminService.makeAdmin(payload).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
       () => {
         alert(`${user.username} är nu admin!`);
         this.selectedUser = null;

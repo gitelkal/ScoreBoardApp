@@ -14,11 +14,24 @@ export class TeamUsersService {
   constructor(private http: HttpClient, private apiService: ApiService) {
     this.api = this.apiService.api;
   }
-  getTeamWithUsers(): Observable<TeamUsers[]> {
-    return this.http.get<TeamUsers[]>(`${this.api}/TeamUsers/`);
+  public async getTeamWithUsers(): Promise<TeamUsers[]> {
+    try {
+      const teamUsers = await this.http.get<TeamUsers[]>(`${this.api}/TeamUsers/`).toPromise();
+      return teamUsers || []; // Return an empty array if teamUsers is null
+    } catch (error) {
+      console.error('Error fetching teams with users', error);
+      throw error;
+    }
   }
-  getOneTeamWithUsers(id: number): Observable<TeamUsers> {
-    return this.http.get<TeamUsers>(`${this.api}/TeamUsers/${id}`);
+
+  public async getOneTeamWithUsers(id: number): Promise<TeamUsers> {
+    try {
+      const teamUser = await this.http.get<TeamUsers>(`${this.api}/TeamUsers/${id}`).toPromise();
+      return teamUser || {} as TeamUsers;
+    } catch (error) {
+      console.error(`Error fetching team with users with id ${id}`, error);
+      throw error;
+    }
   }
   joinTeam(userId: number, teamID: number): Observable<any> {
     return this.http.post(`${this.api}/teamusers`, {userId: userId, teamID: teamID});

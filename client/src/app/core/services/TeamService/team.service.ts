@@ -15,13 +15,40 @@ export class TeamService {
   }
 
   // Hämta alla lag
-  public getAllTeams(): Observable<Teams[]> {
-    return this.http.get<Teams[]>(`${this.api}/teams`);
+  public async getAllTeams(): Promise<Teams[]> {
+    try {
+      const teams = await this.http.get<Teams[]>(`${this.api}/teams`).toPromise();
+      if (!teams) {
+        throw new Error('Failed to fetch teams');
+      }
+      return teams;
+    } catch (error) {
+      console.error('Error fetching all teams', error);
+      throw error;
+    }
   }
 
-  // Hämta ett enskilt lag
-  public getOneTeam(id: string): Observable<Teams> {
-    return this.http.get<Teams>(`${this.api}/teams/${id}`);
+  public async getOneTeam(id: string): Promise<Teams> {
+    try {
+      const team = await this.http.get<Teams>(`${this.api}/teams/${id}`).toPromise();
+      if (!team) {
+        throw new Error(`Failed to fetch team with id ${id}`);
+      }
+      return team;
+    } catch (error) {
+      console.error(`Error fetching team with id ${id}`, error);
+      throw error;
+    }
+  }
+
+  public async getTeamWithUsers(): Promise<any> {
+    try {
+      const userTeams = await this.http.get<any>(`${this.api}/TeamUsers/`).toPromise();
+      return userTeams || []; // Return an empty array if userTeams is null
+    } catch (error) {
+      console.error('Error fetching teams with users', error);
+      throw error;
+    }
   }
 
   // Skapa ett nytt lag
@@ -34,9 +61,6 @@ export class TeamService {
     return this.http.delete(`${this.api}/teams/${teamId}`);
   }
 
-  public getTeamWithUsers(): Observable<any> {
-    return this.http.get<any>(`${this.api}/TeamUsers/`);
-  }
 
   public updateTeam(teamId: number, updatedTeam: any): Observable<any> {
     return this.http.put(`${this.api}/teams/${teamId}`, updatedTeam);
