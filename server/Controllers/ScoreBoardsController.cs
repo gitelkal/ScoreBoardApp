@@ -44,7 +44,8 @@ namespace server.Controllers
                     StartedAt = scoreboardDTO.StartedAt ?? DateTime.UtcNow,
                     EndedAt = scoreboardDTO.EndedAt,
                     Description = scoreboardDTO.Description,
-                    Active = scoreboardDTO.Active
+                    Active = scoreboardDTO.Active,
+                    NumberOfTasks = scoreboardDTO.NumberOfTasks
                 };
 
                 dbContext.ScoreBoards.Add(scoreboard);
@@ -80,8 +81,9 @@ namespace server.Controllers
                 scoreboard.EndedAt = scoreboardDTO.EndedAt;
                 scoreboard.Description = scoreboardDTO.Description;
                 scoreboard.Active = scoreboardDTO.Active;
+                scoreboard.NumberOfTasks = scoreboardDTO.NumberOfTasks;
 
-                dbContext.SaveChanges();
+            dbContext.SaveChanges();
 
                 return Ok(new { message = "Scoreboard updated successfully!" });
             }
@@ -125,7 +127,8 @@ namespace server.Controllers
                     sb.Name,
                     sb.StartedAt,
                     sb.EndedAt,
-                    sb.Active
+                    sb.Active,
+                    sb.NumberOfTasks
                 })
                 .FirstOrDefault();
 
@@ -146,7 +149,8 @@ namespace server.Controllers
                                       t.TeamID,
                                       t.TeamName,
                                       sbt.Points,
-                                      sbt.LastUpdated
+                                      sbt.LastUpdated,
+                                      sbt.TasksCount
                                   } into teamGroup
                                   orderby teamGroup.Key.Points descending
                                   select new
@@ -155,6 +159,7 @@ namespace server.Controllers
                                       teamGroup.Key.TeamName,
                                       teamGroup.Key.Points,
                                       teamGroup.Key.LastUpdated,
+                                      teamGroup.Key.TasksCount,
                                       Users = teamGroup
                                           .Where(x => x != null) // Ensure no null values
                                           .Select(x => new
@@ -176,10 +181,46 @@ namespace server.Controllers
                     scoreboard.StartedAt,
                     scoreboard.EndedAt,
                     scoreboard.Active,
+                    scoreboard.NumberOfTasks,
                     Teams = teamsWithUsers
                 }
             });
         }
+
+        [HttpPut("{scoreboardId}/numberOfTasks")]
+        public async Task<IActionResult> UpdateNumberOfTasks(int scoreboardId, [FromBody] UpdateNumberOfTasksDTO dto)
+        {
+
+            var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
+            if (scoreboard == null)
+            {
+                return NotFound(new { message = "Scoreboard not found." });
+            }
+
+            scoreboard.NumberOfTasks = dto.NumberOfTasks;
+            dbContext.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("TaskCountUpdated", scoreboardId, dto.NumberOfTasks);
+            return Ok(new { message = "Number of tasks updated successfully!" });
+        }
+
+        [HttpGet("{scoreboardId}/numberOfTasks")]
+        public IActionResult GetNumberOfTasks(int scoreboardId)
+        {
+            var scoreboard = dbContext.ScoreBoards.FirstOrDefault(s => s.ScoreboardId == scoreboardId);
+            if (scoreboard == null)
+            {
+                return NotFound(new { message = "Scoreboard not found." });
+            }
+
+            if (scoreboard.NumberOfTasks == null)
+            {
+                Console.WriteLine("NumberOfTasks är NULL!");
+            }
+
+            return Ok(scoreboard.NumberOfTasks);
+        }
+
 
 
     }

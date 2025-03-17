@@ -15,4 +15,6 @@ public class ScoreBoardTeams
     // Additional fields
     public int? Points { get; set; }
     public DateTime? LastUpdated { get; set; }
+    [Column("Tasks")]
+    public int? TasksCount { get; set; }
 }

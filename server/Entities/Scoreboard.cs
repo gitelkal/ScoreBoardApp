@@ -14,5 +14,6 @@ namespace server
         public DateTime? EndedAt { get; set; }     
         public DateTime StartedAt { get; set; }  
         public Boolean Active {  get; set; }
+        public int? NumberOfTasks { get; set; }
     }
 }
