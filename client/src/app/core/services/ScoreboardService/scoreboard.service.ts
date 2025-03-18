@@ -80,5 +80,10 @@ export class ScoreboardService {
   public removeTeamFromScoreboard(scoreboardId: number, teamId: number): Observable<any> {
     return this.http.delete(`${this.api}/ScoreboardTeams?scoreboardId=${scoreboardId}&teamId=${teamId}`);
   }
-  
+  public updateNumberOfTasks(scoreboardId: number, numberOfTasks: number): Observable<any> {
+    return this.http.put(`${this.api}/scoreboards/${scoreboardId}/numberOfTasks`, { NumberOfTasks: numberOfTasks });
+  }
+  public getNumberOfTasks(scoreboardId: number): Observable<number> {
+    return this.http.get<number>(`${this.api}/scoreboards/${scoreboardId}/numberOfTasks`);
+  }
 }

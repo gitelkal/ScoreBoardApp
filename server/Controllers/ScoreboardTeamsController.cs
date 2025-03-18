@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using server.Data;
+using server.Entities;
 
 namespace server.Controllers
 {
@@ -50,6 +52,7 @@ namespace server.Controllers
                 sb.StartedAt,
                 sb.EndedAt,
                 sb.Active,
+                sb.NumberOfTasks,
                 Points = scoreboards.First(s => s.ScoreboardID == sb.ScoreboardId).Points
             });
 
@@ -108,7 +111,8 @@ namespace server.Controllers
             var scoreboardTeam = new ScoreBoardTeams
             {
                 ScoreboardID = scoreboardId,
-                TeamID = teamId
+                TeamID = teamId,
+                TasksCount = 0
             };
 
             _dbContext.ScoreboardTeams.Add(scoreboardTeam);
@@ -133,7 +137,8 @@ namespace server.Controllers
             var scoreboardTeam = new ScoreBoardTeams
             {
                 ScoreboardID = scoreboardId,
-                TeamID = team.TeamID 
+                TeamID = team.TeamID,
+                TasksCount = 0
             };
 
             _dbContext.ScoreboardTeams.Add(scoreboardTeam);
@@ -177,5 +182,49 @@ namespace server.Controllers
             _dbContext.SaveChanges();
             return Ok();
         }
+
+        [HttpPut("{scoreboardId}/{teamId}/tasks")]
+        public async Task<IActionResult> UpdateTasksForTeam(int scoreboardId, int teamId, [FromBody] UpdateTasksDTO dto)
+        {
+            if (dto == null || dto.TasksCount == null || dto.TasksCount < 0)
+            {
+                return BadRequest("DTO är null eller har ogiltigt värde");
+            }
+
+            var scoreboardTeam = _dbContext.ScoreboardTeams.FirstOrDefault(st => st.TeamID == teamId && st.ScoreboardID == scoreboardId);
+            if (scoreboardTeam == null)
+            {
+                return NotFound("ScoreboardTeam not found.");
+            }
+
+            scoreboardTeam.TasksCount = dto.TasksCount;
+
+            if (dto.Points.HasValue)
+            {
+                scoreboardTeam.Points = dto.Points.Value;
+            }
+            _dbContext.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("TaskCompleted", scoreboardId, teamId, dto.TasksCount, scoreboardTeam.Points);
+
+            return Ok(new { message = "Tasks updated successfully!", points = scoreboardTeam.Points });
+        }
+
+
+
+        [HttpGet("{scoreboardId}/{teamId}/tasks")]
+        public IActionResult GetTasksForTeam(int scoreboardId, int teamId)
+        {
+            var scoreboardTeam = _dbContext.ScoreboardTeams.FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
+
+            if (scoreboardTeam == null)
+            {
+                return NotFound(new { message = "Team not found in the scoreboard" });
+            }
+
+            return Ok(new { TeamID = teamId, ScoreboardID = scoreboardId, TasksCompleted = scoreboardTeam.TasksCount });
+        }
+
+
     }
 }

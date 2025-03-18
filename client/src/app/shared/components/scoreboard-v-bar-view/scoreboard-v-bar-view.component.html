@@ -4,18 +4,10 @@
     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
       <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" >Hackaton</a>
       <a [routerLink]="['/scoreboard-dark', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" >Mörk tavla</a >
-      <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Tasks</a>
+      <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Uppgifter</a>
     </div>
   </div>
 </div>
-
-<button 
-(click)="openFullscreen()"
-class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition">
-Fullskärm</button>
-<button (click)="closeFullscreen()"
-class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition"
->Avbryt fullskärm</button>
 
 <div *ngIf="getRichScoreboard$ | async as richScoreboard" class="w-full min-h-screen fin-bakgrund flex items-start justify-center pt-6">
 <div class="max-w-5xl w-full mx-auto p-6 rounded-lg shadow-lg backdrop-blur-lg bg-white/20 border border-gray-300 flex flex-col min-w-[min-content]">

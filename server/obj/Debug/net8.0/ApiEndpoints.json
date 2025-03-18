@@ -248,6 +248,43 @@
   },
   {
     "ContainingType": "server.Controllers.ScoreboardsController",
+    "Method": "UpdateNumberOfTasks",
+    "RelativePath": "api/Scoreboards/{scoreboardId}/numberOfTasks",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "server.Entities.UpdateNumberOfTasksDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardsController",
+    "Method": "GetNumberOfTasks",
+    "RelativePath": "api/Scoreboards/{scoreboardId}/numberOfTasks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardsController",
     "Method": "GetRichScoreboardById",
     "RelativePath": "api/Scoreboards/rich/{scoreboardId}",
     "HttpMethod": "GET",
@@ -339,6 +376,74 @@
       },
       {
         "Name": "points",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "UpdateTasksForTeam",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/tasks",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "server.Entities.UpdateTasksDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "GetTasksForTeam",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/{teamId}/tasks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.Controllers.ScoreboardTeamsController",
+    "Method": "DeleteScoreboardTeam",
+    "RelativePath": "api/ScoreboardTeams/{scoreboardId}/teamId",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreboardId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "teamId",
         "Type": "System.Int32",
         "IsRequired": false
       }

@@ -1,11 +1,12 @@
-<div class="min-h-screen bg-gray-800 text-white flex mt-12 justify-center p-6 relative">
+<div class="min-h-screen  text-white flex mt-12 justify-center p-6 relative fixed top-0 left-0">
+    <div class="bg-gray-800 fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1] backdrop-blur-override"></div>
     <div class="absolute top-0 left-0">
         <button class="bg-red5 text-white1 px-4 py-2 rounded-b transition" (click)="toggleViewDropdown()">Ändra vy</button>
         <div *ngIf="isViewDropdownOpen" class="origin-top-left absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem">Hackaton</a>
+                <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Hackaton</a>
                 <a [routerLink]="['/scoreboard-v-bar-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Stapel-vy</a>
-                <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Tasks</a>
+                <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Uppgifter</a>
             </div>
         </div>
     </div>
@@ -17,10 +18,7 @@
                     <h2 class="text-red-500 text-2xl font-bold tracking-wide uppercase text-center">
                         {{ scoreboard.scoreboard.name }}
                     </h2>
-                    <div
-                        class="text-lg font-bold mt-2"
-                        [ngClass]="{'text-green-500': scoreboard.scoreboard.active, 'text-red-500': !scoreboard.scoreboard.active}"
-                    >
+                    <div class="text-lg font-bold mt-2" [ngClass]="{'text-green-500': scoreboard.scoreboard.active, 'text-red-500': !scoreboard.scoreboard.active}">
                         {{ scoreboard.scoreboard.active ? 'Aktiv' : 'Inaktiv' }}
                     </div>
                     <div class="absolute right-0 top-0 text-right space-y-2">
@@ -76,7 +74,7 @@
     <!-- Dropdowns -->
     <div class="absolute top-0 right-0 mt-6 mr-4 z-50 space-y-2">
         <!-- Team Participate Dropdown -->
-        <div *ngIf="(loggedIn | async) && noConflict" class="dropdown-menu">
+        <div *ngIf="(loggedIn | async) && noConflict && activeScoreboard" class="dropdown-menu">
             <div class="relative inline-block text-left">
                 <button (click)="toggleJoinDropdown()" class="bg-blue-900 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
                     <span>Delta i tävling</span>
@@ -101,7 +99,7 @@
         </div>
 
         <!-- Points Dropdown -->
-        <div *ngIf="(isAdmin | async) === true" class="dropdown-menu">
+        <div *ngIf="(isAdmin | async) === true && activeScoreboard" class="dropdown-menu">
             <div class="relative inline-block text-left">
                 <button (click)="togglePointsDropdown()" class="bg-blue-900 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
                     <span>Tilldela Poäng</span>

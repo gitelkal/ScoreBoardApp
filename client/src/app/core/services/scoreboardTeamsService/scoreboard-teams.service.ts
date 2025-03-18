@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { ScoreboardTeams } from '@app/shared/models/scoreboardTeams.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ScoreboardTeamsResponseOne } from '@app/shared/models/scoreboardTeamsOne.model';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +66,11 @@ export class ScoreboardTeamsService {
   removeTeamFromScoreboard(scoreboardId: number, teamId: number)
   {
     return this.http.delete<any>(`${this.api}/ScoreboardTeams/${scoreboardId}/teamId?teamId=${teamId}`, { responseType: 'json' });
+  }
+  public updateTasksForTeam(scoreboardId: number, teamId: number, tasksCount: number): Observable<any> {
+    return this.http.put(`${this.api}/ScoreboardTeams/${scoreboardId}/${teamId}/tasks`, { TasksCount: Number(tasksCount) });
+  }
+  public getTasksForTeam(scoreboardId: number, teamId: number): Observable<any> {
+    return this.http.get<number>(`${this.api}/ScoreboardTeams/${scoreboardId}/${teamId}/tasks`)
   }
 }

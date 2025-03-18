@@ -1,43 +1,48 @@
-<header class="bg-white1">
-  <div id="header" class="w-full flex justify-center">
-    <div class="w-full md:w-3/4 flex justify-between items-center flex-wrap sm:flex-nowrap bg-red1 sm:bg-white1">
-      <a routerLink="/">
-        <div class="w-[18rem] md:w-64">
-          <img class="" src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg" alt="TV-ikon">
-        </div>
-      </a>
+<header class="bg-white1 relative">
+  <button (click)="toggleFullscreen()" class="absolute top-2 left-2 bg-mainColor text-white1 p-1 rounded-md">
+    Fullskärm
+  </button>
+  <ng-container *ngIf="isHeaderVisible">
+    <div id="header" class="w-full flex justify-center">
+      <div class="w-full md:w-3/4 flex justify-between items-center flex-wrap sm:flex-nowrap bg-red1 sm:bg-white1">
+        <a routerLink="/">
+          <div class="w-[18rem] md:w-64">
+            <img class="" src="https://www.trafikverket.se/contentassets/d8ca1da136844608a07a850a75a7168b/trafikverket-logo.svg" alt="TV-ikon">
+          </div>
+        </a>
 
-      <div class="flex flex-wrap xl:flex-nowrap flex-col-reverse xl:flex-row w-full ml-0 sm:ml-0 md:ml-3 xl:h-11 bg-white1">
-        <div class="md:w-full flex md:mt-1 xl:mt-0">
-          <form class="flex w-full relative h-10 sm:h-12 md:h-12 xl:h-11" #searchForm="ngForm" (ngSubmit)="submitQuery(searchForm)" novalidate>
-            <input class="w-full border-l-2 border-t-2 border-b-2 border-red6 px-2 font-digital" type="text" placeholder="Sök efter tävlingar, lag eller användare" [(ngModel)]="searchQuery" name="searchQuery" required (input)="onSearchInputChange()" autocomplete="off"/>
-            <button class="w-24 font-bold sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg xl:mr-2 bg-white1 text-red6 border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" type="submit" [disabled]="searchForm.invalid">Sök</button>
-            <button class="sm:ml-0 md:ml-1 lg:ml-1 lg:mr-0 xl:mr-3 px-14 sm:px-6 text-center sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 hover:bg-red6 hover:text-white1 transition border-t-2 border-r-2 border-b-2 md:border-2 border-red6 font-digital" *ngIf="(isAdmin | async) === true" routerLink="/admin">Admin</button>
-            <div *ngIf="isDropdownOpen" class="absolute w-[calc(100%)] bg-white border border-red6 mt-1 z-10 top-10 mr-4">
-              <ul>
-                <li *ngFor="let result of filteredResults.slice(0, 10), let i = index" class="p-2 border-b border-red6 cursor-pointer flex font-digital">
-                  <img [src]="imageUrls[i]" alt="Icon" class="mr-2 w-6 h-6">
-                  <a [routerLink]="getRouterLink(result)">
-                    {{ getResultName(result) }}
-                  </a>
-                </li>
-                <li *ngIf="filteredResults.length === 0" class="p-2">
-                  Inga resultat matchade din sökning
-                </li>
-              </ul>
-            </div>
-          </form>
-        </div>
+        <div class="flex flex-wrap xl:flex-nowrap flex-col-reverse xl:flex-row w-full ml-0 sm:ml-0 md:ml-3 xl:h-11 bg-white1">
+          <div class="md:w-full flex md:mt-1 xl:mt-0">
+            <form class="flex w-full relative h-10 sm:h-12 md:h-12 xl:h-11" #searchForm="ngForm" (ngSubmit)="submitQuery(searchForm)" novalidate>
+              <input class="w-full border-l-2 border-t-2 border-b-2 border-red6 px-2 font-digital" type="text" placeholder="Sök efter tävlingar, lag eller användare" [(ngModel)]="searchQuery" name="searchQuery" required (input)="onSearchInputChange()" autocomplete="off"/>
+              <button class="w-24 font-bold sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg xl:mr-2 bg-white1 text-red6 border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" type="submit" [disabled]="searchForm.invalid">Sök</button>
+              <button class="sm:ml-0 md:ml-1 lg:ml-1 lg:mr-0 xl:mr-3 px-14 sm:px-6 text-center sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 hover:bg-red6 hover:text-white1 transition border-t-2 border-r-2 border-b-2 md:border-2 border-red6 font-digital" *ngIf="(isAdmin | async) === true" routerLink="/admin">Admin</button>
+              <div *ngIf="isDropdownOpen" class="absolute w-[calc(100%)] bg-white border border-red6 mt-1 z-10 top-10 mr-4">
+                <ul>
+                  <li *ngFor="let result of filteredResults.slice(0, 10), let i = index" class="p-2 border-b border-red6 cursor-pointer flex font-digital">
+                    <img [src]="imageUrls[i]" alt="Icon" class="mr-2 w-6 h-6">
+                    <a [routerLink]="getRouterLink(result)">
+                      {{ getResultName(result) }}
+                    </a>
+                  </li>
+                  <li *ngIf="filteredResults.length === 0" class="p-2">
+                    Inga resultat matchade din sökning
+                  </li>
+                </ul>
+              </div>
+            </form>
+          </div>
 
-        <div class="w-full lg:w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 md:gap-1 xl:gap-3 h-36 sm:h-24 md:h-12 xl:h-11">
-          <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 border-t-2 border-l-2 border-r-2 sm:border-t-2 sm:border-l-2 sm:border-r-0 md:border-r-2 md:border-b-2 lg:border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" routerLink="team">Lag</button>
-          <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 border-t-2 border-r-2 border-l-2 md:border-b-2 lg:border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" routerLink="scoreboards-history">Historik</button>
-          <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg text-nowrap text-center font-bold bg-white1 text-red6 border-t-2 border-l-2 border-r-2 sm:border-t-2 sm:border-l-2 sm:border-r-0 md:border-r-2 md:border-b-2 lg:border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" *ngIf="(loggedIn | async) === true" [routerLink]="['/user', userID]">Min sida</button>
-          <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 border-l-2 border-t-2 border-r-2 sm:border-t-2 sm:border-r-2 sm:border-l-2 sm:border-t-2 sm:border-r-0 md:border-r-2 md:border-b-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" (click)="toggleRegisterModal()" *ngIf="(loggedIn | async) === false">Registrera</button>
-          <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg text-nowrap font-bold bg-white1 text-red6 border-l-2 border-t-2 border-r-2 sm:border-t-2 sm:border-r-2 sm:border-l-2 sm:border-t-2 md:border-b-2  border-red6 hover:bg-red6 hover:text-white1 font-digital transition" (click)="toggleLoginModal()" *ngIf="(loggedIn | async) === false">Logga in</button>
-          <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg text-nowrap font-bold bg-white1 text-red6 border-l-2 border-t-2 border-r-2 sm:border-t-2 sm:border-r-2 sm:border-l-2 sm:border-t-2 md:border-b-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" (click)="logoutButton()" *ngIf="(loggedIn | async) === true" routerLink="/">Logga ut</button>
+          <div class="w-full lg:w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 md:gap-1 xl:gap-3 h-36 sm:h-24 md:h-12 xl:h-11">
+            <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 border-t-2 border-l-2 border-r-2 sm:border-t-2 sm:border-l-2 sm:border-r-0 md:border-r-2 md:border-b-2 lg:border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" routerLink="team">Lag</button>
+            <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 border-t-2 border-r-2 border-l-2 md:border-b-2 lg:border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" routerLink="scoreboards-history">Historik</button>
+            <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg text-nowrap text-center font-bold bg-white1 text-red6 border-t-2 border-l-2 border-r-2 sm:border-t-2 sm:border-l-2 sm:border-r-0 md:border-r-2 md:border-b-2 lg:border-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" *ngIf="(loggedIn | async) === true" [routerLink]="['/user', userID]">Min sida</button>
+            <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg font-bold bg-white1 text-red6 border-l-2 border-t-2 border-r-2 sm:border-t-2 sm:border-r-2 sm:border-l-2 sm:border-t-2 sm:border-r-0 md:border-r-2 md:border-b-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" (click)="toggleRegisterModal()" *ngIf="(loggedIn | async) === false">Registrera</button>
+            <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg text-nowrap font-bold bg-white1 text-red6 border-l-2 border-t-2 border-r-2 sm:border-t-2 sm:border-r-2 sm:border-l-2 sm:border-t-2 md:border-b-2  border-red6 hover:bg-red6 hover:text-white1 font-digital transition" (click)="toggleLoginModal()" *ngIf="(loggedIn | async) === false">Logga in</button>
+            <button class="sm:text-sm md:text-md lg:text-lg xl:text-sm 2xl:text-lg text-nowrap font-bold bg-white1 text-red6 border-l-2 border-t-2 border-r-2 sm:border-t-2 sm:border-r-2 sm:border-l-2 sm:border-t-2 md:border-b-2 border-red6 hover:bg-red6 hover:text-white1 font-digital transition" (click)="logoutButton()" *ngIf="(loggedIn | async) === true" routerLink="/">Logga ut</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </header>
