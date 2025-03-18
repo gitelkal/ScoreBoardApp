@@ -84,7 +84,6 @@ export class ScoreboardDarkComponent implements OnInit {
     this.userService.getUserTeams(this.userID).then((teams) => {
       this.myTeams = teams;
       this.updateAvailableTeams();
-      console.log(`User ${this.userID} teams:`, teams);
     }).catch(error => {
       console.error('Error fetching user teams:', error);
     });
@@ -101,9 +100,9 @@ export class ScoreboardDarkComponent implements OnInit {
             team.points = points;
             const teamIDelement = document.querySelector(`#team-points-${teamId}`);
             if (teamIDelement) {
-              teamIDelement.classList.add('glow');
+              teamIDelement.classList.add('points');
               setTimeout(() => {
-                teamIDelement.classList.remove('glow');
+                teamIDelement.classList.remove('points');
               }, 10000); 
             }
           } else {
