@@ -51,7 +51,6 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
     this.destroy$.complete();
   }
 
-  
   private subscribeToTaskUpdates() {
     this.signalRService.taskCountUpdates.pipe(
       takeUntil(this.destroy$)
@@ -168,41 +167,29 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
     this.pointsPerTaskMap.set(Number(this.scoreboardID), this.pointsPerTask);
   }
   
-
-
-
-
-
-
   getCompletedTasks(teamId: number): number {
     if (!this.scoreboardID) return 0;
     const scoreboardId = Number(this.scoreboardID);
-
-    // 🛠 Försök att hämta från completedTasksMap först
     const completedTasks = this.completedTasksMap.get(scoreboardId)?.get(teamId);
     if (completedTasks !== undefined) return completedTasks;
-
-    // 🛠 Om det inte finns, försök hämta från RichTeam
     const team = this.scoreboardResponseSubject.value?.scoreboard.teams.find(t => t.teamID === teamId);
     return (team as any)?.tasksCount || 0;
 }
 
-
   protected override updateTeamProgress(scoreboardId: number, teamId: number, points: number): void {
     const currentScoreboard = this.scoreboardResponseSubject.value;
     if (!currentScoreboard?.scoreboard?.teams) return;
-
     const teamToUpdate = currentScoreboard.scoreboard.teams.find(team => team.teamID === teamId);
     if (teamToUpdate) {
-      teamToUpdate.points = points;
-      currentScoreboard.scoreboard.teams.sort((a, b) => b.points - a.points);
-      this.scoreboardResponseSubject.next(currentScoreboard);
+        const currentPoints = teamToUpdate.points || 0;
+        teamToUpdate.points = currentPoints + points;
+        currentScoreboard.scoreboard.teams.sort((a, b) => b.points - a.points);
+        this.scoreboardResponseSubject.next(currentScoreboard);
     }
   }
-  
+
   getTaskColor(taskIndex: number): string {
     const colors = ['#FF0000', '#FF8000', '#FFFF00', '#80FF00', '#00FF00', '#00FF80', '#00FFFF', '#0080FF', '#0000FF', '#8000FF'];
     return colors[taskIndex % colors.length];
   }
-  
 }
