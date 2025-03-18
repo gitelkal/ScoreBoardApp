@@ -35,6 +35,7 @@ export class ScoreboardDarkComponent implements OnInit {
   noConflict: boolean = true;
   selectedJoinTeamId: number = 0;
   scoreboardID: number = 0;
+  activeScoreboard: boolean = false;
   selectedTeamId: number | undefined;
   pointsToGive: number | undefined;
   scoreboards: ScoreboardResponse[] = [];
@@ -71,6 +72,9 @@ export class ScoreboardDarkComponent implements OnInit {
         const exists = this.scoreboards.some(sb => sb.scoreboard.scoreboardId === scoreboard.scoreboard.scoreboardId);
         if (!exists) {
           this.scoreboards.push(scoreboard);
+          if(scoreboard.scoreboard.active){
+            this.activeScoreboard = true;
+          }
         }
       }).catch(error => {
         console.error('Error loading scoreboard:', error);
