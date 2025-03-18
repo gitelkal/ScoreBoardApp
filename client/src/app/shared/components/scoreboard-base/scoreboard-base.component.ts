@@ -57,13 +57,10 @@ import { DOCUMENT } from '@angular/common';
   getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
   teamColorAssignments: Map<string, string> = new Map();
 
-  constructor(@Inject(DOCUMENT) protected document: any) {}
-  fullscreenElement: any;
-
   protected destroy$ = new Subject<void>();
 
   ngOnInit() {
-    this.fullscreenElement = document.documentElement;
+
     this.signalRService.startConnection();
     this.isBarChartView = false;
     this.scoreboardID = this.route.snapshot.paramMap.get('id');
@@ -77,36 +74,6 @@ import { DOCUMENT } from '@angular/common';
         this.setPoints(teamID, points);
       }
     });
-  }
-
-  openFullscreen() {
-    if (this.fullscreenElement.requestFullscreen) {
-      this.fullscreenElement.requestFullscreen();
-    } else if (this.fullscreenElement.mozRequestFullScreen) {
-      /* Firefox */
-      this.fullscreenElement.mozRequestFullScreen();
-    } else if (this.fullscreenElement.webkitRequestFullscreen) {
-      /* Chrome, Safari and Opera */
-      this.fullscreenElement.webkitRequestFullscreen();
-    } else if (this.fullscreenElement.msRequestFullscreen) {
-      /* IE/Edge */
-      this.fullscreenElement.msRequestFullscreen();
-    }
-  }
-
-  closeFullscreen() {
-    if (this.document.exitFullscreen) {
-      this.document.exitFullscreen();
-    } else if (this.document.mozCancelFullScreen) {
-      /* Firefox */
-      this.document.mozCancelFullScreen();
-    } else if (this.document.webkitExitFullscreen) {
-      /* Chrome, Safari and Opera */
-      this.document.webkitExitFullscreen();
-    } else if (this.document.msExitFullscreen) {
-      /* IE/Edge */
-      this.document.msExitFullscreen();
-    }
   }
 
 

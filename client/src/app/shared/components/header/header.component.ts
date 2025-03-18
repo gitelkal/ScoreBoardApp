@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, HostListener, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, HostListener, ElementRef, OnDestroy, Inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -12,6 +12,7 @@ import { Scoreboards } from '@app/shared/models/scoreboards.model';
 import { Teams } from '@app/shared/models/teams.models';
 import { Users } from '@app/shared/models/users.model';
 import { ThirdPartyApiService } from '@app/core/services/thirdPartyApiService/third-party-api.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -39,11 +40,15 @@ export class HeaderComponent implements OnDestroy {
   teamImageUrl: string = '';
   scoreboardImageUrl: string = '';
   imageUrls: { [key: string]: string } = {};
+  isHeaderVisible: boolean = true;
+  fullscreenElement: any;
 
   private destroy$ = new Subject<void>();
 
-  constructor(private search: SearchService, private elementRef: ElementRef, private thirdPartyApiService: ThirdPartyApiService) {
+  constructor(private search: SearchService, private elementRef: ElementRef, private thirdPartyApiService: ThirdPartyApiService, @Inject(DOCUMENT) protected document: any) {
     if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
+   
+      this.fullscreenElement = document.documentElement;
       this.isAdmin = this.authService.isAdmin;
       this.loggedIn = this.authService.loggedIn;
       this.userID = this.authService.getUserID() ?? 0;
@@ -192,4 +197,36 @@ export class HeaderComponent implements OnDestroy {
       this.isDropdownOpen = false;
     }
   }
+
+  toggleFullscreen() {
+    this.isHeaderVisible = !this.isHeaderVisible;
+    if (!this.document.fullscreenElement) {
+      if (this.fullscreenElement.requestFullscreen) {
+        this.fullscreenElement.requestFullscreen();
+      } else if (this.fullscreenElement.mozRequestFullScreen) {
+        /* Firefox */
+        this.fullscreenElement.mozRequestFullScreen();
+      } else if (this.fullscreenElement.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        this.fullscreenElement.webkitRequestFullscreen();
+      } else if (this.fullscreenElement.msRequestFullscreen) {
+        /* IE/Edge */
+        this.fullscreenElement.msRequestFullscreen();
+      }
+    } else {
+      if (this.document.exitFullscreen) {
+        this.document.exitFullscreen();
+      } else if (this.document.mozCancelFullScreen) {
+        /* Firefox */
+        this.document.mozCancelFullScreen();
+      } else if (this.document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        this.document.webkitExitFullscreen();
+      } else if (this.document.msExitFullscreen) {
+        /* IE/Edge */
+        this.document.msExitFullscreen();
+      }
+    }
+  }
+  
 }

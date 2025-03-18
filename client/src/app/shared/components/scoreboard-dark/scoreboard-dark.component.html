@@ -1,4 +1,5 @@
-<div class="min-h-screen bg-gray-800 text-white flex mt-12 justify-center p-6 relative">
+<div class="min-h-screen  text-white flex mt-12 justify-center p-6 relative fixed top-0 left-0">
+    <div class="bg-gray-800 fixed top-0 left-0 w-full h-full bg-cover bg-center z-[-1] backdrop-blur-override"></div>
     <div class="absolute top-0 left-0">
         <button class="bg-red5 text-white1 px-4 py-2 rounded-b transition" (click)="toggleViewDropdown()">Ändra vy</button>
         <div *ngIf="isViewDropdownOpen" class="origin-top-left absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">

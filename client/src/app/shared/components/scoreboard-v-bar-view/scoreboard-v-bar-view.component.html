@@ -9,14 +9,6 @@
   </div>
 </div>
 
-<button 
-(click)="openFullscreen()"
-class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition">
-Fullskärm</button>
-<button (click)="closeFullscreen()"
-class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition"
->Avbryt fullskärm</button>
-
 <div *ngIf="getRichScoreboard$ | async as richScoreboard" class="w-full min-h-screen fin-bakgrund flex items-start justify-center pt-6">
 <div class="max-w-5xl w-full mx-auto p-6 rounded-lg shadow-lg backdrop-blur-lg bg-white/20 border border-gray-300 flex flex-col min-w-[min-content]">
   <div class="bg-gradient-to-r from-red-700 to-yellow-500 p-4 rounded-lg shadow-md text-center relative">    
