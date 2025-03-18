@@ -21,6 +21,14 @@ export class ScoreboardVBarViewComponent extends ScoreboardBaseComponent {
     this.isViewDropdownOpen = !this.isViewDropdownOpen;
   }
 
+  isHorizontalView: boolean = true;
+
+toggleView() {
+  this.isHorizontalView = !this.isHorizontalView;
+}
+
+
+
   //override openFullscreen() {
     //this.isFullscreen = true;
     // Add logic to enter fullscreen mode
