@@ -16,6 +16,7 @@ import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 @Component({
   template: ''
@@ -117,10 +118,9 @@ import { DOCUMENT } from '@angular/common';
   protected subscribeToScoreUpdates() {
     this.signalRService.scoreUpdates.subscribe(update => {
       if (!update) return;
-  
       const currentScoreboard = this.scoreboardResponseSubject.value;
-      if (!currentScoreboard?.scoreboard?.teams) return;
-  
+      if (!currentScoreboard?.scoreboard?.teams || update.scoreboardId !== Number(this.scoreboardID)) return;
+      
       const teamToUpdate = currentScoreboard.scoreboard.teams.find(team => team.teamID === update.teamId);
       if (teamToUpdate) {
         const targetScore = update.points;
@@ -207,9 +207,6 @@ import { DOCUMENT } from '@angular/common';
 
   setPoints(teamId: number, points: number) {
     if (!this.scoreboardID) return;
-
-
-    console.log(Number(this.scoreboardID))
     this.scoreboardTeamsService.setScoreboardTeamPoints(this.scoreboardID, teamId, points)
       .subscribe();
       this.snackBar.open('Uppdaterade poäng', 'Stäng', { duration: 2000 });
