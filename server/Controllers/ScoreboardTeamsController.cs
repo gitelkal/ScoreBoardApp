@@ -191,7 +191,7 @@ namespace server.Controllers
                 return BadRequest("DTO är null eller har ogiltigt värde");
             }
 
-            var scoreboardTeam = dbContext.ScoreboardTeams.FirstOrDefault(st => st.TeamID == teamId && st.ScoreboardID == scoreboardId);
+            var scoreboardTeam = _dbContext.ScoreboardTeams.FirstOrDefault(st => st.TeamID == teamId && st.ScoreboardID == scoreboardId);
             if (scoreboardTeam == null)
             {
                 return NotFound("ScoreboardTeam not found.");
@@ -203,7 +203,7 @@ namespace server.Controllers
             {
                 scoreboardTeam.Points = dto.Points.Value;
             }
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             await _hubContext.Clients.All.SendAsync("TaskCompleted", scoreboardId, teamId, dto.TasksCount, scoreboardTeam.Points);
 
@@ -215,7 +215,7 @@ namespace server.Controllers
         [HttpGet("{scoreboardId}/{teamId}/tasks")]
         public IActionResult GetTasksForTeam(int scoreboardId, int teamId)
         {
-            var scoreboardTeam = dbContext.ScoreboardTeams.FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
+            var scoreboardTeam = _dbContext.ScoreboardTeams.FirstOrDefault(st => st.ScoreboardID == scoreboardId && st.TeamID == teamId);
 
             if (scoreboardTeam == null)
             {
