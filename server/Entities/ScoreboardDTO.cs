@@ -8,7 +8,8 @@ public class ScoreboardDTO
     public DateTime? EndedAt { get; set; }
     public string Description { get; set; }
     public bool Active { get; set; }
-}
+    public int? NumberOfTasks { get; set; }
+    }
 
 
 

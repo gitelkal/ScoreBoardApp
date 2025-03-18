@@ -24,6 +24,26 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
   override ngOnInit() {
     super.ngOnInit();
     this.subscribeToTaskUpdates();
+
+    if (!this.scoreboardID) return;
+    const scoreboardId = Number(this.scoreboardID);
+    this.scoreboardService.getNumberOfTasks(scoreboardId).subscribe(taskCount => {
+      this.taskCountMap.set(scoreboardId, taskCount);
+    });
+    this.scoreboardService.getRichScoreboard(this.scoreboardID).then(response => {
+      this.scoreboardResponseSubject.next(response);
+      response.scoreboard.teams.forEach(team => {
+        this.scoreboardTeamsService.getTasksForTeam(scoreboardId, team.teamID).subscribe(tasksResponse => {
+          if (!tasksResponse || tasksResponse.tasksCompleted === undefined) {
+            return;
+          }
+          if (!this.completedTasksMap.has(scoreboardId)) {
+            this.completedTasksMap.set(scoreboardId, new Map());
+          }
+          this.completedTasksMap.get(scoreboardId)!.set(team.teamID, tasksResponse.tasksCompleted);
+        });
+      });
+    });
   }
 
   ngOnDestroy(): void {
@@ -61,21 +81,59 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
   onTaskCountChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const newValue = Number(inputElement.value);
-
     if (!this.scoreboardID || isNaN(newValue)) return;
-
     const scoreboardId = Number(this.scoreboardID);
-    this.taskCountMap.set(scoreboardId, newValue);
+    this.scoreboardService.updateNumberOfTasks(scoreboardId, newValue).subscribe(() => {
+      this.scoreboardService.getNumberOfTasks(scoreboardId).subscribe(updatedValue => {
+          this.taskCountMap.set(scoreboardId, updatedValue);
+      });
+    });
+  }
+
+  completeTask(teamId: number) {
+    if (!this.scoreboardID) return;
+    const scoreboardId = Number(this.scoreboardID);
+    const currentCompletedTasks = this.completedTasksMap.get(scoreboardId)?.get(teamId) || 0;
+    const newCompletedTasks = isNaN(currentCompletedTasks) ? 1 : Number(currentCompletedTasks) + 1;
+    const pointsPerTask = this.pointsPerTaskMap.get(scoreboardId) || 100;
+    const newPoints = newCompletedTasks * pointsPerTask; 
+    const dto = { tasksCompleted: newCompletedTasks, points: newPoints  };
+
+    this.scoreboardTeamsService.updateTasksForTeam(scoreboardId, teamId, newCompletedTasks).subscribe(() => {
+      if (!this.completedTasksMap.has(scoreboardId)) {
+          this.completedTasksMap.set(scoreboardId, new Map());
+      }
+      this.completedTasksMap.get(scoreboardId)!.set(teamId, newCompletedTasks);
+      this.setPoints(teamId, newPoints);
+    });
   }
 
   onPointsPerTaskChange(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const newValue = Number(inputElement.value);
-
     if (!this.scoreboardID || isNaN(newValue)) return;
-
     const scoreboardId = Number(this.scoreboardID);
     this.pointsPerTaskMap.set(scoreboardId, newValue);
+  }
+
+  undoTask(teamId: number) {
+    if (!this.scoreboardID) return;
+    const scoreboardId = Number(this.scoreboardID);
+    const currentCompletedTasks = this.completedTasksMap.get(scoreboardId)?.get(teamId) || 0;
+    if (currentCompletedTasks <= 0) {
+      return;
+    }
+    const newCompletedTasks = currentCompletedTasks - 1;
+    const pointsPerTask = this.pointsPerTaskMap.get(scoreboardId) || 100;
+    const newPoints = newCompletedTasks * pointsPerTask;
+    const dto = { tasksCompleted: newCompletedTasks, points: newPoints };
+    this.scoreboardTeamsService.updateTasksForTeam(scoreboardId, teamId, newCompletedTasks).subscribe(() => {
+      if (!this.completedTasksMap.has(scoreboardId)) {
+        this.completedTasksMap.set(scoreboardId, new Map());
+      }
+      this.completedTasksMap.get(scoreboardId)!.set(teamId, newCompletedTasks);
+      this.setPoints(teamId, newPoints);
+    });
   }
 
   toggleViewDropdown() {
@@ -98,7 +156,6 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
     this.isEditingTaskCount = false;
     if (!this.scoreboardID) return;
     this.taskCountMap.set(Number(this.scoreboardID), this.taskCount);
-    console.log(`Antal tasks sparat lokalt:`, this.taskCountMap);
   }
   
   startEditTaskPoints() {
@@ -109,33 +166,27 @@ export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
     this.isEditingTaskPoints = false;
     if (!this.scoreboardID) return;
     this.pointsPerTaskMap.set(Number(this.scoreboardID), this.pointsPerTask);
-    console.log(`Poäng per task sparat lokalt:`, this.pointsPerTaskMap);
   }
   
 
-  completeTask(teamId: number) {
-    if (!this.scoreboardID) return;
-  
-    const scoreboardId = Number(this.scoreboardID);
 
-    if (!this.completedTasksMap.has(scoreboardId)) {
-      this.completedTasksMap.set(scoreboardId, new Map());
-    }
-  
-    const teamTasks = this.completedTasksMap.get(scoreboardId)!;
-    teamTasks.set(teamId, (teamTasks.get(teamId) || 0) + 1);
-    const teamPoints = this.pointsPerTask;
-    const currentPoints = this.scoreboardResponseSubject.value?.scoreboard?.teams.find(team => team.teamID === teamId)?.points || 0;
-    const updatedPoints = currentPoints + teamPoints;
-  
-    this.setPoints(teamId, updatedPoints);
-  }
+
+
+
 
   getCompletedTasks(teamId: number): number {
     if (!this.scoreboardID) return 0;
     const scoreboardId = Number(this.scoreboardID);
-    return this.completedTasksMap.get(scoreboardId)?.get(teamId) || 0;
+
+    // 🛠 Försök att hämta från completedTasksMap först
+    const completedTasks = this.completedTasksMap.get(scoreboardId)?.get(teamId);
+    if (completedTasks !== undefined) return completedTasks;
+
+    // 🛠 Om det inte finns, försök hämta från RichTeam
+    const team = this.scoreboardResponseSubject.value?.scoreboard.teams.find(t => t.teamID === teamId);
+    return (team as any)?.tasksCount || 0;
 }
+
 
   protected override updateTeamProgress(scoreboardId: number, teamId: number, points: number): void {
     const currentScoreboard = this.scoreboardResponseSubject.value;
