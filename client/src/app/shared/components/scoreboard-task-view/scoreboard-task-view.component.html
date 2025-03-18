@@ -1,5 +1,7 @@
 <div class="relative inline-block text-left">
-  <button class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition" (click)="toggleViewDropdown()">Ändra vy</button>
+  <button class="bg-[#b30000]/90 text-white1 px-4 py-2 shadow-[0_24px_24px_rgba(255,255,255,0.25)] rounded-b hover:bg-[#b30000] transition" (click)="toggleViewDropdown()">
+    Ändra vy
+  </button>
   <div *ngIf="isViewDropdownOpen" class="origin-top-right absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
       <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Hackaton</a>
@@ -22,7 +24,7 @@
         </span>
       </p>
       <p class="font-semibold mb-1 text-sm" 
-        [ngClass]="{ 'text-text-green-600 pulse': richScoreboard.scoreboard.active, 'text-red-600': !richScoreboard.scoreboard.active }">
+        [ngClass]="{ 'text-text-green-600 pulse': richScoreboard.scoreboard.active, 'text-red-200': !richScoreboard.scoreboard.active }">
         {{ richScoreboard.scoreboard.active ? 'Aktiv' : 'Inaktiv' }}
       </p>
       <p class="text-base font-medium text-gray-800">
@@ -38,7 +40,7 @@
             </label>
             <label class="text-gray-900 flex flex-col items-center">
               Poäng per uppgift:
-              <input type="number" [value]="pointsPerTask"  (input)="onPointsPerTaskChange($event)" class="border border-gray-300 rounded px-3 py-1 w-full text-center">
+                <input type="number" [value]="pointsPerTask"  (input)="onPointsPerTaskChange($event)" class="border border-gray-300 rounded px-3 py-1 w-full text-center">
             </label>
           </div>
         </div>
@@ -58,7 +60,7 @@
                 {{ team.teamName }}
               </li>
             </ul>
-            <button class="ml-2 px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition shadow-lg" (click)="$event.stopPropagation(); toggleTeamDropdown()" style="margin-bottom: 1rem">
+            <button class="ml-2 mb-[1rem] px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition shadow-lg" (click)="$event.stopPropagation(); toggleTeamDropdown()">
               Avbryt
             </button>
           </div>
@@ -77,34 +79,36 @@
       </div>
     </div>
 
-    <div class="mt-4 p-6 bg-white/10 backdrop-blur-md rounded-lg shadow-md border border-gray-300 min-w-[min-content] flex flex-col justify-end items-center z-[-1]" [ngStyle]="{'min-height': (taskCount * 25 + 200) + 'px'}">
+    <div class="mt-4 p-6 bg-white/10 backdrop-blur-md rounded-lg shadow-md border border-gray-300 min-w-[min-content] flex flex-col justify-end items-center z-[-1]" 
+      [ngStyle]="{'min-height': (taskCount * 25 + 200) + 'px'}">
       <div class="flex justify-center w-full space-x-6 items-end"> 
         <div *ngFor="let team of richScoreboard.scoreboard.teams" class="relative flex flex-col items-center w-[10%] transition-all duration-500">
-          <div class="relative flex flex-col justify-end items-center w-full" [ngStyle]="{'height': (taskCount * 20) + 'px'}"> 
+          <div class="relative flex flex-col justify-end items-center w-full" 
+            [ngStyle]="{'height': (taskCount * 20) + 'px'}"> 
             <div class="absolute bottom-0 w-12 border-2 border-gray-300 opacity-50 rounded-md flex flex-col justify-end">
-              <div *ngFor="let task of [].constructor(taskCount)" class="w-full h-4 bg-gray-300 rounded-sm m-[1px]">
+              <div *ngFor="let task of taskArray" class="w-full h-4 bg-gray-300 rounded-sm m-[1px]">
               </div>
             </div>
-
-            <div class="absolute bottom-0 w-12 flex flex-col justify-end items-center transition-all duration-500" [ngStyle]="{'height': (getCompletedTasks(team.teamID) * 20) + 'px'}">
-              <div *ngFor="let task of [].constructor(getCompletedTasks(team.teamID)); let i = index" [ngStyle]="{'background': getTaskColor(i), 'height': '20px', 'opacity': '1'}" class="w-full rounded-sm m-[1px] shadow-md">
+            <div class="absolute bottom-0 w-12 flex flex-col justify-end items-center transition-all duration-500" 
+              [ngStyle]="{'height': (getCompletedTasks(team.teamID) * 20) + 'px'}">
+              <div *ngFor="let task of getCompletedTasksArray(team.teamID); let i = index" 
+                [ngStyle]="{'background': getTaskColor(i), 'height': '20px', 'opacity': '1'}" class="w-full rounded-sm m-[1px] shadow-md">
               </div>
             </div>
           </div>
 
           <div class="w-full text-center mt-3 flex flex-col justify-between items-center">
-            <div class="bg-gray-800 text-white text-sm font-bold p-6 rounded-md shadow-md flex items-center justify-center w-24 h-[40px]">
+            <div class="bg-gray-800 text-white text-sm font-bold p-6 rounded-md shadow-lg flex items-center justify-center w-24 h-[40px]">
               {{ team.teamName }}
             </div>
             <div class="text-sm font-semibold text-gray-300 flex items-center justify-center h-[30px]">
               Poäng: {{ team.points }}
             </div>
           </div>
- 
-          <button *ngIf="(isAdmin | async) === true" (click)="completeTask(team.teamID)" class="mt-3 px-4 py-2 bg-green-600 hover:bg-green-500 text-white text-sm rounded-lg shadow-lg transition">
+          <button *ngIf="(isAdmin | async) === true" (click)="completeTask(team.teamID)" class="mt-3 px-4 py-1 bg-green-600/90 hover:bg-green-700 text-white text-sm rounded-lg shadow-lg transition">
             Uppgift Klar
           </button>
-          <button *ngIf="(isAdmin | async) === true" (click)="undoTask(team.teamID)" class="mt-2 px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-sm rounded-lg shadow-lg transition">
+          <button *ngIf="(isAdmin | async) === true" (click)="undoTask(team.teamID)" class="mt-2 px-4 py-1 bg-red-600/80 hover:bg-red-700 text-white text-sm rounded-lg shadow-lg transition">
             Ångra
           </button>
           

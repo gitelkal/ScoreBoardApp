@@ -49,7 +49,7 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
   protected pointsChangeSubject = new Subject<{ scoreboardID: number,teamID: number; points: number }>();
   protected scoreboardResponseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
-  protected updateTeamProgress(scoreboardId: number, teamId: number, points: number): void {}
+  //protected updateTeamProgress(scoreboardId: number, teamId: number, points: number): void {}
   protected taskCountMap = new Map<number, number>(); 
   protected pointsPerTaskMap = new Map<number, number>();
   protected completedTasksMap = new Map<number, Map<number, number>>();
