@@ -3,7 +3,7 @@ import { RouterLink, Router } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
-import { NgIf, AsyncPipe, NgFor } from '@angular/common';
+import { NgIf, AsyncPipe, NgFor, DOCUMENT } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { RegisterComponent } from '../register/register.component';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -12,7 +12,6 @@ import { Scoreboards } from '@app/shared/models/scoreboards.model';
 import { Teams } from '@app/shared/models/teams.models';
 import { Users } from '@app/shared/models/users.model';
 import { ThirdPartyApiService } from '@app/core/services/thirdPartyApiService/third-party-api.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -25,10 +24,9 @@ export class HeaderComponent implements OnDestroy {
   readonly dialog = inject(MatDialog);
   authService = inject(AuthService);
   router = inject(Router);
-  
+
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
-  userID: number = 0;
   searchQuery: string = '';
   scoreboards: Scoreboards[] = [];
   teams: Teams[] = [];
@@ -47,17 +45,19 @@ export class HeaderComponent implements OnDestroy {
 
   constructor(private search: SearchService, private elementRef: ElementRef, private thirdPartyApiService: ThirdPartyApiService, @Inject(DOCUMENT) protected document: any) {
     if (typeof window !== 'undefined' && typeof location !== 'undefined' && this.authService) {
-   
       this.fullscreenElement = document.documentElement;
       this.isAdmin = this.authService.isAdmin;
       this.loggedIn = this.authService.loggedIn;
-      this.userID = this.authService.getUserID() ?? 0;
     }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  getUserID(): number {
+    return this.authService.getUserID();
   }
 
   toggleLoginModal() {
@@ -93,13 +93,13 @@ export class HeaderComponent implements OnDestroy {
         this.scoreboards = response.scoreboards || [];
         this.teams = response.teams || [];
         this.users = response.users || [];
-  
+
         const allResults = [
           ...this.scoreboards.map(scoreboard => ({ ...scoreboard, type: 'scoreboard' })),
           ...this.teams.map(team => ({ ...team, type: 'team' })),
           ...this.users.map(user => ({ ...user, type: 'user' }))
         ];
-  
+
         this.filteredResults = allResults.filter(result => {
           const name = this.getResultName(result).toLowerCase();
           return name.includes(this.searchQuery.toLowerCase());
@@ -107,25 +107,25 @@ export class HeaderComponent implements OnDestroy {
           const nameA = this.getResultName(a).toLowerCase();
           const nameB = this.getResultName(b).toLowerCase();
           const query = this.searchQuery.toLowerCase();
-  
+
           if (nameA.startsWith(query) && !nameB.startsWith(query)) {
             return -1;
           }
           if (!nameA.startsWith(query) && nameB.startsWith(query)) {
             return 1;
           }
-  
+
           const matchCountA = [...nameA.matchAll(new RegExp(query, 'g'))].length;
           const matchCountB = [...nameB.matchAll(new RegExp(query, 'g'))].length;
-  
+
           return matchCountB - matchCountA;
         });
-  
+
         // Hämta bilder för varje resultat
         this.filteredResults.forEach((result, index) => {
           this.getImageFromApi(result, index.toString());
         });
-  
+
         this.isDropdownOpen = true;
       },
       (error) => {
@@ -133,7 +133,7 @@ export class HeaderComponent implements OnDestroy {
       }
     );
   }
-  
+
   getResultName(result: Scoreboards | Teams | Users): string {
     if ('name' in result) {
       return result.name;
@@ -189,7 +189,7 @@ export class HeaderComponent implements OnDestroy {
     }
     return [];
   }
-  
+
   @HostListener('document:click', ['$event'])
   handleClick(event: Event) {
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
@@ -214,5 +214,5 @@ export class HeaderComponent implements OnDestroy {
   onFullscreenChange(event: Event) {
     this.isHeaderVisible = !this.document.fullscreenElement;
   }
-  
+
 }
