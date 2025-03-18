@@ -201,32 +201,18 @@ export class HeaderComponent implements OnDestroy {
   toggleFullscreen() {
     this.isHeaderVisible = !this.isHeaderVisible;
     if (!this.document.fullscreenElement) {
-      if (this.fullscreenElement.requestFullscreen) {
-        this.fullscreenElement.requestFullscreen();
-      } else if (this.fullscreenElement.mozRequestFullScreen) {
-        /* Firefox */
-        this.fullscreenElement.mozRequestFullScreen();
-      } else if (this.fullscreenElement.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.fullscreenElement.webkitRequestFullscreen();
-      } else if (this.fullscreenElement.msRequestFullscreen) {
-        /* IE/Edge */
-        this.fullscreenElement.msRequestFullscreen();
-      }
+      this.document.documentElement.requestFullscreen();
     } else {
-      if (this.document.exitFullscreen) {
-        this.document.exitFullscreen();
-      } else if (this.document.mozCancelFullScreen) {
-        /* Firefox */
-        this.document.mozCancelFullScreen();
-      } else if (this.document.webkitExitFullscreen) {
-        /* Chrome, Safari and Opera */
-        this.document.webkitExitFullscreen();
-      } else if (this.document.msExitFullscreen) {
-        /* IE/Edge */
-        this.document.msExitFullscreen();
-      }
+      this.document.exitFullscreen();
     }
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  onFullscreenChange(event: Event) {
+    this.isHeaderVisible = !this.document.fullscreenElement;
   }
   
 }
