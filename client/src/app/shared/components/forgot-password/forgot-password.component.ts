@@ -17,15 +17,16 @@ export class ForgotPasswordComponent {
 
   constructor(private authService: AuthService) {}
 
-  async forgotPassword() {
-    try {
-      await this.authService.forgotPassword(this.email);
-      this.success = true;
-      setTimeout(() => {
-        this.success = false;
-      }, 3000);
-    } catch (error) {
-      if ((error as any).status === 400) {
+  forgotPassword() {
+    this.authService.forgotPassword(this.email).subscribe({
+      next: () => {
+        this.success = true;
+        setTimeout(() => {
+          this.success = false;
+        }, 3000);
+      },
+      error: (error) => {
+        if (error.status === 400) {
         this.emailNotFound = true;
         setTimeout(() => {
           this.emailNotFound = false;
@@ -36,7 +37,8 @@ export class ForgotPasswordComponent {
           this.unknownError = false;
         }, 3000);
       }
-      console.log('Error: ', error);
-    }
+        console.log('Error: ', error);
+      }
+    });
   }
 }
