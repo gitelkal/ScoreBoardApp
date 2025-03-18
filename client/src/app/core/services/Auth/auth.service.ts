@@ -41,6 +41,10 @@ export class AuthService {
         localStorage.setItem('userID', response.id.toString());
         this.loggedIn.next(true);
         console.log(response.username, "Logged in", this.loggedIn);
+        this.userID = response.id;
+        this.username = response.username;
+        this.firstname = response.firstname;
+        this.lastname = response.lastname;
         if (response.admin) {
           this.isAdmin.next(true);
         }

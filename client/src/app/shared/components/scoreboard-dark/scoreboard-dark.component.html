@@ -4,9 +4,9 @@
         <button class="bg-red5 text-white1 px-4 py-2 rounded-b transition" (click)="toggleViewDropdown()">Ändra vy</button>
         <div *ngIf="isViewDropdownOpen" class="origin-top-left absolute left-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem">Hackaton</a>
+                <a [routerLink]="['/scoreboard', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Hackaton</a>
                 <a [routerLink]="['/scoreboard-v-bar-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Stapel-vy</a>
-                <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Tasks</a>
+                <a [routerLink]="['/scoreboard-task-view', scoreboardID]" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Uppgifter</a>
             </div>
         </div>
     </div>
