@@ -1,9 +1,9 @@
-import { Component, OnInit, inject, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScoreboardService } from '@app/core/services/scoreboardService/scoreboard.service';
 import { SignalRService } from '@app/core/services/signalRService/signal-r.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { switchMap, debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ScoreboardResponse } from '@app/shared/models/richScoreboard.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '@app/core/services/auth/auth.service';
@@ -15,8 +15,6 @@ import { RegisterComponent } from '../register/register.component';
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 @Component({
   template: ''
@@ -31,66 +29,45 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
   protected readonly scoreboardTeamsService = inject(ScoreboardTeamsService);
   protected readonly userService = inject(UserService);
   protected readonly signalRService = inject(SignalRService);
-  protected readonly snackBar = inject(MatSnackBar);
-  
+  protected readonly snackBar = inject(MatSnackBar);  
   
   isAddingTeam = false;
+  isJoiningTeam = false;
   newTeamName = '';
+  isTeamDropdownOpen = false;
   openTeamIndex: number | null = null;
+
   isAdmin!: Observable<boolean>;
   loggedIn!: Observable<boolean>;
   userID: number = 0;
   userTeams: Teams[] = [];
   userTeamsNotInScoreboard: Teams[] = [];
   scoreboardID: string | null = "0";
-  isTeamDropdownOpen = false;
-  isJoiningTeam = false;
-  isBarChartView: boolean = false;
 
   protected pointsChangeSubject = new Subject<{ scoreboardID: number,teamID: number; points: number }>();
   protected scoreboardResponseSubject = new BehaviorSubject<ScoreboardResponse | null>(null);
-  //protected updateTeamProgress(scoreboardId: number, teamId: number, points: number): void {}
-  protected taskCountMap = new Map<number, number>(); 
-  protected pointsPerTaskMap = new Map<number, number>();
-  protected completedTasksMap = new Map<number, Map<number, number>>();
-
-
-  getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
-  teamColorAssignments: Map<string, string> = new Map();
-
   protected destroy$ = new Subject<void>();
 
+  getRichScoreboard$ = this.scoreboardResponseSubject.asObservable();
+  
   ngOnInit() {
-
     this.signalRService.startConnection();
-    this.isBarChartView = false;
     this.scoreboardID = this.route.snapshot.paramMap.get('id');
     this.loadInitialScoreboard();
     this.subscribeToScoreUpdates();
-    this.pointsChangeSubject.pipe(
-      debounceTime(200),
-      takeUntil(this.destroy$)
-    ).subscribe(({ scoreboardID, teamID, points }) => {
-      if (scoreboardID == Number(this.scoreboardID)) {
-        this.setPoints(teamID, points);
-      }
-    });
+    this.subscribeToPointsChanges();
   }
-
 
   protected loadInitialScoreboard() {
     if (!this.scoreboardID) return;
-  
     this.scoreboardService.getRichScoreboard(this.scoreboardID).then(response => {
       this.scoreboardResponseSubject.next(response);
     }).catch(error => {
       console.error('Error loading initial scoreboard:', error);
     });
-  
     this.isAdmin = this.authService.isAdmin;
     this.loggedIn = this.authService.loggedIn;
     this.userID = this.authService.getUserID() ?? 0;
-  
     this.loadUserTeams();
   }
 
@@ -100,7 +77,6 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
       position: { bottom: '20px', right: '20px' }, 
       panelClass: 'popup-dialog'
     });
-    
     setTimeout(() => {
       this.dialog.closeAll();
     }, 3000); 
@@ -120,7 +96,6 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
       if (!update) return;
       const currentScoreboard = this.scoreboardResponseSubject.value;
       if (!currentScoreboard?.scoreboard?.teams || update.scoreboardId !== Number(this.scoreboardID)) return;
-      
       const teamToUpdate = currentScoreboard.scoreboard.teams.find(team => team.teamID === update.teamId);
       if (teamToUpdate) {
         const targetScore = update.points;
@@ -135,6 +110,7 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
       }
     });
   }
+
   appendTeam(teamId: number) {
     if (!this.scoreboardID) return;
     this.scoreboardTeamsService.addTeamToScoreboard(Number(this.scoreboardID), teamId)
@@ -145,7 +121,6 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
   addTeam(event: Event) {
     event.preventDefault();
     if (!this.newTeamName.trim() || !this.scoreboardID) return;
-    
     this.scoreboardService.CreateAndAddEmptyTeamToScoreboard(this.scoreboardID, this.newTeamName)
       .subscribe(() => {
         this.isAddingTeam = false;
@@ -157,12 +132,9 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
   removeTeam(teamId: number) {
     this.scoreboardTeamsService.removeTeamFromScoreboard(Number(this.scoreboardID), teamId).subscribe(() => {
       const currentScoreboard = this.scoreboardResponseSubject.value;
-  
       if (!currentScoreboard?.scoreboard?.teams) return;
       currentScoreboard.scoreboard.teams = currentScoreboard.scoreboard.teams.filter(team => team.teamID !== teamId);
       this.scoreboardResponseSubject.next({ ...currentScoreboard });
-      
-      
       this.snackBar.open('Tog bort lag', 'Stäng', { duration: 2000 });
     });
   }
@@ -212,41 +184,14 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
       this.snackBar.open('Uppdaterade poäng', 'Stäng', { duration: 2000 });
   }
 
-  getBarHeight(points: number): number {
-    const maxPoints = Math.max(...(this.scoreboardResponseSubject.value?.scoreboard.teams.map(team => team.points) || [1])) || 1;
-    return (points / maxPoints) * 300;
+  protected subscribeToPointsChanges() {
+    this.pointsChangeSubject.pipe(debounceTime(200), takeUntil(this.destroy$))
+    .subscribe(({ scoreboardID, teamID, points }) => {
+        if (scoreboardID === Number(this.scoreboardID)) {
+            this.setPoints(teamID, points);
+        }
+    });
   }
-
-  getTeamColor(teamName: string, existingAssignments: Map<string, string>): string {
-    const colors = [
-        'linear-gradient(to top, #b30000, #ff4d4d)',
-        'linear-gradient(to top, #ffcc00, #ffea00)',
-        'linear-gradient(to top, #ff6600, #ff9933)',
-        'linear-gradient(to top, #b30086, #ff00ff)',
-        'linear-gradient(to top, #0080ff, #00cfff)',
-        'linear-gradient(to top, #008000, #00ff00)',
-        'linear-gradient(to top, #ff1493, #ff69b4)',
-        'linear-gradient(to top, #4b0082, #8a2be2)', 
-        'linear-gradient(to top, #ff4500, #ff8c00)',
-        'linear-gradient(to top, #4682b4, #87ceeb)' 
-    ];
-    if (existingAssignments.has(teamName)) {
-        return existingAssignments.get(teamName)!;
-    }
-    let assignedColor: string;
-    if (existingAssignments.size < colors.length) {
-        assignedColor = colors[existingAssignments.size];
-    } else {
-        assignedColor = this.generateRandomGradient();
-    }
-    existingAssignments.set(teamName, assignedColor);
-    return assignedColor;
-}
-
-generateRandomGradient(): string {
-    const randomColor = () => Math.floor(Math.random() * 16777215).toString(16);
-    return `linear-gradient(to top, #${randomColor()}, #${randomColor()})`;
-}
 
   onPointsChange(teamID: number, points: any) {
     this.pointsChangeSubject.next({scoreboardID: Number(this.scoreboardID), teamID, points: points });
@@ -258,13 +203,11 @@ generateRandomGradient(): string {
     const interval = 50;
     const steps = maxDuration / interval; 
     const stepIncrement = (end - start) / steps;
-  
     let elapsed = 0;
     const animationInterval = setInterval(() => {
       elapsed += interval;
       current += stepIncrement;
       teamToUpdate.points = Math.round(current); 
-  
       currentScoreboard.scoreboard.teams.sort((a: any, b: any) => b.points - a.points);
       this.scoreboardResponseSubject.next(currentScoreboard);
       if (Math.round(current) === end || elapsed >= maxDuration) {

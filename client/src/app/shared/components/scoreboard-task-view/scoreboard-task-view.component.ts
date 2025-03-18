@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ScoreboardBaseComponent } from '../scoreboard-base/scoreboard-base.component';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,13 +8,18 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-scoreboard-task-view',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './scoreboard-task-view.component.html',
   styleUrls: ['./scoreboard-task-view.component.css']
 })
 
 export class ScoreboardTaskViewComponent extends ScoreboardBaseComponent {
   isViewDropdownOpen = false; 
+
+  protected taskCountMap = new Map<number, number>(); 
+  protected pointsPerTaskMap = new Map<number, number>();
+  protected completedTasksMap = new Map<number, Map<number, number>>();
+
 
   override destroy$ = new Subject<void>();
 
