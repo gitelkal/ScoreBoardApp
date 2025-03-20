@@ -27,6 +27,7 @@ export class AuthService {
 
   constructor(private apiService: ApiService, private http: HttpClient, private userService: UserService, private adminService: AdminService) {
     this.api = this.apiService.api;
+    this.timeUntilExpiration = 0;
     this.tokenExpirationCheck();
   }
   
@@ -102,16 +103,17 @@ export class AuthService {
     setInterval(() => {
       let expirationTime = localStorage.getItem('tokenExpiration');
       if (expirationTime) {
-        this.timeUntilExpiration = (new Date(expirationTime).getTime() - new Date().getTime()) / 1000;
-        console.log(this.timeUntilExpiration);
+      this.timeUntilExpiration = (new Date(expirationTime).getTime() - new Date().getTime()) / 1000;
+      console.log("Tid tills token går ut: " + this.timeUntilExpiration);
       } 
       if (this.timeUntilExpiration < 4000 && this.timeUntilExpiration > 3000) {
-        console.log("Token kommer att gå ut om cirka 1 timme");
+      console.log("Token kommer att gå ut om cirka 1 timme");
       } else if (this.timeUntilExpiration <= 0) {
-        console.log("Token har utgått");
-        this.logout();
+      console.log("Token har utgått");
+      this.timeUntilExpiration = 0;
+      this.logout();
       }
-    }, 360000); // 1 timme
+    }, 300000); // 5 minuter
   }
   
   private loadUserData() {
